@@ -70,9 +70,9 @@
     
     <!-- content -->
     <v-content>
-      <v-container fluid fill-height>
-        <v-layout justify-center align-center>
-
+      <v-container fluid fill-height >
+        <v-layout justify-start align-left>
+          
           <!-- your content here -->
           <router-view name="home"></router-view>
           <router-view></router-view>
