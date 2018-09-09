@@ -57,14 +57,18 @@
       <v-btn icon>
         <v-icon>notifications</v-icon>
       </v-btn>
-      <v-btn icon large>
-        <v-avatar size="32px" tile>
-          <img
-            src="https://cdn.vuetifyjs.com/images/logos/logo.svg"
-            alt="Vuetify"
-          >
+      <v-menu bottom left full-width>
+        <v-avatar slot="activator">
+          <v-icon >account_circle</v-icon>
         </v-avatar>
-      </v-btn>
+          <v-list>
+            <v-list-tile
+              @click=""
+            >
+              <v-list-tile-title>Keluar</v-list-tile-title>
+            </v-list-tile>
+          </v-list>
+        </v-menu>
     </v-toolbar>
     <!-- end of toolbar -->
     
