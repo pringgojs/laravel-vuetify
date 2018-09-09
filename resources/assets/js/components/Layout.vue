@@ -97,6 +97,7 @@
         { icon: 'content_copy', text: 'Materi', link: '/materi' },
         { icon: 'date_range', text: 'Jadwal', link: '/schedule' },
         { icon: 'assessment', text: 'Laporan', link: '/report' },
+        { icon: 'lock', text: 'Login', link: '/login' },
       ]
     }),
     props: {
