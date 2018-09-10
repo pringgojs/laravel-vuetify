@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 18);
+/******/ 	return __webpack_require__(__webpack_require__.s = 19);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -70,7 +70,7 @@
 "use strict";
 
 
-var bind = __webpack_require__(4);
+var bind = __webpack_require__(5);
 var isBuffer = __webpack_require__(27);
 
 /*global toString:true*/
@@ -533,10 +533,10 @@ function getDefaultAdapter() {
   var adapter;
   if (typeof XMLHttpRequest !== 'undefined') {
     // For browsers use XHR adapter
-    adapter = __webpack_require__(6);
+    adapter = __webpack_require__(7);
   } else if (typeof process !== 'undefined') {
     // For node use HTTP adapter
-    adapter = __webpack_require__(6);
+    adapter = __webpack_require__(7);
   }
   return adapter;
 }
@@ -607,10 +607,16 @@ utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
 
 module.exports = defaults;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)))
 
 /***/ }),
 /* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(26);
+
+/***/ }),
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -628,7 +634,7 @@ module.exports = function bind(fn, thisArg) {
 
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -818,7 +824,7 @@ process.umask = function() { return 0; };
 
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -829,7 +835,7 @@ var settle = __webpack_require__(30);
 var buildURL = __webpack_require__(32);
 var parseHeaders = __webpack_require__(33);
 var isURLSameOrigin = __webpack_require__(34);
-var createError = __webpack_require__(7);
+var createError = __webpack_require__(8);
 var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(35);
 
 module.exports = function xhrAdapter(config) {
@@ -1005,7 +1011,7 @@ module.exports = function xhrAdapter(config) {
 
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1030,7 +1036,7 @@ module.exports = function createError(message, config, code, request, response) 
 
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1042,7 +1048,7 @@ module.exports = function isCancel(value) {
 
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1068,7 +1074,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12034,7 +12040,7 @@ module.exports = Vue;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(44).setImmediate))
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
@@ -12081,7 +12087,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
@@ -12128,7 +12134,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
@@ -12175,7 +12181,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
@@ -12222,7 +12228,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
@@ -12269,7 +12275,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
@@ -12316,7 +12322,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
@@ -12363,15 +12369,15 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(19);
+__webpack_require__(20);
 module.exports = __webpack_require__(61);
 
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -12379,19 +12385,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_router__ = __webpack_require__(46);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuetify__ = __webpack_require__(47);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuetify___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vuetify__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_Layout_vue__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_Layout_vue__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_Layout_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_Layout_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_Home_vue__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_Home_vue__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_Home_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_Home_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_ETugas_vue__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_ETugas_vue__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_ETugas_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__components_ETugas_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_Schedule_vue__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_Schedule_vue__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_Schedule_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__components_Schedule_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_Materi_vue__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_Materi_vue__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_Materi_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__components_Materi_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_Report_vue__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_Report_vue__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_Report_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__components_Report_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_Login_vue__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_Login_vue__ = __webpack_require__(18);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_Login_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__components_Login_vue__);
 
 /**
@@ -12400,9 +12406,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-__webpack_require__(20);
+__webpack_require__(21);
 
-window.Vue = __webpack_require__(10);
+window.Vue = __webpack_require__(11);
 
 
 
@@ -12418,13 +12424,13 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vuetify___default.a);
 Vue.use(__WEBPACK_IMPORTED_MODULE_0_vue_router__["a" /* default */]);
 
 Vue.component('example', __webpack_require__(58));
-Vue.component('layout', __webpack_require__(11));
-Vue.component('home', __webpack_require__(12));
-Vue.component('e-tugas', __webpack_require__(13));
-Vue.component('schedule', __webpack_require__(14));
-Vue.component('report', __webpack_require__(16));
-Vue.component('materi', __webpack_require__(15));
-Vue.component('login', __webpack_require__(17));
+Vue.component('layout', __webpack_require__(12));
+Vue.component('home', __webpack_require__(13));
+Vue.component('e-tugas', __webpack_require__(14));
+Vue.component('schedule', __webpack_require__(15));
+Vue.component('report', __webpack_require__(17));
+Vue.component('materi', __webpack_require__(16));
+Vue.component('login', __webpack_require__(18));
 
 var routes = [{
     path: '/layout',
@@ -12496,11 +12502,11 @@ new Vue({
 });
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-window._ = __webpack_require__(21);
+window._ = __webpack_require__(22);
 
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
@@ -12509,9 +12515,9 @@ window._ = __webpack_require__(21);
  */
 
 try {
-  window.$ = window.jQuery = __webpack_require__(23);
+  window.$ = window.jQuery = __webpack_require__(24);
 
-  __webpack_require__(24);
+  __webpack_require__(25);
 } catch (e) {}
 
 /**
@@ -12520,7 +12526,7 @@ try {
  * CSRF token as a header based on the value of the "XSRF" token cookie.
  */
 
-window.axios = __webpack_require__(25);
+window.axios = __webpack_require__(4);
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
@@ -12554,7 +12560,7 @@ if (token) {
 // });
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, module) {var __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -29664,10 +29670,10 @@ if (token) {
   }
 }.call(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(22)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(23)(module)))
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -29695,7 +29701,7 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -40066,7 +40072,7 @@ return jQuery;
 
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports) {
 
 /*!
@@ -42449,12 +42455,6 @@ if (typeof jQuery === 'undefined') {
 
 
 /***/ }),
-/* 25 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(26);
-
-/***/ }),
 /* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -42462,7 +42462,7 @@ module.exports = __webpack_require__(26);
 
 
 var utils = __webpack_require__(0);
-var bind = __webpack_require__(4);
+var bind = __webpack_require__(5);
 var Axios = __webpack_require__(28);
 var defaults = __webpack_require__(3);
 
@@ -42497,9 +42497,9 @@ axios.create = function create(instanceConfig) {
 };
 
 // Expose Cancel & CancelToken
-axios.Cancel = __webpack_require__(9);
+axios.Cancel = __webpack_require__(10);
 axios.CancelToken = __webpack_require__(42);
-axios.isCancel = __webpack_require__(8);
+axios.isCancel = __webpack_require__(9);
 
 // Expose all/spread
 axios.all = function all(promises) {
@@ -42659,7 +42659,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 "use strict";
 
 
-var createError = __webpack_require__(7);
+var createError = __webpack_require__(8);
 
 /**
  * Resolve or reject a Promise based on response status.
@@ -43078,7 +43078,7 @@ module.exports = InterceptorManager;
 
 var utils = __webpack_require__(0);
 var transformData = __webpack_require__(39);
-var isCancel = __webpack_require__(8);
+var isCancel = __webpack_require__(9);
 var defaults = __webpack_require__(3);
 
 /**
@@ -43231,7 +43231,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 "use strict";
 
 
-var Cancel = __webpack_require__(9);
+var Cancel = __webpack_require__(10);
 
 /**
  * A `CancelToken` is an object that can be used to request cancellation of an operation.
@@ -43583,7 +43583,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(5)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(6)))
 
 /***/ }),
 /* 46 */
@@ -46221,7 +46221,7 @@ if (inBrowser && window.Vue) {
 
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(true)
-		module.exports = factory(__webpack_require__(10));
+		module.exports = factory(__webpack_require__(11));
 	else if(typeof define === 'function' && define.amd)
 		define(["vue"], factory);
 	else if(typeof exports === 'object')
@@ -67474,13 +67474,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       dialog: false,
       drawer: null,
-      items: [{ icon: 'home', text: 'Beranda', link: '/home' }, { icon: 'history', text: 'E-tugas', link: '/e-tugas' }, { icon: 'content_copy', text: 'Materi', link: '/materi' }, { icon: 'date_range', text: 'Jadwal', link: '/schedule' }, { icon: 'assessment', text: 'Laporan', link: '/report' }, { icon: 'lock', text: 'Login', link: '/login' }]
+      items: [{ icon: 'home', text: 'Beranda', link: '/home' }, { icon: 'history', text: 'E-tugas', link: '/e-tugas' }, { icon: 'content_copy', text: 'Materi', link: '/materi' }, { icon: 'date_range', text: 'Jadwal', link: '/schedule' }, { icon: 'assessment', text: 'Laporan', link: '/report' }]
     };
   },
   props: {
@@ -67635,17 +67639,28 @@ var render = function() {
           ),
           _vm._v(" "),
           _c(
-            "v-btn",
-            { attrs: { icon: "", large: "" } },
+            "v-menu",
+            { attrs: { bottom: "", left: "", "full-width": "" } },
             [
-              _c("v-avatar", { attrs: { size: "32px", tile: "" } }, [
-                _c("img", {
-                  attrs: {
-                    src: "https://cdn.vuetifyjs.com/images/logos/logo.svg",
-                    alt: "Vuetify"
-                  }
-                })
-              ])
+              _c(
+                "v-avatar",
+                { attrs: { slot: "activator" }, slot: "activator" },
+                [_c("v-icon", [_vm._v("account_circle")])],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-list",
+                [
+                  _c(
+                    "v-list-tile",
+                    { on: { click: function($event) {} } },
+                    [_c("v-list-tile-title", [_vm._v("Keluar")])],
+                    1
+                  )
+                ],
+                1
+              )
             ],
             1
           )
@@ -68021,8 +68036,51 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
-var axios = __webpack_require__(25);
+var axios = __webpack_require__(4);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -68046,14 +68104,13 @@ var axios = __webpack_require__(25);
     methods: {
         toggleForm: function toggleForm() {
             var app = this;
-            app.snackbarText = 'Anda berganti signin';
 
             if (app.isStudentFormActive) {
                 app.label = 'Username';
                 app.isStudentFormActive = false;
                 app.data.type = 'dosen';
                 app.labelBy = 'mahasiswa';
-                this.snackbar = true;
+                app.showSnackbar('Anda berganti signin');
                 return true;
             }
 
@@ -68061,39 +68118,43 @@ var axios = __webpack_require__(25);
             app.isStudentFormActive = true;
             app.data.type = 'mahasiswa';
             app.labelBy = 'dosen';
-            this.snackbar = true;
+            app.showSnackbar('Anda berganti signin');
         },
         login: function login() {
             console.log("work");
-            this.errors = [];
+            var app = this;
+            app.errors = [];
             event.preventDefault();
-            this.validate();
+            app.validate();
 
-            if (this.errors.length) {
-                this.snackbarText = 'Semua inputan harus terisi';
-                this.snackbar = true;
+            if (app.errors.length) {
+                app.snackbarText = 'Semua inputan harus terisi';
+                app.snackbar = true;
 
                 return true;
             }
-            return true;
-            var data = this.data;
-            axios.post('login', data).then(function (resp) {
 
+            var data = app.data;
+            axios.post('login', data).then(function (resp) {
                 if (resp.data.status == 1) {
-                    swal('Selamat datang, Anda berhasil masuk');
+                    app.showSnackbar('Selamat datang, Anda berhasil masuk');
                     window.location.href = resp.data.url;
                     return true;
                 }
-
-                swal('Data tidak ditemukan, silahkan coba lagi.');
+                app.showSnackbar('Data tidak ditemukan, silahkan coba lagi.');
             }).catch(function (resp) {
-                swal("oops, something went wrong. Please try again!");
+                app.showSnackbar('oops, something went wrong. Please try again!');
             });
         },
         validate: function validate() {
             var app = this;
             if (!app.data.username) app.errors.push(app.label + ' tidak boleh kosong');
             if (!app.data.password) app.errors.push('password tidak boleh kosong');
+        },
+        showSnackbar: function showSnackbar(text) {
+            var app = this;
+            app.snackbarText = text;
+            app.snackbar = true;
         }
     }
 });
@@ -68107,154 +68168,227 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "v-flex",
-    { attrs: { xs12: "", sm6: "" } },
+    "v-app",
+    { attrs: { id: "inspire" } },
     [
       _c(
-        "v-card",
+        "v-toolbar",
+        {
+          attrs: {
+            "clipped-left": _vm.$vuetify.breakpoint.lgAndUp,
+            color: "blue darken-3",
+            dark: "",
+            app: "",
+            fixed: ""
+          }
+        },
         [
           _c(
-            "v-form",
-            {
-              attrs: { "lazy-validation": "" },
-              model: {
-                value: _vm.valid,
-                callback: function($$v) {
-                  _vm.valid = $$v
-                },
-                expression: "valid"
-              }
-            },
+            "v-toolbar-title",
+            { staticClass: "ml-0 pl-3", staticStyle: { width: "300px" } },
             [
-              _c("v-img", { attrs: { src: "img/benner.png" } }),
-              _vm._v(" "),
-              _c("v-card-title", { attrs: { "primary-title": "" } }, [
-                _c("div", [
-                  _c("h3", { staticClass: "headline mb-0" }, [_vm._v("Masuk")]),
-                  _vm._v(" "),
-                  _c("div", [_vm._v("Supaya kami tahu siapa Anda")])
-                ])
-              ]),
-              _vm._v(" "),
-              _c(
-                "v-card-text",
-                [
-                  _c(
-                    "v-flex",
-                    { attrs: { md12: "" } },
-                    [
-                      _c("v-text-field", {
-                        attrs: {
-                          label: _vm.label,
-                          flat: "",
-                          clearable: "",
-                          required: ""
-                        },
-                        model: {
-                          value: _vm.data.username,
-                          callback: function($$v) {
-                            _vm.$set(_vm.data, "username", $$v)
-                          },
-                          expression: "data.username"
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("v-text-field", {
-                        attrs: {
-                          label: "Password",
-                          flat: "",
-                          type: "password",
-                          clearable: "",
-                          required: ""
-                        },
-                        model: {
-                          value: _vm.data.password,
-                          callback: function($$v) {
-                            _vm.$set(_vm.data, "password", $$v)
-                          },
-                          expression: "data.password"
-                        }
-                      })
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c("p", [
-                    _vm._v(
-                      "\n                    Anda " +
-                        _vm._s(_vm.labelBy) +
-                        " ? "
-                    ),
-                    _c(
-                      "a",
-                      {
-                        on: {
-                          click: function($event) {
-                            _vm.toggleForm()
-                          }
-                        }
-                      },
-                      [_vm._v(" Masuk sebagai " + _vm._s(_vm.labelBy))]
-                    )
-                  ])
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-card-actions",
-                [
-                  _c(
-                    "v-btn",
-                    {
-                      attrs: {
-                        flat: "",
-                        color: "primary",
-                        disabled: !_vm.valid
-                      },
-                      on: {
-                        click: function($event) {
-                          _vm.login()
-                        }
-                      }
-                    },
-                    [_vm._v("Izinkan saya masuk")]
-                  )
-                ],
-                1
-              )
-            ],
-            1
+              _c("span", { staticClass: "hidden-sm-and-down" }, [
+                _vm._v("Dosen Jaga")
+              ])
+            ]
           )
         ],
         1
       ),
       _vm._v(" "),
       _c(
-        "v-snackbar",
-        {
-          attrs: { right: "", bottom: "" },
-          model: {
-            value: _vm.snackbar,
-            callback: function($$v) {
-              _vm.snackbar = $$v
-            },
-            expression: "snackbar"
-          }
-        },
+        "v-content",
         [
-          _vm._v("\n        " + _vm._s(_vm.snackbarText) + "\n        "),
           _c(
-            "v-btn",
-            {
-              attrs: { dark: "", flat: "" },
-              on: {
-                click: function($event) {
-                  _vm.snackbar = false
-                }
-              }
-            },
-            [_vm._v("\n            Close\n        ")]
+            "v-container",
+            { attrs: { fluid: "", "fill-height": "" } },
+            [
+              _c(
+                "v-layout",
+                { attrs: { "justify-center": "", "align-center": "" } },
+                [
+                  _c(
+                    "v-flex",
+                    { attrs: { xs12: "", sm6: "" } },
+                    [
+                      _c(
+                        "v-card",
+                        [
+                          _c(
+                            "v-form",
+                            {
+                              attrs: { "lazy-validation": "" },
+                              model: {
+                                value: _vm.valid,
+                                callback: function($$v) {
+                                  _vm.valid = $$v
+                                },
+                                expression: "valid"
+                              }
+                            },
+                            [
+                              _c("v-img", { attrs: { src: "img/benner.png" } }),
+                              _vm._v(" "),
+                              _c(
+                                "v-card-title",
+                                { attrs: { "primary-title": "" } },
+                                [
+                                  _c("div", [
+                                    _c("h3", { staticClass: "headline mb-0" }, [
+                                      _vm._v("Masuk")
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("div", [
+                                      _vm._v("Supaya kami tahu siapa Anda")
+                                    ])
+                                  ])
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "v-card-text",
+                                [
+                                  _c(
+                                    "v-flex",
+                                    { attrs: { md12: "" } },
+                                    [
+                                      _c("v-text-field", {
+                                        attrs: {
+                                          label: _vm.label,
+                                          flat: "",
+                                          clearable: "",
+                                          required: ""
+                                        },
+                                        model: {
+                                          value: _vm.data.username,
+                                          callback: function($$v) {
+                                            _vm.$set(_vm.data, "username", $$v)
+                                          },
+                                          expression: "data.username"
+                                        }
+                                      }),
+                                      _vm._v(" "),
+                                      _c("v-text-field", {
+                                        attrs: {
+                                          label: "Password",
+                                          flat: "",
+                                          type: "password",
+                                          clearable: "",
+                                          required: ""
+                                        },
+                                        model: {
+                                          value: _vm.data.password,
+                                          callback: function($$v) {
+                                            _vm.$set(_vm.data, "password", $$v)
+                                          },
+                                          expression: "data.password"
+                                        }
+                                      })
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c("p", [
+                                    _vm._v(
+                                      "\n                              Anda " +
+                                        _vm._s(_vm.labelBy) +
+                                        " ? "
+                                    ),
+                                    _c(
+                                      "a",
+                                      {
+                                        on: {
+                                          click: function($event) {
+                                            _vm.toggleForm()
+                                          }
+                                        }
+                                      },
+                                      [
+                                        _vm._v(
+                                          " Masuk sebagai " +
+                                            _vm._s(_vm.labelBy)
+                                        )
+                                      ]
+                                    )
+                                  ])
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "v-card-actions",
+                                [
+                                  _c(
+                                    "v-btn",
+                                    {
+                                      attrs: {
+                                        flat: "",
+                                        color: "primary",
+                                        disabled: !_vm.valid
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          _vm.login()
+                                        }
+                                      }
+                                    },
+                                    [_vm._v("Izinkan saya masuk")]
+                                  )
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-snackbar",
+                        {
+                          attrs: { right: "", bottom: "" },
+                          model: {
+                            value: _vm.snackbar,
+                            callback: function($$v) {
+                              _vm.snackbar = $$v
+                            },
+                            expression: "snackbar"
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n                  " +
+                              _vm._s(_vm.snackbarText) +
+                              "\n                  "
+                          ),
+                          _c(
+                            "v-btn",
+                            {
+                              attrs: { dark: "", flat: "" },
+                              on: {
+                                click: function($event) {
+                                  _vm.snackbar = false
+                                }
+                              }
+                            },
+                            [
+                              _vm._v(
+                                "\n                      Close\n                  "
+                              )
+                            ]
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
           )
         ],
         1
