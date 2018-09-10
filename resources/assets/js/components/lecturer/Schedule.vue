@@ -2,26 +2,28 @@
     <v-flex sm12>
         <h1 class="font-weight-light">Jadwal</h1>
         <div class="subheading">Modul untuk perkuliahan {{descriptionSemester}}</div>
-        <v-flex sm6 d-flex mt-5>
+        <content-loader v-if="!isLoaded" height="300"></content-loader>
+        
+        <v-flex sm6 d-flex mt-5 v-if="isLoaded">
             <v-select 
                 :items="semesters"
                 v-model="filter"
                 label="Filter jadwal"
                 item-text="tahun"
                 item-value="kuliah"
-                :on-change="selectSemester()"
+                @change="selectSemester()"
                 solo
             >
                 <template slot="selection" slot-scope="data">
-                    {{ data.item.tahun }} / {{ data.item.semester }} - {{ data.item.jurusan }}
+                    {{ data.item.tahun }} / {{ data.item.semester }} - {{ data.item.jurusan }} ({{data.item.kelas}} {{data.item.pararel}})
                 </template>
                 <template slot="item" slot-scope="data">
-                    {{ data.item.tahun }} / {{ data.item.semester }} - {{ data.item.jurusan }}
+                    {{ data.item.tahun }} / {{ data.item.semester }} - {{ data.item.jurusan }} ({{data.item.kelas}} {{data.item.pararel}})
                 </template>
             </v-select>
         </v-flex>
 
-        <v-flex sm12>
+        <v-flex sm12 v-if="isLoaded">
             <v-data-table
                 :headers="headerTable"
                 :items="bodyTable"
@@ -58,6 +60,8 @@
 </template>
 
 <script>
+import { ContentLoader } from 'vue-content-loader'
+
 export default {
     data () {
         return {
@@ -76,7 +80,11 @@ export default {
             filter: '',
             snackbarText: '',
             snackbar: false,
+            isLoaded: false,
         }
+    },
+    components: {
+        ContentLoader
     },
     mounted() {
         this.initData();
@@ -89,7 +97,6 @@ export default {
                 app.descriptionSemester = resp.data.keterangan;
                 app.bodyTable = resp.data.data;
                 app.semesters = resp.data.data_semester;
-                console.log(app.semesters)
             })
             .catch(function (resp) {
                 showSnackbar("oops, something went wrong. Please try again!");
@@ -103,11 +110,11 @@ export default {
         selectSemester() {
             if (!this.filter) return false;
             var app = this;
-            axios.get('lecturer/schedule/get-by-semester/'+this.filter).then(function (resp) {
+            app.isLoaded = false;
+            axios.get('lecturer/schedule/get-by-semester/'+app.filter).then(function (resp) {
                 app.isLoaded = true;
                 app.descriptionSemester = resp.data.keterangan;
                 app.bodyTable = resp.data.data;
-                console.log(app.bodyTable)
             })
             .catch(function (resp) {
                 showSnackbar("oops, something went wrong. Please try again!");
