@@ -31,4 +31,15 @@ class DatabaseHelper
         
         return $response;
     }
+
+    public static function getScheduleBySemester($kuliah)
+    {
+        $url = config('api.url').'/lecturer/schedule/get-by-semester/'.$kuliah;
+        $data = array('user' => ResponseHelper::user());
+        $response = Curl::to($url)
+        ->withData($data)
+        ->post();
+        
+        return $response;
+    }
 }

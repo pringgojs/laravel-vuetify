@@ -11,24 +11,24 @@ window.Vue = require('vue');
 import VueRouter from 'vue-router';
 import Vuetify from 'vuetify';
 
-import Layout from './components/Layout.vue';
-import Home from './components/Home.vue';
-import ETugas from './components/ETugas.vue';
-import Schedule from './components/Schedule.vue';
-import Materi from './components/Materi.vue';
-import Report from './components/Report.vue';
+import Layout from './components/lecturer/Layout.vue';
+import Home from './components/lecturer/Home.vue';
+import ETugas from './components/lecturer/ETugas.vue';
+import Schedule from './components/lecturer/Schedule.vue';
+import Materi from './components/lecturer/Materi.vue';
+import Report from './components/lecturer/Report.vue';
 import Login from './components/Login.vue';
 
 Vue.use(Vuetify);
 Vue.use(VueRouter);
 
-Vue.component('example', require('./components/Example.vue'));
-Vue.component('layout', require('./components/Layout.vue'));
-Vue.component('home', require('./components/Home.vue'));
-Vue.component('e-tugas', require('./components/ETugas.vue'));
-Vue.component('schedule', require('./components/Schedule.vue'));
-Vue.component('report', require('./components/Report.vue'));
-Vue.component('materi', require('./components/Materi.vue'));
+Vue.component('example', require('./components/lecturer/Example.vue'));
+Vue.component('layout', require('./components/lecturer/Layout.vue'));
+Vue.component('home', require('./components/lecturer/Home.vue'));
+Vue.component('e-tugas', require('./components/lecturer/ETugas.vue'));
+Vue.component('schedule', require('./components/lecturer/Schedule.vue'));
+Vue.component('report', require('./components/lecturer/Report.vue'));
+Vue.component('materi', require('./components/lecturer/Materi.vue'));
 Vue.component('login', require('./components/Login.vue'));
 
 
