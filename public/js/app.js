@@ -12119,10 +12119,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_lecturer_Schedule_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__components_lecturer_Schedule_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_lecturer_Materi_vue__ = __webpack_require__(77);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_lecturer_Materi_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__components_lecturer_Materi_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_lecturer_Report_vue__ = __webpack_require__(78);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_lecturer_Report_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__components_lecturer_Report_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_Login_vue__ = __webpack_require__(18);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_Login_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__components_Login_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_lecturer_MateriAdd_vue__ = __webpack_require__(93);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_lecturer_MateriAdd_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__components_lecturer_MateriAdd_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_lecturer_Report_vue__ = __webpack_require__(78);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_lecturer_Report_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__components_lecturer_Report_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_Login_vue__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_Login_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9__components_Login_vue__);
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -12144,6 +12146,7 @@ window.Vue = __webpack_require__(11);
 
 
 
+
 Vue.use(__WEBPACK_IMPORTED_MODULE_1_vuetify___default.a);
 Vue.use(__WEBPACK_IMPORTED_MODULE_0_vue_router__["a" /* default */]);
 
@@ -12154,6 +12157,7 @@ Vue.component('e-tugas', __webpack_require__(75));
 Vue.component('schedule', __webpack_require__(76));
 Vue.component('report', __webpack_require__(78));
 Vue.component('materi', __webpack_require__(77));
+Vue.component('materi-add', __webpack_require__(93));
 Vue.component('login', __webpack_require__(18));
 
 var routes = [{
@@ -12179,8 +12183,15 @@ var routes = [{
     name: 'materi',
     meta: { title: 'Materi - Dosen Jaga' }
 }, {
+    path: '/materi/add',
+    component: __WEBPACK_IMPORTED_MODULE_7__components_lecturer_MateriAdd_vue___default.a,
+    name: 'materi-add',
+    meta: {
+        title: 'Materi Baru - Dosen Jaga'
+    }
+}, {
     path: '/report',
-    component: __WEBPACK_IMPORTED_MODULE_7__components_lecturer_Report_vue___default.a,
+    component: __WEBPACK_IMPORTED_MODULE_8__components_lecturer_Report_vue___default.a,
     name: 'report',
     meta: {
         title: 'Laporan - Dosen Jaga'
@@ -12196,7 +12207,7 @@ var routes = [{
 
 }, {
     path: '/login',
-    component: __WEBPACK_IMPORTED_MODULE_8__components_Login_vue___default.a,
+    component: __WEBPACK_IMPORTED_MODULE_9__components_Login_vue___default.a,
     name: 'login',
     meta: {
         title: 'Login - Dosen Jaga'
@@ -67762,7 +67773,7 @@ module.exports = Component.exports
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = null
+var __vue_script__ = __webpack_require__(92)
 /* template */
 var __vue_template__ = __webpack_require__(85)
 /* template functional */
@@ -68373,7 +68384,7 @@ var render = function() {
       ]),
       _vm._v(" "),
       !_vm.isLoaded
-        ? _c("content-loader", { attrs: { height: "300" } })
+        ? _c("content-loader", { attrs: { height: "250" } })
         : _vm._e(),
       _vm._v(" "),
       _vm.isLoaded
@@ -68555,11 +68566,195 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "div",
+    "v-flex",
+    { attrs: { sm12: "" } },
     [
-      _c("h1", [_vm._v("Home")]),
+      _c("h1", [_vm._v("Materi")]),
       _vm._v(" "),
-      _c("v-btn", { attrs: { small: "" } }, [_vm._v("Normal")])
+      _c("div", { staticClass: "subheading" }, [
+        _vm._v("Tambahkan materi sebagai penunjang belajar mahasiswa")
+      ]),
+      _vm._v(" "),
+      !_vm.isLoaded
+        ? _c("content-loader", { attrs: { height: "250" } })
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.isLoaded
+        ? _c(
+            "v-flex",
+            { attrs: { xs3: "", "offset-xs9": "", "align-end": "" } },
+            [
+              _c(
+                "router-link",
+                { attrs: { to: "materi/add" } },
+                [
+                  _c("v-btn", { attrs: { color: "info" } }, [
+                    _vm._v("Upload materi baru")
+                  ])
+                ],
+                1
+              )
+            ],
+            1
+          )
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.isLoaded
+        ? _c(
+            "v-flex",
+            { attrs: { md5: "", "mt-5": "" } },
+            [
+              _c("v-select", {
+                attrs: {
+                  items: _vm.semesters,
+                  label: "Filter jadwal",
+                  "item-text": "tahun",
+                  "item-value": "kuliah",
+                  solo: ""
+                },
+                on: {
+                  change: function($event) {
+                    _vm.selectSemester()
+                  }
+                },
+                scopedSlots: _vm._u([
+                  {
+                    key: "selection",
+                    fn: function(data) {
+                      return [
+                        _vm._v(
+                          "\n                " +
+                            _vm._s(data.item.tahun) +
+                            " / " +
+                            _vm._s(data.item.semester) +
+                            " - " +
+                            _vm._s(data.item.jurusan) +
+                            " (" +
+                            _vm._s(data.item.kelas) +
+                            " " +
+                            _vm._s(data.item.pararel) +
+                            ")\n            "
+                        )
+                      ]
+                    }
+                  },
+                  {
+                    key: "item",
+                    fn: function(data) {
+                      return [
+                        _vm._v(
+                          "\n                " +
+                            _vm._s(data.item.tahun) +
+                            " / " +
+                            _vm._s(data.item.semester) +
+                            " - " +
+                            _vm._s(data.item.jurusan) +
+                            " (" +
+                            _vm._s(data.item.kelas) +
+                            " " +
+                            _vm._s(data.item.pararel) +
+                            ")\n            "
+                        )
+                      ]
+                    }
+                  }
+                ]),
+                model: {
+                  value: _vm.filter,
+                  callback: function($$v) {
+                    _vm.filter = $$v
+                  },
+                  expression: "filter"
+                }
+              })
+            ],
+            1
+          )
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.isLoaded
+        ? _c(
+            "v-flex",
+            { attrs: { sm12: "" } },
+            [
+              _c("v-data-table", {
+                staticClass: "elevation-1",
+                attrs: {
+                  headers: _vm.headerTable,
+                  items: _vm.bodyTable,
+                  "hide-actions": ""
+                },
+                scopedSlots: _vm._u([
+                  {
+                    key: "items",
+                    fn: function(props) {
+                      return [
+                        _c("td", [_vm._v(_vm._s(props.item.modul))]),
+                        _vm._v(" "),
+                        _c("td", { staticClass: "text-xs-left" }, [
+                          _vm._v(_vm._s(props.item.matakuliah))
+                        ]),
+                        _vm._v(" "),
+                        _c("td", { staticClass: "text-xs-center" }, [
+                          _vm._v(_vm._s(props.item.program))
+                        ]),
+                        _vm._v(" "),
+                        _c("td", { staticClass: "text-xs-left" }, [
+                          _vm._v(_vm._s(props.item.jurusan))
+                        ]),
+                        _vm._v(" "),
+                        _c("td", { staticClass: "text-xs-left" }, [
+                          _vm._v(_vm._s(props.item.tahun))
+                        ]),
+                        _vm._v(" "),
+                        _c("td", { staticClass: "text-xs-center" }, [
+                          _vm._v(_vm._s(props.item.semester))
+                        ]),
+                        _vm._v(" "),
+                        _c("td", { staticClass: "text-xs-center" }, [
+                          _vm._v(_vm._s(props.item.pararel))
+                        ])
+                      ]
+                    }
+                  }
+                ])
+              })
+            ],
+            1
+          )
+        : _vm._e(),
+      _vm._v(" "),
+      _c(
+        "v-snackbar",
+        {
+          attrs: { right: "", bottom: "" },
+          model: {
+            value: _vm.snackbar,
+            callback: function($$v) {
+              _vm.snackbar = $$v
+            },
+            expression: "snackbar"
+          }
+        },
+        [
+          _vm._v(
+            "\n            " + _vm._s(_vm.snackbarText) + "\n            "
+          ),
+          _c(
+            "v-btn",
+            {
+              attrs: { dark: "", flat: "" },
+              on: {
+                click: function($event) {
+                  _vm.snackbar = false
+                }
+              }
+            },
+            [_vm._v("\n                Close\n            ")]
+          )
+        ],
+        1
+      )
     ],
     1
   )
@@ -69242,6 +69437,367 @@ function mergeFn (a, b) {
   }
 }
 
+
+/***/ }),
+/* 92 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_content_loader__ = __webpack_require__(90);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            headerTable: [{ text: 'Modul', value: 'modul' }, { text: 'Matakuliah', value: 'matakuliah' }, { text: 'Program', value: 'program' }, { text: 'Jurusan', value: 'jurusan' }, { text: 'Tahun', value: 'tahun' }, { text: 'Semester', value: 'semester' }, { text: 'Paralel', value: 'paralel' }],
+            bodyTable: [],
+            semesters: [],
+            descriptionSemester: '',
+            filter: '',
+            snackbarText: '',
+            snackbar: false,
+            isLoaded: false
+        };
+    },
+
+    components: {
+        ContentLoader: __WEBPACK_IMPORTED_MODULE_0_vue_content_loader__["a" /* ContentLoader */]
+    },
+    mounted: function mounted() {
+        this.initData();
+    },
+
+    methods: {
+        initData: function initData() {
+            var app = this;
+            axios.get('lecturer/schedule').then(function (resp) {
+                app.isLoaded = true;
+                app.descriptionSemester = resp.data.keterangan;
+                app.bodyTable = resp.data.data;
+                app.semesters = resp.data.data_semester;
+            }).catch(function (resp) {
+                showSnackbar("oops, something went wrong. Please try again!");
+            });
+        },
+        showSnackbar: function showSnackbar(text) {
+            var app = this;
+            app.snackbarText = text;
+            app.snackbar = true;
+        },
+        selectSemester: function selectSemester() {
+            if (!this.filter) return false;
+            var app = this;
+            app.isLoaded = false;
+            axios.get('lecturer/schedule/get-by-semester/' + app.filter).then(function (resp) {
+                app.isLoaded = true;
+                app.descriptionSemester = resp.data.keterangan;
+                app.bodyTable = resp.data.data;
+            }).catch(function (resp) {
+                showSnackbar("oops, something went wrong. Please try again!");
+            });
+        }
+    }
+});
+
+/***/ }),
+/* 93 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(94)
+/* template */
+var __vue_template__ = __webpack_require__(95)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/lecturer/MateriAdd.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-49e9cabe", Component.options)
+  } else {
+    hotAPI.reload("data-v-49e9cabe", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 94 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            snackbarText: '',
+            snackbar: false
+        };
+    },
+
+    methods: {
+        showSnackbar: function showSnackbar(text) {
+            var app = this;
+            app.snackbarText = text;
+            app.snackbar = true;
+        },
+        selectSemester: function selectSemester() {
+            if (!this.filter) return false;
+            var app = this;
+            app.isLoaded = false;
+            axios.get('lecturer/schedule/get-by-semester/' + app.filter).then(function (resp) {
+                app.isLoaded = true;
+                app.descriptionSemester = resp.data.keterangan;
+                app.bodyTable = resp.data.data;
+            }).catch(function (resp) {
+                showSnackbar("oops, something went wrong. Please try again!");
+            });
+        }
+    }
+});
+
+/***/ }),
+/* 95 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "v-flex",
+    { attrs: { sm12: "" } },
+    [
+      _c("h1", [_vm._v("Materi Baru")]),
+      _vm._v(" "),
+      _c("div", { staticClass: "subheading" }, [
+        _vm._v("Tambahkan materi sebagai penunjang belajar mahasiswa")
+      ]),
+      _vm._v(" "),
+      _c(
+        "v-flex",
+        { attrs: { xs3: "", "offset-xs9": "", "align-end": "" } },
+        [
+          _c(
+            "router-link",
+            { attrs: { to: "/materi" } },
+            [_c("v-btn", { attrs: { color: "success" } }, [_vm._v("Kembali")])],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-flex",
+        { attrs: { sm12: "", md6: "" } },
+        [
+          _c(
+            "v-flex",
+            { attrs: { xs12: "", sm12: "", md12: "" } },
+            [
+              _c("v-text-field", { attrs: { label: "Judul Materi", solo: "" } })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-flex",
+            { attrs: { xs12: "" } },
+            [
+              _c("v-textarea", {
+                attrs: { solo: "", name: "input-7-4", label: "Keterangan" }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c("v-btn", { attrs: { color: "info" } }, [_vm._v("Simpan")])
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-snackbar",
+        {
+          attrs: { right: "", bottom: "" },
+          model: {
+            value: _vm.snackbar,
+            callback: function($$v) {
+              _vm.snackbar = $$v
+            },
+            expression: "snackbar"
+          }
+        },
+        [
+          _vm._v(
+            "\n            " + _vm._s(_vm.snackbarText) + "\n            "
+          ),
+          _c(
+            "v-btn",
+            {
+              attrs: { dark: "", flat: "" },
+              on: {
+                click: function($event) {
+                  _vm.snackbar = false
+                }
+              }
+            },
+            [_vm._v("\n                Close\n            ")]
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-49e9cabe", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

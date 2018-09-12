@@ -2,7 +2,7 @@
     <v-flex sm12>
         <h1 class="font-weight-light">Jadwal</h1>
         <div class="subheading">Modul untuk perkuliahan {{descriptionSemester}}</div>
-        <content-loader v-if="!isLoaded" height="300"></content-loader>
+        <content-loader v-if="!isLoaded" height="250"></content-loader>
         
         <v-flex sm6 d-flex mt-5 v-if="isLoaded">
             <v-select 

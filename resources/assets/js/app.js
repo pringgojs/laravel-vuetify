@@ -16,6 +16,7 @@ import Home from './components/lecturer/Home.vue';
 import ETugas from './components/lecturer/ETugas.vue';
 import Schedule from './components/lecturer/Schedule.vue';
 import Materi from './components/lecturer/Materi.vue';
+import MateriAdd from './components/lecturer/MateriAdd.vue';
 import Report from './components/lecturer/Report.vue';
 import Login from './components/Login.vue';
 
@@ -29,6 +30,7 @@ Vue.component('e-tugas', require('./components/lecturer/ETugas.vue'));
 Vue.component('schedule', require('./components/lecturer/Schedule.vue'));
 Vue.component('report', require('./components/lecturer/Report.vue'));
 Vue.component('materi', require('./components/lecturer/Materi.vue'));
+Vue.component('materi-add', require('./components/lecturer/MateriAdd.vue'));
 Vue.component('login', require('./components/Login.vue'));
 
 
@@ -58,6 +60,14 @@ const routes = [
         component: Materi,
         name: 'materi',
         meta: { title: 'Materi - Dosen Jaga'}
+    },
+    {
+        path: '/materi/add',
+        component: MateriAdd,
+        name: 'materi-add',
+        meta: {
+            title: 'Materi Baru - Dosen Jaga'
+        }
     },
     {
         path: '/report',
