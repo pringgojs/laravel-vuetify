@@ -83,11 +83,20 @@
                             value=""
                             ></v-textarea>
                         </v-flex>
+                        <v-flex xs12>
+                            <file-pond
+                                name="test"
+                                ref="pond"
+                                label-idle="Drop files here..."
+                                allow-multiple="false"
+                                v-bind:files="myFiles"
+                                v-on:init="handleFilePondInit"/>
+                        </v-flex>
                     </v-card-text>
                     <v-card-actions>
                         <v-spacer></v-spacer>
                         <v-btn flat color="primary" @click="dialog = false">Cancel</v-btn>
-                        <v-btn flat @click="dialog = false">Save</v-btn>
+                        <v-btn flat @click="submit">Save</v-btn>
                     </v-card-actions>
                 </v-card>
             </v-dialog>
@@ -97,6 +106,22 @@
 
 <script>
 import { ContentLoader } from 'vue-content-loader'
+// Import Vue FilePond
+import vueFilePond from 'vue-filepond';
+import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
+import FilePondPluginFileValidateSize from 'filepond-plugin-file-validate-size';
+import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
+import FilePondPluginFileEncode from 'filepond-plugin-file-encode';
+// Import FilePond styles
+import 'filepond/dist/filepond.min.css';
+import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
+
+const FilePond = vueFilePond( 
+    FilePondPluginImagePreview,
+    FilePondPluginFileValidateSize,
+    FilePondPluginFileValidateType,
+    FilePondPluginFileEncode
+);
 
 export default {
     data () {
@@ -118,10 +143,12 @@ export default {
             snackbar: false,
             isLoaded: false,
             dialog: false,
+            myFiles: ''
         }
     },
     components: {
-        ContentLoader
+        ContentLoader,
+        FilePond
     },
     mounted() {
         this.initData();
@@ -160,6 +187,21 @@ export default {
         },
         addMateri(nomor_nilai_master_modul) {
             this.dialog = true;
+        },
+        handleFilePondInit: function() {
+        },
+        submit() {
+            var app = this;
+            var file = app.$refs.pond.getFiles();
+            let formData = new FormData();
+            console.log(file[0]);
+            formData.append('file', file[0].file);
+            axios.post( 'lecturer/materi/store', formData, { headers: {'Content-Type': 'multipart/form-data'}}).then(function (resp) {
+                console.log(resp);
+            })
+            .catch(function(){
+                console.log('FAILURE!!');
+            });
         }
     }
 }
