@@ -13,7 +13,3 @@ let mix = require('laravel-mix');
 
 mix.js('resources/assets/js/app.js', 'public/js')
    .sass('resources/assets/sass/app.scss', 'public/css');
-mix.styles([
-    '/node_modules/filepond/dist/filepond.min.css',
-    '/node_modules/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css'
-], 'public/css');

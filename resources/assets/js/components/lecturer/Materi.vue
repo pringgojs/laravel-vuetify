@@ -34,13 +34,15 @@
                 class="elevation-1"
             >
                 <template slot="items" slot-scope="props">
-                    <td>{{ props.item.modul }}</td>
-                    <td class="text-xs-left">{{ props.item.matakuliah }}</td>
-                    <td class="text-xs-center">{{ props.item.program }}</td>
-                    <td class="text-xs-left">{{ props.item.jurusan }}</td>
-                    <td class="text-xs-left">{{ props.item.tahun }}</td>
-                    <td class="text-xs-center">{{ props.item.semester }}</td>
-                    <td class="text-xs-center">{{ props.item.pararel }}</td>
+                    <tr @click="addMateri(props.item.nomor_nilai_master_modul)">
+                        <td>{{ props.item.modul }}</td>
+                        <td class="text-xs-left">{{ props.item.matakuliah }}</td>
+                        <td class="text-xs-center">{{ props.item.program }}</td>
+                        <td class="text-xs-left">{{ props.item.jurusan }}</td>
+                        <td class="text-xs-left">{{ props.item.tahun }}</td>
+                        <td class="text-xs-center">{{ props.item.semester }}</td>
+                        <td class="text-xs-center">{{ props.item.pararel }}</td>
+                    </tr>
                 </template>
             </v-data-table>
         </v-flex>
@@ -59,7 +61,38 @@
                     Close
                 </v-btn>
         </v-snackbar>
+
+        <!-- dialog -->
+            <v-dialog v-model="dialog" width="800px">
+                <v-card>
+                    <v-card-title
+                    class="grey lighten-4 py-4 title"
+                    >
+                    Materi Baru
+                    </v-card-title>
+                    <v-card-text>
+                        <v-flex xs12>
+                            <v-text-field
+                                label="Judul"
+                            ></v-text-field>
+                        </v-flex>
+                        <v-flex xs12>
+                            <v-textarea
+                            name="input-7-1"
+                            label="Keterangan"
+                            value=""
+                            ></v-textarea>
+                        </v-flex>
+                    </v-card-text>
+                    <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn flat color="primary" @click="dialog = false">Cancel</v-btn>
+                        <v-btn flat @click="dialog = false">Save</v-btn>
+                    </v-card-actions>
+                </v-card>
+            </v-dialog>
     </v-flex>
+
 </template>
 
 <script>
@@ -84,6 +117,7 @@ export default {
             snackbarText: '',
             snackbar: false,
             isLoaded: false,
+            dialog: false,
         }
     },
     components: {
@@ -100,6 +134,7 @@ export default {
                 app.descriptionSemester = resp.data.keterangan;
                 app.bodyTable = resp.data.data;
                 app.semesters = resp.data.data_semester;
+                console.log(resp.data);
             })
             .catch(function (resp) {
                 showSnackbar("oops, something went wrong. Please try again!");
@@ -122,6 +157,9 @@ export default {
             .catch(function (resp) {
                 showSnackbar("oops, something went wrong. Please try again!");
             });
+        },
+        addMateri(nomor_nilai_master_modul) {
+            this.dialog = true;
         }
     }
 }

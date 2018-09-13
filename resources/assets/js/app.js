@@ -40,7 +40,6 @@ const routes = [
         component: Layout,
         name: 'layout',
         meta: { title: 'Beranda - Dosen Jaga'}
-
     },
     {
         path: '/home',
@@ -53,7 +52,6 @@ const routes = [
         component: ETugas,
         name: 'e-tugas',
         meta: { title: 'E Tugas - Dosen Jaga'}
-
     },
     {
         path: '/materi',
