@@ -4,7 +4,7 @@
         <div class="subheading">Tambahkan materi sebagai penunjang belajar mahasiswa</div>
         <content-loader v-if="!isLoaded" height="250"></content-loader>
 
-        <v-flex xs3 offset-xs9 align-end>
+        <v-flex xs3 offset-xs9 align-end v-if="isLoaded">
             <router-link to="/materi"><v-btn color="success">Kembali</v-btn></router-link>
         </v-flex>
         <v-flex sm12 md6  v-if="isLoaded">
@@ -155,6 +155,16 @@ export default {
         },
         submit() {
             var app = this;
+            if (app.judul == '') {
+                app.showSnackbar('Judul harus diisi');
+                return false;
+            }
+
+            if (app.nilai_master_modul == '') {
+                app.showSnackbar('Modul harus diisi');
+                return false;
+            }
+            
             var file = app.$refs.pond.getFiles();
             let form = new FormData();
             if (file.length) {
@@ -167,6 +177,9 @@ export default {
             form.append('nilai_master_modul', app.nilai_master_modul)
             axios.post( 'lecturer/materi/store', form, { headers: {'Content-Type': 'multipart/form-data'}}).then(function (resp) {
                 if (resp.data.code == 200) {
+                    app.judul = '';
+                    app.keterangan = '';
+                    app.myFiles = [];
                     app.showSnackbar('Materi berhasil ditambahkan');
                 }
             })

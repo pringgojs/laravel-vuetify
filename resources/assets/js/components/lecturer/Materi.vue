@@ -34,106 +34,58 @@
                 class="elevation-1"
             >
                 <template slot="items" slot-scope="props">
-                    <tr @click="addMateri(props.item.nomor_nilai_master_modul)">
+                    <tr :id="'tr-'+props.item.id">
                         <td>{{ props.item.modul }}</td>
-                        <td class="text-xs-left">{{ props.item.matakuliah }}</td>
-                        <td class="text-xs-center">{{ props.item.program }}</td>
-                        <td class="text-xs-left">{{ props.item.jurusan }}</td>
-                        <td class="text-xs-left">{{ props.item.tahun }}</td>
-                        <td class="text-xs-center">{{ props.item.semester }}</td>
-                        <td class="text-xs-center">{{ props.item.pararel }}</td>
+                        <td class="text-xs-left" :id="'matakuliah-'+props.item.id">{{ props.item.matakuliah }}</td>
+                        <td class="text-xs-left" :id="'kelas-'+props.item.id">{{ props.item.tahun }} / {{ props.item.semester }} - {{ props.item.program }} {{ props.item.jurusan }} ({{props.item.kelas}} {{props.item.pararel}})</td>
+                        <td class="text-xs-left" :id="'judul-'+props.item.id">{{ props.item.judul }}</td>
+                        <td class="text-xs-center" :id="'keterangan'+props.item.id">{{ props.item.keterangan }}</td>
+                        <td class="text-xs-center"><template v-if="props.item.file_url"><a slot="activator" v-bind:href="props.item.file_url"> Download File </a></template></td>
+                        <td class="text-xs-center">
+                            <div class="text-xs-center">
+                                <v-btn fab dark small color="primary" @click="remove(props.item.id)">
+                                <v-icon dark>remove</v-icon>
+                                </v-btn>
+                            </div>
+                        </td>
                     </tr>
                 </template>
             </v-data-table>
         </v-flex>
-        
-        <v-snackbar
-            v-model="snackbar"
-                right
-                bottom
-                >
-                {{snackbarText}}
-                <v-btn
-                    dark
-                    flat
-                    @click="snackbar = false"
-                >
-                    Close
-                </v-btn>
-        </v-snackbar>
 
-        <!-- dialog -->
-        <v-dialog v-model="dialog" width="800px">
-            <v-card>
-                <v-card-title
-                class="grey lighten-4 py-4 title"
-                >
-                Materi Baru
-                </v-card-title>
-                <v-card-text>
-                    <v-flex xs12>
-                        <v-text-field
-                            label="Judul"
-                        ></v-text-field>
-                    </v-flex>
-                    <v-flex xs12>
-                        <v-textarea
-                        name="input-7-1"
-                        label="Keterangan"
-                        value=""
-                        ></v-textarea>
-                    </v-flex>
-                    <v-flex xs12>
-                        <file-pond
-                            name="test"
-                            ref="pond"
-                            label-idle="Drop files here..."
-                            allow-multiple="false"
-                            v-bind:files="myFiles"
-                            v-on:init="handleFilePondInit"/>
-                    </v-flex>
-                </v-card-text>
-                <v-card-actions>
+        <!-- modal -->
+        <template>
+            <v-layout row justify-center>
+                <v-dialog v-model="dialog" persistent max-width="400">
+                <v-card>
+                    <v-card-title class="headline">{{title_confirm}}</v-card-title>
+                    <v-card-text>{{desc_confirm}}</v-card-text>
+                    <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn flat color="primary" @click="dialog = false">Cancel</v-btn>
-                    <v-btn flat @click="submit">Save</v-btn>
-                </v-card-actions>
-            </v-card>
-        </v-dialog>
+                    <v-btn color="primary darken-1" flat @click="sureRemoveMe">Ya, Setuju hapus</v-btn>
+                    <v-btn color="warning darken-1" flat @click.native="dialog = false">Batalkan</v-btn>
+                    </v-card-actions>
+                </v-card>
+                </v-dialog>
+            </v-layout>
+        </template>
     </v-flex>
 
 </template>
 
 <script>
 import { ContentLoader } from 'vue-content-loader'
-// Import Vue FilePond
-import vueFilePond from 'vue-filepond';
-import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
-import FilePondPluginFileValidateSize from 'filepond-plugin-file-validate-size';
-import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
-import FilePondPluginFileEncode from 'filepond-plugin-file-encode';
-// Import FilePond styles
-import 'filepond/dist/filepond.min.css';
-import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
-
-const FilePond = vueFilePond( 
-    FilePondPluginImagePreview,
-    FilePondPluginFileValidateSize,
-    FilePondPluginFileValidateType,
-    FilePondPluginFileEncode
-);
-
 export default {
     data () {
         return {
             headerTable: [
                 { text: 'Modul', value: 'modul' },
                 { text: 'Matakuliah', value: 'matakuliah' },
-                { text: 'Program', value: 'program' },
-                { text: 'Jurusan', value: 'jurusan' },
-                { text: 'Tahun', value: 'tahun' },
-                { text: 'Semester', value: 'semester' },
-                { text: 'Paralel', value: 'paralel' },
+                { text: 'Kelas', value: 'kelas' },
+                { text: 'Judul Materi', value: 'judul' },
+                { text: 'Keterangan', value: 'keterangan' },
+                { text: 'File Materi', value: 'file_url' },
+                { text: 'Hapus', value: 'id' },
             ],
             bodyTable: [],
             semesters: [],
@@ -143,12 +95,13 @@ export default {
             snackbar: false,
             isLoaded: false,
             dialog: false,
-            myFiles: ''
+            title_confirm: '',
+            desc_confirm: '',
+            remove_id: ''
         }
     },
     components: {
-        ContentLoader,
-        FilePond
+        ContentLoader
     },
     mounted() {
         this.initData();
@@ -156,15 +109,14 @@ export default {
     methods: {
         initData() {
             var app = this;
-            axios.get('lecturer/schedule').then(function (resp) {
+            axios.get('lecturer/materi').then(function (resp) {
                 app.isLoaded = true;
-                app.descriptionSemester = resp.data.keterangan;
                 app.bodyTable = resp.data.data;
                 app.semesters = resp.data.data_semester;
                 console.log(resp.data);
             })
             .catch(function (resp) {
-                showSnackbar("oops, something went wrong. Please try again!");
+                app.showSnackbar("oops, something went wrong. Please try again!");
             });
         },
         showSnackbar(text) {
@@ -176,31 +128,36 @@ export default {
             if (!this.filter) return false;
             var app = this;
             app.isLoaded = false;
-            axios.get('lecturer/schedule/get-by-semester/'+app.filter).then(function (resp) {
+            axios.get('lecturer/materi/get-by-semester/'+app.filter).then(function (resp) {
                 app.isLoaded = true;
-                app.descriptionSemester = resp.data.keterangan;
                 app.bodyTable = resp.data.data;
             })
             .catch(function (resp) {
-                showSnackbar("oops, something went wrong. Please try again!");
+                app.showSnackbar("oops, something went wrong. Please try again!");
             });
         },
-        addMateri(nomor_nilai_master_modul) {
+        remove(id) {
             this.dialog = true;
+
+            let matakuliah = $('#matakuliah-'+id).html();
+            let kelas = $('#kelas-'+id).html();
+            let judul = $('#judul-'+id).html();
+            let keterangan = $('#keterangan-'+id).html();
+            let app = this;
+            app.title_confirm = 'Yakin ingin menghapus materi ?';
+            app.desc_confirm = 'Materi dengan judul "'+judul+' kelas ' +kelas+ '" yang dihapus tidak bisa dikembalikan.';
+            app.remove_id = id;
         },
-        handleFilePondInit: function() {
-        },
-        submit() {
-            var app = this;
-            var file = app.$refs.pond.getFiles();
-            let formData = new FormData();
-            console.log(file[0]);
-            formData.append('file', file[0].file);
-            axios.post( 'lecturer/materi/store', formData, { headers: {'Content-Type': 'multipart/form-data'}}).then(function (resp) {
-                console.log(resp);
+        sureRemoveMe() {
+            let app = this;
+            axios.get('lecturer/materi/remove/'+app.remove_id).then(function (resp) {
+                app.dialog = false;
+                app.showSnackbar("Berhasil menghapus data");
+                $('#tr-'+app.remove_id).fadeOut();
             })
-            .catch(function(){
-                console.log('FAILURE!!');
+            .catch(function (resp) {
+                app.dialog = false;
+                app.showSnackbar("oops, something went wrong. Please try again!");
             });
         }
     }

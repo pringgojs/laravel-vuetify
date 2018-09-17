@@ -70729,51 +70729,6 @@ if (false) {
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_content_loader__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_filepond__ = __webpack_require__(18);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_filepond___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue_filepond__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_filepond_plugin_image_preview__ = __webpack_require__(19);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_filepond_plugin_image_preview___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_filepond_plugin_image_preview__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_filepond_plugin_file_validate_size__ = __webpack_require__(20);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_filepond_plugin_file_validate_size___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_filepond_plugin_file_validate_size__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_filepond_plugin_file_validate_type__ = __webpack_require__(21);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_filepond_plugin_file_validate_type___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_filepond_plugin_file_validate_type__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_filepond_plugin_file_encode__ = __webpack_require__(22);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_filepond_plugin_file_encode___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_filepond_plugin_file_encode__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_filepond_dist_filepond_min_css__ = __webpack_require__(23);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_filepond_dist_filepond_min_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_filepond_dist_filepond_min_css__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_filepond_plugin_image_preview_dist_filepond_plugin_image_preview_css__ = __webpack_require__(26);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_filepond_plugin_image_preview_dist_filepond_plugin_image_preview_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_filepond_plugin_image_preview_dist_filepond_plugin_image_preview_css__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -70850,23 +70805,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
-
-// Import Vue FilePond
-
-
-
-
-
-// Import FilePond styles
-
-
-
-var FilePond = __WEBPACK_IMPORTED_MODULE_1_vue_filepond___default()(__WEBPACK_IMPORTED_MODULE_2_filepond_plugin_image_preview___default.a, __WEBPACK_IMPORTED_MODULE_3_filepond_plugin_file_validate_size___default.a, __WEBPACK_IMPORTED_MODULE_4_filepond_plugin_file_validate_type___default.a, __WEBPACK_IMPORTED_MODULE_5_filepond_plugin_file_encode___default.a);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            headerTable: [{ text: 'Modul', value: 'modul' }, { text: 'Matakuliah', value: 'matakuliah' }, { text: 'Program', value: 'program' }, { text: 'Jurusan', value: 'jurusan' }, { text: 'Tahun', value: 'tahun' }, { text: 'Semester', value: 'semester' }, { text: 'Paralel', value: 'paralel' }],
+            headerTable: [{ text: 'Modul', value: 'modul' }, { text: 'Matakuliah', value: 'matakuliah' }, { text: 'Kelas', value: 'kelas' }, { text: 'Judul Materi', value: 'judul' }, { text: 'Keterangan', value: 'keterangan' }, { text: 'File Materi', value: 'file_url' }, { text: 'Hapus', value: 'id' }],
             bodyTable: [],
             semesters: [],
             descriptionSemester: '',
@@ -70875,13 +70818,14 @@ var FilePond = __WEBPACK_IMPORTED_MODULE_1_vue_filepond___default()(__WEBPACK_IM
             snackbar: false,
             isLoaded: false,
             dialog: false,
-            myFiles: ''
+            title_confirm: '',
+            desc_confirm: '',
+            remove_id: ''
         };
     },
 
     components: {
-        ContentLoader: __WEBPACK_IMPORTED_MODULE_0_vue_content_loader__["a" /* ContentLoader */],
-        FilePond: FilePond
+        ContentLoader: __WEBPACK_IMPORTED_MODULE_0_vue_content_loader__["a" /* ContentLoader */]
     },
     mounted: function mounted() {
         this.initData();
@@ -70890,14 +70834,13 @@ var FilePond = __WEBPACK_IMPORTED_MODULE_1_vue_filepond___default()(__WEBPACK_IM
     methods: {
         initData: function initData() {
             var app = this;
-            axios.get('lecturer/schedule').then(function (resp) {
+            axios.get('lecturer/materi').then(function (resp) {
                 app.isLoaded = true;
-                app.descriptionSemester = resp.data.keterangan;
                 app.bodyTable = resp.data.data;
                 app.semesters = resp.data.data_semester;
                 console.log(resp.data);
             }).catch(function (resp) {
-                showSnackbar("oops, something went wrong. Please try again!");
+                app.showSnackbar("oops, something went wrong. Please try again!");
             });
         },
         showSnackbar: function showSnackbar(text) {
@@ -70909,29 +70852,34 @@ var FilePond = __WEBPACK_IMPORTED_MODULE_1_vue_filepond___default()(__WEBPACK_IM
             if (!this.filter) return false;
             var app = this;
             app.isLoaded = false;
-            axios.get('lecturer/schedule/get-by-semester/' + app.filter).then(function (resp) {
+            axios.get('lecturer/materi/get-by-semester/' + app.filter).then(function (resp) {
                 app.isLoaded = true;
-                app.descriptionSemester = resp.data.keterangan;
                 app.bodyTable = resp.data.data;
             }).catch(function (resp) {
-                showSnackbar("oops, something went wrong. Please try again!");
+                app.showSnackbar("oops, something went wrong. Please try again!");
             });
         },
-        addMateri: function addMateri(nomor_nilai_master_modul) {
+        remove: function remove(id) {
             this.dialog = true;
-        },
 
-        handleFilePondInit: function handleFilePondInit() {},
-        submit: function submit() {
+            var matakuliah = $('#matakuliah-' + id).html();
+            var kelas = $('#kelas-' + id).html();
+            var judul = $('#judul-' + id).html();
+            var keterangan = $('#keterangan-' + id).html();
             var app = this;
-            var file = app.$refs.pond.getFiles();
-            var formData = new FormData();
-            console.log(file[0]);
-            formData.append('file', file[0].file);
-            axios.post('lecturer/materi/store', formData, { headers: { 'Content-Type': 'multipart/form-data' } }).then(function (resp) {
-                console.log(resp);
-            }).catch(function () {
-                console.log('FAILURE!!');
+            app.title_confirm = 'Yakin ingin menghapus materi ?';
+            app.desc_confirm = 'Materi dengan judul "' + judul + ' kelas ' + kelas + '" yang dihapus tidak bisa dikembalikan.';
+            app.remove_id = id;
+        },
+        sureRemoveMe: function sureRemoveMe() {
+            var app = this;
+            axios.get('lecturer/materi/remove/' + app.remove_id).then(function (resp) {
+                app.dialog = false;
+                app.showSnackbar("Berhasil menghapus data");
+                $('#tr-' + app.remove_id).fadeOut();
+            }).catch(function (resp) {
+                app.dialog = false;
+                app.showSnackbar("oops, something went wrong. Please try again!");
             });
         }
     }
@@ -79618,45 +79566,115 @@ var render = function() {
                     key: "items",
                     fn: function(props) {
                       return [
-                        _c(
-                          "tr",
-                          {
-                            on: {
-                              click: function($event) {
-                                _vm.addMateri(
-                                  props.item.nomor_nilai_master_modul
+                        _c("tr", { attrs: { id: "tr-" + props.item.id } }, [
+                          _c("td", [_vm._v(_vm._s(props.item.modul))]),
+                          _vm._v(" "),
+                          _c(
+                            "td",
+                            {
+                              staticClass: "text-xs-left",
+                              attrs: { id: "matakuliah-" + props.item.id }
+                            },
+                            [_vm._v(_vm._s(props.item.matakuliah))]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "td",
+                            {
+                              staticClass: "text-xs-left",
+                              attrs: { id: "kelas-" + props.item.id }
+                            },
+                            [
+                              _vm._v(
+                                _vm._s(props.item.tahun) +
+                                  " / " +
+                                  _vm._s(props.item.semester) +
+                                  " - " +
+                                  _vm._s(props.item.program) +
+                                  " " +
+                                  _vm._s(props.item.jurusan) +
+                                  " (" +
+                                  _vm._s(props.item.kelas) +
+                                  " " +
+                                  _vm._s(props.item.pararel) +
+                                  ")"
+                              )
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "td",
+                            {
+                              staticClass: "text-xs-left",
+                              attrs: { id: "judul-" + props.item.id }
+                            },
+                            [_vm._v(_vm._s(props.item.judul))]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "td",
+                            {
+                              staticClass: "text-xs-center",
+                              attrs: { id: "keterangan" + props.item.id }
+                            },
+                            [_vm._v(_vm._s(props.item.keterangan))]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "td",
+                            { staticClass: "text-xs-center" },
+                            [
+                              props.item.file_url
+                                ? [
+                                    _c(
+                                      "a",
+                                      {
+                                        attrs: {
+                                          slot: "activator",
+                                          href: props.item.file_url
+                                        },
+                                        slot: "activator"
+                                      },
+                                      [_vm._v(" Download File ")]
+                                    )
+                                  ]
+                                : _vm._e()
+                            ],
+                            2
+                          ),
+                          _vm._v(" "),
+                          _c("td", { staticClass: "text-xs-center" }, [
+                            _c(
+                              "div",
+                              { staticClass: "text-xs-center" },
+                              [
+                                _c(
+                                  "v-btn",
+                                  {
+                                    attrs: {
+                                      fab: "",
+                                      dark: "",
+                                      small: "",
+                                      color: "primary"
+                                    },
+                                    on: {
+                                      click: function($event) {
+                                        _vm.remove(props.item.id)
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _c("v-icon", { attrs: { dark: "" } }, [
+                                      _vm._v("remove")
+                                    ])
+                                  ],
+                                  1
                                 )
-                              }
-                            }
-                          },
-                          [
-                            _c("td", [_vm._v(_vm._s(props.item.modul))]),
-                            _vm._v(" "),
-                            _c("td", { staticClass: "text-xs-left" }, [
-                              _vm._v(_vm._s(props.item.matakuliah))
-                            ]),
-                            _vm._v(" "),
-                            _c("td", { staticClass: "text-xs-center" }, [
-                              _vm._v(_vm._s(props.item.program))
-                            ]),
-                            _vm._v(" "),
-                            _c("td", { staticClass: "text-xs-left" }, [
-                              _vm._v(_vm._s(props.item.jurusan))
-                            ]),
-                            _vm._v(" "),
-                            _c("td", { staticClass: "text-xs-left" }, [
-                              _vm._v(_vm._s(props.item.tahun))
-                            ]),
-                            _vm._v(" "),
-                            _c("td", { staticClass: "text-xs-center" }, [
-                              _vm._v(_vm._s(props.item.semester))
-                            ]),
-                            _vm._v(" "),
-                            _c("td", { staticClass: "text-xs-center" }, [
-                              _vm._v(_vm._s(props.item.pararel))
-                            ])
-                          ]
-                        )
+                              ],
+                              1
+                            )
+                          ])
+                        ])
                       ]
                     }
                   }
@@ -79667,138 +79685,74 @@ var render = function() {
           )
         : _vm._e(),
       _vm._v(" "),
-      _c(
-        "v-snackbar",
-        {
-          attrs: { right: "", bottom: "" },
-          model: {
-            value: _vm.snackbar,
-            callback: function($$v) {
-              _vm.snackbar = $$v
-            },
-            expression: "snackbar"
-          }
-        },
-        [
-          _vm._v(
-            "\n            " + _vm._s(_vm.snackbarText) + "\n            "
-          ),
-          _c(
-            "v-btn",
-            {
-              attrs: { dark: "", flat: "" },
-              on: {
-                click: function($event) {
-                  _vm.snackbar = false
+      [
+        _c(
+          "v-layout",
+          { attrs: { row: "", "justify-center": "" } },
+          [
+            _c(
+              "v-dialog",
+              {
+                attrs: { persistent: "", "max-width": "400" },
+                model: {
+                  value: _vm.dialog,
+                  callback: function($$v) {
+                    _vm.dialog = $$v
+                  },
+                  expression: "dialog"
                 }
-              }
-            },
-            [_vm._v("\n                Close\n            ")]
-          )
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "v-dialog",
-        {
-          attrs: { width: "800px" },
-          model: {
-            value: _vm.dialog,
-            callback: function($$v) {
-              _vm.dialog = $$v
-            },
-            expression: "dialog"
-          }
-        },
-        [
-          _c(
-            "v-card",
-            [
-              _c("v-card-title", { staticClass: "grey lighten-4 py-4 title" }, [
-                _vm._v("\n            Materi Baru\n            ")
-              ]),
-              _vm._v(" "),
-              _c(
-                "v-card-text",
-                [
-                  _c(
-                    "v-flex",
-                    { attrs: { xs12: "" } },
-                    [_c("v-text-field", { attrs: { label: "Judul" } })],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "v-flex",
-                    { attrs: { xs12: "" } },
-                    [
-                      _c("v-textarea", {
-                        attrs: {
-                          name: "input-7-1",
-                          label: "Keterangan",
-                          value: ""
-                        }
-                      })
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "v-flex",
-                    { attrs: { xs12: "" } },
-                    [
-                      _c("file-pond", {
-                        ref: "pond",
-                        attrs: {
-                          name: "test",
-                          "label-idle": "Drop files here...",
-                          "allow-multiple": "false",
-                          files: _vm.myFiles
-                        },
-                        on: { init: _vm.handleFilePondInit }
-                      })
-                    ],
-                    1
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-card-actions",
-                [
-                  _c("v-spacer"),
-                  _vm._v(" "),
-                  _c(
-                    "v-btn",
-                    {
-                      attrs: { flat: "", color: "primary" },
-                      on: {
-                        click: function($event) {
-                          _vm.dialog = false
-                        }
-                      }
-                    },
-                    [_vm._v("Cancel")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "v-btn",
-                    { attrs: { flat: "" }, on: { click: _vm.submit } },
-                    [_vm._v("Save")]
-                  )
-                ],
-                1
-              )
-            ],
-            1
-          )
-        ],
-        1
-      )
+              },
+              [
+                _c(
+                  "v-card",
+                  [
+                    _c("v-card-title", { staticClass: "headline" }, [
+                      _vm._v(_vm._s(_vm.title_confirm))
+                    ]),
+                    _vm._v(" "),
+                    _c("v-card-text", [_vm._v(_vm._s(_vm.desc_confirm))]),
+                    _vm._v(" "),
+                    _c(
+                      "v-card-actions",
+                      [
+                        _c("v-spacer"),
+                        _vm._v(" "),
+                        _c(
+                          "v-btn",
+                          {
+                            attrs: { color: "primary darken-1", flat: "" },
+                            on: { click: _vm.sureRemoveMe }
+                          },
+                          [_vm._v("Ya, Setuju hapus")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "v-btn",
+                          {
+                            attrs: { color: "warning darken-1", flat: "" },
+                            nativeOn: {
+                              click: function($event) {
+                                _vm.dialog = false
+                              }
+                            }
+                          },
+                          [_vm._v("Batalkan")]
+                        )
+                      ],
+                      1
+                    )
+                  ],
+                  1
+                )
+              ],
+              1
+            )
+          ],
+          1
+        )
+      ]
     ],
-    1
+    2
   )
 }
 var staticRenderFns = []
@@ -79983,6 +79937,16 @@ var FilePond = __WEBPACK_IMPORTED_MODULE_1_vue_filepond___default()(__WEBPACK_IM
         },
         submit: function submit() {
             var app = this;
+            if (app.judul == '') {
+                app.showSnackbar('Judul harus diisi');
+                return false;
+            }
+
+            if (app.nilai_master_modul == '') {
+                app.showSnackbar('Modul harus diisi');
+                return false;
+            }
+
             var file = app.$refs.pond.getFiles();
             var form = new FormData();
             if (file.length) {
@@ -79995,6 +79959,9 @@ var FilePond = __WEBPACK_IMPORTED_MODULE_1_vue_filepond___default()(__WEBPACK_IM
             form.append('nilai_master_modul', app.nilai_master_modul);
             axios.post('lecturer/materi/store', form, { headers: { 'Content-Type': 'multipart/form-data' } }).then(function (resp) {
                 if (resp.data.code == 200) {
+                    app.judul = '';
+                    app.keterangan = '';
+                    app.myFiles = [];
                     app.showSnackbar('Materi berhasil ditambahkan');
                 }
             }).catch(function (e) {
@@ -80031,19 +79998,25 @@ var render = function() {
         ? _c("content-loader", { attrs: { height: "250" } })
         : _vm._e(),
       _vm._v(" "),
-      _c(
-        "v-flex",
-        { attrs: { xs3: "", "offset-xs9": "", "align-end": "" } },
-        [
-          _c(
-            "router-link",
-            { attrs: { to: "/materi" } },
-            [_c("v-btn", { attrs: { color: "success" } }, [_vm._v("Kembali")])],
+      _vm.isLoaded
+        ? _c(
+            "v-flex",
+            { attrs: { xs3: "", "offset-xs9": "", "align-end": "" } },
+            [
+              _c(
+                "router-link",
+                { attrs: { to: "/materi" } },
+                [
+                  _c("v-btn", { attrs: { color: "success" } }, [
+                    _vm._v("Kembali")
+                  ])
+                ],
+                1
+              )
+            ],
             1
           )
-        ],
-        1
-      ),
+        : _vm._e(),
       _vm._v(" "),
       _vm.isLoaded
         ? _c(

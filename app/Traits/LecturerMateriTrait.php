@@ -10,11 +10,30 @@ use App\Helpers\ResponseHelper;
 
 trait LecturerMateriTrait
 {
+    public function indexMateri()
+    {
+        $database = DatabaseHelper::indexMateri();
+        return $database;
+    }
+
     public function storeMateri(Request $request)
     {
         $file = FileHelper::upload($request->file('file'), 'public/uploads/materi/');
         $database = DatabaseHelper::storeMateri($request, $file);
         return $database;
+    }
+
+    public function deleteMateri($id)
+    {
+        $database = DatabaseHelper::deleteMateri($id);
+        if (file_exists($database->url)) {
+            try {
+                \File::delete($database->url);
+            } catch (\Exception $e) {
+                // throw new AppException("Can't delete file photo", 503);
+            }
+        }
+        return 1;
     }
 
 }

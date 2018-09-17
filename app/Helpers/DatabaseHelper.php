@@ -44,6 +44,17 @@ class DatabaseHelper
     }
 
     // Materi
+    public static function indexMateri()
+    {
+        $url = config('api.url').'/lecturer/materi';
+        $data = array('user' => ResponseHelper::user());
+        $response = Curl::to($url)
+        ->withData($data)
+        ->post();
+        
+        return $response;
+    }
+
     public static function storeMateri($request, $file)
     {
         $url = config('api.url').'/lecturer/materi/store';
@@ -52,5 +63,16 @@ class DatabaseHelper
             ->withData($data)
             ->post();
         return $response;
+    }
+
+    public static function deleteMateri($id)
+    {
+        $url = config('api.url').'/lecturer/materi/delete/'.$id;
+        $data = array('user' => ResponseHelper::user());
+        $response = Curl::to($url)
+            ->withData($data)
+            ->post();
+        
+        return json_decode($response);
     }
 }
