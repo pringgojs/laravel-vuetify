@@ -113,7 +113,6 @@ export default {
                 app.isLoaded = true;
                 app.bodyTable = resp.data.data;
                 app.semesters = resp.data.data_semester;
-                console.log(resp.data);
             })
             .catch(function (resp) {
                 app.showSnackbar("oops, something went wrong. Please try again!");
@@ -127,9 +126,7 @@ export default {
         selectSemester() {
             if (!this.filter) return false;
             var app = this;
-            app.isLoaded = false;
             axios.get('lecturer/materi/get-by-semester/'+app.filter).then(function (resp) {
-                app.isLoaded = true;
                 app.bodyTable = resp.data.data;
             })
             .catch(function (resp) {

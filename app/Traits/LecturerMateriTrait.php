@@ -18,7 +18,7 @@ trait LecturerMateriTrait
 
     public function storeMateri(Request $request)
     {
-        $file = FileHelper::upload($request->file('file'), 'public/uploads/materi/');
+        $file = FileHelper::upload($request->file('file'), 'uploads/materi/');
         $database = DatabaseHelper::storeMateri($request, $file);
         return $database;
     }
@@ -34,6 +34,12 @@ trait LecturerMateriTrait
             }
         }
         return 1;
+    }
+
+    public function getByKuliahMateri($kuliah)
+    {
+        $database = DatabaseHelper::getByKuliahMateri($kuliah);
+        return $database;
     }
 
 }

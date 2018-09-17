@@ -51,7 +51,7 @@ class DatabaseHelper
         $response = Curl::to($url)
         ->withData($data)
         ->post();
-        
+
         return $response;
     }
 
@@ -74,5 +74,16 @@ class DatabaseHelper
             ->post();
         
         return json_decode($response);
+    }
+
+    public static function getByKuliahMateri($kuliah)
+    {
+        $url = config('api.url').'/lecturer/materi/get-by-kuliah';
+        $data = array('user' => ResponseHelper::user(), 'kuliah' => $kuliah);
+        $response = Curl::to($url)
+        ->withData($data)
+        ->post();
+
+        return $response;
     }
 }
