@@ -63,43 +63,43 @@
         </v-snackbar>
 
         <!-- dialog -->
-            <v-dialog v-model="dialog" width="800px">
-                <v-card>
-                    <v-card-title
-                    class="grey lighten-4 py-4 title"
-                    >
-                    Materi Baru
-                    </v-card-title>
-                    <v-card-text>
-                        <v-flex xs12>
-                            <v-text-field
-                                label="Judul"
-                            ></v-text-field>
-                        </v-flex>
-                        <v-flex xs12>
-                            <v-textarea
-                            name="input-7-1"
-                            label="Keterangan"
-                            value=""
-                            ></v-textarea>
-                        </v-flex>
-                        <v-flex xs12>
-                            <file-pond
-                                name="test"
-                                ref="pond"
-                                label-idle="Drop files here..."
-                                allow-multiple="false"
-                                v-bind:files="myFiles"
-                                v-on:init="handleFilePondInit"/>
-                        </v-flex>
-                    </v-card-text>
-                    <v-card-actions>
-                        <v-spacer></v-spacer>
-                        <v-btn flat color="primary" @click="dialog = false">Cancel</v-btn>
-                        <v-btn flat @click="submit">Save</v-btn>
-                    </v-card-actions>
-                </v-card>
-            </v-dialog>
+        <v-dialog v-model="dialog" width="800px">
+            <v-card>
+                <v-card-title
+                class="grey lighten-4 py-4 title"
+                >
+                Materi Baru
+                </v-card-title>
+                <v-card-text>
+                    <v-flex xs12>
+                        <v-text-field
+                            label="Judul"
+                        ></v-text-field>
+                    </v-flex>
+                    <v-flex xs12>
+                        <v-textarea
+                        name="input-7-1"
+                        label="Keterangan"
+                        value=""
+                        ></v-textarea>
+                    </v-flex>
+                    <v-flex xs12>
+                        <file-pond
+                            name="test"
+                            ref="pond"
+                            label-idle="Drop files here..."
+                            allow-multiple="false"
+                            v-bind:files="myFiles"
+                            v-on:init="handleFilePondInit"/>
+                    </v-flex>
+                </v-card-text>
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn flat color="primary" @click="dialog = false">Cancel</v-btn>
+                    <v-btn flat @click="submit">Save</v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
     </v-flex>
 
 </template>

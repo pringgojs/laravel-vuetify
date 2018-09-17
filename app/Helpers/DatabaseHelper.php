@@ -42,4 +42,15 @@ class DatabaseHelper
         
         return $response;
     }
+
+    // Materi
+    public static function storeMateri($request, $file)
+    {
+        $url = config('api.url').'/lecturer/materi/store';
+        $data = array('user' => ResponseHelper::user(), 'request' => $request->toArray(), 'file' => $file);
+        $response = Curl::to($url)
+            ->withData($data)
+            ->post();
+        return $response;
+    }
 }
