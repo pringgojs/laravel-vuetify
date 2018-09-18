@@ -108,6 +108,27 @@ class DatabaseHelper
             ->post();
         return $response;
     }
+    
+
+    public static function editEtugas($id)
+    {
+        $url = config('api.url').'/lecturer/e-tugas/edit/'.$id;
+        $data = array('user' => ResponseHelper::user());
+        $response = Curl::to($url)
+            ->withData($data)
+            ->post();
+        return $response;
+    }
+
+    public static function updateEtugas($request, $file, $id)
+    {
+        $url = config('api.url').'/lecturer/e-tugas/update/'.$id;
+        $data = array('user' => ResponseHelper::user(), 'request' => $request->toArray(), 'file' => $file);
+        $response = Curl::to($url)
+            ->withData($data)
+            ->post();
+        return $response;
+    }
 
     public static function deleteEtugas($id)
     {

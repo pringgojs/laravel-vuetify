@@ -16,10 +16,23 @@ trait LecturerEtugasTrait
         return $database;
     }
 
+    public function editEtugas($id)
+    {
+        $database = DatabaseHelper::editEtugas($id);
+        return $database;
+    }
+
     public function storeEtugas(Request $request)
     {
         $file = FileHelper::upload($request->file('file'), 'uploads/e-tugas/');
         $database = DatabaseHelper::storeEtugas($request, $file);
+        return $database;
+    }
+
+    public function updateEtugas(Request $request, $id)
+    {
+        $file = FileHelper::upload($request->file('file'), 'uploads/e-tugas/');
+        $database = DatabaseHelper::updateEtugas($request, $file, $id);
         return $database;
     }
 

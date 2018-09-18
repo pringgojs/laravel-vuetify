@@ -15,6 +15,7 @@ import Layout from './components/lecturer/Layout.vue';
 import Home from './components/lecturer/Home.vue';
 import ETugas from './components/lecturer/ETugas.vue';
 import ETugasAdd from './components/lecturer/ETugasAdd.vue';
+import ETugasEdit from './components/lecturer/ETugasEdit.vue';
 import Schedule from './components/lecturer/Schedule.vue';
 import Materi from './components/lecturer/Materi.vue';
 import MateriAdd from './components/lecturer/MateriAdd.vue';
@@ -29,6 +30,7 @@ Vue.component('layout', require('./components/lecturer/Layout.vue'));
 Vue.component('home', require('./components/lecturer/Home.vue'));
 Vue.component('e-tugas', require('./components/lecturer/ETugas.vue'));
 Vue.component('e-tugas-add', require('./components/lecturer/ETugasAdd.vue'));
+Vue.component('e-tugas-edit', require('./components/lecturer/ETugasEdit.vue'));
 Vue.component('schedule', require('./components/lecturer/Schedule.vue'));
 Vue.component('report', require('./components/lecturer/Report.vue'));
 Vue.component('materi', require('./components/lecturer/Materi.vue'));
@@ -60,7 +62,15 @@ const routes = [
         component: ETugasAdd,
         name: 'e-tugas-add',
         meta: {
-            title: 'E Tugas Baru- Dosen Jaga'
+            title: 'E Tugas Baru - Dosen Jaga'
+        }
+    },
+    {
+        path: '/e-tugas/edit/:id',
+        component: ETugasEdit,
+        name: 'e-tugas-edit',
+        meta: {
+            title: 'E Tugas Edit - Dosen Jaga'
         }
     },
     {
@@ -84,7 +94,6 @@ const routes = [
         meta: {
             title: 'Laporan - Dosen Jaga'
         }
-
     },
     {
         path: '/schedule',
@@ -93,7 +102,6 @@ const routes = [
         meta: {
             title: 'Jadwal - Dosen Jaga'
         }
-
     },
     {
         path: '/login',
@@ -102,7 +110,6 @@ const routes = [
         meta: {
             title: 'Login - Dosen Jaga'
         }
-
     }
 ]
 

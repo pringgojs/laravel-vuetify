@@ -22,8 +22,10 @@ Route::group(['prefix' => 'lecturer', 'middleware' => 'role:lecturer'], function
     Route::get('materi', 'LecturerController@indexMateri');
 
     // e-tugas
+    Route::get('e-tugas/get-by-semester/{kuliah}', 'LecturerController@getByKuliahEtugas');
+    Route::post('e-tugas/update/{id}', 'LecturerController@updateEtugas');
     Route::get('e-tugas/edit/{id}', 'LecturerController@editEtugas');
-    Route::post('e-tugas/remove/{id}', 'LecturerController@deleteEtugas');
+    Route::get('e-tugas/remove/{id}', 'LecturerController@deleteEtugas');
     Route::post('e-tugas/store', 'LecturerController@storeEtugas');
     Route::get('e-tugas', 'LecturerController@indexEtugas');
 

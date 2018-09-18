@@ -1,6 +1,6 @@
 <template>
     <v-flex sm12>
-        <h1>Tugas Baru</h1>
+        <h1>Perbarui Tugas</h1>
         <div class="subheading">Tambahkan tugas sebagai bahan evaluasi belajar mahasiswa</div>
         <content-loader v-if="!isLoaded" height="250"></content-loader>
 
@@ -157,6 +157,8 @@
 
 <script>
 import { ContentLoader } from 'vue-content-loader'
+import * as moment from 'moment';
+moment.locale('id');
 
 // Import Vue FilePond
 import vueFilePond from 'vue-filepond';
@@ -191,19 +193,33 @@ export default {
             menu: false,
             time: null,
             menu2: false,
+            id: '',
+            kuliah_edit: '',
+            modul_edit: '',
         }
     },
     mounted() {
         this.initData();
     },
+    created() {
+        this.id = this.$route.params.id
+    },
     methods: {
         initData() {
             var app = this;
-            axios.get('lecturer/schedule').then(function (resp) {
+            axios.get('lecturer/e-tugas/edit/'+this.id).then(function (resp) {
                 app.isLoaded = true;
-                app.descriptionSemester = resp.data.keterangan;
-                app.bodyTable = resp.data.data;
+                app.moduls = resp.data.data_modul;
                 app.semesters = resp.data.data_semester;
+                app.kuliah_edit = resp.data.tugas.kuliah;
+                app.modul_edit = resp.data.tugas.nilai_master_modul;
+                app.judul = resp.data.tugas.judul
+                app.keterangan = resp.data.tugas.keterangan
+                let due_date = resp.data.tugas.due_date.split(' ');
+                app.date = due_date[0] == '0000-00-00' ? moment().format('YYYY-MM-DD') : due_date[0]
+                app.time = due_date[1]
+                app.filter = resp.data.tugas.kuliah
+                app.nilai_master_modul = resp.data.tugas.nilai_master_modul
             })
             .catch(function (resp) {
                 app.showSnackbar("oops, something went wrong. Please try again!");
@@ -222,7 +238,7 @@ export default {
                 app.moduls = resp.data.data;
             })
             .catch(function (resp) {
-                showSnackbar("oops, something went wrong. Please try again!");
+                app.showSnackbar("oops, something went wrong. Please try again!");
             });
         },
         submit() {
@@ -259,17 +275,18 @@ export default {
             form.append('waktu', app.time)
             form.append('keterangan', app.keterangan)
             form.append('nilai_master_modul', app.nilai_master_modul)
-            axios.post( 'lecturer/e-tugas/store', form, { headers: {'Content-Type': 'multipart/form-data'}}).then(function (resp) {
+            axios.post( 'lecturer/e-tugas/update/'+app.id, form, { headers: {'Content-Type': 'multipart/form-data'}}).then(function (resp) {
                 if (resp.data.code == 200) {
                     app.judul = '';
                     app.keterangan = '';
                     app.myFiles = [];
-                    app.showSnackbar('E-Tugas berhasil ditambahkan');
+                    app.showSnackbar('E-Tugas berhasil disimpan');
+                    app.$router.push('/e-tugas') 
                 }
             })
             .catch(function(e) {
                 console.log(e);
-                app.showSnackbar('E-Tugas gagal ditambahkan');
+                app.showSnackbar('E-Tugas gagal disimpan');
             });
         }
     },

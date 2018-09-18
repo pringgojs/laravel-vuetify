@@ -39,14 +39,24 @@
                         <td class="text-xs-left" :id="'matakuliah-'+props.item.id">{{ props.item.matakuliah }}</td>
                         <td class="text-xs-left" :id="'kelas-'+props.item.id">{{ props.item.tahun }} / {{ props.item.semester }} - {{ props.item.program }} {{ props.item.jurusan }} ({{props.item.kelas}} {{props.item.pararel}})</td>
                         <td class="text-xs-left" :id="'judul-'+props.item.id">{{ props.item.judul }}</td>
-                        <td class="text-xs-center" :id="'keterangan'+props.item.id">{{ props.item.keterangan }}</td>
+                        <td class="text-xs-center" :id="'keterangan-'+props.item.id">{{ props.item.keterangan }}</td>
+                        <td class="text-xs-center" :id="'due-date-'+props.item.id">{{ dateView(props.item.due_date) }}</td>
                         <td class="text-xs-center"><template v-if="props.item.file_url"><a slot="activator" v-bind:href="props.item.file_url"> Download File </a></template></td>
                         <td class="text-xs-center">
-                            <div class="text-xs-center">
-                                <v-btn fab dark small color="primary" @click="remove(props.item.id)">
-                                <v-icon dark>remove</v-icon>
+                            <v-layout justify-space-around>
+                                <v-btn fab  small color="info" @click="remove(props.item.id)">
+                                    <v-icon dark>list_alt</v-icon>
                                 </v-btn>
-                            </div>
+                                <router-link :to="'/e-tugas/edit/'+props.item.id">
+                                    <v-btn fab  small color="primary">
+                                        <v-icon dark>create</v-icon>
+                                    </v-btn>
+                                </router-link>
+                                <v-btn fab  small color="warning" @click="remove(props.item.id)">
+                                    <v-icon dark>remove</v-icon>
+                                </v-btn>
+
+                            </v-layout>
                         </td>
                     </tr>
                 </template>
@@ -74,7 +84,10 @@
 </template>
 
 <script>
-import { ContentLoader } from 'vue-content-loader'
+import { ContentLoader } from 'vue-content-loader';
+import * as moment from 'moment';
+moment.locale('id');
+
 export default {
     data () {
         return {
@@ -84,6 +97,7 @@ export default {
                 { text: 'Kelas', value: 'kelas' },
                 { text: 'Judul Materi', value: 'judul' },
                 { text: 'Keterangan', value: 'keterangan' },
+                { text: 'Due Date', value: 'due_date' },
                 { text: 'File Materi', value: 'file_url' },
                 { text: 'Hapus', value: 'id' },
             ],
@@ -109,7 +123,7 @@ export default {
     methods: {
         initData() {
             var app = this;
-            axios.get('lecturer/materi').then(function (resp) {
+            axios.get('lecturer/e-tugas').then(function (resp) {
                 app.isLoaded = true;
                 app.bodyTable = resp.data.data;
                 app.semesters = resp.data.data_semester;
@@ -126,7 +140,7 @@ export default {
         selectSemester() {
             if (!this.filter) return false;
             var app = this;
-            axios.get('lecturer/materi/get-by-semester/'+app.filter).then(function (resp) {
+            axios.get('lecturer/e-tugas/get-by-semester/'+app.filter).then(function (resp) {
                 app.bodyTable = resp.data.data;
             })
             .catch(function (resp) {
@@ -141,13 +155,13 @@ export default {
             let judul = $('#judul-'+id).html();
             let keterangan = $('#keterangan-'+id).html();
             let app = this;
-            app.title_confirm = 'Yakin ingin menghapus materi ?';
-            app.desc_confirm = 'Materi dengan judul "'+judul+' kelas ' +kelas+ '" yang dihapus tidak bisa dikembalikan.';
+            app.title_confirm = 'Yakin ingin menghapus tugas ?';
+            app.desc_confirm = 'Tugas dengan judul "'+judul+' kelas ' +kelas+ '" yang dihapus tidak bisa dikembalikan.';
             app.remove_id = id;
         },
         sureRemoveMe() {
             let app = this;
-            axios.get('lecturer/materi/remove/'+app.remove_id).then(function (resp) {
+            axios.get('lecturer/e-tugas/remove/'+app.remove_id).then(function (resp) {
                 app.dialog = false;
                 app.showSnackbar("Berhasil menghapus data");
                 $('#tr-'+app.remove_id).fadeOut();
@@ -156,6 +170,14 @@ export default {
                 app.dialog = false;
                 app.showSnackbar("oops, something went wrong. Please try again!");
             });
+        },
+        dateView(date) {
+            if (date != '0000-00-00 00:00:00') {
+                return moment(date).format("dddd, MMMM Do YYYY, h:mm:ss a");
+            }
+
+            return '-'
+
         }
     }
 }
