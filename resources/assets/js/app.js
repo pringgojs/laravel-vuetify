@@ -21,6 +21,7 @@ import Materi from './components/lecturer/Materi.vue';
 import MateriAdd from './components/lecturer/MateriAdd.vue';
 import Report from './components/lecturer/Report.vue';
 import Login from './components/Login.vue';
+import NotFound from './components/NotFound.vue';
 
 Vue.use(Vuetify);
 Vue.use(VueRouter);
@@ -36,6 +37,7 @@ Vue.component('report', require('./components/lecturer/Report.vue'));
 Vue.component('materi', require('./components/lecturer/Materi.vue'));
 Vue.component('materi-add', require('./components/lecturer/MateriAdd.vue'));
 Vue.component('login', require('./components/Login.vue'));
+Vue.component('not-found', require('./components/NotFound.vue'));
 
 
 const routes = [
@@ -110,6 +112,14 @@ const routes = [
         meta: {
             title: 'Login - Dosen Jaga'
         }
+    },
+    {
+        path: '/not-found',
+        component: NotFound,
+        name: 'not-found',
+        meta: {
+            title: '404 - Dosen Jaga'
+        }
     }
 ]
 
@@ -119,8 +129,13 @@ const router = new VueRouter({
 
 // Add title in header
 router.beforeEach((to, from, next) => {
-    document.title = to.meta.title
-    next()
+    if (!to.matched.length) {
+        next('/not-found');
+    } else {
+        document.title = to.meta.title
+        next()
+    }
+    
 })
 
 

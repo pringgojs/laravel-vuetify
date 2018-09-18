@@ -13367,6 +13367,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_lecturer_Report_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10__components_lecturer_Report_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_Login_vue__ = __webpack_require__(22);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_Login_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11__components_Login_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_NotFound_vue__ = __webpack_require__(227);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_NotFound_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_12__components_NotFound_vue__);
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -13377,6 +13379,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 __webpack_require__(25);
 
 window.Vue = __webpack_require__(5);
+
 
 
 
@@ -13405,6 +13408,7 @@ Vue.component('report', __webpack_require__(21));
 Vue.component('materi', __webpack_require__(17));
 Vue.component('materi-add', __webpack_require__(18));
 Vue.component('login', __webpack_require__(22));
+Vue.component('not-found', __webpack_require__(227));
 
 var routes = [{
     path: '/layout',
@@ -13468,6 +13472,13 @@ var routes = [{
     meta: {
         title: 'Login - Dosen Jaga'
     }
+}, {
+    path: '/not-found',
+    component: __WEBPACK_IMPORTED_MODULE_12__components_NotFound_vue___default.a,
+    name: 'not-found',
+    meta: {
+        title: '404 - Dosen Jaga'
+    }
 }];
 
 var router = new __WEBPACK_IMPORTED_MODULE_0_vue_router__["a" /* default */]({
@@ -13476,8 +13487,12 @@ var router = new __WEBPACK_IMPORTED_MODULE_0_vue_router__["a" /* default */]({
 
 // Add title in header
 router.beforeEach(function (to, from, next) {
-    document.title = to.meta.title;
-    next();
+    if (!to.matched.length) {
+        next('/not-found');
+    } else {
+        document.title = to.meta.title;
+        next();
+    }
 });
 
 /**
@@ -99998,6 +100013,87 @@ exports.push([module.i, "\n.fab-container {\r\n  position: fixed;\r\n  bottom: 2
 
 // exports
 
+
+/***/ }),
+/* 227 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = null
+/* template */
+var __vue_template__ = __webpack_require__(228)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/NotFound.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-078b1bb4", Component.options)
+  } else {
+    hotAPI.reload("data-v-078b1bb4", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 228 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "v-layout",
+    { attrs: { "justify-center": "", "align-center": "" } },
+    [
+      _c(
+        "h1",
+        { staticClass: "font-weight-black display-4" },
+        [
+          _vm._v("404 "),
+          _c("font", { staticClass: "font-weight-light" }, [_vm._v(":(")])
+        ],
+        1
+      )
+    ]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-078b1bb4", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);
