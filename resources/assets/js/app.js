@@ -14,6 +14,7 @@ import Vuetify from 'vuetify';
 import Layout from './components/lecturer/Layout.vue';
 import Home from './components/lecturer/Home.vue';
 import ETugas from './components/lecturer/ETugas.vue';
+import ETugasAdd from './components/lecturer/ETugasAdd.vue';
 import Schedule from './components/lecturer/Schedule.vue';
 import Materi from './components/lecturer/Materi.vue';
 import MateriAdd from './components/lecturer/MateriAdd.vue';
@@ -27,6 +28,7 @@ Vue.component('example', require('./components/lecturer/Example.vue'));
 Vue.component('layout', require('./components/lecturer/Layout.vue'));
 Vue.component('home', require('./components/lecturer/Home.vue'));
 Vue.component('e-tugas', require('./components/lecturer/ETugas.vue'));
+Vue.component('e-tugas-add', require('./components/lecturer/ETugasAdd.vue'));
 Vue.component('schedule', require('./components/lecturer/Schedule.vue'));
 Vue.component('report', require('./components/lecturer/Report.vue'));
 Vue.component('materi', require('./components/lecturer/Materi.vue'));
@@ -52,6 +54,14 @@ const routes = [
         component: ETugas,
         name: 'e-tugas',
         meta: { title: 'E Tugas - Dosen Jaga'}
+    },
+    {
+        path: '/e-tugas/add',
+        component: ETugasAdd,
+        name: 'e-tugas-add',
+        meta: {
+            title: 'E Tugas Baru- Dosen Jaga'
+        }
     },
     {
         path: '/materi',

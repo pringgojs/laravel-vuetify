@@ -15,11 +15,19 @@ Route::group(['prefix' => 'student', 'middleware' => 'role:student'], function (
 });
 
 Route::group(['prefix' => 'lecturer', 'middleware' => 'role:lecturer'], function () {
+    // materi
     Route::get('materi/get-by-semester/{kuliah}', 'LecturerController@getByKuliahMateri');
     Route::get('materi/remove/{id}', 'LecturerController@deleteMateri');
     Route::post('materi/store', 'LecturerController@storeMateri');
     Route::get('materi', 'LecturerController@indexMateri');
 
+    // e-tugas
+    Route::get('e-tugas/edit/{id}', 'LecturerController@editEtugas');
+    Route::post('e-tugas/remove/{id}', 'LecturerController@deleteEtugas');
+    Route::post('e-tugas/store', 'LecturerController@storeEtugas');
+    Route::get('e-tugas', 'LecturerController@indexEtugas');
+
+    // schedule
     Route::get('schedule/get-by-semester/{kuliah}', 'LecturerController@getBySemester');
     Route::get('schedule', 'LecturerController@schedule');
     Route::get('/', 'LecturerController@index');

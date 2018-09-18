@@ -86,4 +86,49 @@ class DatabaseHelper
 
         return $response;
     }
+
+    // etugas
+    public static function indexEtugas()
+    {
+        $url = config('api.url').'/lecturer/e-tugas';
+        $data = array('user' => ResponseHelper::user());
+        $response = Curl::to($url)
+        ->withData($data)
+        ->post();
+
+        return $response;
+    }
+
+    public static function storeEtugas($request, $file)
+    {
+        $url = config('api.url').'/lecturer/e-tugas/store';
+        $data = array('user' => ResponseHelper::user(), 'request' => $request->toArray(), 'file' => $file);
+        $response = Curl::to($url)
+            ->withData($data)
+            ->post();
+        return $response;
+    }
+
+    public static function deleteEtugas($id)
+    {
+        $url = config('api.url').'/lecturer/e-tugas/delete/'.$id;
+        $data = array('user' => ResponseHelper::user());
+        $response = Curl::to($url)
+            ->withData($data)
+            ->post();
+        
+        return json_decode($response);
+    }
+
+    public static function getByKuliahEtugas($kuliah)
+    {
+        $url = config('api.url').'/lecturer/e-tugas/get-by-kuliah';
+        $data = array('user' => ResponseHelper::user(), 'kuliah' => $kuliah);
+        $response = Curl::to($url)
+        ->withData($data)
+        ->post();
+
+        return $response;
+    }
+
 }

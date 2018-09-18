@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Helpers\DatabaseHelper;
+use App\Traits\LecturerEtugasTrait;
 use App\Traits\LecturerMateriTrait;
 
 class LecturerController extends Controller
 {
     use LecturerMateriTrait;
-
+    use LecturerEtugasTrait;
+    
     public function index()
     {
         $database = DatabaseHelper::getLecturerIndex();
