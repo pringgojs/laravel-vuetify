@@ -1,12 +1,9 @@
 <template>
     <v-flex sm12>
-        <h1>Materi Baru</h1>
+        <h1 class="font-weight-light"> Materi Baru</h1>
         <div class="subheading">Tambahkan materi sebagai penunjang belajar mahasiswa</div>
         <content-loader v-if="!isLoaded" height="250"></content-loader>
 
-        <v-flex xs3 offset-xs9 align-end v-if="isLoaded">
-            <router-link to="/materi"><v-btn color="success">Kembali</v-btn></router-link>
-        </v-flex>
         <v-flex sm12 md6  v-if="isLoaded">
             <v-flex md12 mt-5>
                 <v-select 
@@ -66,8 +63,8 @@
                     allow-multiple="false"
                     v-bind:files="myFiles"/>
             </v-flex>
+            <router-link to="/materi"><v-btn flat >Kembali</v-btn></router-link>
             <v-btn color="info" @click="submit">Simpan</v-btn>
-
         </v-flex>
 
         <v-snackbar

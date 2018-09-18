@@ -1,12 +1,9 @@
 <template>
     <v-flex sm12>
-        <h1>E Tugas</h1>
+        <h1 class="font-weight-light">E Tugas</h1>
         <div class="subheading">Tambahkan tugas sebagai bahwan evaluasi mahasiswa dalam memahami pelajaran</div>
         
         <content-loader v-if="!isLoaded" height="250"></content-loader>
-        <v-flex v-if="isLoaded"  xs3 offset-xs9 align-end>
-            <router-link to="e-tugas/add"><v-btn color="info">Upload tugas baru</v-btn></router-link>
-        </v-flex>
         <v-flex md5 mt-5 v-if="isLoaded">
             <v-select 
                 :items="semesters"
@@ -44,16 +41,16 @@
                         <td class="text-xs-center"><template v-if="props.item.file_url"><a slot="activator" v-bind:href="props.item.file_url"> Download File </a></template></td>
                         <td class="text-xs-center">
                             <v-layout justify-space-around>
-                                <v-btn fab  small color="info" @click="remove(props.item.id)">
+                                <v-btn flat icon color="info" @click="remove(props.item.id)">
                                     <v-icon dark>list_alt</v-icon>
                                 </v-btn>
                                 <router-link :to="'/e-tugas/edit/'+props.item.id">
-                                    <v-btn fab  small color="primary">
+                                    <v-btn flat icon color="green">
                                         <v-icon dark>create</v-icon>
                                     </v-btn>
                                 </router-link>
-                                <v-btn fab  small color="warning" @click="remove(props.item.id)">
-                                    <v-icon dark>remove</v-icon>
+                                <v-btn flat icon color="pink" @click="remove(props.item.id)">
+                                    <v-icon dark>delete</v-icon>
                                 </v-btn>
 
                             </v-layout>
@@ -62,6 +59,15 @@
                 </template>
             </v-data-table>
         </v-flex>
+
+        <!-- floating button -->
+        <v-layout column class="fab-container">
+            <router-link to="e-tugas/add">
+                <v-btn fab dark color="pink" >
+                    <v-icon>add</v-icon>
+                </v-btn>
+            </router-link>
+        </v-layout>
 
         <!-- modal -->
         <template>
@@ -99,7 +105,7 @@ export default {
                 { text: 'Keterangan', value: 'keterangan' },
                 { text: 'Due Date', value: 'due_date' },
                 { text: 'File Materi', value: 'file_url' },
-                { text: 'Hapus', value: 'id' },
+                { text: 'Aksi', value: 'id' },
             ],
             bodyTable: [],
             semesters: [],
@@ -182,3 +188,11 @@ export default {
     }
 }
 </script>
+
+<style>
+.fab-container {
+  position: fixed;
+  bottom: 20px;
+  right: 0;
+}
+</style>

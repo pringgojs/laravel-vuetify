@@ -1,12 +1,9 @@
 <template>
     <v-flex sm12>
-        <h1>Materi</h1>
+        <h1 class="font-weight-light">Materi</h1>
         <div class="subheading">Tambahkan materi sebagai penunjang belajar mahasiswa</div>
         
         <content-loader v-if="!isLoaded" height="250"></content-loader>
-        <v-flex v-if="isLoaded"  xs3 offset-xs9 align-end>
-            <router-link to="materi/add"><v-btn color="info">Upload materi baru</v-btn></router-link>
-        </v-flex>
         <v-flex md5 mt-5 v-if="isLoaded">
             <v-select 
                 :items="semesters"
@@ -31,6 +28,7 @@
                 :headers="headerTable"
                 :items="bodyTable"
                 hide-actions
+                light
                 class="elevation-1"
             >
                 <template slot="items" slot-scope="props">
@@ -43,8 +41,8 @@
                         <td class="text-xs-center"><template v-if="props.item.file_url"><a slot="activator" v-bind:href="props.item.file_url"> Download File </a></template></td>
                         <td class="text-xs-center">
                             <div class="text-xs-center">
-                                <v-btn fab dark small color="primary" @click="remove(props.item.id)">
-                                <v-icon dark>remove</v-icon>
+                                <v-btn flat icon color="pink" @click="remove(props.item.id)">
+                                <v-icon>delete</v-icon>
                                 </v-btn>
                             </div>
                         </td>
@@ -52,6 +50,15 @@
                 </template>
             </v-data-table>
         </v-flex>
+
+        <!-- floating button -->
+        <v-layout column class="fab-container">
+            <router-link to="materi/add">
+                <v-btn fab dark color="pink" >
+                    <v-icon>add</v-icon>
+                </v-btn>
+            </router-link>
+        </v-layout>
 
         <!-- modal -->
         <template>
@@ -69,6 +76,8 @@
                 </v-dialog>
             </v-layout>
         </template>
+
+        
     </v-flex>
 
 </template>
@@ -85,7 +94,7 @@ export default {
                 { text: 'Judul Materi', value: 'judul' },
                 { text: 'Keterangan', value: 'keterangan' },
                 { text: 'File Materi', value: 'file_url' },
-                { text: 'Hapus', value: 'id' },
+                { text: 'Aksi', value: 'id' },
             ],
             bodyTable: [],
             semesters: [],
@@ -160,3 +169,11 @@ export default {
     }
 }
 </script>
+
+<style>
+.fab-container {
+  position: fixed;
+  bottom: 20px;
+  right: 0;
+}
+</style>

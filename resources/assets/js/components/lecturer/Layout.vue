@@ -3,6 +3,7 @@
     <v-navigation-drawer
       :clipped="$vuetify.breakpoint.lgAndUp"
       v-model="drawer"
+      width="250"
       fixed
       app
     >
@@ -18,7 +19,7 @@
 
           <v-list-tile v-else :key="item.text" @click="link(item.link)">
             <v-list-tile-action>
-              <v-icon>{{ item.icon }}</v-icon>
+              <v-icon class="ml-0 pl-3">{{ item.icon }}</v-icon>
             </v-list-tile-action>
             <v-list-tile-content>
               <v-list-tile-title>
@@ -38,9 +39,9 @@
       app
       fixed
     >
-      <v-toolbar-title style="width: 300px" class="ml-0 pl-3">
+      <v-toolbar-title style="width: 300px" class="ml-0 pl-0">
         <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
-        <span class="hidden-sm-and-down">Dosen Jaga</span>
+        <span class="hidden-sm-and-down font-weight-regular">Dosen Jaga</span>
       </v-toolbar-title>
       <v-text-field
         flat

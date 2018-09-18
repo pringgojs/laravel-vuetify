@@ -1,12 +1,9 @@
 <template>
     <v-flex sm12>
-        <h1>Perbarui Tugas</h1>
+        <h1 class="font-weight-light">Perbarui Tugas</h1>
         <div class="subheading">Tambahkan tugas sebagai bahan evaluasi belajar mahasiswa</div>
         <content-loader v-if="!isLoaded" height="250"></content-loader>
 
-        <v-flex xs3 offset-xs9 align-end v-if="isLoaded">
-            <router-link to="/e-tugas"><v-btn color="success">Kembali</v-btn></router-link>
-        </v-flex>
         <v-flex sm12 md6  v-if="isLoaded">
             <v-flex md12 mt-5>
                 <v-select 
@@ -133,7 +130,7 @@
                     allow-multiple="false"
                     v-bind:files="myFiles"/>
             </v-flex>
-
+            <router-link to="/e-tugas"><v-btn flat >Saya berubah pikiran</v-btn></router-link>
             <v-btn color="info" @click="submit">Simpan</v-btn>
 
         </v-flex>

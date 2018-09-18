@@ -12604,6 +12604,10 @@ module.exports = Component.exports
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(225)
+}
 var normalizeComponent = __webpack_require__(1)
 /* script */
 var __vue_script__ = __webpack_require__(55)
@@ -12612,7 +12616,7 @@ var __vue_template__ = __webpack_require__(57)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
-var __vue_styles__ = null
+var __vue_styles__ = injectStyle
 /* scopeId */
 var __vue_scopeId__ = null
 /* moduleIdentifier (server only) */
@@ -12698,6 +12702,10 @@ module.exports = Component.exports
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(221)
+}
 var normalizeComponent = __webpack_require__(1)
 /* script */
 var __vue_script__ = __webpack_require__(60)
@@ -12706,7 +12714,7 @@ var __vue_template__ = __webpack_require__(61)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
-var __vue_styles__ = null
+var __vue_styles__ = injectStyle
 /* scopeId */
 var __vue_scopeId__ = null
 /* moduleIdentifier (server only) */
@@ -68460,6 +68468,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -68496,6 +68505,7 @@ var render = function() {
         {
           attrs: {
             clipped: _vm.$vuetify.breakpoint.lgAndUp,
+            width: "250",
             fixed: "",
             app: ""
           },
@@ -68532,7 +68542,11 @@ var render = function() {
                         [
                           _c(
                             "v-list-tile-action",
-                            [_c("v-icon", [_vm._v(_vm._s(item.icon))])],
+                            [
+                              _c("v-icon", { staticClass: "ml-0 pl-3" }, [
+                                _vm._v(_vm._s(item.icon))
+                              ])
+                            ],
                             1
                           ),
                           _vm._v(" "),
@@ -68575,7 +68589,7 @@ var render = function() {
         [
           _c(
             "v-toolbar-title",
-            { staticClass: "ml-0 pl-3", staticStyle: { width: "300px" } },
+            { staticClass: "ml-0 pl-0", staticStyle: { width: "300px" } },
             [
               _c("v-toolbar-side-icon", {
                 on: {
@@ -68586,9 +68600,11 @@ var render = function() {
                 }
               }),
               _vm._v(" "),
-              _c("span", { staticClass: "hidden-sm-and-down" }, [
-                _vm._v("Dosen Jaga")
-              ])
+              _c(
+                "span",
+                { staticClass: "hidden-sm-and-down font-weight-regular" },
+                [_vm._v("Dosen Jaga")]
+              )
             ],
             1
           ),
@@ -68698,7 +68714,7 @@ var render = function() {
   return _c(
     "div",
     [
-      _c("h1", [_vm._v("Beranda")]),
+      _c("h1", { staticClass: "font-weight-light" }, [_vm._v("Beranda")]),
       _vm._v(" "),
       _c("v-btn", { attrs: { small: "" } }, [_vm._v("Normal")])
     ],
@@ -68809,6 +68825,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 
@@ -68817,7 +68839,7 @@ __WEBPACK_IMPORTED_MODULE_1_moment__["locale"]('id');
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            headerTable: [{ text: 'Modul', value: 'modul' }, { text: 'Matakuliah', value: 'matakuliah' }, { text: 'Kelas', value: 'kelas' }, { text: 'Judul Materi', value: 'judul' }, { text: 'Keterangan', value: 'keterangan' }, { text: 'Due Date', value: 'due_date' }, { text: 'File Materi', value: 'file_url' }, { text: 'Hapus', value: 'id' }],
+            headerTable: [{ text: 'Modul', value: 'modul' }, { text: 'Matakuliah', value: 'matakuliah' }, { text: 'Kelas', value: 'kelas' }, { text: 'Judul Materi', value: 'judul' }, { text: 'Keterangan', value: 'keterangan' }, { text: 'Due Date', value: 'due_date' }, { text: 'File Materi', value: 'file_url' }, { text: 'Aksi', value: 'id' }],
             bodyTable: [],
             semesters: [],
             descriptionSemester: '',
@@ -68965,7 +68987,7 @@ var render = function() {
     "v-flex",
     { attrs: { sm12: "" } },
     [
-      _c("h1", [_vm._v("E Tugas")]),
+      _c("h1", { staticClass: "font-weight-light" }, [_vm._v("E Tugas")]),
       _vm._v(" "),
       _c("div", { staticClass: "subheading" }, [
         _vm._v(
@@ -68975,26 +68997,6 @@ var render = function() {
       _vm._v(" "),
       !_vm.isLoaded
         ? _c("content-loader", { attrs: { height: "250" } })
-        : _vm._e(),
-      _vm._v(" "),
-      _vm.isLoaded
-        ? _c(
-            "v-flex",
-            { attrs: { xs3: "", "offset-xs9": "", "align-end": "" } },
-            [
-              _c(
-                "router-link",
-                { attrs: { to: "e-tugas/add" } },
-                [
-                  _c("v-btn", { attrs: { color: "info" } }, [
-                    _vm._v("Upload tugas baru")
-                  ])
-                ],
-                1
-              )
-            ],
-            1
-          )
         : _vm._e(),
       _vm._v(" "),
       _vm.isLoaded
@@ -69185,8 +69187,8 @@ var render = function() {
                                     "v-btn",
                                     {
                                       attrs: {
-                                        fab: "",
-                                        small: "",
+                                        flat: "",
+                                        icon: "",
                                         color: "info"
                                       },
                                       on: {
@@ -69215,9 +69217,9 @@ var render = function() {
                                         "v-btn",
                                         {
                                           attrs: {
-                                            fab: "",
-                                            small: "",
-                                            color: "primary"
+                                            flat: "",
+                                            icon: "",
+                                            color: "green"
                                           }
                                         },
                                         [
@@ -69237,9 +69239,9 @@ var render = function() {
                                     "v-btn",
                                     {
                                       attrs: {
-                                        fab: "",
-                                        small: "",
-                                        color: "warning"
+                                        flat: "",
+                                        icon: "",
+                                        color: "pink"
                                       },
                                       on: {
                                         click: function($event) {
@@ -69249,7 +69251,7 @@ var render = function() {
                                     },
                                     [
                                       _c("v-icon", { attrs: { dark: "" } }, [
-                                        _vm._v("remove")
+                                        _vm._v("delete")
                                       ])
                                     ],
                                     1
@@ -69270,6 +69272,27 @@ var render = function() {
             1
           )
         : _vm._e(),
+      _vm._v(" "),
+      _c(
+        "v-layout",
+        { staticClass: "fab-container", attrs: { column: "" } },
+        [
+          _c(
+            "router-link",
+            { attrs: { to: "e-tugas/add" } },
+            [
+              _c(
+                "v-btn",
+                { attrs: { fab: "", dark: "", color: "pink" } },
+                [_c("v-icon", [_vm._v("add")])],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
       _vm._v(" "),
       [
         _c(
@@ -69749,12 +69772,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            headerTable: [{ text: 'Modul', value: 'modul' }, { text: 'Matakuliah', value: 'matakuliah' }, { text: 'Kelas', value: 'kelas' }, { text: 'Judul Materi', value: 'judul' }, { text: 'Keterangan', value: 'keterangan' }, { text: 'File Materi', value: 'file_url' }, { text: 'Hapus', value: 'id' }],
+            headerTable: [{ text: 'Modul', value: 'modul' }, { text: 'Matakuliah', value: 'matakuliah' }, { text: 'Kelas', value: 'kelas' }, { text: 'Judul Materi', value: 'judul' }, { text: 'Keterangan', value: 'keterangan' }, { text: 'File Materi', value: 'file_url' }, { text: 'Aksi', value: 'id' }],
             bodyTable: [],
             semesters: [],
             descriptionSemester: '',
@@ -69839,7 +69871,7 @@ var render = function() {
     "v-flex",
     { attrs: { sm12: "" } },
     [
-      _c("h1", [_vm._v("Materi")]),
+      _c("h1", { staticClass: "font-weight-light" }, [_vm._v("Materi")]),
       _vm._v(" "),
       _c("div", { staticClass: "subheading" }, [
         _vm._v("Tambahkan materi sebagai penunjang belajar mahasiswa")
@@ -69847,26 +69879,6 @@ var render = function() {
       _vm._v(" "),
       !_vm.isLoaded
         ? _c("content-loader", { attrs: { height: "250" } })
-        : _vm._e(),
-      _vm._v(" "),
-      _vm.isLoaded
-        ? _c(
-            "v-flex",
-            { attrs: { xs3: "", "offset-xs9": "", "align-end": "" } },
-            [
-              _c(
-                "router-link",
-                { attrs: { to: "materi/add" } },
-                [
-                  _c("v-btn", { attrs: { color: "info" } }, [
-                    _vm._v("Upload materi baru")
-                  ])
-                ],
-                1
-              )
-            ],
-            1
-          )
         : _vm._e(),
       _vm._v(" "),
       _vm.isLoaded
@@ -69952,7 +69964,8 @@ var render = function() {
                 attrs: {
                   headers: _vm.headerTable,
                   items: _vm.bodyTable,
-                  "hide-actions": ""
+                  "hide-actions": "",
+                  light: ""
                 },
                 scopedSlots: _vm._u([
                   {
@@ -70045,10 +70058,9 @@ var render = function() {
                                   "v-btn",
                                   {
                                     attrs: {
-                                      fab: "",
-                                      dark: "",
-                                      small: "",
-                                      color: "primary"
+                                      flat: "",
+                                      icon: "",
+                                      color: "pink"
                                     },
                                     on: {
                                       click: function($event) {
@@ -70056,11 +70068,7 @@ var render = function() {
                                       }
                                     }
                                   },
-                                  [
-                                    _c("v-icon", { attrs: { dark: "" } }, [
-                                      _vm._v("remove")
-                                    ])
-                                  ],
+                                  [_c("v-icon", [_vm._v("delete")])],
                                   1
                                 )
                               ],
@@ -70077,6 +70085,27 @@ var render = function() {
             1
           )
         : _vm._e(),
+      _vm._v(" "),
+      _c(
+        "v-layout",
+        { staticClass: "fab-container", attrs: { column: "" } },
+        [
+          _c(
+            "router-link",
+            { attrs: { to: "materi/add" } },
+            [
+              _c(
+                "v-btn",
+                { attrs: { fab: "", dark: "", color: "pink" } },
+                [_c("v-icon", [_vm._v("add")])],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
       _vm._v(" "),
       [
         _c(
@@ -70179,9 +70208,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_filepond_dist_filepond_min_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_filepond_dist_filepond_min_css__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_filepond_plugin_image_preview_dist_filepond_plugin_image_preview_css__ = __webpack_require__(72);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_filepond_plugin_image_preview_dist_filepond_plugin_image_preview_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_filepond_plugin_image_preview_dist_filepond_plugin_image_preview_css__);
-//
-//
-//
 //
 //
 //
@@ -80556,7 +80582,7 @@ var render = function() {
     "v-flex",
     { attrs: { sm12: "" } },
     [
-      _c("h1", [_vm._v("Materi Baru")]),
+      _c("h1", { staticClass: "font-weight-light" }, [_vm._v(" Materi Baru")]),
       _vm._v(" "),
       _c("div", { staticClass: "subheading" }, [
         _vm._v("Tambahkan materi sebagai penunjang belajar mahasiswa")
@@ -80564,26 +80590,6 @@ var render = function() {
       _vm._v(" "),
       !_vm.isLoaded
         ? _c("content-loader", { attrs: { height: "250" } })
-        : _vm._e(),
-      _vm._v(" "),
-      _vm.isLoaded
-        ? _c(
-            "v-flex",
-            { attrs: { xs3: "", "offset-xs9": "", "align-end": "" } },
-            [
-              _c(
-                "router-link",
-                { attrs: { to: "/materi" } },
-                [
-                  _c("v-btn", { attrs: { color: "success" } }, [
-                    _vm._v("Kembali")
-                  ])
-                ],
-                1
-              )
-            ],
-            1
-          )
         : _vm._e(),
       _vm._v(" "),
       _vm.isLoaded
@@ -80766,6 +80772,13 @@ var render = function() {
               ),
               _vm._v(" "),
               _c(
+                "router-link",
+                { attrs: { to: "/materi" } },
+                [_c("v-btn", { attrs: { flat: "" } }, [_vm._v("Kembali")])],
+                1
+              ),
+              _vm._v(" "),
+              _c(
                 "v-btn",
                 { attrs: { color: "info" }, on: { click: _vm.submit } },
                 [_vm._v("Simpan")]
@@ -80831,7 +80844,7 @@ var render = function() {
   return _c(
     "div",
     [
-      _c("h1", [_vm._v("Laporan")]),
+      _c("h1", { staticClass: "font-weight-light" }, [_vm._v("Laporan")]),
       _vm._v(" "),
       _c("v-btn", { attrs: { small: "" } }, [_vm._v("Normal")])
     ],
@@ -81638,9 +81651,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
 
 
 
@@ -81770,7 +81780,7 @@ var render = function() {
     "v-flex",
     { attrs: { sm12: "" } },
     [
-      _c("h1", [_vm._v("Tugas Baru")]),
+      _c("h1", { staticClass: "font-weight-light" }, [_vm._v("Tugas Baru")]),
       _vm._v(" "),
       _c("div", { staticClass: "subheading" }, [
         _vm._v("Tambahkan tugas sebagai bahan evaluasi belajar mahasiswa")
@@ -81778,26 +81788,6 @@ var render = function() {
       _vm._v(" "),
       !_vm.isLoaded
         ? _c("content-loader", { attrs: { height: "250" } })
-        : _vm._e(),
-      _vm._v(" "),
-      _vm.isLoaded
-        ? _c(
-            "v-flex",
-            { attrs: { xs3: "", "offset-xs9": "", "align-end": "" } },
-            [
-              _c(
-                "router-link",
-                { attrs: { to: "/e-tugas" } },
-                [
-                  _c("v-btn", { attrs: { color: "success" } }, [
-                    _vm._v("Kembali")
-                  ])
-                ],
-                1
-              )
-            ],
-            1
-          )
         : _vm._e(),
       _vm._v(" "),
       _vm.isLoaded
@@ -82163,6 +82153,13 @@ var render = function() {
                     }
                   })
                 ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "router-link",
+                { attrs: { to: "/e-tugas" } },
+                [_c("v-btn", { attrs: { flat: "" } }, [_vm._v("Kembali")])],
                 1
               ),
               _vm._v(" "),
@@ -99071,9 +99068,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
 
 
 
@@ -99220,7 +99214,9 @@ var render = function() {
     "v-flex",
     { attrs: { sm12: "" } },
     [
-      _c("h1", [_vm._v("Perbarui Tugas")]),
+      _c("h1", { staticClass: "font-weight-light" }, [
+        _vm._v("Perbarui Tugas")
+      ]),
       _vm._v(" "),
       _c("div", { staticClass: "subheading" }, [
         _vm._v("Tambahkan tugas sebagai bahan evaluasi belajar mahasiswa")
@@ -99228,26 +99224,6 @@ var render = function() {
       _vm._v(" "),
       !_vm.isLoaded
         ? _c("content-loader", { attrs: { height: "250" } })
-        : _vm._e(),
-      _vm._v(" "),
-      _vm.isLoaded
-        ? _c(
-            "v-flex",
-            { attrs: { xs3: "", "offset-xs9": "", "align-end": "" } },
-            [
-              _c(
-                "router-link",
-                { attrs: { to: "/e-tugas" } },
-                [
-                  _c("v-btn", { attrs: { color: "success" } }, [
-                    _vm._v("Kembali")
-                  ])
-                ],
-                1
-              )
-            ],
-            1
-          )
         : _vm._e(),
       _vm._v(" "),
       _vm.isLoaded
@@ -99617,6 +99593,17 @@ var render = function() {
               ),
               _vm._v(" "),
               _c(
+                "router-link",
+                { attrs: { to: "/e-tugas" } },
+                [
+                  _c("v-btn", { attrs: { flat: "" } }, [
+                    _vm._v("Saya berubah pikiran")
+                  ])
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
                 "v-btn",
                 { attrs: { color: "info" }, on: { click: _vm.submit } },
                 [_vm._v("Simpan")]
@@ -99670,6 +99657,347 @@ if (false) {
     require("vue-hot-reload-api")      .rerender("data-v-6c5fc5de", module.exports)
   }
 }
+
+/***/ }),
+/* 221 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(222);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(223)("4e14bc48", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-14fe5f90\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Materi.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-14fe5f90\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Materi.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 222 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(19)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.fab-container {\r\n  position: fixed;\r\n  bottom: 20px;\r\n  right: 0;\n}\r\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 223 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/*
+  MIT License http://www.opensource.org/licenses/mit-license.php
+  Author Tobias Koppers @sokra
+  Modified by Evan You @yyx990803
+*/
+
+var hasDocument = typeof document !== 'undefined'
+
+if (typeof DEBUG !== 'undefined' && DEBUG) {
+  if (!hasDocument) {
+    throw new Error(
+    'vue-style-loader cannot be used in a non-browser environment. ' +
+    "Use { target: 'node' } in your Webpack config to indicate a server-rendering environment."
+  ) }
+}
+
+var listToStyles = __webpack_require__(224)
+
+/*
+type StyleObject = {
+  id: number;
+  parts: Array<StyleObjectPart>
+}
+
+type StyleObjectPart = {
+  css: string;
+  media: string;
+  sourceMap: ?string
+}
+*/
+
+var stylesInDom = {/*
+  [id: number]: {
+    id: number,
+    refs: number,
+    parts: Array<(obj?: StyleObjectPart) => void>
+  }
+*/}
+
+var head = hasDocument && (document.head || document.getElementsByTagName('head')[0])
+var singletonElement = null
+var singletonCounter = 0
+var isProduction = false
+var noop = function () {}
+var options = null
+var ssrIdKey = 'data-vue-ssr-id'
+
+// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
+// tags it will allow on a page
+var isOldIE = typeof navigator !== 'undefined' && /msie [6-9]\b/.test(navigator.userAgent.toLowerCase())
+
+module.exports = function (parentId, list, _isProduction, _options) {
+  isProduction = _isProduction
+
+  options = _options || {}
+
+  var styles = listToStyles(parentId, list)
+  addStylesToDom(styles)
+
+  return function update (newList) {
+    var mayRemove = []
+    for (var i = 0; i < styles.length; i++) {
+      var item = styles[i]
+      var domStyle = stylesInDom[item.id]
+      domStyle.refs--
+      mayRemove.push(domStyle)
+    }
+    if (newList) {
+      styles = listToStyles(parentId, newList)
+      addStylesToDom(styles)
+    } else {
+      styles = []
+    }
+    for (var i = 0; i < mayRemove.length; i++) {
+      var domStyle = mayRemove[i]
+      if (domStyle.refs === 0) {
+        for (var j = 0; j < domStyle.parts.length; j++) {
+          domStyle.parts[j]()
+        }
+        delete stylesInDom[domStyle.id]
+      }
+    }
+  }
+}
+
+function addStylesToDom (styles /* Array<StyleObject> */) {
+  for (var i = 0; i < styles.length; i++) {
+    var item = styles[i]
+    var domStyle = stylesInDom[item.id]
+    if (domStyle) {
+      domStyle.refs++
+      for (var j = 0; j < domStyle.parts.length; j++) {
+        domStyle.parts[j](item.parts[j])
+      }
+      for (; j < item.parts.length; j++) {
+        domStyle.parts.push(addStyle(item.parts[j]))
+      }
+      if (domStyle.parts.length > item.parts.length) {
+        domStyle.parts.length = item.parts.length
+      }
+    } else {
+      var parts = []
+      for (var j = 0; j < item.parts.length; j++) {
+        parts.push(addStyle(item.parts[j]))
+      }
+      stylesInDom[item.id] = { id: item.id, refs: 1, parts: parts }
+    }
+  }
+}
+
+function createStyleElement () {
+  var styleElement = document.createElement('style')
+  styleElement.type = 'text/css'
+  head.appendChild(styleElement)
+  return styleElement
+}
+
+function addStyle (obj /* StyleObjectPart */) {
+  var update, remove
+  var styleElement = document.querySelector('style[' + ssrIdKey + '~="' + obj.id + '"]')
+
+  if (styleElement) {
+    if (isProduction) {
+      // has SSR styles and in production mode.
+      // simply do nothing.
+      return noop
+    } else {
+      // has SSR styles but in dev mode.
+      // for some reason Chrome can't handle source map in server-rendered
+      // style tags - source maps in <style> only works if the style tag is
+      // created and inserted dynamically. So we remove the server rendered
+      // styles and inject new ones.
+      styleElement.parentNode.removeChild(styleElement)
+    }
+  }
+
+  if (isOldIE) {
+    // use singleton mode for IE9.
+    var styleIndex = singletonCounter++
+    styleElement = singletonElement || (singletonElement = createStyleElement())
+    update = applyToSingletonTag.bind(null, styleElement, styleIndex, false)
+    remove = applyToSingletonTag.bind(null, styleElement, styleIndex, true)
+  } else {
+    // use multi-style-tag mode in all other cases
+    styleElement = createStyleElement()
+    update = applyToTag.bind(null, styleElement)
+    remove = function () {
+      styleElement.parentNode.removeChild(styleElement)
+    }
+  }
+
+  update(obj)
+
+  return function updateStyle (newObj /* StyleObjectPart */) {
+    if (newObj) {
+      if (newObj.css === obj.css &&
+          newObj.media === obj.media &&
+          newObj.sourceMap === obj.sourceMap) {
+        return
+      }
+      update(obj = newObj)
+    } else {
+      remove()
+    }
+  }
+}
+
+var replaceText = (function () {
+  var textStore = []
+
+  return function (index, replacement) {
+    textStore[index] = replacement
+    return textStore.filter(Boolean).join('\n')
+  }
+})()
+
+function applyToSingletonTag (styleElement, index, remove, obj) {
+  var css = remove ? '' : obj.css
+
+  if (styleElement.styleSheet) {
+    styleElement.styleSheet.cssText = replaceText(index, css)
+  } else {
+    var cssNode = document.createTextNode(css)
+    var childNodes = styleElement.childNodes
+    if (childNodes[index]) styleElement.removeChild(childNodes[index])
+    if (childNodes.length) {
+      styleElement.insertBefore(cssNode, childNodes[index])
+    } else {
+      styleElement.appendChild(cssNode)
+    }
+  }
+}
+
+function applyToTag (styleElement, obj) {
+  var css = obj.css
+  var media = obj.media
+  var sourceMap = obj.sourceMap
+
+  if (media) {
+    styleElement.setAttribute('media', media)
+  }
+  if (options.ssrId) {
+    styleElement.setAttribute(ssrIdKey, obj.id)
+  }
+
+  if (sourceMap) {
+    // https://developer.chrome.com/devtools/docs/javascript-debugging
+    // this makes source maps inside style tags work properly in Chrome
+    css += '\n/*# sourceURL=' + sourceMap.sources[0] + ' */'
+    // http://stackoverflow.com/a/26603875
+    css += '\n/*# sourceMappingURL=data:application/json;base64,' + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + ' */'
+  }
+
+  if (styleElement.styleSheet) {
+    styleElement.styleSheet.cssText = css
+  } else {
+    while (styleElement.firstChild) {
+      styleElement.removeChild(styleElement.firstChild)
+    }
+    styleElement.appendChild(document.createTextNode(css))
+  }
+}
+
+
+/***/ }),
+/* 224 */
+/***/ (function(module, exports) {
+
+/**
+ * Translates the list format produced by css-loader into something
+ * easier to manipulate.
+ */
+module.exports = function listToStyles (parentId, list) {
+  var styles = []
+  var newStyles = {}
+  for (var i = 0; i < list.length; i++) {
+    var item = list[i]
+    var id = item[0]
+    var css = item[1]
+    var media = item[2]
+    var sourceMap = item[3]
+    var part = {
+      id: parentId + ':' + i,
+      css: css,
+      media: media,
+      sourceMap: sourceMap
+    }
+    if (!newStyles[id]) {
+      styles.push(newStyles[id] = { id: id, parts: [part] })
+    } else {
+      newStyles[id].parts.push(part)
+    }
+  }
+  return styles
+}
+
+
+/***/ }),
+/* 225 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(226);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(223)("b0be8e36", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-bf1d4132\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ETugas.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-bf1d4132\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ETugas.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 226 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(19)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.fab-container {\r\n  position: fixed;\r\n  bottom: 20px;\r\n  right: 0;\n}\r\n", ""]);
+
+// exports
+
 
 /***/ })
 /******/ ]);
