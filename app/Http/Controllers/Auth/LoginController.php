@@ -41,6 +41,10 @@ class LoginController extends Controller
 
     public function showLoginForm()
     {
+        if (session('type')) {
+            return redirect(session('type'));
+        }
+        
         return view('login');
     }
 
@@ -71,6 +75,16 @@ class LoginController extends Controller
                 'url' => url($response->type)
             ]
         );
+    }
+
+    public function logout()
+    {
+        \Session::forget('type');
+        \Session::forget('username');
+        \Session::forget('name');
+        \Session::forget('id');
+
+        return redirect('/login');
     }
 
     function checkAuth()

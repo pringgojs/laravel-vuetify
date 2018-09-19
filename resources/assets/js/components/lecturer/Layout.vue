@@ -64,7 +64,7 @@
         </v-avatar>
           <v-list>
             <v-list-tile
-              @click=""
+              @click="logout"
             >
               <v-list-tile-title>Keluar</v-list-tile-title>
             </v-list-tile>
@@ -110,6 +110,10 @@
     methods: {
       link(link) {
         this.$router.push(link)
+      },
+      logout() {
+        let base_url = window.location.origin;
+        window.location.href = base_url+'/logout';
       }
     }
   }

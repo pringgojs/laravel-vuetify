@@ -36,5 +36,6 @@ Route::group(['prefix' => 'lecturer', 'middleware' => 'role:lecturer'], function
 });
 
 Route::post('login', 'Auth\LoginController@login');
+Route::get('logout', 'Auth\LoginController@logout');
 Route::get('login', 'Auth\LoginController@showLoginForm');
 Route::get('/', 'Auth\LoginController@checkAuth');
