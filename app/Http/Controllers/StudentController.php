@@ -8,6 +8,6 @@ class StudentController extends Controller
 {
     public function index()
     {
-        dd('Student');
+        return $view = view('student');
     }
 }

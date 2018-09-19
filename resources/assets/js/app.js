@@ -5,137 +5,25 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-require('./bootstrap');
+require('./bootstrap')
 
-window.Vue = require('vue');
-import VueRouter from 'vue-router';
-import Vuetify from 'vuetify';
+window.Vue = require('vue')
+import VueRouter from 'vue-router'
+import Vuetify from 'vuetify'
+import LecturerRouter from './lecturer-router'
+import StudentRouter from './student-router'
 
-import Layout from './components/lecturer/Layout.vue';
-import Home from './components/lecturer/Home.vue';
-import ETugas from './components/lecturer/ETugas.vue';
-import ETugasAdd from './components/lecturer/ETugasAdd.vue';
-import ETugasEdit from './components/lecturer/ETugasEdit.vue';
-import Schedule from './components/lecturer/Schedule.vue';
-import Materi from './components/lecturer/Materi.vue';
-import MateriAdd from './components/lecturer/MateriAdd.vue';
-import Report from './components/lecturer/Report.vue';
-import Login from './components/Login.vue';
-import NotFound from './components/NotFound.vue';
-
-Vue.use(Vuetify);
-Vue.use(VueRouter);
-
-Vue.component('example', require('./components/lecturer/Example.vue'));
-Vue.component('layout', require('./components/lecturer/Layout.vue'));
-Vue.component('home', require('./components/lecturer/Home.vue'));
-Vue.component('e-tugas', require('./components/lecturer/ETugas.vue'));
-Vue.component('e-tugas-add', require('./components/lecturer/ETugasAdd.vue'));
-Vue.component('e-tugas-edit', require('./components/lecturer/ETugasEdit.vue'));
-Vue.component('schedule', require('./components/lecturer/Schedule.vue'));
-Vue.component('report', require('./components/lecturer/Report.vue'));
-Vue.component('materi', require('./components/lecturer/Materi.vue'));
-Vue.component('materi-add', require('./components/lecturer/MateriAdd.vue'));
-Vue.component('login', require('./components/Login.vue'));
-Vue.component('not-found', require('./components/NotFound.vue'));
-
-
-const routes = [
-    {
-        path: '/layout',
-        component: Layout,
-        name: 'layout',
-        meta: { title: 'Beranda - Dosen Jaga'}
-    },
-    {
-        path: '/home',
-        component: Home,
-        name: 'home',
-        meta: { title: 'Beranda - Dosen Jaga'}
-    },
-    {
-        path: '/e-tugas',
-        component: ETugas,
-        name: 'e-tugas',
-        meta: { title: 'E Tugas - Dosen Jaga'}
-    },
-    {
-        path: '/e-tugas/add',
-        component: ETugasAdd,
-        name: 'e-tugas-add',
-        meta: {
-            title: 'E Tugas Baru - Dosen Jaga'
-        }
-    },
-    {
-        path: '/e-tugas/edit/:id',
-        component: ETugasEdit,
-        name: 'e-tugas-edit',
-        meta: {
-            title: 'E Tugas Edit - Dosen Jaga'
-        }
-    },
-    {
-        path: '/materi',
-        component: Materi,
-        name: 'materi',
-        meta: { title: 'Materi - Dosen Jaga'}
-    },
-    {
-        path: '/materi/add',
-        component: MateriAdd,
-        name: 'materi-add',
-        meta: {
-            title: 'Materi Baru - Dosen Jaga'
-        }
-    },
-    {
-        path: '/report',
-        component: Report,
-        name: 'report',
-        meta: {
-            title: 'Laporan - Dosen Jaga'
-        }
-    },
-    {
-        path: '/schedule',
-        component: Schedule,
-        name: 'schedule',
-        meta: {
-            title: 'Jadwal - Dosen Jaga'
-        }
-    },
-    {
-        path: '/login',
-        component: Login,
-        name: 'login',
-        meta: {
-            title: 'Login - Dosen Jaga'
-        }
-    },
-    {
-        path: '/not-found',
-        component: NotFound,
-        name: 'not-found',
-        meta: {
-            title: '404 - Dosen Jaga'
-        }
-    }
-]
-
-const router = new VueRouter({
-    routes
-})
+Vue.use(Vuetify)
+Vue.use(VueRouter)
 
 // Add title in header
-router.beforeEach((to, from, next) => {
+LecturerRouter.beforeEach((to, from, next) => {
     if (!to.matched.length) {
-        next('/not-found');
+        next('/not-found')
     } else {
         document.title = to.meta.title
         next()
     }
-    
 })
 
 
@@ -148,5 +36,5 @@ router.beforeEach((to, from, next) => {
 
 new Vue({
     el: "#app",
-    router: router
+    router: LecturerRouter, StudentRouter
 })

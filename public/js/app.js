@@ -31728,28 +31728,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_router__ = __webpack_require__(185);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuetify__ = __webpack_require__(186);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuetify___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vuetify__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_lecturer_Layout_vue__ = __webpack_require__(23);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_lecturer_Layout_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_lecturer_Layout_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_lecturer_Home_vue__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_lecturer_Home_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_lecturer_Home_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_lecturer_ETugas_vue__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_lecturer_ETugas_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__components_lecturer_ETugas_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_lecturer_ETugasAdd_vue__ = __webpack_require__(150);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_lecturer_ETugasAdd_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__components_lecturer_ETugasAdd_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_lecturer_ETugasEdit_vue__ = __webpack_require__(152);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_lecturer_ETugasEdit_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__components_lecturer_ETugasEdit_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_lecturer_Schedule_vue__ = __webpack_require__(153);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_lecturer_Schedule_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__components_lecturer_Schedule_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_lecturer_Materi_vue__ = __webpack_require__(154);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_lecturer_Materi_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__components_lecturer_Materi_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_lecturer_MateriAdd_vue__ = __webpack_require__(155);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_lecturer_MateriAdd_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9__components_lecturer_MateriAdd_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_lecturer_Report_vue__ = __webpack_require__(156);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_lecturer_Report_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10__components_lecturer_Report_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_Login_vue__ = __webpack_require__(157);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_Login_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11__components_Login_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_NotFound_vue__ = __webpack_require__(158);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_NotFound_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_12__components_NotFound_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__lecturer_router__ = __webpack_require__(250);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__student_router__ = __webpack_require__(236);
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -31765,109 +31745,11 @@ window.Vue = __webpack_require__(7);
 
 
 
-
-
-
-
-
-
-
-
-
-
 Vue.use(__WEBPACK_IMPORTED_MODULE_1_vuetify___default.a);
 Vue.use(__WEBPACK_IMPORTED_MODULE_0_vue_router__["a" /* default */]);
 
-Vue.component('example', __webpack_require__(217));
-Vue.component('layout', __webpack_require__(23));
-Vue.component('home', __webpack_require__(24));
-Vue.component('e-tugas', __webpack_require__(25));
-Vue.component('e-tugas-add', __webpack_require__(150));
-Vue.component('e-tugas-edit', __webpack_require__(152));
-Vue.component('schedule', __webpack_require__(153));
-Vue.component('report', __webpack_require__(156));
-Vue.component('materi', __webpack_require__(154));
-Vue.component('materi-add', __webpack_require__(155));
-Vue.component('login', __webpack_require__(157));
-Vue.component('not-found', __webpack_require__(158));
-
-var routes = [{
-    path: '/layout',
-    component: __WEBPACK_IMPORTED_MODULE_2__components_lecturer_Layout_vue___default.a,
-    name: 'layout',
-    meta: { title: 'Beranda - Dosen Jaga' }
-}, {
-    path: '/home',
-    component: __WEBPACK_IMPORTED_MODULE_3__components_lecturer_Home_vue___default.a,
-    name: 'home',
-    meta: { title: 'Beranda - Dosen Jaga' }
-}, {
-    path: '/e-tugas',
-    component: __WEBPACK_IMPORTED_MODULE_4__components_lecturer_ETugas_vue___default.a,
-    name: 'e-tugas',
-    meta: { title: 'E Tugas - Dosen Jaga' }
-}, {
-    path: '/e-tugas/add',
-    component: __WEBPACK_IMPORTED_MODULE_5__components_lecturer_ETugasAdd_vue___default.a,
-    name: 'e-tugas-add',
-    meta: {
-        title: 'E Tugas Baru - Dosen Jaga'
-    }
-}, {
-    path: '/e-tugas/edit/:id',
-    component: __WEBPACK_IMPORTED_MODULE_6__components_lecturer_ETugasEdit_vue___default.a,
-    name: 'e-tugas-edit',
-    meta: {
-        title: 'E Tugas Edit - Dosen Jaga'
-    }
-}, {
-    path: '/materi',
-    component: __WEBPACK_IMPORTED_MODULE_8__components_lecturer_Materi_vue___default.a,
-    name: 'materi',
-    meta: { title: 'Materi - Dosen Jaga' }
-}, {
-    path: '/materi/add',
-    component: __WEBPACK_IMPORTED_MODULE_9__components_lecturer_MateriAdd_vue___default.a,
-    name: 'materi-add',
-    meta: {
-        title: 'Materi Baru - Dosen Jaga'
-    }
-}, {
-    path: '/report',
-    component: __WEBPACK_IMPORTED_MODULE_10__components_lecturer_Report_vue___default.a,
-    name: 'report',
-    meta: {
-        title: 'Laporan - Dosen Jaga'
-    }
-}, {
-    path: '/schedule',
-    component: __WEBPACK_IMPORTED_MODULE_7__components_lecturer_Schedule_vue___default.a,
-    name: 'schedule',
-    meta: {
-        title: 'Jadwal - Dosen Jaga'
-    }
-}, {
-    path: '/login',
-    component: __WEBPACK_IMPORTED_MODULE_11__components_Login_vue___default.a,
-    name: 'login',
-    meta: {
-        title: 'Login - Dosen Jaga'
-    }
-}, {
-    path: '/not-found',
-    component: __WEBPACK_IMPORTED_MODULE_12__components_NotFound_vue___default.a,
-    name: 'not-found',
-    meta: {
-        title: '404 - Dosen Jaga'
-    }
-}];
-
-var router = new __WEBPACK_IMPORTED_MODULE_0_vue_router__["a" /* default */]({
-    routes: routes
-});
-
 // Add title in header
-router.beforeEach(function (to, from, next) {
+__WEBPACK_IMPORTED_MODULE_2__lecturer_router__["a" /* default */].beforeEach(function (to, from, next) {
     if (!to.matched.length) {
         next('/not-found');
     } else {
@@ -31884,7 +31766,7 @@ router.beforeEach(function (to, from, next) {
 
 new Vue({
     el: "#app",
-    router: router
+    router: __WEBPACK_IMPORTED_MODULE_2__lecturer_router__["a" /* default */], StudentRouter: __WEBPACK_IMPORTED_MODULE_3__student_router__["a" /* default */]
 });
 
 /***/ }),
@@ -99967,15 +99849,34 @@ if (false) {
 }
 
 /***/ }),
-/* 217 */
+/* 217 */,
+/* 218 */,
+/* 219 */,
+/* 220 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 221 */,
+/* 222 */,
+/* 223 */,
+/* 224 */,
+/* 225 */,
+/* 226 */,
+/* 227 */,
+/* 228 */,
+/* 229 */,
+/* 230 */,
+/* 231 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(218)
+var __vue_script__ = __webpack_require__(237)
 /* template */
-var __vue_template__ = __webpack_require__(219)
+var __vue_template__ = __webpack_require__(238)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -99992,7 +99893,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/components/lecturer/Example.vue"
+Component.options.__file = "resources/assets/js/components/student/Layout.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -100001,9 +99902,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-9b2288f4", Component.options)
+    hotAPI.createRecord("data-v-272c6875", Component.options)
   } else {
-    hotAPI.reload("data-v-9b2288f4", Component.options)
+    hotAPI.reload("data-v-272c6875", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -100014,7 +99915,282 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 218 */
+/* 232 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = null
+/* template */
+var __vue_template__ = __webpack_require__(239)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/student/Home.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-7dbed06a", Component.options)
+  } else {
+    hotAPI.reload("data-v-7dbed06a", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 233 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(240)
+}
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(242)
+/* template */
+var __vue_template__ = __webpack_require__(243)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/student/ETugas.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-ee69c7c4", Component.options)
+  } else {
+    hotAPI.reload("data-v-ee69c7c4", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 234 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(244)
+/* template */
+var __vue_template__ = __webpack_require__(245)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/student/Schedule.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-217b60a2", Component.options)
+  } else {
+    hotAPI.reload("data-v-217b60a2", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 235 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(246)
+}
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(248)
+/* template */
+var __vue_template__ = __webpack_require__(249)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/student/Materi.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-054fc772", Component.options)
+  } else {
+    hotAPI.reload("data-v-054fc772", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 236 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_router__ = __webpack_require__(185);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_student_Layout_vue__ = __webpack_require__(231);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_student_Layout_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_student_Layout_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_student_Home_vue__ = __webpack_require__(232);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_student_Home_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_student_Home_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_student_ETugas_vue__ = __webpack_require__(233);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_student_ETugas_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__components_student_ETugas_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_student_Schedule_vue__ = __webpack_require__(234);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_student_Schedule_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__components_student_Schedule_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_student_Materi_vue__ = __webpack_require__(235);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_student_Materi_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__components_student_Materi_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_student_Report_vue__ = __webpack_require__(251);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_student_Report_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__components_student_Report_vue__);
+
+
+
+
+
+
+
+
+
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]);
+
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('layout', __webpack_require__(231));
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('beranda', __webpack_require__(232));
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('etugas', __webpack_require__(233));
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('jadwal', __webpack_require__(234));
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('laporan', __webpack_require__(251));
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('materi-kuliah', __webpack_require__(235));
+
+var routes = [{
+    path: '/beranda',
+    component: __WEBPACK_IMPORTED_MODULE_3__components_student_Home_vue___default.a,
+    name: 'beranda',
+    meta: {
+        title: 'Beranda - Dosen Jaga'
+    }
+}, {
+    path: '/etugas',
+    component: __WEBPACK_IMPORTED_MODULE_4__components_student_ETugas_vue___default.a,
+    name: 'etugas',
+    meta: {
+        title: 'Etugas - Dosen Jaga'
+    }
+}, {
+    path: '/materi-kuliah',
+    component: __WEBPACK_IMPORTED_MODULE_6__components_student_Materi_vue___default.a,
+    name: 'materi-kuliah',
+    meta: {
+        title: 'Materi - Dosen Jaga'
+    }
+}, {
+    path: '/laporan',
+    component: __WEBPACK_IMPORTED_MODULE_7__components_student_Report_vue___default.a,
+    name: 'laporan',
+    meta: {
+        title: 'Laporan - Dosen Jaga'
+    }
+}, {
+    path: '/jadwal',
+    component: __WEBPACK_IMPORTED_MODULE_5__components_student_Schedule_vue___default.a,
+    name: 'laporan',
+    meta: {
+        title: 'Jadwal - Dosen Jaga'
+    }
+}];
+
+/* harmony default export */ __webpack_exports__["a"] = (new __WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]({
+    routes: routes
+}));
+
+/***/ }),
+/* 237 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -100035,61 +100211,2063 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    mounted: function mounted() {
-        console.log('Component mounted.');
+  data: function data() {
+    return {
+      dialog: false,
+      drawer: null,
+      items: [{ icon: 'home', text: 'Beranda', link: '/beranda' }, { icon: 'history', text: 'E-tugas', link: '/etugas' }, { icon: 'content_copy', text: 'Materi', link: '/materi-kuliah' }, { icon: 'date_range', text: 'Jadwal', link: '/jadwal' }, { icon: 'assessment', text: 'Laporan', link: '/laporan' }]
+    };
+  },
+  props: {
+    source: String
+  },
+  methods: {
+    link: function link(_link) {
+      this.$router.push(_link);
+    },
+    logout: function logout() {
+      var base_url = window.location.origin;
+      window.location.href = base_url + '/logout';
     }
+  }
 });
 
 /***/ }),
-/* 219 */
+/* 238 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "container" }, [
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-md-8 col-md-offset-2" }, [
-          _c("div", { staticClass: "panel panel-default" }, [
-            _c("div", { staticClass: "panel-heading" }, [
-              _vm._v("Example Component")
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "panel-body" }, [
-              _vm._v(
-                "\n                    I'm an example component!\n                "
+  return _c(
+    "v-app",
+    { attrs: { id: "inspire" } },
+    [
+      _c(
+        "v-navigation-drawer",
+        {
+          attrs: {
+            clipped: _vm.$vuetify.breakpoint.lgAndUp,
+            width: "250",
+            fixed: "",
+            app: ""
+          },
+          model: {
+            value: _vm.drawer,
+            callback: function($$v) {
+              _vm.drawer = $$v
+            },
+            expression: "drawer"
+          }
+        },
+        [
+          _c(
+            "v-list",
+            { attrs: { dense: "" } },
+            [
+              _vm._l(_vm.items, function(item) {
+                return [
+                  item.heading
+                    ? _c("v-layout", {
+                        key: item.heading,
+                        attrs: { row: "", "align-center": "" }
+                      })
+                    : _c(
+                        "v-list-tile",
+                        {
+                          key: item.text,
+                          on: {
+                            click: function($event) {
+                              _vm.link(item.link)
+                            }
+                          }
+                        },
+                        [
+                          _c(
+                            "v-list-tile-action",
+                            [
+                              _c("v-icon", { staticClass: "ml-0 pl-3" }, [
+                                _vm._v(_vm._s(item.icon))
+                              ])
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-list-tile-content",
+                            [
+                              _c("v-list-tile-title", [
+                                _vm._v(
+                                  "\n              " +
+                                    _vm._s(item.text) +
+                                    "\n            "
+                                )
+                              ])
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                ]
+              })
+            ],
+            2
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-toolbar",
+        {
+          attrs: {
+            "clipped-left": _vm.$vuetify.breakpoint.lgAndUp,
+            color: "blue darken-3",
+            dark: "",
+            app: "",
+            fixed: ""
+          }
+        },
+        [
+          _c(
+            "v-toolbar-title",
+            { staticClass: "ml-0 pl-0", staticStyle: { width: "300px" } },
+            [
+              _c("v-toolbar-side-icon", {
+                on: {
+                  click: function($event) {
+                    $event.stopPropagation()
+                    _vm.drawer = !_vm.drawer
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "span",
+                { staticClass: "hidden-sm-and-down font-weight-regular" },
+                [_vm._v("Dosen Jaga")]
               )
-            ])
-          ])
-        ])
-      ])
-    ])
-  }
-]
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c("v-text-field", {
+            staticClass: "hidden-sm-and-down",
+            attrs: {
+              flat: "",
+              "solo-inverted": "",
+              "hide-details": "",
+              "prepend-inner-icon": "search",
+              label: "Search"
+            }
+          }),
+          _vm._v(" "),
+          _c("v-spacer"),
+          _vm._v(" "),
+          _c(
+            "v-btn",
+            { attrs: { icon: "" } },
+            [_c("v-icon", [_vm._v("apps")])],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-btn",
+            { attrs: { icon: "" } },
+            [_c("v-icon", [_vm._v("notifications")])],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-menu",
+            { attrs: { bottom: "", left: "", "full-width": "" } },
+            [
+              _c(
+                "v-avatar",
+                { attrs: { slot: "activator" }, slot: "activator" },
+                [_c("v-icon", [_vm._v("account_circle")])],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-list",
+                [
+                  _c(
+                    "v-list-tile",
+                    { on: { click: _vm.logout } },
+                    [_c("v-list-tile-title", [_vm._v("Keluar")])],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-content",
+        [
+          _c(
+            "v-container",
+            { attrs: { fluid: "", "fill-height": "" } },
+            [
+              _c(
+                "v-layout",
+                { attrs: { "justify-start": "", "align-left": "" } },
+                [
+                  _c("router-view", { attrs: { name: "home" } }),
+                  _vm._v(" "),
+                  _c("router-view")
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-9b2288f4", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-272c6875", module.exports)
   }
 }
 
 /***/ }),
-/* 220 */
-/***/ (function(module, exports) {
+/* 239 */
+/***/ (function(module, exports, __webpack_require__) {
 
-// removed by extract-text-webpack-plugin
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c("h1", { staticClass: "font-weight-light" }, [_vm._v("Beranda")]),
+      _vm._v(" "),
+      _c("v-btn", { attrs: { small: "" } }, [_vm._v("Normal")])
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-7dbed06a", module.exports)
+  }
+}
+
+/***/ }),
+/* 240 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(241);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(26)("39b10236", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-ee69c7c4\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ETugas.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-ee69c7c4\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ETugas.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 241 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(5)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.fab-container {\r\n  position: fixed;\r\n  bottom: 20px;\r\n  right: 0;\n}\r\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 242 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_content_loader__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_moment__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_moment__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+__WEBPACK_IMPORTED_MODULE_1_moment__["locale"]('id');
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            headerTable: [{ text: 'Modul', value: 'modul' }, { text: 'Matakuliah', value: 'matakuliah' }, { text: 'Kelas', value: 'kelas' }, { text: 'Judul Materi', value: 'judul' }, { text: 'Keterangan', value: 'keterangan' }, { text: 'Due Date', value: 'due_date' }, { text: 'File Materi', value: 'file_url' }, { text: 'Aksi', value: 'id' }],
+            bodyTable: [],
+            semesters: [],
+            descriptionSemester: '',
+            filter: '',
+            snackbarText: '',
+            snackbar: false,
+            isLoaded: false,
+            dialog: false,
+            title_confirm: '',
+            desc_confirm: '',
+            remove_id: ''
+        };
+    },
+
+    components: {
+        ContentLoader: __WEBPACK_IMPORTED_MODULE_0_vue_content_loader__["a" /* ContentLoader */]
+    },
+    mounted: function mounted() {
+        this.initData();
+    },
+
+    methods: {
+        initData: function initData() {
+            var app = this;
+            axios.get('lecturer/e-tugas').then(function (resp) {
+                app.isLoaded = true;
+                app.bodyTable = resp.data.data;
+                app.semesters = resp.data.data_semester;
+            }).catch(function (resp) {
+                app.showSnackbar("oops, something went wrong. Please try again!");
+            });
+        },
+        showSnackbar: function showSnackbar(text) {
+            var app = this;
+            app.snackbarText = text;
+            app.snackbar = true;
+        },
+        selectSemester: function selectSemester() {
+            if (!this.filter) return false;
+            var app = this;
+            axios.get('lecturer/e-tugas/get-by-semester/' + app.filter).then(function (resp) {
+                app.bodyTable = resp.data.data;
+            }).catch(function (resp) {
+                app.showSnackbar("oops, something went wrong. Please try again!");
+            });
+        },
+        remove: function remove(id) {
+            this.dialog = true;
+
+            var matakuliah = $('#matakuliah-' + id).html();
+            var kelas = $('#kelas-' + id).html();
+            var judul = $('#judul-' + id).html();
+            var keterangan = $('#keterangan-' + id).html();
+            var app = this;
+            app.title_confirm = 'Yakin ingin menghapus tugas ?';
+            app.desc_confirm = 'Tugas dengan judul "' + judul + ' kelas ' + kelas + '" yang dihapus tidak bisa dikembalikan.';
+            app.remove_id = id;
+        },
+        sureRemoveMe: function sureRemoveMe() {
+            var app = this;
+            axios.get('lecturer/e-tugas/remove/' + app.remove_id).then(function (resp) {
+                app.dialog = false;
+                app.showSnackbar("Berhasil menghapus data");
+                $('#tr-' + app.remove_id).fadeOut();
+            }).catch(function (resp) {
+                app.dialog = false;
+                app.showSnackbar("oops, something went wrong. Please try again!");
+            });
+        },
+        dateView: function dateView(date) {
+            if (date != '0000-00-00 00:00:00') {
+                return __WEBPACK_IMPORTED_MODULE_1_moment__(date).format("dddd, MMMM Do YYYY, h:mm:ss a");
+            }
+
+            return '-';
+        }
+    }
+});
+
+/***/ }),
+/* 243 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "v-flex",
+    { attrs: { sm12: "" } },
+    [
+      _c("h1", { staticClass: "font-weight-light" }, [_vm._v("E Tugas")]),
+      _vm._v(" "),
+      _c("div", { staticClass: "subheading" }, [
+        _vm._v(
+          "Tambahkan tugas sebagai bahwan evaluasi mahasiswa dalam memahami pelajaran"
+        )
+      ]),
+      _vm._v(" "),
+      !_vm.isLoaded
+        ? _c("content-loader", { attrs: { height: "250" } })
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.isLoaded
+        ? _c(
+            "v-flex",
+            { attrs: { md5: "", "mt-5": "" } },
+            [
+              _c("v-select", {
+                attrs: {
+                  items: _vm.semesters,
+                  label: "Filter jadwal",
+                  "item-text": "tahun",
+                  "item-value": "kuliah",
+                  solo: ""
+                },
+                on: {
+                  change: function($event) {
+                    _vm.selectSemester()
+                  }
+                },
+                scopedSlots: _vm._u([
+                  {
+                    key: "selection",
+                    fn: function(data) {
+                      return [
+                        _vm._v(
+                          "\n                " +
+                            _vm._s(data.item.tahun) +
+                            " / " +
+                            _vm._s(data.item.semester) +
+                            " - " +
+                            _vm._s(data.item.jurusan) +
+                            " (" +
+                            _vm._s(data.item.kelas) +
+                            " " +
+                            _vm._s(data.item.pararel) +
+                            ")\n            "
+                        )
+                      ]
+                    }
+                  },
+                  {
+                    key: "item",
+                    fn: function(data) {
+                      return [
+                        _vm._v(
+                          "\n                " +
+                            _vm._s(data.item.tahun) +
+                            " / " +
+                            _vm._s(data.item.semester) +
+                            " - " +
+                            _vm._s(data.item.jurusan) +
+                            " (" +
+                            _vm._s(data.item.kelas) +
+                            " " +
+                            _vm._s(data.item.pararel) +
+                            ")\n            "
+                        )
+                      ]
+                    }
+                  }
+                ]),
+                model: {
+                  value: _vm.filter,
+                  callback: function($$v) {
+                    _vm.filter = $$v
+                  },
+                  expression: "filter"
+                }
+              })
+            ],
+            1
+          )
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.isLoaded
+        ? _c(
+            "v-flex",
+            { attrs: { sm12: "" } },
+            [
+              _c("v-data-table", {
+                staticClass: "elevation-1",
+                attrs: {
+                  headers: _vm.headerTable,
+                  items: _vm.bodyTable,
+                  "hide-actions": ""
+                },
+                scopedSlots: _vm._u([
+                  {
+                    key: "items",
+                    fn: function(props) {
+                      return [
+                        _c("tr", { attrs: { id: "tr-" + props.item.id } }, [
+                          _c("td", [_vm._v(_vm._s(props.item.modul))]),
+                          _vm._v(" "),
+                          _c(
+                            "td",
+                            {
+                              staticClass: "text-xs-left",
+                              attrs: { id: "matakuliah-" + props.item.id }
+                            },
+                            [_vm._v(_vm._s(props.item.matakuliah))]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "td",
+                            {
+                              staticClass: "text-xs-left",
+                              attrs: { id: "kelas-" + props.item.id }
+                            },
+                            [
+                              _vm._v(
+                                _vm._s(props.item.tahun) +
+                                  " / " +
+                                  _vm._s(props.item.semester) +
+                                  " - " +
+                                  _vm._s(props.item.program) +
+                                  " " +
+                                  _vm._s(props.item.jurusan) +
+                                  " (" +
+                                  _vm._s(props.item.kelas) +
+                                  " " +
+                                  _vm._s(props.item.pararel) +
+                                  ")"
+                              )
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "td",
+                            {
+                              staticClass: "text-xs-left",
+                              attrs: { id: "judul-" + props.item.id }
+                            },
+                            [_vm._v(_vm._s(props.item.judul))]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "td",
+                            {
+                              staticClass: "text-xs-center",
+                              attrs: { id: "keterangan-" + props.item.id }
+                            },
+                            [_vm._v(_vm._s(props.item.keterangan))]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "td",
+                            {
+                              staticClass: "text-xs-center",
+                              attrs: { id: "due-date-" + props.item.id }
+                            },
+                            [_vm._v(_vm._s(_vm.dateView(props.item.due_date)))]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "td",
+                            { staticClass: "text-xs-center" },
+                            [
+                              props.item.file_url
+                                ? [
+                                    _c(
+                                      "a",
+                                      {
+                                        attrs: {
+                                          slot: "activator",
+                                          href: props.item.file_url
+                                        },
+                                        slot: "activator"
+                                      },
+                                      [_vm._v(" Download File ")]
+                                    )
+                                  ]
+                                : _vm._e()
+                            ],
+                            2
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "td",
+                            { staticClass: "text-xs-center" },
+                            [
+                              _c(
+                                "v-layout",
+                                { attrs: { "justify-space-around": "" } },
+                                [
+                                  _c(
+                                    "v-btn",
+                                    {
+                                      attrs: {
+                                        flat: "",
+                                        icon: "",
+                                        color: "info"
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          _vm.remove(props.item.id)
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c("v-icon", { attrs: { dark: "" } }, [
+                                        _vm._v("list_alt")
+                                      ])
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "router-link",
+                                    {
+                                      attrs: {
+                                        to: "/e-tugas/edit/" + props.item.id
+                                      }
+                                    },
+                                    [
+                                      _c(
+                                        "v-btn",
+                                        {
+                                          attrs: {
+                                            flat: "",
+                                            icon: "",
+                                            color: "green"
+                                          }
+                                        },
+                                        [
+                                          _c(
+                                            "v-icon",
+                                            { attrs: { dark: "" } },
+                                            [_vm._v("create")]
+                                          )
+                                        ],
+                                        1
+                                      )
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-btn",
+                                    {
+                                      attrs: {
+                                        flat: "",
+                                        icon: "",
+                                        color: "pink"
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          _vm.remove(props.item.id)
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c("v-icon", { attrs: { dark: "" } }, [
+                                        _vm._v("delete")
+                                      ])
+                                    ],
+                                    1
+                                  )
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          )
+                        ])
+                      ]
+                    }
+                  }
+                ])
+              })
+            ],
+            1
+          )
+        : _vm._e(),
+      _vm._v(" "),
+      _c(
+        "v-layout",
+        { staticClass: "fab-container", attrs: { column: "" } },
+        [
+          _c(
+            "router-link",
+            { attrs: { to: "e-tugas/add" } },
+            [
+              _c(
+                "v-btn",
+                { attrs: { fab: "", dark: "", color: "pink" } },
+                [_c("v-icon", [_vm._v("add")])],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      [
+        _c(
+          "v-layout",
+          { attrs: { row: "", "justify-center": "" } },
+          [
+            _c(
+              "v-dialog",
+              {
+                attrs: { persistent: "", "max-width": "400" },
+                model: {
+                  value: _vm.dialog,
+                  callback: function($$v) {
+                    _vm.dialog = $$v
+                  },
+                  expression: "dialog"
+                }
+              },
+              [
+                _c(
+                  "v-card",
+                  [
+                    _c("v-card-title", { staticClass: "headline" }, [
+                      _vm._v(_vm._s(_vm.title_confirm))
+                    ]),
+                    _vm._v(" "),
+                    _c("v-card-text", [_vm._v(_vm._s(_vm.desc_confirm))]),
+                    _vm._v(" "),
+                    _c(
+                      "v-card-actions",
+                      [
+                        _c("v-spacer"),
+                        _vm._v(" "),
+                        _c(
+                          "v-btn",
+                          {
+                            attrs: { color: "primary darken-1", flat: "" },
+                            on: { click: _vm.sureRemoveMe }
+                          },
+                          [_vm._v("Ya, Setuju hapus")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "v-btn",
+                          {
+                            attrs: { color: "warning darken-1", flat: "" },
+                            nativeOn: {
+                              click: function($event) {
+                                _vm.dialog = false
+                              }
+                            }
+                          },
+                          [_vm._v("Batalkan")]
+                        )
+                      ],
+                      1
+                    )
+                  ],
+                  1
+                )
+              ],
+              1
+            )
+          ],
+          1
+        )
+      ]
+    ],
+    2
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-ee69c7c4", module.exports)
+  }
+}
+
+/***/ }),
+/* 244 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_content_loader__ = __webpack_require__(3);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            headerTable: [{ text: 'Modul', value: 'modul' }, { text: 'Matakuliah', value: 'matakuliah' }, { text: 'Program', value: 'program' }, { text: 'Jurusan', value: 'jurusan' }, { text: 'Tahun', value: 'tahun' }, { text: 'Semester', value: 'semester' }, { text: 'Paralel', value: 'paralel' }],
+            bodyTable: [],
+            semesters: [],
+            descriptionSemester: '',
+            filter: '',
+            snackbarText: '',
+            snackbar: false,
+            isLoaded: false
+        };
+    },
+
+    components: {
+        ContentLoader: __WEBPACK_IMPORTED_MODULE_0_vue_content_loader__["a" /* ContentLoader */]
+    },
+    mounted: function mounted() {
+        this.initData();
+    },
+
+    methods: {
+        initData: function initData() {
+            var app = this;
+            axios.get('lecturer/schedule').then(function (resp) {
+                app.isLoaded = true;
+                app.descriptionSemester = resp.data.keterangan;
+                app.bodyTable = resp.data.data;
+                app.semesters = resp.data.data_semester;
+            }).catch(function (resp) {
+                showSnackbar("oops, something went wrong. Please try again!");
+            });
+        },
+        showSnackbar: function showSnackbar(text) {
+            var app = this;
+            app.snackbarText = text;
+            app.snackbar = true;
+        },
+        selectSemester: function selectSemester() {
+            if (!this.filter) return false;
+            var app = this;
+            app.isLoaded = false;
+            axios.get('lecturer/schedule/get-by-semester/' + app.filter).then(function (resp) {
+                app.isLoaded = true;
+                app.descriptionSemester = resp.data.keterangan;
+                app.bodyTable = resp.data.data;
+            }).catch(function (resp) {
+                showSnackbar("oops, something went wrong. Please try again!");
+            });
+        }
+    }
+});
+
+/***/ }),
+/* 245 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "v-flex",
+    { attrs: { sm12: "" } },
+    [
+      _c("h1", { staticClass: "font-weight-light" }, [_vm._v("Jadwal")]),
+      _vm._v(" "),
+      _c("div", { staticClass: "subheading" }, [
+        _vm._v("Modul untuk perkuliahan " + _vm._s(_vm.descriptionSemester))
+      ]),
+      _vm._v(" "),
+      !_vm.isLoaded
+        ? _c("content-loader", { attrs: { height: "250" } })
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.isLoaded
+        ? _c(
+            "v-flex",
+            { attrs: { sm6: "", "d-flex": "", "mt-5": "" } },
+            [
+              _c("v-select", {
+                attrs: {
+                  items: _vm.semesters,
+                  label: "Filter jadwal",
+                  "item-text": "tahun",
+                  "item-value": "kuliah",
+                  solo: ""
+                },
+                on: {
+                  change: function($event) {
+                    _vm.selectSemester()
+                  }
+                },
+                scopedSlots: _vm._u([
+                  {
+                    key: "selection",
+                    fn: function(data) {
+                      return [
+                        _vm._v(
+                          "\n                " +
+                            _vm._s(data.item.tahun) +
+                            " / " +
+                            _vm._s(data.item.semester) +
+                            " - " +
+                            _vm._s(data.item.jurusan) +
+                            " (" +
+                            _vm._s(data.item.kelas) +
+                            " " +
+                            _vm._s(data.item.pararel) +
+                            ")\n            "
+                        )
+                      ]
+                    }
+                  },
+                  {
+                    key: "item",
+                    fn: function(data) {
+                      return [
+                        _vm._v(
+                          "\n                " +
+                            _vm._s(data.item.tahun) +
+                            " / " +
+                            _vm._s(data.item.semester) +
+                            " - " +
+                            _vm._s(data.item.jurusan) +
+                            " (" +
+                            _vm._s(data.item.kelas) +
+                            " " +
+                            _vm._s(data.item.pararel) +
+                            ")\n            "
+                        )
+                      ]
+                    }
+                  }
+                ]),
+                model: {
+                  value: _vm.filter,
+                  callback: function($$v) {
+                    _vm.filter = $$v
+                  },
+                  expression: "filter"
+                }
+              })
+            ],
+            1
+          )
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.isLoaded
+        ? _c(
+            "v-flex",
+            { attrs: { sm12: "" } },
+            [
+              _c("v-data-table", {
+                staticClass: "elevation-1",
+                attrs: {
+                  headers: _vm.headerTable,
+                  items: _vm.bodyTable,
+                  "hide-actions": ""
+                },
+                scopedSlots: _vm._u([
+                  {
+                    key: "items",
+                    fn: function(props) {
+                      return [
+                        _c("td", [_vm._v(_vm._s(props.item.modul))]),
+                        _vm._v(" "),
+                        _c("td", { staticClass: "text-xs-left" }, [
+                          _vm._v(_vm._s(props.item.matakuliah))
+                        ]),
+                        _vm._v(" "),
+                        _c("td", { staticClass: "text-xs-center" }, [
+                          _vm._v(_vm._s(props.item.program))
+                        ]),
+                        _vm._v(" "),
+                        _c("td", { staticClass: "text-xs-left" }, [
+                          _vm._v(_vm._s(props.item.jurusan))
+                        ]),
+                        _vm._v(" "),
+                        _c("td", { staticClass: "text-xs-left" }, [
+                          _vm._v(_vm._s(props.item.tahun))
+                        ]),
+                        _vm._v(" "),
+                        _c("td", { staticClass: "text-xs-center" }, [
+                          _vm._v(_vm._s(props.item.semester))
+                        ]),
+                        _vm._v(" "),
+                        _c("td", { staticClass: "text-xs-center" }, [
+                          _vm._v(_vm._s(props.item.pararel))
+                        ])
+                      ]
+                    }
+                  }
+                ])
+              })
+            ],
+            1
+          )
+        : _vm._e(),
+      _vm._v(" "),
+      _c(
+        "v-snackbar",
+        {
+          attrs: { right: "", bottom: "" },
+          model: {
+            value: _vm.snackbar,
+            callback: function($$v) {
+              _vm.snackbar = $$v
+            },
+            expression: "snackbar"
+          }
+        },
+        [
+          _vm._v(
+            "\n            " + _vm._s(_vm.snackbarText) + "\n            "
+          ),
+          _c(
+            "v-btn",
+            {
+              attrs: { dark: "", flat: "" },
+              on: {
+                click: function($event) {
+                  _vm.snackbar = false
+                }
+              }
+            },
+            [_vm._v("\n                Close\n            ")]
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-217b60a2", module.exports)
+  }
+}
+
+/***/ }),
+/* 246 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(247);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(26)("1139b78e", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-054fc772\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Materi.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-054fc772\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Materi.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 247 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(5)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.fab-container {\r\n  position: fixed;\r\n  bottom: 20px;\r\n  right: 0;\n}\r\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 248 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_content_loader__ = __webpack_require__(3);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            headerTable: [{ text: 'Modul', value: 'modul' }, { text: 'Matakuliah', value: 'matakuliah' }, { text: 'Kelas', value: 'kelas' }, { text: 'Judul Materi', value: 'judul' }, { text: 'Keterangan', value: 'keterangan' }, { text: 'File Materi', value: 'file_url' }, { text: 'Aksi', value: 'id' }],
+            bodyTable: [],
+            semesters: [],
+            descriptionSemester: '',
+            filter: '',
+            snackbarText: '',
+            snackbar: false,
+            isLoaded: false,
+            dialog: false,
+            title_confirm: '',
+            desc_confirm: '',
+            remove_id: ''
+        };
+    },
+
+    components: {
+        ContentLoader: __WEBPACK_IMPORTED_MODULE_0_vue_content_loader__["a" /* ContentLoader */]
+    },
+    mounted: function mounted() {
+        this.initData();
+    },
+
+    methods: {
+        initData: function initData() {
+            var app = this;
+            axios.get('lecturer/materi').then(function (resp) {
+                app.isLoaded = true;
+                app.bodyTable = resp.data.data;
+                app.semesters = resp.data.data_semester;
+            }).catch(function (resp) {
+                app.showSnackbar("oops, something went wrong. Please try again!");
+            });
+        },
+        showSnackbar: function showSnackbar(text) {
+            var app = this;
+            app.snackbarText = text;
+            app.snackbar = true;
+        },
+        selectSemester: function selectSemester() {
+            if (!this.filter) return false;
+            var app = this;
+            axios.get('lecturer/materi/get-by-semester/' + app.filter).then(function (resp) {
+                app.bodyTable = resp.data.data;
+            }).catch(function (resp) {
+                app.showSnackbar("oops, something went wrong. Please try again!");
+            });
+        },
+        remove: function remove(id) {
+            this.dialog = true;
+
+            var matakuliah = $('#matakuliah-' + id).html();
+            var kelas = $('#kelas-' + id).html();
+            var judul = $('#judul-' + id).html();
+            var keterangan = $('#keterangan-' + id).html();
+            var app = this;
+            app.title_confirm = 'Yakin ingin menghapus materi ?';
+            app.desc_confirm = 'Materi dengan judul "' + judul + ' kelas ' + kelas + '" yang dihapus tidak bisa dikembalikan.';
+            app.remove_id = id;
+        },
+        sureRemoveMe: function sureRemoveMe() {
+            var app = this;
+            axios.get('lecturer/materi/remove/' + app.remove_id).then(function (resp) {
+                app.dialog = false;
+                app.showSnackbar("Berhasil menghapus data");
+                $('#tr-' + app.remove_id).fadeOut();
+            }).catch(function (resp) {
+                app.dialog = false;
+                app.showSnackbar("oops, something went wrong. Please try again!");
+            });
+        }
+    }
+});
+
+/***/ }),
+/* 249 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "v-flex",
+    { attrs: { sm12: "" } },
+    [
+      _c("h1", { staticClass: "font-weight-light" }, [_vm._v("Materi")]),
+      _vm._v(" "),
+      _c("div", { staticClass: "subheading" }, [
+        _vm._v("Tambahkan materi sebagai penunjang belajar mahasiswa")
+      ]),
+      _vm._v(" "),
+      !_vm.isLoaded
+        ? _c("content-loader", { attrs: { height: "250" } })
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.isLoaded
+        ? _c(
+            "v-flex",
+            { attrs: { md5: "", "mt-5": "" } },
+            [
+              _c("v-select", {
+                attrs: {
+                  items: _vm.semesters,
+                  label: "Filter jadwal",
+                  "item-text": "tahun",
+                  "item-value": "kuliah",
+                  solo: ""
+                },
+                on: {
+                  change: function($event) {
+                    _vm.selectSemester()
+                  }
+                },
+                scopedSlots: _vm._u([
+                  {
+                    key: "selection",
+                    fn: function(data) {
+                      return [
+                        _vm._v(
+                          "\n                " +
+                            _vm._s(data.item.tahun) +
+                            " / " +
+                            _vm._s(data.item.semester) +
+                            " - " +
+                            _vm._s(data.item.jurusan) +
+                            " (" +
+                            _vm._s(data.item.kelas) +
+                            " " +
+                            _vm._s(data.item.pararel) +
+                            ")\n            "
+                        )
+                      ]
+                    }
+                  },
+                  {
+                    key: "item",
+                    fn: function(data) {
+                      return [
+                        _vm._v(
+                          "\n                " +
+                            _vm._s(data.item.tahun) +
+                            " / " +
+                            _vm._s(data.item.semester) +
+                            " - " +
+                            _vm._s(data.item.jurusan) +
+                            " (" +
+                            _vm._s(data.item.kelas) +
+                            " " +
+                            _vm._s(data.item.pararel) +
+                            ")\n            "
+                        )
+                      ]
+                    }
+                  }
+                ]),
+                model: {
+                  value: _vm.filter,
+                  callback: function($$v) {
+                    _vm.filter = $$v
+                  },
+                  expression: "filter"
+                }
+              })
+            ],
+            1
+          )
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.isLoaded
+        ? _c(
+            "v-flex",
+            { attrs: { sm12: "" } },
+            [
+              _c("v-data-table", {
+                staticClass: "elevation-1",
+                attrs: {
+                  headers: _vm.headerTable,
+                  items: _vm.bodyTable,
+                  "hide-actions": "",
+                  light: ""
+                },
+                scopedSlots: _vm._u([
+                  {
+                    key: "items",
+                    fn: function(props) {
+                      return [
+                        _c("tr", { attrs: { id: "tr-" + props.item.id } }, [
+                          _c("td", [_vm._v(_vm._s(props.item.modul))]),
+                          _vm._v(" "),
+                          _c(
+                            "td",
+                            {
+                              staticClass: "text-xs-left",
+                              attrs: { id: "matakuliah-" + props.item.id }
+                            },
+                            [_vm._v(_vm._s(props.item.matakuliah))]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "td",
+                            {
+                              staticClass: "text-xs-left",
+                              attrs: { id: "kelas-" + props.item.id }
+                            },
+                            [
+                              _vm._v(
+                                _vm._s(props.item.tahun) +
+                                  " / " +
+                                  _vm._s(props.item.semester) +
+                                  " - " +
+                                  _vm._s(props.item.program) +
+                                  " " +
+                                  _vm._s(props.item.jurusan) +
+                                  " (" +
+                                  _vm._s(props.item.kelas) +
+                                  " " +
+                                  _vm._s(props.item.pararel) +
+                                  ")"
+                              )
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "td",
+                            {
+                              staticClass: "text-xs-left",
+                              attrs: { id: "judul-" + props.item.id }
+                            },
+                            [_vm._v(_vm._s(props.item.judul))]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "td",
+                            {
+                              staticClass: "text-xs-center",
+                              attrs: { id: "keterangan" + props.item.id }
+                            },
+                            [_vm._v(_vm._s(props.item.keterangan))]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "td",
+                            { staticClass: "text-xs-center" },
+                            [
+                              props.item.file_url
+                                ? [
+                                    _c(
+                                      "a",
+                                      {
+                                        attrs: {
+                                          slot: "activator",
+                                          href: props.item.file_url
+                                        },
+                                        slot: "activator"
+                                      },
+                                      [_vm._v(" Download File ")]
+                                    )
+                                  ]
+                                : _vm._e()
+                            ],
+                            2
+                          ),
+                          _vm._v(" "),
+                          _c("td", { staticClass: "text-xs-center" }, [
+                            _c(
+                              "div",
+                              { staticClass: "text-xs-center" },
+                              [
+                                _c(
+                                  "v-btn",
+                                  {
+                                    attrs: {
+                                      flat: "",
+                                      icon: "",
+                                      color: "pink"
+                                    },
+                                    on: {
+                                      click: function($event) {
+                                        _vm.remove(props.item.id)
+                                      }
+                                    }
+                                  },
+                                  [_c("v-icon", [_vm._v("delete")])],
+                                  1
+                                )
+                              ],
+                              1
+                            )
+                          ])
+                        ])
+                      ]
+                    }
+                  }
+                ])
+              })
+            ],
+            1
+          )
+        : _vm._e(),
+      _vm._v(" "),
+      _c(
+        "v-layout",
+        { staticClass: "fab-container", attrs: { column: "" } },
+        [
+          _c(
+            "router-link",
+            { attrs: { to: "materi/add" } },
+            [
+              _c(
+                "v-btn",
+                { attrs: { fab: "", dark: "", color: "pink" } },
+                [_c("v-icon", [_vm._v("add")])],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      [
+        _c(
+          "v-layout",
+          { attrs: { row: "", "justify-center": "" } },
+          [
+            _c(
+              "v-dialog",
+              {
+                attrs: { persistent: "", "max-width": "400" },
+                model: {
+                  value: _vm.dialog,
+                  callback: function($$v) {
+                    _vm.dialog = $$v
+                  },
+                  expression: "dialog"
+                }
+              },
+              [
+                _c(
+                  "v-card",
+                  [
+                    _c("v-card-title", { staticClass: "headline" }, [
+                      _vm._v(_vm._s(_vm.title_confirm))
+                    ]),
+                    _vm._v(" "),
+                    _c("v-card-text", [_vm._v(_vm._s(_vm.desc_confirm))]),
+                    _vm._v(" "),
+                    _c(
+                      "v-card-actions",
+                      [
+                        _c("v-spacer"),
+                        _vm._v(" "),
+                        _c(
+                          "v-btn",
+                          {
+                            attrs: { color: "primary darken-1", flat: "" },
+                            on: { click: _vm.sureRemoveMe }
+                          },
+                          [_vm._v("Ya, Setuju hapus")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "v-btn",
+                          {
+                            attrs: { color: "warning darken-1", flat: "" },
+                            nativeOn: {
+                              click: function($event) {
+                                _vm.dialog = false
+                              }
+                            }
+                          },
+                          [_vm._v("Batalkan")]
+                        )
+                      ],
+                      1
+                    )
+                  ],
+                  1
+                )
+              ],
+              1
+            )
+          ],
+          1
+        )
+      ]
+    ],
+    2
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-054fc772", module.exports)
+  }
+}
+
+/***/ }),
+/* 250 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_router__ = __webpack_require__(185);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_lecturer_Layout_vue__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_lecturer_Layout_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_lecturer_Layout_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_lecturer_Home_vue__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_lecturer_Home_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_lecturer_Home_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_lecturer_ETugas_vue__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_lecturer_ETugas_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__components_lecturer_ETugas_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_lecturer_ETugasAdd_vue__ = __webpack_require__(150);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_lecturer_ETugasAdd_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__components_lecturer_ETugasAdd_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_lecturer_ETugasEdit_vue__ = __webpack_require__(152);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_lecturer_ETugasEdit_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__components_lecturer_ETugasEdit_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_lecturer_Schedule_vue__ = __webpack_require__(153);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_lecturer_Schedule_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__components_lecturer_Schedule_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_lecturer_Materi_vue__ = __webpack_require__(154);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_lecturer_Materi_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__components_lecturer_Materi_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_lecturer_MateriAdd_vue__ = __webpack_require__(155);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_lecturer_MateriAdd_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9__components_lecturer_MateriAdd_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_lecturer_Report_vue__ = __webpack_require__(156);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_lecturer_Report_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10__components_lecturer_Report_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_Login_vue__ = __webpack_require__(157);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_Login_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11__components_Login_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_NotFound_vue__ = __webpack_require__(158);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_NotFound_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_12__components_NotFound_vue__);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]);
+
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('layout', __webpack_require__(23));
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('home', __webpack_require__(24));
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('e-tugas', __webpack_require__(25));
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('e-tugas-add', __webpack_require__(150));
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('e-tugas-edit', __webpack_require__(152));
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('schedule', __webpack_require__(153));
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('report', __webpack_require__(156));
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('materi', __webpack_require__(154));
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('materi-add', __webpack_require__(155));
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('login', __webpack_require__(157));
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('not-found', __webpack_require__(158));
+
+var routes = [{
+    path: '/',
+    component: __WEBPACK_IMPORTED_MODULE_2__components_lecturer_Layout_vue___default.a,
+    name: 'layout',
+    meta: {
+        title: 'Beranda - Dosen Jaga',
+        type: 'lecturer'
+    }
+}, {
+    path: '/layout',
+    component: __WEBPACK_IMPORTED_MODULE_2__components_lecturer_Layout_vue___default.a,
+    name: 'layout',
+    meta: {
+        title: 'Beranda - Dosen Jaga',
+        type: 'lecturer'
+    }
+}, {
+    path: '/home',
+    component: __WEBPACK_IMPORTED_MODULE_3__components_lecturer_Home_vue___default.a,
+    name: 'home',
+    meta: {
+        title: 'Beranda - Dosen Jaga',
+        type: 'lecturer'
+    }
+}, {
+    path: '/e-tugas',
+    component: __WEBPACK_IMPORTED_MODULE_4__components_lecturer_ETugas_vue___default.a,
+    name: 'e-tugas',
+    meta: {
+        title: 'E Tugas - Dosen Jaga',
+        type: 'lecturer'
+    }
+}, {
+    path: '/e-tugas/add',
+    component: __WEBPACK_IMPORTED_MODULE_5__components_lecturer_ETugasAdd_vue___default.a,
+    name: 'e-tugas-add',
+    meta: {
+        title: 'E Tugas Baru - Dosen Jaga',
+        type: 'lecturer'
+    }
+}, {
+    path: '/e-tugas/edit/:id',
+    component: __WEBPACK_IMPORTED_MODULE_6__components_lecturer_ETugasEdit_vue___default.a,
+    name: 'e-tugas-edit',
+    meta: {
+        title: 'E Tugas Edit - Dosen Jaga',
+        type: 'lecturer'
+    }
+}, {
+    path: '/materi',
+    component: __WEBPACK_IMPORTED_MODULE_8__components_lecturer_Materi_vue___default.a,
+    name: 'materi',
+    meta: {
+        title: 'Materi - Dosen Jaga',
+        type: 'lecturer'
+    }
+}, {
+    path: '/materi/add',
+    component: __WEBPACK_IMPORTED_MODULE_9__components_lecturer_MateriAdd_vue___default.a,
+    name: 'materi-add',
+    meta: {
+        title: 'Materi Baru - Dosen Jaga',
+        type: 'lecturer'
+    }
+}, {
+    path: '/report',
+    component: __WEBPACK_IMPORTED_MODULE_10__components_lecturer_Report_vue___default.a,
+    name: 'report',
+    meta: {
+        title: 'Laporan - Dosen Jaga',
+        type: 'lecturer'
+    }
+}, {
+    path: '/schedule',
+    component: __WEBPACK_IMPORTED_MODULE_7__components_lecturer_Schedule_vue___default.a,
+    name: 'schedule',
+    meta: {
+        title: 'Jadwal - Dosen Jaga',
+        type: 'lecturer'
+    }
+}, {
+    path: '/login',
+    component: __WEBPACK_IMPORTED_MODULE_11__components_Login_vue___default.a,
+    name: 'login',
+    meta: {
+        title: 'Login - Dosen Jaga',
+        type: 'lecturer'
+    }
+}, {
+    path: '/not-found',
+    component: __WEBPACK_IMPORTED_MODULE_12__components_NotFound_vue___default.a,
+    name: 'not-found',
+    meta: {
+        title: '404 - Dosen Jaga',
+        type: 'lecturer'
+    }
+}];
+
+/* harmony default export */ __webpack_exports__["a"] = (new __WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]({
+    routes: routes
+}));
+
+/***/ }),
+/* 251 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = null
+/* template */
+var __vue_template__ = __webpack_require__(252)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/student/Report.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-f424a502", Component.options)
+  } else {
+    hotAPI.reload("data-v-f424a502", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 252 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c("h1", { staticClass: "font-weight-light" }, [_vm._v("Laporan")]),
+      _vm._v(" "),
+      _c("v-btn", { attrs: { small: "" } }, [_vm._v("Normal")])
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-f424a502", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);
