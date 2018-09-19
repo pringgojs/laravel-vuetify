@@ -11,6 +11,9 @@
 |
 */
 Route::group(['prefix' => 'student', 'middleware' => 'role:student'], function () {
+    // schedule
+    Route::get('schedule/get-by-semester/{kuliah}', 'StudentController@getBySemester');
+    Route::get('schedule', 'StudentController@schedule');
     Route::get('/', 'StudentController@index');
 });
 

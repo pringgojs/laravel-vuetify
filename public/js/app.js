@@ -101172,25 +101172,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -101199,9 +101180,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             headerTable: [{ text: 'Modul', value: 'modul' }, { text: 'Matakuliah', value: 'matakuliah' }, { text: 'Program', value: 'program' }, { text: 'Jurusan', value: 'jurusan' }, { text: 'Tahun', value: 'tahun' }, { text: 'Semester', value: 'semester' }, { text: 'Paralel', value: 'paralel' }],
             bodyTable: [],
-            semesters: [],
-            descriptionSemester: '',
-            filter: '',
             snackbarText: '',
             snackbar: false,
             isLoaded: false
@@ -101218,31 +101196,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     methods: {
         initData: function initData() {
             var app = this;
-            axios.get('lecturer/schedule').then(function (resp) {
+            axios.get('student/schedule').then(function (resp) {
                 app.isLoaded = true;
-                app.descriptionSemester = resp.data.keterangan;
                 app.bodyTable = resp.data.data;
-                app.semesters = resp.data.data_semester;
             }).catch(function (resp) {
-                showSnackbar("oops, something went wrong. Please try again!");
+                app.showSnackbar("oops, something went wrong. Please try again!");
             });
         },
         showSnackbar: function showSnackbar(text) {
             var app = this;
             app.snackbarText = text;
             app.snackbar = true;
-        },
-        selectSemester: function selectSemester() {
-            if (!this.filter) return false;
-            var app = this;
-            app.isLoaded = false;
-            axios.get('lecturer/schedule/get-by-semester/' + app.filter).then(function (resp) {
-                app.isLoaded = true;
-                app.descriptionSemester = resp.data.keterangan;
-                app.bodyTable = resp.data.data;
-            }).catch(function (resp) {
-                showSnackbar("oops, something went wrong. Please try again!");
-            });
         }
     }
 });
@@ -101262,7 +101226,7 @@ var render = function() {
       _c("h1", { staticClass: "font-weight-light" }, [_vm._v("Jadwal")]),
       _vm._v(" "),
       _c("div", { staticClass: "subheading" }, [
-        _vm._v("Modul untuk perkuliahan " + _vm._s(_vm.descriptionSemester))
+        _vm._v("Modul untuk perkuliahan")
       ]),
       _vm._v(" "),
       !_vm.isLoaded
@@ -101272,80 +101236,7 @@ var render = function() {
       _vm.isLoaded
         ? _c(
             "v-flex",
-            { attrs: { sm6: "", "d-flex": "", "mt-5": "" } },
-            [
-              _c("v-select", {
-                attrs: {
-                  items: _vm.semesters,
-                  label: "Filter jadwal",
-                  "item-text": "tahun",
-                  "item-value": "kuliah",
-                  solo: ""
-                },
-                on: {
-                  change: function($event) {
-                    _vm.selectSemester()
-                  }
-                },
-                scopedSlots: _vm._u([
-                  {
-                    key: "selection",
-                    fn: function(data) {
-                      return [
-                        _vm._v(
-                          "\n                " +
-                            _vm._s(data.item.tahun) +
-                            " / " +
-                            _vm._s(data.item.semester) +
-                            " - " +
-                            _vm._s(data.item.jurusan) +
-                            " (" +
-                            _vm._s(data.item.kelas) +
-                            " " +
-                            _vm._s(data.item.pararel) +
-                            ")\n            "
-                        )
-                      ]
-                    }
-                  },
-                  {
-                    key: "item",
-                    fn: function(data) {
-                      return [
-                        _vm._v(
-                          "\n                " +
-                            _vm._s(data.item.tahun) +
-                            " / " +
-                            _vm._s(data.item.semester) +
-                            " - " +
-                            _vm._s(data.item.jurusan) +
-                            " (" +
-                            _vm._s(data.item.kelas) +
-                            " " +
-                            _vm._s(data.item.pararel) +
-                            ")\n            "
-                        )
-                      ]
-                    }
-                  }
-                ]),
-                model: {
-                  value: _vm.filter,
-                  callback: function($$v) {
-                    _vm.filter = $$v
-                  },
-                  expression: "filter"
-                }
-              })
-            ],
-            1
-          )
-        : _vm._e(),
-      _vm._v(" "),
-      _vm.isLoaded
-        ? _c(
-            "v-flex",
-            { attrs: { sm12: "" } },
+            { attrs: { sm12: "", "mt-5": "" } },
             [
               _c("v-data-table", {
                 staticClass: "elevation-1",
