@@ -101554,7 +101554,7 @@ var render = function() {
       _c("h1", { staticClass: "font-weight-light" }, [_vm._v("Materi")]),
       _vm._v(" "),
       _c("div", { staticClass: "subheading" }, [
-        _vm._v("Tambahkan materi sebagai penunjang belajar mahasiswa")
+        _vm._v("Silahkan download materi yang sudah diunggah oleh dosen")
       ]),
       _vm._v(" "),
       !_vm.isLoaded

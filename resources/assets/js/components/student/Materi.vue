@@ -1,7 +1,7 @@
 <template>
     <v-flex sm12>
         <h1 class="font-weight-light">Materi</h1>
-        <div class="subheading">Tambahkan materi sebagai penunjang belajar mahasiswa</div>
+        <div class="subheading">Silahkan download materi yang sudah diunggah oleh dosen</div>
         
         <content-loader v-if="!isLoaded" height="250"></content-loader>
         <v-flex md5 mt-5 v-if="isLoaded">
