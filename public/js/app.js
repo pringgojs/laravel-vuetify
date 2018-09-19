@@ -31729,10 +31729,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(253);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuetify__ = __webpack_require__(186);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuetify___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_vuetify__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__lecturer_router__ = __webpack_require__(250);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__student_router__ = __webpack_require__(236);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_es6_promise_auto__ = __webpack_require__(254);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_es6_promise_auto___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_es6_promise_auto__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__routes__ = __webpack_require__(259);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_es6_promise_auto__ = __webpack_require__(254);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_es6_promise_auto___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_es6_promise_auto__);
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -31749,13 +31748,12 @@ window.Vue = __webpack_require__(7);
 
 
 
-
 Vue.use(__WEBPACK_IMPORTED_MODULE_2_vuetify___default.a);
 Vue.use(__WEBPACK_IMPORTED_MODULE_0_vue_router__["a" /* default */]);
 Vue.use(__WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */]);
 
 // Add title in header
-__WEBPACK_IMPORTED_MODULE_3__lecturer_router__["a" /* default */].beforeEach(function (to, from, next) {
+__WEBPACK_IMPORTED_MODULE_3__routes__["a" /* default */].beforeEach(function (to, from, next) {
     if (!to.matched.length) {
         next('/not-found');
     } else {
@@ -31784,7 +31782,7 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
 
 new Vue({
     el: "#app",
-    router: __WEBPACK_IMPORTED_MODULE_3__lecturer_router__["a" /* default */], StudentRouter: __WEBPACK_IMPORTED_MODULE_4__student_router__["a" /* default */],
+    router: __WEBPACK_IMPORTED_MODULE_3__routes__["a" /* default */],
     store: store
 });
 
@@ -86950,7 +86948,7 @@ var render = function() {
                 "v-layout",
                 { attrs: { "justify-start": "", "align-left": "" } },
                 [
-                  _c("router-view", { attrs: { name: "home" } }),
+                  _c("router-view", { attrs: { name: "lecturerHome" } }),
                   _vm._v(" "),
                   _c("router-view")
                 ],
@@ -100130,82 +100128,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 236 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_router__ = __webpack_require__(185);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_student_Home_vue__ = __webpack_require__(232);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_student_Home_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_student_Home_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_student_ETugas_vue__ = __webpack_require__(233);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_student_ETugas_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_student_ETugas_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_student_Schedule_vue__ = __webpack_require__(234);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_student_Schedule_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__components_student_Schedule_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_student_Materi_vue__ = __webpack_require__(235);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_student_Materi_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__components_student_Materi_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_student_Report_vue__ = __webpack_require__(251);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_student_Report_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__components_student_Report_vue__);
-
-
-
-
-
-
-
-
-__WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]);
-
-__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('layout-student', __webpack_require__(231));
-__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('beranda', __webpack_require__(232));
-__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('etugas', __webpack_require__(233));
-__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('jadwal', __webpack_require__(234));
-__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('laporan-tugas', __webpack_require__(251));
-__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('materi-kuliah', __webpack_require__(235));
-
-var routes = [{
-    path: '/beranda',
-    component: __WEBPACK_IMPORTED_MODULE_2__components_student_Home_vue___default.a,
-    name: 'beranda',
-    meta: {
-        title: 'Beranda - Dosen Jaga'
-    }
-}, {
-    path: '/etugas',
-    component: __WEBPACK_IMPORTED_MODULE_3__components_student_ETugas_vue___default.a,
-    name: 'etugas',
-    meta: {
-        title: 'Etugas - Dosen Jaga'
-    }
-}, {
-    path: '/materi-kuliah',
-    component: __WEBPACK_IMPORTED_MODULE_5__components_student_Materi_vue___default.a,
-    name: 'materi-kuliah',
-    meta: {
-        title: 'Materi - Dosen Jaga'
-    }
-}, {
-    path: '/laporan',
-    component: __WEBPACK_IMPORTED_MODULE_6__components_student_Report_vue___default.a,
-    name: 'laporan-tugas',
-    meta: {
-        title: 'Laporan - Dosen Jaga'
-    }
-}, {
-    path: '/jadwal',
-    component: __WEBPACK_IMPORTED_MODULE_4__components_student_Schedule_vue___default.a,
-    name: 'laporan',
-    meta: {
-        title: 'Jadwal - Dosen Jaga'
-    }
-}];
-
-/* harmony default export */ __webpack_exports__["a"] = (new __WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]({
-    routes: routes
-}));
-
-/***/ }),
+/* 236 */,
 /* 237 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -100324,6 +100247,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       var base_url = window.location.origin;
       window.location.href = base_url + '/logout';
     }
+  },
+  mounted: function mounted() {
+    console.log('mon');
   }
 });
 
@@ -102051,170 +101977,7 @@ if (false) {
 }
 
 /***/ }),
-/* 250 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_router__ = __webpack_require__(185);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_lecturer_Layout_vue__ = __webpack_require__(23);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_lecturer_Layout_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_lecturer_Layout_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_lecturer_Home_vue__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_lecturer_Home_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_lecturer_Home_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_lecturer_ETugas_vue__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_lecturer_ETugas_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__components_lecturer_ETugas_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_lecturer_ETugasAdd_vue__ = __webpack_require__(150);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_lecturer_ETugasAdd_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__components_lecturer_ETugasAdd_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_lecturer_ETugasEdit_vue__ = __webpack_require__(152);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_lecturer_ETugasEdit_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__components_lecturer_ETugasEdit_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_lecturer_Schedule_vue__ = __webpack_require__(153);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_lecturer_Schedule_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__components_lecturer_Schedule_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_lecturer_Materi_vue__ = __webpack_require__(154);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_lecturer_Materi_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__components_lecturer_Materi_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_lecturer_MateriAdd_vue__ = __webpack_require__(155);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_lecturer_MateriAdd_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9__components_lecturer_MateriAdd_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_lecturer_Report_vue__ = __webpack_require__(156);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_lecturer_Report_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10__components_lecturer_Report_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_Login_vue__ = __webpack_require__(157);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_Login_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11__components_Login_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_NotFound_vue__ = __webpack_require__(158);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_NotFound_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_12__components_NotFound_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_Redirect_vue__ = __webpack_require__(256);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_Redirect_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_13__components_Redirect_vue__);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-__WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]);
-
-__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('layout', __webpack_require__(23));
-__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('home', __webpack_require__(24));
-__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('e-tugas', __webpack_require__(25));
-__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('e-tugas-add', __webpack_require__(150));
-__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('e-tugas-edit', __webpack_require__(152));
-__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('schedule', __webpack_require__(153));
-__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('report', __webpack_require__(156));
-__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('materi', __webpack_require__(154));
-__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('materi-add', __webpack_require__(155));
-__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('login', __webpack_require__(157));
-__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('not-found', __webpack_require__(158));
-__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('redirect', __webpack_require__(256));
-
-var routes = [{
-    path: '/',
-    component: __WEBPACK_IMPORTED_MODULE_13__components_Redirect_vue___default.a,
-    name: 'redirect',
-    meta: {
-        title: 'redirect - Dosen Jaga',
-        type: 'lecturer'
-    }
-}, {
-    path: '/layout',
-    component: __WEBPACK_IMPORTED_MODULE_2__components_lecturer_Layout_vue___default.a,
-    name: 'layout',
-    meta: {
-        title: 'Beranda - Dosen Jaga',
-        type: 'lecturer'
-    }
-}, {
-    path: '/home',
-    component: __WEBPACK_IMPORTED_MODULE_3__components_lecturer_Home_vue___default.a,
-    name: 'home',
-    meta: {
-        title: 'Beranda - Dosen Jaga',
-        type: 'lecturer'
-    }
-}, {
-    path: '/e-tugas',
-    component: __WEBPACK_IMPORTED_MODULE_4__components_lecturer_ETugas_vue___default.a,
-    name: 'e-tugas',
-    meta: {
-        title: 'E Tugas - Dosen Jaga',
-        type: 'lecturer'
-    }
-}, {
-    path: '/e-tugas/add',
-    component: __WEBPACK_IMPORTED_MODULE_5__components_lecturer_ETugasAdd_vue___default.a,
-    name: 'e-tugas-add',
-    meta: {
-        title: 'E Tugas Baru - Dosen Jaga',
-        type: 'lecturer'
-    }
-}, {
-    path: '/e-tugas/edit/:id',
-    component: __WEBPACK_IMPORTED_MODULE_6__components_lecturer_ETugasEdit_vue___default.a,
-    name: 'e-tugas-edit',
-    meta: {
-        title: 'E Tugas Edit - Dosen Jaga',
-        type: 'lecturer'
-    }
-}, {
-    path: '/materi',
-    component: __WEBPACK_IMPORTED_MODULE_8__components_lecturer_Materi_vue___default.a,
-    name: 'materi',
-    meta: {
-        title: 'Materi - Dosen Jaga',
-        type: 'lecturer'
-    }
-}, {
-    path: '/materi/add',
-    component: __WEBPACK_IMPORTED_MODULE_9__components_lecturer_MateriAdd_vue___default.a,
-    name: 'materi-add',
-    meta: {
-        title: 'Materi Baru - Dosen Jaga',
-        type: 'lecturer'
-    }
-}, {
-    path: '/report',
-    component: __WEBPACK_IMPORTED_MODULE_10__components_lecturer_Report_vue___default.a,
-    name: 'report',
-    meta: {
-        title: 'Laporan - Dosen Jaga',
-        type: 'lecturer'
-    }
-}, {
-    path: '/schedule',
-    component: __WEBPACK_IMPORTED_MODULE_7__components_lecturer_Schedule_vue___default.a,
-    name: 'schedule',
-    meta: {
-        title: 'Jadwal - Dosen Jaga',
-        type: 'lecturer'
-    }
-}, {
-    path: '/login',
-    component: __WEBPACK_IMPORTED_MODULE_11__components_Login_vue___default.a,
-    name: 'login',
-    meta: {
-        title: 'Login - Dosen Jaga',
-        type: 'lecturer'
-    }
-}, {
-    path: '/not-found',
-    component: __WEBPACK_IMPORTED_MODULE_12__components_NotFound_vue___default.a,
-    name: 'not-found',
-    meta: {
-        title: '404 - Dosen Jaga',
-        type: 'lecturer'
-    }
-}];
-
-/* harmony default export */ __webpack_exports__["a"] = (new __WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]({
-    routes: routes
-}));
-
-/***/ }),
+/* 250 */,
 /* 251 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -104526,6 +104289,236 @@ if (false) {
     require("vue-hot-reload-api")      .rerender("data-v-22322313", module.exports)
   }
 }
+
+/***/ }),
+/* 259 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_router__ = __webpack_require__(185);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_lecturer_Layout_vue__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_lecturer_Layout_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_lecturer_Layout_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_lecturer_Home_vue__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_lecturer_Home_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_lecturer_Home_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_lecturer_ETugas_vue__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_lecturer_ETugas_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__components_lecturer_ETugas_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_lecturer_ETugasAdd_vue__ = __webpack_require__(150);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_lecturer_ETugasAdd_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__components_lecturer_ETugasAdd_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_lecturer_ETugasEdit_vue__ = __webpack_require__(152);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_lecturer_ETugasEdit_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__components_lecturer_ETugasEdit_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_lecturer_Schedule_vue__ = __webpack_require__(153);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_lecturer_Schedule_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__components_lecturer_Schedule_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_lecturer_Materi_vue__ = __webpack_require__(154);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_lecturer_Materi_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__components_lecturer_Materi_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_lecturer_MateriAdd_vue__ = __webpack_require__(155);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_lecturer_MateriAdd_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9__components_lecturer_MateriAdd_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_lecturer_Report_vue__ = __webpack_require__(156);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_lecturer_Report_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10__components_lecturer_Report_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_Login_vue__ = __webpack_require__(157);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_Login_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11__components_Login_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_NotFound_vue__ = __webpack_require__(158);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_NotFound_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_12__components_NotFound_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_Redirect_vue__ = __webpack_require__(256);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_Redirect_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_13__components_Redirect_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_student_Home_vue__ = __webpack_require__(232);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_student_Home_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_14__components_student_Home_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__components_student_ETugas_vue__ = __webpack_require__(233);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__components_student_ETugas_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_15__components_student_ETugas_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__components_student_Schedule_vue__ = __webpack_require__(234);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__components_student_Schedule_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_16__components_student_Schedule_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__components_student_Materi_vue__ = __webpack_require__(235);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__components_student_Materi_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_17__components_student_Materi_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__components_student_Report_vue__ = __webpack_require__(251);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__components_student_Report_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_18__components_student_Report_vue__);
+
+
+
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]);
+
+// lecturer
+
+
+
+
+
+
+
+
+
+
+
+
+
+// student
+
+
+
+
+
+
+// lecturer
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('layout', __webpack_require__(23));
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('home', __webpack_require__(24));
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('e-tugas', __webpack_require__(25));
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('e-tugas-add', __webpack_require__(150));
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('e-tugas-edit', __webpack_require__(152));
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('schedule', __webpack_require__(153));
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('report', __webpack_require__(156));
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('materi', __webpack_require__(154));
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('materi-add', __webpack_require__(155));
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('login', __webpack_require__(157));
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('not-found', __webpack_require__(158));
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('redirect', __webpack_require__(256));
+
+// // student
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('layout-student', __webpack_require__(231));
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('beranda', __webpack_require__(232));
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('etugas', __webpack_require__(233));
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('jadwal', __webpack_require__(234));
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('laporan-tugas', __webpack_require__(251));
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('materi-kuliah', __webpack_require__(235));
+
+var routes = [{
+    path: '/',
+    component: __WEBPACK_IMPORTED_MODULE_13__components_Redirect_vue___default.a,
+    name: 'redirect',
+    meta: {
+        title: 'redirect - Dosen Jaga',
+        type: 'lecturer'
+    }
+}, {
+    path: '/layout',
+    component: __WEBPACK_IMPORTED_MODULE_2__components_lecturer_Layout_vue___default.a,
+    name: 'lecturerLayout',
+    meta: {
+        title: 'Beranda - Dosen Jaga',
+        type: 'lecturer'
+    }
+}, {
+    path: '/home',
+    component: __WEBPACK_IMPORTED_MODULE_3__components_lecturer_Home_vue___default.a,
+    name: 'lecturerHome',
+    meta: {
+        title: 'Beranda - Dosen Jaga',
+        type: 'lecturer'
+    }
+}, {
+    path: '/e-tugas',
+    component: __WEBPACK_IMPORTED_MODULE_4__components_lecturer_ETugas_vue___default.a,
+    name: 'lecturerEtugas',
+    meta: {
+        title: 'E Tugas - Dosen Jaga',
+        type: 'lecturer'
+    }
+}, {
+    path: '/e-tugas/add',
+    component: __WEBPACK_IMPORTED_MODULE_5__components_lecturer_ETugasAdd_vue___default.a,
+    name: 'lecturerEtugasAdd',
+    meta: {
+        title: 'E Tugas Baru - Dosen Jaga',
+        type: 'lecturer'
+    }
+}, {
+    path: '/e-tugas/edit/:id',
+    component: __WEBPACK_IMPORTED_MODULE_6__components_lecturer_ETugasEdit_vue___default.a,
+    name: 'lecturerEtugasEdit',
+    meta: {
+        title: 'E Tugas Edit - Dosen Jaga',
+        type: 'lecturer'
+    }
+}, {
+    path: '/materi',
+    component: __WEBPACK_IMPORTED_MODULE_8__components_lecturer_Materi_vue___default.a,
+    name: 'lecturerMateri',
+    meta: {
+        title: 'Materi - Dosen Jaga',
+        type: 'lecturer'
+    }
+}, {
+    path: '/materi/add',
+    component: __WEBPACK_IMPORTED_MODULE_9__components_lecturer_MateriAdd_vue___default.a,
+    name: 'lecturerMateriAdd',
+    meta: {
+        title: 'Materi Baru - Dosen Jaga',
+        type: 'lecturer'
+    }
+}, {
+    path: '/report',
+    component: __WEBPACK_IMPORTED_MODULE_10__components_lecturer_Report_vue___default.a,
+    name: 'lecturerReport',
+    meta: {
+        title: 'Laporan - Dosen Jaga',
+        type: 'lecturer'
+    }
+}, {
+    path: '/schedule',
+    component: __WEBPACK_IMPORTED_MODULE_7__components_lecturer_Schedule_vue___default.a,
+    name: 'lecturerSchedule',
+    meta: {
+        title: 'Jadwal - Dosen Jaga',
+        type: 'lecturer'
+    }
+}, {
+    path: '/login',
+    component: __WEBPACK_IMPORTED_MODULE_11__components_Login_vue___default.a,
+    name: 'login',
+    meta: {
+        title: 'Login - Dosen Jaga',
+        type: 'lecturer'
+    }
+}, {
+    path: '/not-found',
+    component: __WEBPACK_IMPORTED_MODULE_12__components_NotFound_vue___default.a,
+    name: 'notFound',
+    meta: {
+        title: '404 - Dosen Jaga',
+        type: 'lecturer'
+    }
+},
+
+// student
+{
+    path: '/beranda',
+    component: __WEBPACK_IMPORTED_MODULE_14__components_student_Home_vue___default.a,
+    name: 'studentBeranda',
+    meta: {
+        title: 'Beranda - Dosen Jaga'
+    }
+}, {
+    path: '/etugas',
+    component: __WEBPACK_IMPORTED_MODULE_15__components_student_ETugas_vue___default.a,
+    name: 'studentEtugas',
+    meta: {
+        title: 'Etugas - Dosen Jaga'
+    }
+}, {
+    path: '/materi-kuliah',
+    component: __WEBPACK_IMPORTED_MODULE_17__components_student_Materi_vue___default.a,
+    name: 'studentMateri',
+    meta: {
+        title: 'Materi - Dosen Jaga'
+    }
+}, {
+    path: '/laporan',
+    component: __WEBPACK_IMPORTED_MODULE_18__components_student_Report_vue___default.a,
+    name: 'studentLaporan',
+    meta: {
+        title: 'Laporan - Dosen Jaga'
+    }
+}, {
+    path: '/jadwal',
+    component: __WEBPACK_IMPORTED_MODULE_16__components_student_Schedule_vue___default.a,
+    name: 'studentJadwal',
+    meta: {
+        title: 'Jadwal - Dosen Jaga'
+    }
+}];
+
+/* harmony default export */ __webpack_exports__["a"] = (new __WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]({
+    routes: routes
+}));
 
 /***/ })
 /******/ ]);

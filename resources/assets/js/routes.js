@@ -1,5 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+
+Vue.use(Router)
+
+// lecturer
 import Layout from './components/lecturer/Layout.vue'
 import Home from './components/lecturer/Home.vue'
 import ETugas from './components/lecturer/ETugas.vue'
@@ -13,8 +17,14 @@ import Login from './components/Login.vue'
 import NotFound from './components/NotFound.vue'
 import Redirect from './components/Redirect.vue'
 
-Vue.use(Router)
+// student
+import StudentHome from './components/student/Home.vue'
+import StudentETugas from './components/student/ETugas.vue'
+import StudentSchedule from './components/student/Schedule.vue'
+import StudentMateri from './components/student/Materi.vue'
+import StudentReport from './components/student/Report.vue'
 
+// lecturer
 Vue.component('layout', require('./components/lecturer/Layout.vue'))
 Vue.component('home', require('./components/lecturer/Home.vue'))
 Vue.component('e-tugas', require('./components/lecturer/ETugas.vue'))
@@ -27,6 +37,14 @@ Vue.component('materi-add', require('./components/lecturer/MateriAdd.vue'))
 Vue.component('login', require('./components/Login.vue'))
 Vue.component('not-found', require('./components/NotFound.vue'))
 Vue.component('redirect', require('./components/Redirect.vue'))
+
+// // student
+Vue.component('layout-student', require('./components/student/Layout.vue'))
+Vue.component('beranda', require('./components/student/Home.vue'))
+Vue.component('etugas', require('./components/student/ETugas.vue'))
+Vue.component('jadwal', require('./components/student/Schedule.vue'))
+Vue.component('laporan-tugas', require('./components/student/Report.vue'))
+Vue.component('materi-kuliah', require('./components/student/Materi.vue'))
 
 const routes = [
     {
@@ -41,7 +59,7 @@ const routes = [
     {
         path: '/layout',
         component: Layout,
-        name: 'layout',
+        name: 'lecturerLayout',
         meta: {
             title: 'Beranda - Dosen Jaga',
             type: 'lecturer'
@@ -50,7 +68,7 @@ const routes = [
     {
         path: '/home',
         component: Home,
-        name: 'home',
+        name: 'lecturerHome',
         meta: {
             title: 'Beranda - Dosen Jaga',
             type: 'lecturer'
@@ -59,7 +77,7 @@ const routes = [
     {
         path: '/e-tugas',
         component: ETugas,
-        name: 'e-tugas',
+        name: 'lecturerEtugas',
         meta: {
             title: 'E Tugas - Dosen Jaga',
             type: 'lecturer'
@@ -68,7 +86,7 @@ const routes = [
     {
         path: '/e-tugas/add',
         component: ETugasAdd,
-        name: 'e-tugas-add',
+        name: 'lecturerEtugasAdd',
         meta: {
             title: 'E Tugas Baru - Dosen Jaga',
             type: 'lecturer'
@@ -77,7 +95,7 @@ const routes = [
     {
         path: '/e-tugas/edit/:id',
         component: ETugasEdit,
-        name: 'e-tugas-edit',
+        name: 'lecturerEtugasEdit',
         meta: {
             title: 'E Tugas Edit - Dosen Jaga',
             type: 'lecturer'
@@ -86,7 +104,7 @@ const routes = [
     {
         path: '/materi',
         component: Materi,
-        name: 'materi',
+        name: 'lecturerMateri',
         meta: {
             title: 'Materi - Dosen Jaga',
             type: 'lecturer'
@@ -95,7 +113,7 @@ const routes = [
     {
         path: '/materi/add',
         component: MateriAdd,
-        name: 'materi-add',
+        name: 'lecturerMateriAdd',
         meta: {
             title: 'Materi Baru - Dosen Jaga',
             type: 'lecturer'
@@ -104,7 +122,7 @@ const routes = [
     {
         path: '/report',
         component: Report,
-        name: 'report',
+        name: 'lecturerReport',
         meta: {
             title: 'Laporan - Dosen Jaga',
             type: 'lecturer'
@@ -113,7 +131,7 @@ const routes = [
     {
         path: '/schedule',
         component: Schedule,
-        name: 'schedule',
+        name: 'lecturerSchedule',
         meta: {
             title: 'Jadwal - Dosen Jaga',
             type: 'lecturer'
@@ -131,13 +149,52 @@ const routes = [
     {
         path: '/not-found',
         component: NotFound,
-        name: 'not-found',
+        name: 'notFound',
         meta: {
             title: '404 - Dosen Jaga',
             type: 'lecturer'
         }
-    }
+    },
+
+    // student
+    {
+        path: '/beranda',
+        component: StudentHome,
+        name: 'studentBeranda',
+        meta: {
+            title: 'Beranda - Dosen Jaga'
+        }
+    }, {
+        path: '/etugas',
+        component: StudentETugas,
+        name: 'studentEtugas',
+        meta: {
+            title: 'Etugas - Dosen Jaga'
+        }
+    }, {
+        path: '/materi-kuliah',
+        component: StudentMateri,
+        name: 'studentMateri',
+        meta: {
+            title: 'Materi - Dosen Jaga'
+        }
+    }, {
+        path: '/laporan',
+        component: StudentReport,
+        name: 'studentLaporan',
+        meta: {
+            title: 'Laporan - Dosen Jaga'
+        }
+    }, {
+        path: '/jadwal',
+        component: StudentSchedule,
+        name: 'studentJadwal',
+        meta: {
+            title: 'Jadwal - Dosen Jaga'
+        }
+    },
 ]
+
 
 export default new Router({
     routes

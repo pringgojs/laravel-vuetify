@@ -79,7 +79,7 @@
         <v-layout justify-start align-left>
           
           <!-- your content here -->
-          <router-view name="home"></router-view>
+          <router-view name="lecturerHome"></router-view>
           <router-view></router-view>
           <!-- end of your content -->
 

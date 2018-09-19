@@ -115,6 +115,9 @@
         let base_url = window.location.origin;
         window.location.href = base_url+'/logout';
       }
+    },
+    mounted() {
+      console.log('mon')
     }
   }
 </script>

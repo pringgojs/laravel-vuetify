@@ -11,8 +11,7 @@ window.Vue = require('vue')
 import VueRouter from 'vue-router'
 import Vuex from 'vuex'
 import Vuetify from 'vuetify'
-import LecturerRouter from './lecturer-router'
-import StudentRouter from './student-router'
+import router from './routes'
 import 'es6-promise/auto'
 
 Vue.use(Vuetify)
@@ -20,7 +19,7 @@ Vue.use(VueRouter)
 Vue.use(Vuex)
 
 // Add title in header
-LecturerRouter.beforeEach((to, from, next) => {
+router.beforeEach((to, from, next) => {
     if (!to.matched.length) {
         next('/not-found')
     } else {
@@ -51,6 +50,6 @@ const store = new Vuex.Store({
 
 new Vue({
     el: "#app",
-    router: LecturerRouter, StudentRouter,
+    router: router,
     store
 })
