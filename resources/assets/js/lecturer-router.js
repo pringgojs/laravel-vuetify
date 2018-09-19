@@ -11,6 +11,7 @@ import MateriAdd from './components/lecturer/MateriAdd.vue'
 import Report from './components/lecturer/Report.vue'
 import Login from './components/Login.vue'
 import NotFound from './components/NotFound.vue'
+import Redirect from './components/Redirect.vue'
 
 Vue.use(Router)
 
@@ -25,15 +26,15 @@ Vue.component('materi', require('./components/lecturer/Materi.vue'))
 Vue.component('materi-add', require('./components/lecturer/MateriAdd.vue'))
 Vue.component('login', require('./components/Login.vue'))
 Vue.component('not-found', require('./components/NotFound.vue'))
-
+Vue.component('redirect', require('./components/Redirect.vue'))
 
 const routes = [
     {
         path: '/',
-        component: Layout,
-        name: 'layout',
+        component: Redirect,
+        name: 'redirect',
         meta: {
-            title: 'Beranda - Dosen Jaga',
+            title: 'redirect - Dosen Jaga',
             type: 'lecturer'
         }
     },

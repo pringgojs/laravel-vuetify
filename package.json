@@ -19,6 +19,7 @@
     "vue": "^2.1.10"
   },
   "dependencies": {
+    "es6-promise": "^4.2.5",
     "filepond": "^2.2.0",
     "filepond-plugin-file-encode": "^1.0.5",
     "filepond-plugin-file-validate-size": "^1.0.4",
@@ -29,6 +30,7 @@
     "vue-content-loader": "^0.2.1",
     "vue-filepond": "^3.0.3",
     "vue-router": "^3.0.1",
-    "vuetify": "^1.2.3"
+    "vuetify": "^1.2.3",
+    "vuex": "^3.0.1"
   }
 }
