@@ -18,9 +18,9 @@ class StudentDatabaseHelper
         return $response;
     }
 
-    public static function getScheduleBySemester($kuliah)
+    public static function getMateriIndex()
     {
-        $url = config('api.url').'/student/schedule/get-by-semester/'.$kuliah;
+        $url = config('api.url').'/student/materi';
         $data = array('user' => ResponseHelper::user());
         $response = Curl::to($url)
         ->withData($data)
@@ -29,4 +29,14 @@ class StudentDatabaseHelper
         return $response;
     }
 
+    public static function getMateriGetBySemester($kuliah)
+    {
+        $url = config('api.url').'/student/materi/kuliah/'.$kuliah;
+        $data = array('user' => ResponseHelper::user());
+        $response = Curl::to($url)
+        ->withData($data)
+        ->post();
+        
+        return $response;
+    }
 }

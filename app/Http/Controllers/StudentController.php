@@ -18,4 +18,16 @@ class StudentController extends Controller
         $database = StudentDatabaseHelper::getScheduleIndex();
         return $database;
     }
+
+    public function materi()
+    {
+        $database = StudentDatabaseHelper::getMateriIndex();
+        return $database;
+    }
+
+    public function materiGetBySemester($kuliah)
+    {
+        $database = StudentDatabaseHelper::getMateriGetBySemester($kuliah);
+        return $database;
+    }
 }
