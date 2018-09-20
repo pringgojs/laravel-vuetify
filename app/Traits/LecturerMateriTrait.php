@@ -18,6 +18,7 @@ trait LecturerMateriTrait
 
     public function storeMateri(Request $request)
     {
+        \Log::info($request->file('file'));
         $file = FileHelper::upload($request->file('file'), 'uploads/materi/');
         $database = DatabaseHelper::storeMateri($request, $file);
         return $database;

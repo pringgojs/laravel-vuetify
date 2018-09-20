@@ -246,11 +246,11 @@ export default {
             
             var file = app.$refs.pond.getFiles();
             let form = new FormData();
+            form.append('file', '');
             if (file.length) {
                 form.append('file', file[0].file);
-            } else {
-                form.append('file', '');
             }
+            
             form.append('judul', app.judul)
             form.append('tanggal', app.date)
             form.append('waktu', app.time)

@@ -48,7 +48,7 @@
         solo-inverted
         hide-details
         prepend-inner-icon="search"
-        label="Search"
+        placeholder="Search"
         class="hidden-sm-and-down"
       ></v-text-field>
       <v-spacer></v-spacer>

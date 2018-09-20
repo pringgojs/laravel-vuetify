@@ -15,6 +15,7 @@ Route::group(['prefix' => 'student', 'middleware' => 'role:student'], function (
     Route::get('materi/kuliah/{kuliah}', 'StudentController@materiGetBySemester');
     Route::get('materi', 'StudentController@materi');
     Route::get('schedule', 'StudentController@schedule');
+    Route::get('e-tugas', 'StudentController@eTugas');
     Route::get('/', 'StudentController@index');
 });
 

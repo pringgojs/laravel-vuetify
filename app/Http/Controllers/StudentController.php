@@ -30,4 +30,10 @@ class StudentController extends Controller
         $database = StudentDatabaseHelper::getMateriGetBySemester($kuliah);
         return $database;
     }
+
+    public function eTugas()
+    {
+        $database = StudentDatabaseHelper::getEtugasIndex();
+        return $database;
+    }
 }

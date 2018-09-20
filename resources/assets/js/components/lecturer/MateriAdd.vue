@@ -164,11 +164,12 @@ export default {
             
             var file = app.$refs.pond.getFiles();
             let form = new FormData();
+            
+            form.append('file', '');
             if (file.length) {
                 form.append('file', file[0].file);
-            } else {
-                form.append('file', '');
             }
+
             form.append('judul', app.judul)
             form.append('keterangan', app.keterangan)
             form.append('nilai_master_modul', app.nilai_master_modul)

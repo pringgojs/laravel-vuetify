@@ -5465,6 +5465,33 @@ var InstagramLoader = {
 /* 4 */
 /***/ (function(module, exports) {
 
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || Function("return this")() || (1,eval)("this");
+} catch(e) {
+	// This works if the window reference is available
+	if(typeof window === "object")
+		g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports) {
+
 /*
 	MIT License http://www.opensource.org/licenses/mit-license.php
 	Author Tobias Koppers @sokra
@@ -5541,33 +5568,6 @@ function toComment(sourceMap) {
 
 	return '/*# ' + data + ' */';
 }
-
-
-/***/ }),
-/* 5 */
-/***/ (function(module, exports) {
-
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || Function("return this")() || (1,eval)("this");
-} catch(e) {
-	// This works if the window reference is available
-	if(typeof window === "object")
-		g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
 
 
 /***/ }),
@@ -16534,10 +16534,300 @@ Vue.compile = compileToFunctions;
 
 module.exports = Vue;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(190).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(190).setImmediate))
 
 /***/ }),
 /* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(process) {
+
+var utils = __webpack_require__(2);
+var normalizeHeaderName = __webpack_require__(175);
+
+var DEFAULT_CONTENT_TYPE = {
+  'Content-Type': 'application/x-www-form-urlencoded'
+};
+
+function setContentTypeIfUnset(headers, value) {
+  if (!utils.isUndefined(headers) && utils.isUndefined(headers['Content-Type'])) {
+    headers['Content-Type'] = value;
+  }
+}
+
+function getDefaultAdapter() {
+  var adapter;
+  if (typeof XMLHttpRequest !== 'undefined') {
+    // For browsers use XHR adapter
+    adapter = __webpack_require__(20);
+  } else if (typeof process !== 'undefined') {
+    // For node use HTTP adapter
+    adapter = __webpack_require__(20);
+  }
+  return adapter;
+}
+
+var defaults = {
+  adapter: getDefaultAdapter(),
+
+  transformRequest: [function transformRequest(data, headers) {
+    normalizeHeaderName(headers, 'Content-Type');
+    if (utils.isFormData(data) ||
+      utils.isArrayBuffer(data) ||
+      utils.isBuffer(data) ||
+      utils.isStream(data) ||
+      utils.isFile(data) ||
+      utils.isBlob(data)
+    ) {
+      return data;
+    }
+    if (utils.isArrayBufferView(data)) {
+      return data.buffer;
+    }
+    if (utils.isURLSearchParams(data)) {
+      setContentTypeIfUnset(headers, 'application/x-www-form-urlencoded;charset=utf-8');
+      return data.toString();
+    }
+    if (utils.isObject(data)) {
+      setContentTypeIfUnset(headers, 'application/json;charset=utf-8');
+      return JSON.stringify(data);
+    }
+    return data;
+  }],
+
+  transformResponse: [function transformResponse(data) {
+    /*eslint no-param-reassign:0*/
+    if (typeof data === 'string') {
+      try {
+        data = JSON.parse(data);
+      } catch (e) { /* Ignore */ }
+    }
+    return data;
+  }],
+
+  timeout: 0,
+
+  xsrfCookieName: 'XSRF-TOKEN',
+  xsrfHeaderName: 'X-XSRF-TOKEN',
+
+  maxContentLength: -1,
+
+  validateStatus: function validateStatus(status) {
+    return status >= 200 && status < 300;
+  }
+};
+
+defaults.headers = {
+  common: {
+    'Accept': 'application/json, text/plain, */*'
+  }
+};
+
+utils.forEach(['delete', 'get', 'head'], function forEachMethodNoData(method) {
+  defaults.headers[method] = {};
+});
+
+utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
+  defaults.headers[method] = utils.merge(DEFAULT_CONTENT_TYPE);
+});
+
+module.exports = defaults;
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8)))
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports) {
+
+// shim for using process in browser
+var process = module.exports = {};
+
+// cached from whatever global is present so that test runners that stub it
+// don't break things.  But we need to wrap it in a try catch in case it is
+// wrapped in strict mode code which doesn't define any globals.  It's inside a
+// function because try/catches deoptimize in certain engines.
+
+var cachedSetTimeout;
+var cachedClearTimeout;
+
+function defaultSetTimout() {
+    throw new Error('setTimeout has not been defined');
+}
+function defaultClearTimeout () {
+    throw new Error('clearTimeout has not been defined');
+}
+(function () {
+    try {
+        if (typeof setTimeout === 'function') {
+            cachedSetTimeout = setTimeout;
+        } else {
+            cachedSetTimeout = defaultSetTimout;
+        }
+    } catch (e) {
+        cachedSetTimeout = defaultSetTimout;
+    }
+    try {
+        if (typeof clearTimeout === 'function') {
+            cachedClearTimeout = clearTimeout;
+        } else {
+            cachedClearTimeout = defaultClearTimeout;
+        }
+    } catch (e) {
+        cachedClearTimeout = defaultClearTimeout;
+    }
+} ())
+function runTimeout(fun) {
+    if (cachedSetTimeout === setTimeout) {
+        //normal enviroments in sane situations
+        return setTimeout(fun, 0);
+    }
+    // if setTimeout wasn't available but was latter defined
+    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
+        cachedSetTimeout = setTimeout;
+        return setTimeout(fun, 0);
+    }
+    try {
+        // when when somebody has screwed with setTimeout but no I.E. maddness
+        return cachedSetTimeout(fun, 0);
+    } catch(e){
+        try {
+            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
+            return cachedSetTimeout.call(null, fun, 0);
+        } catch(e){
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
+            return cachedSetTimeout.call(this, fun, 0);
+        }
+    }
+
+
+}
+function runClearTimeout(marker) {
+    if (cachedClearTimeout === clearTimeout) {
+        //normal enviroments in sane situations
+        return clearTimeout(marker);
+    }
+    // if clearTimeout wasn't available but was latter defined
+    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
+        cachedClearTimeout = clearTimeout;
+        return clearTimeout(marker);
+    }
+    try {
+        // when when somebody has screwed with setTimeout but no I.E. maddness
+        return cachedClearTimeout(marker);
+    } catch (e){
+        try {
+            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
+            return cachedClearTimeout.call(null, marker);
+        } catch (e){
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
+            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
+            return cachedClearTimeout.call(this, marker);
+        }
+    }
+
+
+
+}
+var queue = [];
+var draining = false;
+var currentQueue;
+var queueIndex = -1;
+
+function cleanUpNextTick() {
+    if (!draining || !currentQueue) {
+        return;
+    }
+    draining = false;
+    if (currentQueue.length) {
+        queue = currentQueue.concat(queue);
+    } else {
+        queueIndex = -1;
+    }
+    if (queue.length) {
+        drainQueue();
+    }
+}
+
+function drainQueue() {
+    if (draining) {
+        return;
+    }
+    var timeout = runTimeout(cleanUpNextTick);
+    draining = true;
+
+    var len = queue.length;
+    while(len) {
+        currentQueue = queue;
+        queue = [];
+        while (++queueIndex < len) {
+            if (currentQueue) {
+                currentQueue[queueIndex].run();
+            }
+        }
+        queueIndex = -1;
+        len = queue.length;
+    }
+    currentQueue = null;
+    draining = false;
+    runClearTimeout(timeout);
+}
+
+process.nextTick = function (fun) {
+    var args = new Array(arguments.length - 1);
+    if (arguments.length > 1) {
+        for (var i = 1; i < arguments.length; i++) {
+            args[i - 1] = arguments[i];
+        }
+    }
+    queue.push(new Item(fun, args));
+    if (queue.length === 1 && !draining) {
+        runTimeout(drainQueue);
+    }
+};
+
+// v8 likes predictible objects
+function Item(fun, array) {
+    this.fun = fun;
+    this.array = array;
+}
+Item.prototype.run = function () {
+    this.fun.apply(null, this.array);
+};
+process.title = 'browser';
+process.browser = true;
+process.env = {};
+process.argv = [];
+process.version = ''; // empty string to avoid regexp issues
+process.versions = {};
+
+function noop() {}
+
+process.on = noop;
+process.addListener = noop;
+process.once = noop;
+process.off = noop;
+process.removeListener = noop;
+process.removeAllListeners = noop;
+process.emit = noop;
+process.prependListener = noop;
+process.prependOnceListener = noop;
+
+process.listeners = function (name) { return [] }
+
+process.binding = function (name) {
+    throw new Error('process.binding is not supported');
+};
+
+process.cwd = function () { return '/' };
+process.chdir = function (dir) {
+    throw new Error('process.chdir is not supported');
+};
+process.umask = function() { return 0; };
+
+
+/***/ }),
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -16762,296 +17052,6 @@ function applyToTag (styleElement, obj) {
     styleElement.appendChild(document.createTextNode(css))
   }
 }
-
-
-/***/ }),
-/* 8 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(process) {
-
-var utils = __webpack_require__(2);
-var normalizeHeaderName = __webpack_require__(175);
-
-var DEFAULT_CONTENT_TYPE = {
-  'Content-Type': 'application/x-www-form-urlencoded'
-};
-
-function setContentTypeIfUnset(headers, value) {
-  if (!utils.isUndefined(headers) && utils.isUndefined(headers['Content-Type'])) {
-    headers['Content-Type'] = value;
-  }
-}
-
-function getDefaultAdapter() {
-  var adapter;
-  if (typeof XMLHttpRequest !== 'undefined') {
-    // For browsers use XHR adapter
-    adapter = __webpack_require__(20);
-  } else if (typeof process !== 'undefined') {
-    // For node use HTTP adapter
-    adapter = __webpack_require__(20);
-  }
-  return adapter;
-}
-
-var defaults = {
-  adapter: getDefaultAdapter(),
-
-  transformRequest: [function transformRequest(data, headers) {
-    normalizeHeaderName(headers, 'Content-Type');
-    if (utils.isFormData(data) ||
-      utils.isArrayBuffer(data) ||
-      utils.isBuffer(data) ||
-      utils.isStream(data) ||
-      utils.isFile(data) ||
-      utils.isBlob(data)
-    ) {
-      return data;
-    }
-    if (utils.isArrayBufferView(data)) {
-      return data.buffer;
-    }
-    if (utils.isURLSearchParams(data)) {
-      setContentTypeIfUnset(headers, 'application/x-www-form-urlencoded;charset=utf-8');
-      return data.toString();
-    }
-    if (utils.isObject(data)) {
-      setContentTypeIfUnset(headers, 'application/json;charset=utf-8');
-      return JSON.stringify(data);
-    }
-    return data;
-  }],
-
-  transformResponse: [function transformResponse(data) {
-    /*eslint no-param-reassign:0*/
-    if (typeof data === 'string') {
-      try {
-        data = JSON.parse(data);
-      } catch (e) { /* Ignore */ }
-    }
-    return data;
-  }],
-
-  timeout: 0,
-
-  xsrfCookieName: 'XSRF-TOKEN',
-  xsrfHeaderName: 'X-XSRF-TOKEN',
-
-  maxContentLength: -1,
-
-  validateStatus: function validateStatus(status) {
-    return status >= 200 && status < 300;
-  }
-};
-
-defaults.headers = {
-  common: {
-    'Accept': 'application/json, text/plain, */*'
-  }
-};
-
-utils.forEach(['delete', 'get', 'head'], function forEachMethodNoData(method) {
-  defaults.headers[method] = {};
-});
-
-utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
-  defaults.headers[method] = utils.merge(DEFAULT_CONTENT_TYPE);
-});
-
-module.exports = defaults;
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9)))
-
-/***/ }),
-/* 9 */
-/***/ (function(module, exports) {
-
-// shim for using process in browser
-var process = module.exports = {};
-
-// cached from whatever global is present so that test runners that stub it
-// don't break things.  But we need to wrap it in a try catch in case it is
-// wrapped in strict mode code which doesn't define any globals.  It's inside a
-// function because try/catches deoptimize in certain engines.
-
-var cachedSetTimeout;
-var cachedClearTimeout;
-
-function defaultSetTimout() {
-    throw new Error('setTimeout has not been defined');
-}
-function defaultClearTimeout () {
-    throw new Error('clearTimeout has not been defined');
-}
-(function () {
-    try {
-        if (typeof setTimeout === 'function') {
-            cachedSetTimeout = setTimeout;
-        } else {
-            cachedSetTimeout = defaultSetTimout;
-        }
-    } catch (e) {
-        cachedSetTimeout = defaultSetTimout;
-    }
-    try {
-        if (typeof clearTimeout === 'function') {
-            cachedClearTimeout = clearTimeout;
-        } else {
-            cachedClearTimeout = defaultClearTimeout;
-        }
-    } catch (e) {
-        cachedClearTimeout = defaultClearTimeout;
-    }
-} ())
-function runTimeout(fun) {
-    if (cachedSetTimeout === setTimeout) {
-        //normal enviroments in sane situations
-        return setTimeout(fun, 0);
-    }
-    // if setTimeout wasn't available but was latter defined
-    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
-        cachedSetTimeout = setTimeout;
-        return setTimeout(fun, 0);
-    }
-    try {
-        // when when somebody has screwed with setTimeout but no I.E. maddness
-        return cachedSetTimeout(fun, 0);
-    } catch(e){
-        try {
-            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
-            return cachedSetTimeout.call(null, fun, 0);
-        } catch(e){
-            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
-            return cachedSetTimeout.call(this, fun, 0);
-        }
-    }
-
-
-}
-function runClearTimeout(marker) {
-    if (cachedClearTimeout === clearTimeout) {
-        //normal enviroments in sane situations
-        return clearTimeout(marker);
-    }
-    // if clearTimeout wasn't available but was latter defined
-    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
-        cachedClearTimeout = clearTimeout;
-        return clearTimeout(marker);
-    }
-    try {
-        // when when somebody has screwed with setTimeout but no I.E. maddness
-        return cachedClearTimeout(marker);
-    } catch (e){
-        try {
-            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
-            return cachedClearTimeout.call(null, marker);
-        } catch (e){
-            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
-            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
-            return cachedClearTimeout.call(this, marker);
-        }
-    }
-
-
-
-}
-var queue = [];
-var draining = false;
-var currentQueue;
-var queueIndex = -1;
-
-function cleanUpNextTick() {
-    if (!draining || !currentQueue) {
-        return;
-    }
-    draining = false;
-    if (currentQueue.length) {
-        queue = currentQueue.concat(queue);
-    } else {
-        queueIndex = -1;
-    }
-    if (queue.length) {
-        drainQueue();
-    }
-}
-
-function drainQueue() {
-    if (draining) {
-        return;
-    }
-    var timeout = runTimeout(cleanUpNextTick);
-    draining = true;
-
-    var len = queue.length;
-    while(len) {
-        currentQueue = queue;
-        queue = [];
-        while (++queueIndex < len) {
-            if (currentQueue) {
-                currentQueue[queueIndex].run();
-            }
-        }
-        queueIndex = -1;
-        len = queue.length;
-    }
-    currentQueue = null;
-    draining = false;
-    runClearTimeout(timeout);
-}
-
-process.nextTick = function (fun) {
-    var args = new Array(arguments.length - 1);
-    if (arguments.length > 1) {
-        for (var i = 1; i < arguments.length; i++) {
-            args[i - 1] = arguments[i];
-        }
-    }
-    queue.push(new Item(fun, args));
-    if (queue.length === 1 && !draining) {
-        runTimeout(drainQueue);
-    }
-};
-
-// v8 likes predictible objects
-function Item(fun, array) {
-    this.fun = fun;
-    this.array = array;
-}
-Item.prototype.run = function () {
-    this.fun.apply(null, this.array);
-};
-process.title = 'browser';
-process.browser = true;
-process.env = {};
-process.argv = [];
-process.version = ''; // empty string to avoid regexp issues
-process.versions = {};
-
-function noop() {}
-
-process.on = noop;
-process.addListener = noop;
-process.once = noop;
-process.off = noop;
-process.removeListener = noop;
-process.removeAllListeners = noop;
-process.emit = noop;
-process.prependListener = noop;
-process.prependOnceListener = noop;
-
-process.listeners = function (name) { return [] }
-
-process.binding = function (name) {
-    throw new Error('process.binding is not supported');
-};
-
-process.cwd = function () { return '/' };
-process.chdir = function (dir) {
-    throw new Error('process.chdir is not supported');
-};
-process.umask = function() { return 0; };
 
 
 /***/ }),
@@ -34540,9 +34540,9 @@ module.exports = Component.exports
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(236)
+var __vue_script__ = __webpack_require__(234)
 /* template */
-var __vue_template__ = __webpack_require__(237)
+var __vue_template__ = __webpack_require__(235)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -34589,7 +34589,7 @@ var normalizeComponent = __webpack_require__(1)
 /* script */
 var __vue_script__ = null
 /* template */
-var __vue_template__ = __webpack_require__(238)
+var __vue_template__ = __webpack_require__(236)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -34632,7 +34632,7 @@ module.exports = Component.exports
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(167);
-module.exports = __webpack_require__(244);
+module.exports = __webpack_require__(242);
 
 
 /***/ }),
@@ -34646,7 +34646,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuetify__ = __webpack_require__(193);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuetify___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_vuetify__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__routes__ = __webpack_require__(194);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_es6_promise_auto__ = __webpack_require__(242);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_es6_promise_auto__ = __webpack_require__(240);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_es6_promise_auto___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_es6_promise_auto__);
 
 /**
@@ -51871,7 +51871,7 @@ if (token) {
   }
 }.call(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(17)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(17)(module)))
 
 /***/ }),
 /* 170 */
@@ -64637,7 +64637,7 @@ if (typeof jQuery === 'undefined') {
 var utils = __webpack_require__(2);
 var bind = __webpack_require__(19);
 var Axios = __webpack_require__(174);
-var defaults = __webpack_require__(8);
+var defaults = __webpack_require__(7);
 
 /**
  * Create an instance of Axios
@@ -64720,7 +64720,7 @@ function isSlowBuffer (obj) {
 "use strict";
 
 
-var defaults = __webpack_require__(8);
+var defaults = __webpack_require__(7);
 var utils = __webpack_require__(2);
 var InterceptorManager = __webpack_require__(183);
 var dispatchRequest = __webpack_require__(184);
@@ -65252,7 +65252,7 @@ module.exports = InterceptorManager;
 var utils = __webpack_require__(2);
 var transformData = __webpack_require__(185);
 var isCancel = __webpack_require__(22);
-var defaults = __webpack_require__(8);
+var defaults = __webpack_require__(7);
 
 /**
  * Throws a `Cancel` if cancellation has been requested.
@@ -65563,7 +65563,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
                          (typeof global !== "undefined" && global.clearImmediate) ||
                          (this && this.clearImmediate);
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ }),
 /* 191 */
@@ -65756,7 +65756,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(9)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(8)))
 
 /***/ }),
 /* 192 */
@@ -87951,7 +87951,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('not-found', __webpack_req
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('redirect', __webpack_require__(160));
 
 // // student
-__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('layout-student', __webpack_require__(239));
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('layout-student', __webpack_require__(237));
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('beranda', __webpack_require__(161));
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('etugas', __webpack_require__(162));
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('jadwal', __webpack_require__(163));
@@ -88348,7 +88348,7 @@ var render = function() {
               "solo-inverted": "",
               "hide-details": "",
               "prepend-inner-icon": "search",
-              label: "Search"
+              placeholder: "Search"
             }
           }),
           _vm._v(" "),
@@ -88474,7 +88474,7 @@ var content = __webpack_require__(199);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(7)("b0be8e36", content, false, {});
+var update = __webpack_require__(9)("b0be8e36", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -88493,7 +88493,7 @@ if(false) {
 /* 199 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(4)(false);
+exports = module.exports = __webpack_require__(5)(false);
 // imports
 
 
@@ -89710,11 +89710,11 @@ var FilePond = __WEBPACK_IMPORTED_MODULE_1_vue_filepond___default()(__WEBPACK_IM
 
             var file = app.$refs.pond.getFiles();
             var form = new FormData();
+            form.append('file', '');
             if (file.length) {
                 form.append('file', file[0].file);
-            } else {
-                form.append('file', '');
             }
+
             form.append('judul', app.judul);
             form.append('tanggal', app.date);
             form.append('waktu', app.time);
@@ -98169,7 +98169,7 @@ function signature:
 /* 207 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(4)(false);
+exports = module.exports = __webpack_require__(5)(false);
 // imports
 
 
@@ -98278,7 +98278,7 @@ module.exports = function (css) {
 /* 209 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(4)(false);
+exports = module.exports = __webpack_require__(5)(false);
 // imports
 
 
@@ -99832,7 +99832,7 @@ var content = __webpack_require__(216);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(7)("4e14bc48", content, false, {});
+var update = __webpack_require__(9)("4e14bc48", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -99851,7 +99851,7 @@ if(false) {
 /* 216 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(4)(false);
+exports = module.exports = __webpack_require__(5)(false);
 // imports
 
 
@@ -100539,11 +100539,12 @@ var FilePond = __WEBPACK_IMPORTED_MODULE_1_vue_filepond___default()(__WEBPACK_IM
 
             var file = app.$refs.pond.getFiles();
             var form = new FormData();
+
+            form.append('file', '');
             if (file.length) {
                 form.append('file', file[0].file);
-            } else {
-                form.append('file', '');
             }
+
             form.append('judul', app.judul);
             form.append('keterangan', app.keterangan);
             form.append('nilai_master_modul', app.nilai_master_modul);
@@ -101410,7 +101411,7 @@ var content = __webpack_require__(229);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(7)("39b10236", content, false, {});
+var update = __webpack_require__(9)("39b10236", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -101429,7 +101430,7 @@ if(false) {
 /* 229 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(4)(false);
+exports = module.exports = __webpack_require__(5)(false);
 // imports
 
 
@@ -101539,6 +101540,56 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -101547,7 +101598,7 @@ __WEBPACK_IMPORTED_MODULE_1_moment__["locale"]('id');
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            headerTable: [{ text: 'Modul', value: 'modul' }, { text: 'Matakuliah', value: 'matakuliah' }, { text: 'Kelas', value: 'kelas' }, { text: 'Judul Materi', value: 'judul' }, { text: 'Keterangan', value: 'keterangan' }, { text: 'Due Date', value: 'due_date' }, { text: 'File Materi', value: 'file_url' }, { text: 'Aksi', value: 'id' }],
+            headerTable: [{ text: 'Modul', value: 'modul' }, { text: 'Matakuliah', value: 'matakuliah' }, { text: 'Kelas', value: 'kelas' }, { text: 'Dosen', value: 'nama' }, { text: 'Judul Materi', value: 'judul' }, { text: 'Keterangan', value: 'keterangan' }, { text: 'Due Date', value: 'due_date' }, { text: 'File Tugas', value: 'file_url' }, { text: 'Status', value: 'id' }],
             bodyTable: [],
             semesters: [],
             descriptionSemester: '',
@@ -101558,7 +101609,7 @@ __WEBPACK_IMPORTED_MODULE_1_moment__["locale"]('id');
             dialog: false,
             title_confirm: '',
             desc_confirm: '',
-            remove_id: ''
+            detail_id: ''
         };
     },
 
@@ -101572,7 +101623,7 @@ __WEBPACK_IMPORTED_MODULE_1_moment__["locale"]('id');
     methods: {
         initData: function initData() {
             var app = this;
-            axios.get('lecturer/e-tugas').then(function (resp) {
+            axios.get('student/e-tugas').then(function (resp) {
                 app.isLoaded = true;
                 app.bodyTable = resp.data.data;
                 app.semesters = resp.data.data_semester;
@@ -101588,13 +101639,13 @@ __WEBPACK_IMPORTED_MODULE_1_moment__["locale"]('id');
         selectSemester: function selectSemester() {
             if (!this.filter) return false;
             var app = this;
-            axios.get('lecturer/e-tugas/get-by-semester/' + app.filter).then(function (resp) {
+            axios.get('student/e-tugas/kuliah/' + app.filter).then(function (resp) {
                 app.bodyTable = resp.data.data;
             }).catch(function (resp) {
                 app.showSnackbar("oops, something went wrong. Please try again!");
             });
         },
-        remove: function remove(id) {
+        detail: function detail(id) {
             this.dialog = true;
 
             var matakuliah = $('#matakuliah-' + id).html();
@@ -101606,22 +101657,10 @@ __WEBPACK_IMPORTED_MODULE_1_moment__["locale"]('id');
             app.desc_confirm = 'Tugas dengan judul "' + judul + ' kelas ' + kelas + '" yang dihapus tidak bisa dikembalikan.';
             app.remove_id = id;
         },
-        sureRemoveMe: function sureRemoveMe() {
-            var app = this;
-            axios.get('lecturer/e-tugas/remove/' + app.remove_id).then(function (resp) {
-                app.dialog = false;
-                app.showSnackbar("Berhasil menghapus data");
-                $('#tr-' + app.remove_id).fadeOut();
-            }).catch(function (resp) {
-                app.dialog = false;
-                app.showSnackbar("oops, something went wrong. Please try again!");
-            });
-        },
         dateView: function dateView(date) {
             if (date != '0000-00-00 00:00:00') {
-                return __WEBPACK_IMPORTED_MODULE_1_moment__(date).format("dddd, MMMM Do YYYY, h:mm:ss a");
+                return __WEBPACK_IMPORTED_MODULE_1_moment__(date).format("dddd, Do MMMM YYYY, h:mm:ss a");
             }
-
             return '-';
         }
     }
@@ -101643,7 +101682,7 @@ var render = function() {
       _vm._v(" "),
       _c("div", { staticClass: "subheading" }, [
         _vm._v(
-          "Tambahkan tugas sebagai bahwan evaluasi mahasiswa dalam memahami pelajaran"
+          "Daftar tugas kuliah. Selesaikan tugas secara cepat dan tepat waktu"
         )
       ]),
       _vm._v(" "),
@@ -101781,9 +101820,38 @@ var render = function() {
                             "td",
                             {
                               staticClass: "text-xs-left",
+                              attrs: { id: "dosen-" + props.item.id }
+                            },
+                            [_vm._v(_vm._s(props.item.nama))]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "td",
+                            {
+                              staticClass: "text-xs-left",
                               attrs: { id: "judul-" + props.item.id }
                             },
-                            [_vm._v(_vm._s(props.item.judul))]
+                            [
+                              _c(
+                                "a",
+                                {
+                                  attrs: { slot: "activator" },
+                                  on: {
+                                    click: function($event) {
+                                      _vm.detail(props.item.id)
+                                    }
+                                  },
+                                  slot: "activator"
+                                },
+                                [
+                                  _vm._v(
+                                    " \n                            " +
+                                      _vm._s(props.item.judul) +
+                                      "\n                        "
+                                  )
+                                ]
+                              )
+                            ]
                           ),
                           _vm._v(" "),
                           _c(
@@ -101812,14 +101880,12 @@ var render = function() {
                                 ? [
                                     _c(
                                       "a",
-                                      {
-                                        attrs: {
-                                          slot: "activator",
-                                          href: props.item.file_url
-                                        },
-                                        slot: "activator"
-                                      },
-                                      [_vm._v(" Download File ")]
+                                      { attrs: { href: props.item.file_url } },
+                                      [
+                                        _vm._v(
+                                          " \n                                Download file tugas\n                            "
+                                        )
+                                      ]
                                     )
                                   ]
                                 : _vm._e()
@@ -101831,88 +101897,24 @@ var render = function() {
                             "td",
                             { staticClass: "text-xs-center" },
                             [
-                              _c(
-                                "v-layout",
-                                { attrs: { "justify-space-around": "" } },
-                                [
-                                  _c(
-                                    "v-btn",
-                                    {
-                                      attrs: {
-                                        flat: "",
-                                        icon: "",
-                                        color: "info"
-                                      },
-                                      on: {
-                                        click: function($event) {
-                                          _vm.remove(props.item.id)
+                              props.item.file_url
+                                ? [
+                                    _c(
+                                      "v-btn",
+                                      {
+                                        attrs: {
+                                          flat: "",
+                                          icon: "",
+                                          color: "pink"
                                         }
-                                      }
-                                    },
-                                    [
-                                      _c("v-icon", { attrs: { dark: "" } }, [
-                                        _vm._v("list_alt")
-                                      ])
-                                    ],
-                                    1
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "router-link",
-                                    {
-                                      attrs: {
-                                        to: "/e-tugas/edit/" + props.item.id
-                                      }
-                                    },
-                                    [
-                                      _c(
-                                        "v-btn",
-                                        {
-                                          attrs: {
-                                            flat: "",
-                                            icon: "",
-                                            color: "green"
-                                          }
-                                        },
-                                        [
-                                          _c(
-                                            "v-icon",
-                                            { attrs: { dark: "" } },
-                                            [_vm._v("create")]
-                                          )
-                                        ],
-                                        1
-                                      )
-                                    ],
-                                    1
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "v-btn",
-                                    {
-                                      attrs: {
-                                        flat: "",
-                                        icon: "",
-                                        color: "pink"
                                       },
-                                      on: {
-                                        click: function($event) {
-                                          _vm.remove(props.item.id)
-                                        }
-                                      }
-                                    },
-                                    [
-                                      _c("v-icon", { attrs: { dark: "" } }, [
-                                        _vm._v("delete")
-                                      ])
-                                    ],
-                                    1
-                                  )
-                                ],
-                                1
-                              )
+                                      [_c("v-icon", [_vm._v("close")])],
+                                      1
+                                    )
+                                  ]
+                                : _vm._e()
                             ],
-                            1
+                            2
                           )
                         ])
                       ]
@@ -101954,7 +101956,11 @@ var render = function() {
             _c(
               "v-dialog",
               {
-                attrs: { persistent: "", "max-width": "400" },
+                attrs: {
+                  fullscreen: "",
+                  "hide-overlay": "",
+                  transition: "dialog-bottom-transition"
+                },
                 model: {
                   value: _vm.dialog,
                   callback: function($$v) {
@@ -101967,37 +101973,224 @@ var render = function() {
                 _c(
                   "v-card",
                   [
-                    _c("v-card-title", { staticClass: "headline" }, [
-                      _vm._v(_vm._s(_vm.title_confirm))
-                    ]),
-                    _vm._v(" "),
-                    _c("v-card-text", [_vm._v(_vm._s(_vm.desc_confirm))]),
-                    _vm._v(" "),
                     _c(
-                      "v-card-actions",
+                      "v-toolbar",
+                      { attrs: { dark: "", color: "primary" } },
                       [
-                        _c("v-spacer"),
-                        _vm._v(" "),
                         _c(
                           "v-btn",
                           {
-                            attrs: { color: "primary darken-1", flat: "" },
-                            on: { click: _vm.sureRemoveMe }
-                          },
-                          [_vm._v("Ya, Setuju hapus")]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "v-btn",
-                          {
-                            attrs: { color: "warning darken-1", flat: "" },
+                            attrs: { icon: "", dark: "" },
                             nativeOn: {
                               click: function($event) {
                                 _vm.dialog = false
                               }
                             }
                           },
-                          [_vm._v("Batalkan")]
+                          [_c("v-icon", [_vm._v("close")])],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c("v-toolbar-title", [_vm._v("Settings")]),
+                        _vm._v(" "),
+                        _c("v-spacer"),
+                        _vm._v(" "),
+                        _c(
+                          "v-toolbar-items",
+                          [
+                            _c(
+                              "v-btn",
+                              {
+                                attrs: { dark: "", flat: "" },
+                                nativeOn: {
+                                  click: function($event) {
+                                    _vm.dialog = false
+                                  }
+                                }
+                              },
+                              [_vm._v("Save")]
+                            )
+                          ],
+                          1
+                        )
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "v-list",
+                      { attrs: { "three-line": "", subheader: "" } },
+                      [
+                        _c("v-subheader", [_vm._v("User Controls")]),
+                        _vm._v(" "),
+                        _c(
+                          "v-list-tile",
+                          { attrs: { avatar: "" } },
+                          [
+                            _c(
+                              "v-list-tile-content",
+                              [
+                                _c("v-list-tile-title", [
+                                  _vm._v("Content filtering")
+                                ]),
+                                _vm._v(" "),
+                                _c("v-list-tile-sub-title", [
+                                  _vm._v(
+                                    "Set the content filtering level to restrict apps that can be downloaded"
+                                  )
+                                ])
+                              ],
+                              1
+                            )
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "v-list-tile",
+                          { attrs: { avatar: "" } },
+                          [
+                            _c(
+                              "v-list-tile-content",
+                              [
+                                _c("v-list-tile-title", [_vm._v("Password")]),
+                                _vm._v(" "),
+                                _c("v-list-tile-sub-title", [
+                                  _vm._v(
+                                    "Require password for purchase or use password to restrict purchase"
+                                  )
+                                ])
+                              ],
+                              1
+                            )
+                          ],
+                          1
+                        )
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c("v-divider"),
+                    _vm._v(" "),
+                    _c(
+                      "v-list",
+                      { attrs: { "three-line": "", subheader: "" } },
+                      [
+                        _c("v-subheader", [_vm._v("General")]),
+                        _vm._v(" "),
+                        _c(
+                          "v-list-tile",
+                          { attrs: { avatar: "" } },
+                          [
+                            _c(
+                              "v-list-tile-action",
+                              [
+                                _c("v-checkbox", {
+                                  model: {
+                                    value: _vm.notifications,
+                                    callback: function($$v) {
+                                      _vm.notifications = $$v
+                                    },
+                                    expression: "notifications"
+                                  }
+                                })
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "v-list-tile-content",
+                              [
+                                _c("v-list-tile-title", [
+                                  _vm._v("Notifications")
+                                ]),
+                                _vm._v(" "),
+                                _c("v-list-tile-sub-title", [
+                                  _vm._v(
+                                    "Notify me about updates to apps or games that I downloaded"
+                                  )
+                                ])
+                              ],
+                              1
+                            )
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "v-list-tile",
+                          { attrs: { avatar: "" } },
+                          [
+                            _c(
+                              "v-list-tile-action",
+                              [
+                                _c("v-checkbox", {
+                                  model: {
+                                    value: _vm.sound,
+                                    callback: function($$v) {
+                                      _vm.sound = $$v
+                                    },
+                                    expression: "sound"
+                                  }
+                                })
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "v-list-tile-content",
+                              [
+                                _c("v-list-tile-title", [_vm._v("Sound")]),
+                                _vm._v(" "),
+                                _c("v-list-tile-sub-title", [
+                                  _vm._v(
+                                    "Auto-update apps at any time. Data charges may apply"
+                                  )
+                                ])
+                              ],
+                              1
+                            )
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "v-list-tile",
+                          { attrs: { avatar: "" } },
+                          [
+                            _c(
+                              "v-list-tile-action",
+                              [
+                                _c("v-checkbox", {
+                                  model: {
+                                    value: _vm.widgets,
+                                    callback: function($$v) {
+                                      _vm.widgets = $$v
+                                    },
+                                    expression: "widgets"
+                                  }
+                                })
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "v-list-tile-content",
+                              [
+                                _c("v-list-tile-title", [
+                                  _vm._v("Auto-add widgets")
+                                ]),
+                                _vm._v(" "),
+                                _c("v-list-tile-sub-title", [
+                                  _vm._v(
+                                    "Automatically add home screen widgets"
+                                  )
+                                ])
+                              ],
+                              1
+                            )
+                          ],
+                          1
                         )
                       ],
                       1
@@ -102234,9 +102427,7 @@ if (false) {
 }
 
 /***/ }),
-/* 234 */,
-/* 235 */,
-/* 236 */
+/* 234 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -102351,7 +102542,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 237 */
+/* 235 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -102570,7 +102761,7 @@ if (false) {
 }
 
 /***/ }),
-/* 238 */
+/* 236 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -102598,15 +102789,15 @@ if (false) {
 }
 
 /***/ }),
-/* 239 */
+/* 237 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(240)
+var __vue_script__ = __webpack_require__(238)
 /* template */
-var __vue_template__ = __webpack_require__(241)
+var __vue_template__ = __webpack_require__(239)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -102645,7 +102836,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 240 */
+/* 238 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -102770,7 +102961,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 241 */
+/* 239 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -102897,7 +103088,7 @@ var render = function() {
               "solo-inverted": "",
               "hide-details": "",
               "prepend-inner-icon": "search",
-              label: "Search"
+              placeholder: "Search"
             }
           }),
           _vm._v(" "),
@@ -102985,18 +103176,18 @@ if (false) {
 }
 
 /***/ }),
-/* 242 */
+/* 240 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 // This file can be required in Browserify and Node.js for automatic polyfill
 // To use it:  require('es6-promise/auto');
 
-module.exports = __webpack_require__(243).polyfill();
+module.exports = __webpack_require__(241).polyfill();
 
 
 /***/ }),
-/* 243 */
+/* 241 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(process, global) {/*!
@@ -104183,10 +104374,10 @@ return Promise$1;
 
 //# sourceMappingURL=es6-promise.map
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9), __webpack_require__(5)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8), __webpack_require__(4)))
 
 /***/ }),
-/* 244 */
+/* 242 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
