@@ -23,6 +23,7 @@ import StudentETugas from './components/student/ETugas.vue'
 import StudentSchedule from './components/student/Schedule.vue'
 import StudentMateri from './components/student/Materi.vue'
 import StudentReport from './components/student/Report.vue'
+import StudentDetailEtugas from './components/student/DetailEtugas.vue'
 
 // lecturer
 Vue.component('layout', require('./components/lecturer/Layout.vue'))
@@ -45,6 +46,7 @@ Vue.component('etugas', require('./components/student/ETugas.vue'))
 Vue.component('jadwal', require('./components/student/Schedule.vue'))
 Vue.component('laporan-tugas', require('./components/student/Report.vue'))
 Vue.component('materi-kuliah', require('./components/student/Materi.vue'))
+Vue.component('detail-etugas', require('./components/student/DetailEtugas.vue'))
 
 const routes = [
     {

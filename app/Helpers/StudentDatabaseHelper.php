@@ -40,9 +40,9 @@ class StudentDatabaseHelper
         return $response;
     }
 
-    public static function getEtugasIndex()
+    public static function getEtugasIndex($id)
     {
-        $url = config('api.url').'/student/etugas';
+        $url = config('api.url').'/student/etugas/detail/'.$id;
         $data = array('user' => ResponseHelper::user());
         $response = Curl::to($url)
         ->withData($data)

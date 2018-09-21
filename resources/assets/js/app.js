@@ -32,11 +32,16 @@ router.beforeEach((to, from, next) => {
 // Vuex store
 const store = new Vuex.Store({
     state: {
-        count: 1
+        detailEtugasId: 0,
+        formDetailEtugas: false,
+        count: 0,
+        snackbarText: '',
+        snackbar: false,
     },
     mutations: {
         increment(state) {
             state.count++
+            state.detail_etugas_id++
         }
     }
 })

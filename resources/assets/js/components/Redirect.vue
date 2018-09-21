@@ -1,5 +1,5 @@
 <template>
-    <div>{{count}}</div>
+    <div @click="increment">click me {{counts}} - {{detailEtugasId}}</div>
 </template>
 
 <script>
@@ -9,9 +9,18 @@ export default {
         console.log('mounted ' + count)
     },
     
+    // computed for return object to template in vuex
     computed: {
-        count() {
+        counts() {
             return this.$store.state.count
+        },
+        detailEtugasId() {
+            return this.$store.state.detailEtugasId
+        }
+    },
+    methods: {
+        increment() {
+            this.$store.commit('increment')
         }
     }
 }

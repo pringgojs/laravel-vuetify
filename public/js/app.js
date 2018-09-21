@@ -34681,11 +34681,16 @@ __WEBPACK_IMPORTED_MODULE_3__routes__["a" /* default */].beforeEach(function (to
 // Vuex store
 var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
     state: {
-        count: 1
+        detailEtugasId: 0,
+        formDetailEtugas: false,
+        count: 0,
+        snackbarText: '',
+        snackbar: false
     },
     mutations: {
         increment: function increment(state) {
             state.count++;
+            state.detail_etugas_id++;
         }
     }
 });
@@ -87910,6 +87915,8 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_vue__;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__components_student_Materi_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_17__components_student_Materi_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__components_student_Report_vue__ = __webpack_require__(165);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__components_student_Report_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_18__components_student_Report_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__components_student_DetailEtugas_vue__ = __webpack_require__(251);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__components_student_DetailEtugas_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_19__components_student_DetailEtugas_vue__);
 
 
 
@@ -87930,6 +87937,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_
 
 
 // student
+
 
 
 
@@ -87957,6 +87965,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('etugas', __webpack_requir
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('jadwal', __webpack_require__(163));
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('laporan-tugas', __webpack_require__(165));
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('materi-kuliah', __webpack_require__(164));
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('detail-etugas', __webpack_require__(251));
 
 var routes = [{
     path: '/',
@@ -101345,9 +101354,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
 
+    // computed for return object to template in vuex
     computed: {
-        count: function count() {
+        counts: function counts() {
             return this.$store.state.count;
+        },
+        detailEtugasId: function detailEtugasId() {
+            return this.$store.state.detailEtugasId;
+        }
+    },
+    methods: {
+        increment: function increment() {
+            this.$store.commit('increment');
         }
     }
 });
@@ -101360,7 +101378,11 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [_vm._v(_vm._s(_vm.count))])
+  return _c("div", { on: { click: _vm.increment } }, [
+    _vm._v(
+      "click me " + _vm._s(_vm.counts) + " - " + _vm._s(_vm.detailEtugasId)
+    )
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -101526,70 +101548,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -101618,6 +101576,7 @@ __WEBPACK_IMPORTED_MODULE_1_moment__["locale"]('id');
     },
     mounted: function mounted() {
         this.initData();
+        var count = this.$store.state.count;
     },
 
     methods: {
@@ -101646,16 +101605,15 @@ __WEBPACK_IMPORTED_MODULE_1_moment__["locale"]('id');
             });
         },
         detail: function detail(id) {
-            this.dialog = true;
-
-            var matakuliah = $('#matakuliah-' + id).html();
-            var kelas = $('#kelas-' + id).html();
-            var judul = $('#judul-' + id).html();
-            var keterangan = $('#keterangan-' + id).html();
             var app = this;
-            app.title_confirm = 'Yakin ingin menghapus tugas ?';
-            app.desc_confirm = 'Tugas dengan judul "' + judul + ' kelas ' + kelas + '" yang dihapus tidak bisa dikembalikan.';
-            app.remove_id = id;
+
+            axios.get('student/e-tugas/detail/' + id).then(function (resp) {
+                app.bodyTable = resp.data.data;
+            }).catch(function (resp) {
+                app.showSnackbar("oops, something went wrong. Please try again!");
+            });
+            this.$store.state.formDetailEtugas = true;
+            this.$store.state.detailEtugasId = id;
         },
         dateView: function dateView(date) {
             if (date != '0000-00-00 00:00:00') {
@@ -101948,265 +101906,9 @@ var render = function() {
         1
       ),
       _vm._v(" "),
-      [
-        _c(
-          "v-layout",
-          { attrs: { row: "", "justify-center": "" } },
-          [
-            _c(
-              "v-dialog",
-              {
-                attrs: {
-                  fullscreen: "",
-                  "hide-overlay": "",
-                  transition: "dialog-bottom-transition"
-                },
-                model: {
-                  value: _vm.dialog,
-                  callback: function($$v) {
-                    _vm.dialog = $$v
-                  },
-                  expression: "dialog"
-                }
-              },
-              [
-                _c(
-                  "v-card",
-                  [
-                    _c(
-                      "v-toolbar",
-                      { attrs: { dark: "", color: "primary" } },
-                      [
-                        _c(
-                          "v-btn",
-                          {
-                            attrs: { icon: "", dark: "" },
-                            nativeOn: {
-                              click: function($event) {
-                                _vm.dialog = false
-                              }
-                            }
-                          },
-                          [_c("v-icon", [_vm._v("close")])],
-                          1
-                        ),
-                        _vm._v(" "),
-                        _c("v-toolbar-title", [_vm._v("Settings")]),
-                        _vm._v(" "),
-                        _c("v-spacer"),
-                        _vm._v(" "),
-                        _c(
-                          "v-toolbar-items",
-                          [
-                            _c(
-                              "v-btn",
-                              {
-                                attrs: { dark: "", flat: "" },
-                                nativeOn: {
-                                  click: function($event) {
-                                    _vm.dialog = false
-                                  }
-                                }
-                              },
-                              [_vm._v("Save")]
-                            )
-                          ],
-                          1
-                        )
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "v-list",
-                      { attrs: { "three-line": "", subheader: "" } },
-                      [
-                        _c("v-subheader", [_vm._v("User Controls")]),
-                        _vm._v(" "),
-                        _c(
-                          "v-list-tile",
-                          { attrs: { avatar: "" } },
-                          [
-                            _c(
-                              "v-list-tile-content",
-                              [
-                                _c("v-list-tile-title", [
-                                  _vm._v("Content filtering")
-                                ]),
-                                _vm._v(" "),
-                                _c("v-list-tile-sub-title", [
-                                  _vm._v(
-                                    "Set the content filtering level to restrict apps that can be downloaded"
-                                  )
-                                ])
-                              ],
-                              1
-                            )
-                          ],
-                          1
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "v-list-tile",
-                          { attrs: { avatar: "" } },
-                          [
-                            _c(
-                              "v-list-tile-content",
-                              [
-                                _c("v-list-tile-title", [_vm._v("Password")]),
-                                _vm._v(" "),
-                                _c("v-list-tile-sub-title", [
-                                  _vm._v(
-                                    "Require password for purchase or use password to restrict purchase"
-                                  )
-                                ])
-                              ],
-                              1
-                            )
-                          ],
-                          1
-                        )
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c("v-divider"),
-                    _vm._v(" "),
-                    _c(
-                      "v-list",
-                      { attrs: { "three-line": "", subheader: "" } },
-                      [
-                        _c("v-subheader", [_vm._v("General")]),
-                        _vm._v(" "),
-                        _c(
-                          "v-list-tile",
-                          { attrs: { avatar: "" } },
-                          [
-                            _c(
-                              "v-list-tile-action",
-                              [
-                                _c("v-checkbox", {
-                                  model: {
-                                    value: _vm.notifications,
-                                    callback: function($$v) {
-                                      _vm.notifications = $$v
-                                    },
-                                    expression: "notifications"
-                                  }
-                                })
-                              ],
-                              1
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "v-list-tile-content",
-                              [
-                                _c("v-list-tile-title", [
-                                  _vm._v("Notifications")
-                                ]),
-                                _vm._v(" "),
-                                _c("v-list-tile-sub-title", [
-                                  _vm._v(
-                                    "Notify me about updates to apps or games that I downloaded"
-                                  )
-                                ])
-                              ],
-                              1
-                            )
-                          ],
-                          1
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "v-list-tile",
-                          { attrs: { avatar: "" } },
-                          [
-                            _c(
-                              "v-list-tile-action",
-                              [
-                                _c("v-checkbox", {
-                                  model: {
-                                    value: _vm.sound,
-                                    callback: function($$v) {
-                                      _vm.sound = $$v
-                                    },
-                                    expression: "sound"
-                                  }
-                                })
-                              ],
-                              1
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "v-list-tile-content",
-                              [
-                                _c("v-list-tile-title", [_vm._v("Sound")]),
-                                _vm._v(" "),
-                                _c("v-list-tile-sub-title", [
-                                  _vm._v(
-                                    "Auto-update apps at any time. Data charges may apply"
-                                  )
-                                ])
-                              ],
-                              1
-                            )
-                          ],
-                          1
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "v-list-tile",
-                          { attrs: { avatar: "" } },
-                          [
-                            _c(
-                              "v-list-tile-action",
-                              [
-                                _c("v-checkbox", {
-                                  model: {
-                                    value: _vm.widgets,
-                                    callback: function($$v) {
-                                      _vm.widgets = $$v
-                                    },
-                                    expression: "widgets"
-                                  }
-                                })
-                              ],
-                              1
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "v-list-tile-content",
-                              [
-                                _c("v-list-tile-title", [
-                                  _vm._v("Auto-add widgets")
-                                ]),
-                                _vm._v(" "),
-                                _c("v-list-tile-sub-title", [
-                                  _vm._v(
-                                    "Automatically add home screen widgets"
-                                  )
-                                ])
-                              ],
-                              1
-                            )
-                          ],
-                          1
-                        )
-                      ],
-                      1
-                    )
-                  ],
-                  1
-                )
-              ],
-              1
-            )
-          ],
-          1
-        )
-      ]
+      _c("detail-etugas")
     ],
-    2
+    1
   )
 }
 var staticRenderFns = []
@@ -104381,6 +104083,394 @@ return Promise$1;
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 243 */,
+/* 244 */,
+/* 245 */,
+/* 246 */,
+/* 247 */,
+/* 248 */,
+/* 249 */,
+/* 250 */,
+/* 251 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(253)
+/* template */
+var __vue_template__ = __webpack_require__(252)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/student/DetailEtugas.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-e3a8a5a2", Component.options)
+  } else {
+    hotAPI.reload("data-v-e3a8a5a2", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 252 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "v-layout",
+    { attrs: { row: "", "justify-center": "" } },
+    [
+      _c(
+        "v-dialog",
+        {
+          attrs: {
+            fullscreen: "",
+            "hide-overlay": "",
+            transition: "dialog-bottom-transition"
+          },
+          model: {
+            value: _vm.formDialogDetail,
+            callback: function($$v) {
+              _vm.formDialogDetail = $$v
+            },
+            expression: "formDialogDetail"
+          }
+        },
+        [
+          _c(
+            "v-card",
+            [
+              _c(
+                "v-toolbar",
+                { attrs: { dark: "", color: "primary" } },
+                [
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { icon: "", dark: "" },
+                      on: { click: _vm.closeFormDialog }
+                    },
+                    [_c("v-icon", [_vm._v("close")])],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("v-toolbar-title", [_vm._v("Pendidikan Agama")]),
+                  _vm._v(" "),
+                  _c("v-spacer"),
+                  _vm._v(" "),
+                  _c(
+                    "v-toolbar-items",
+                    [
+                      _c(
+                        "v-btn",
+                        {
+                          attrs: { dark: "", flat: "" },
+                          nativeOn: {
+                            click: function($event) {
+                              return _vm.saveFormDialog($event)
+                            }
+                          }
+                        },
+                        [_vm._v("Save")]
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-list",
+                { attrs: { "three-line": "", subheader: "" } },
+                [
+                  _c("v-subheader", [_vm._v("Detail Etugas")]),
+                  _vm._v(" "),
+                  _c(
+                    "v-list-tile",
+                    { attrs: { avatar: "" } },
+                    [
+                      _c(
+                        "v-list-tile-content",
+                        [
+                          _c("v-list-tile-title", [
+                            _vm._v("Content filtering")
+                          ]),
+                          _vm._v(" "),
+                          _c("v-list-tile-sub-title", [
+                            _vm._v(
+                              "Set the content filtering level to restrict apps that can be downloaded"
+                            )
+                          ])
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-list-tile",
+                    { attrs: { avatar: "" } },
+                    [
+                      _c(
+                        "v-list-tile-content",
+                        [
+                          _c("v-list-tile-title", [_vm._v("Password")]),
+                          _vm._v(" "),
+                          _c("v-list-tile-sub-title", [
+                            _vm._v(
+                              "Require password for purchase or use password to restrict purchase"
+                            )
+                          ])
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c("v-divider"),
+              _vm._v(" "),
+              _c(
+                "v-list",
+                { attrs: { "three-line": "", subheader: "" } },
+                [
+                  _c("v-subheader", [_vm._v("General")]),
+                  _vm._v(" "),
+                  _c(
+                    "v-list-tile",
+                    { attrs: { avatar: "" } },
+                    [
+                      _c("v-list-tile-action", [_c("v-checkbox")], 1),
+                      _vm._v(" "),
+                      _c(
+                        "v-list-tile-content",
+                        [
+                          _c("v-list-tile-title", [_vm._v("Notifications")]),
+                          _vm._v(" "),
+                          _c("v-list-tile-sub-title", [
+                            _vm._v(
+                              "Notify me about updates to apps or games that I downloaded"
+                            )
+                          ])
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-list-tile",
+                    { attrs: { avatar: "" } },
+                    [
+                      _c("v-list-tile-action", [_c("v-checkbox")], 1),
+                      _vm._v(" "),
+                      _c(
+                        "v-list-tile-content",
+                        [
+                          _c("v-list-tile-title", [_vm._v("Sound")]),
+                          _vm._v(" "),
+                          _c("v-list-tile-sub-title", [
+                            _vm._v(
+                              "Auto-update apps at any time. Data charges may apply"
+                            )
+                          ])
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-list-tile",
+                    { attrs: { avatar: "" } },
+                    [
+                      _c("v-list-tile-action", [_c("v-checkbox")], 1),
+                      _vm._v(" "),
+                      _c(
+                        "v-list-tile-content",
+                        [
+                          _c("v-list-tile-title", [_vm._v("Auto-add widgets")]),
+                          _vm._v(" "),
+                          _c("v-list-tile-sub-title", [
+                            _vm._v("Automatically add home screen widgets")
+                          ])
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-e3a8a5a2", module.exports)
+  }
+}
+
+/***/ }),
+/* 253 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            tugas_id: ''
+        };
+    },
+
+
+    // computed for return object to template in vuex
+    computed: {
+        getID: function getID() {
+            return this.$store.state.detailEetugasId;
+        },
+        formDialogDetail: function formDialogDetail() {
+            return this.$store.state.formDetailEtugas;
+        }
+    },
+    methods: {
+        initData: function initData() {
+            var app = this;
+            // axios.get('student/e-tugas/detail').then(function (resp) {
+            //     app.isLoaded = true;
+            //     app.bodyTable = resp.data.data;
+            //     app.semesters = resp.data.data_semester;
+            // })
+            // .catch(function (resp) {
+            //     app.showSnackbar("oops, something went wrong. Please try again!");
+            // });
+        },
+        saveFormDialog: function saveFormDialog() {
+            this.$store.state.formDetailEtugas = false;
+        },
+        closeFormDialog: function closeFormDialog() {
+            console.log('x');
+            this.$store.state.formDetailEtugas = false;
+        }
+    }
+});
 
 /***/ })
 /******/ ]);
