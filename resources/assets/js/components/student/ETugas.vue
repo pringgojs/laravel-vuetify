@@ -31,7 +31,7 @@
             >
                 <template slot="items" slot-scope="props">
                     <tr :id="'tr-'+props.item.id">
-                        <td>{{ props.item.modul }}</td>
+                        <td style="min-width:250px">{{ props.item.modul }}</td>
                         <td class="text-xs-left" :id="'matakuliah-'+props.item.id">{{ props.item.matakuliah }}</td>
                         <td class="text-xs-left" :id="'kelas-'+props.item.id">{{ props.item.tahun }} / {{ props.item.semester }} - {{ props.item.program }} {{ props.item.jurusan }} ({{props.item.kelas}} {{props.item.pararel}})</td>
                         <td class="text-xs-left" :id="'dosen-'+props.item.id">{{ props.item.nama }}</td>
@@ -49,6 +49,8 @@
                                 </a>
                             </template>
                         </td>
+                        <td class="text-xs-center" :id="'due-date-'+props.item.id">{{ props.item.nilai_mahasiswa ? dateView(props.item.nilai_mahasiswa.updated_at) : '-'}}</td>
+
                         <td class="text-xs-center">
                             <template v-if="!props.item.nilai_mahasiswa">
                                 <v-btn flat icon color="pink">
@@ -84,10 +86,11 @@ export default {
                 { text: 'Matakuliah', value: 'matakuliah' },
                 { text: 'Kelas', value: 'kelas' },
                 { text: 'Dosen', value: 'nama' },
-                { text: 'Judul Materi', value: 'judul' },
+                { text: 'Judul Tugas', value: 'judul' },
                 { text: 'Keterangan', value: 'keterangan' },
                 { text: 'Due Date', value: 'due_date' },
                 { text: 'File Lampiran Tugas', value: 'file_url' },
+                { text: 'Tanggal Upload', value: 'id' },
                 { text: 'Status', value: 'id' },
             ],
             semesters: [],
