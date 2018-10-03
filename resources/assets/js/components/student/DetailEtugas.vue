@@ -6,7 +6,7 @@
                 <v-btn icon dark @click="closeFormDialog">
                     <v-icon>close</v-icon>
                 </v-btn>
-                <v-toolbar-title>{{$store.state.obj_etugas ? $store.state.obj_etugas.etugas.judul : ''}}</v-toolbar-title>
+                <v-toolbar-title>{{$store.state.form_dialog_detail_etugas ? $store.state.obj_etugas.etugas.judul : ''}}</v-toolbar-title>
                 <v-spacer></v-spacer>
                 <v-toolbar-items>
                     <v-btn dark flat @click="submit">Save</v-btn>
@@ -17,53 +17,68 @@
                 <v-list-tile avatar>
                     <v-list-tile-content>
                     <v-list-tile-title>Dosen</v-list-tile-title>
-                    <v-list-tile-sub-title>{{$store.state.obj_etugas ? $store.state.obj_etugas.etugas_pegawai.nama : ''}}</v-list-tile-sub-title>
+                    <v-list-tile-sub-title>{{$store.state.form_dialog_detail_etugas ? $store.state.obj_etugas.etugas_pegawai.nama : ''}}</v-list-tile-sub-title>
                     </v-list-tile-content>
                 </v-list-tile>
                 <v-list-tile avatar>
                     <v-list-tile-content>
                     <v-list-tile-title>Matakuliah</v-list-tile-title>
-                    <v-list-tile-sub-title>{{$store.state.obj_etugas ? $store.state.obj_etugas.etugas_matakuliah.matakuliah : ''}} <br> {{$store.state.obj_etugas ? $store.state.obj_etugas.etugas_modul.modul : ''}}</v-list-tile-sub-title>
+                    <v-list-tile-sub-title>{{$store.state.form_dialog_detail_etugas ? $store.state.obj_etugas.etugas_matakuliah.matakuliah : ''}} <br> {{$store.state.form_dialog_detail_etugas ? $store.state.obj_etugas.etugas_modul.modul : ''}}</v-list-tile-sub-title>
                     </v-list-tile-content>
                 </v-list-tile>
                 <v-list-tile avatar>
                     <v-list-tile-content>
                     <v-list-tile-title>Deskripsi Tugas</v-list-tile-title>
-                    <v-list-tile-sub-title>{{$store.state.obj_etugas ? $store.state.obj_etugas.etugas.keterangan : ''}}</v-list-tile-sub-title>
+                    <v-list-tile-sub-title>{{$store.state.form_dialog_detail_etugas ? $store.state.obj_etugas.etugas.keterangan : ''}}</v-list-tile-sub-title>
                     </v-list-tile-content>
                 </v-list-tile>
                 <v-list-tile avatar>
                     <v-list-tile-content>
                     <v-list-tile-title>Batas Pengumpulan</v-list-tile-title>
-                    <v-list-tile-sub-title>{{dateView($store.state.obj_etugas ? $store.state.obj_etugas.etugas.due_date : '')}}</v-list-tile-sub-title>
+                    <v-list-tile-sub-title>{{dateView($store.state.form_dialog_detail_etugas ? $store.state.obj_etugas.etugas.due_date : '')}}</v-list-tile-sub-title>
                     </v-list-tile-content>
                 </v-list-tile>
                 </v-list>
                 <v-divider></v-divider>
                 <v-list three-line subheader>
-                <v-subheader>Upload Tugas</v-subheader>
-                <v-list-tile avatar>
-                    <v-list-tile-content>
+                    <v-subheader>Upload Tugas</v-subheader>
+                    <v-list-tile avatar>
+                        <v-list-tile-content>
+                            <v-list-tile-sub-title>
+                                <v-textarea
+                                    box
+                                    name="input-7-4"
+                                    id="keterangan"
+                                    placeholder="Tambah keterangan"
+                                    :value="setKeterangan"
+                                    >
+                                    
+                                    </v-textarea>
+                            </v-list-tile-sub-title>
+                        </v-list-tile-content>
+                    </v-list-tile>
+                    <br>
+                    <v-flex xs12 style="padding:15px">
+                        <p>Tambahkan File (Optional)</p>
+                        <file-pond
+                            name="file"
+                            ref="pond"
+                            label-idle="Drop files here..."
+                            allow-multiple="false"
+                            v-bind:files="myFiles"/>
+                    </v-flex>
+                    <v-list-tile avatar v-if="etugas_nilai_mahasiswa">
+                        <v-list-tile-content>
+                        <v-list-tile-title>File yang sudah diupload</v-list-tile-title>
                         <v-list-tile-sub-title>
-                            <v-textarea
-                                box
-                                name="input-7-4"
-                                placeholder="Tambah keterangan"
-                                v-model="keterangan"
-                                ></v-textarea>
+                            <template v-if="etugas_nilai_mahasiswa.file_url">
+                                <a v-bind:href="etugas_nilai_mahasiswa.file_url"> 
+                                    Download file tugas
+                                </a>
+                            </template>
                         </v-list-tile-sub-title>
-                    </v-list-tile-content>
-                </v-list-tile>
-                <br>
-                <v-flex xs12 style="padding:15px">
-                    <p>Tambahkan File (Optional)</p>
-                    <file-pond
-                        name="file"
-                        ref="pond"
-                        label-idle="Drop files here..."
-                        allow-multiple="false"
-                        v-bind:files="myFiles"/>
-                </v-flex>
+                        </v-list-tile-content>
+                    </v-list-tile>
                 </v-list>
             </v-card>
         </v-dialog>
@@ -104,19 +119,23 @@ export default {
             snackbar: false,
             tugas_id: '',
             myFiles: '',
-            keterangan: '',
         }
     },
     components: {
         FilePond
     },
     computed: {
-        getID() {
-            return this.$store.state.obj_etugas
+        setKeterangan() {
+            return this.$store.state.obj_etugas.etugas_nilai_mahasiswa ? this.$store.state.obj_etugas.etugas_nilai_mahasiswa.keterangan: ''
+        },
+        etugas_nilai_mahasiswa() {
+            return this.$store.state.obj_etugas.etugas_nilai_mahasiswa ? this.$store.state.obj_etugas.etugas_nilai_mahasiswa: ''
         },
         formDialogDetail() {
             return this.$store.state.form_dialog_detail_etugas
         }
+    },
+    mounted() {
     },
     methods: {
         initData() {
@@ -161,7 +180,7 @@ export default {
             if (file.length) {
                 form.append('file', file[0].file);
             }
-            form.append('keterangan', app.keterangan)
+            form.append('keterangan', $('#keterangan').val())
             form.append('tugas_id', app.$store.state.obj_etugas.etugas.id)
             form.append('kelas_id', app.$store.state.obj_etugas.etugas.kelas)
             axios.post( 'student/e-tugas/store', form, { headers: {'Content-Type': 'multipart/form-data'}}).then(function (resp) {
@@ -170,6 +189,7 @@ export default {
                     app.myFiles = [];
                     app.showSnackbar('Tugas berhasil diunggah');
                     app.$store.state.form_dialog_detail_etugas = false;
+                    app.$store.state.obj_list_etugas =  resp.data.data_tugas;
                 }
             })
             .catch(function(e) {

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\FileHelper;
 use Illuminate\Http\Request;
 use App\Helpers\DatabaseHelper;
 use App\Helpers\StudentDatabaseHelper;
@@ -45,7 +46,9 @@ class StudentController extends Controller
 
     public function eTugasStore(Request $request)
     {
-        $database = StudentDatabaseHelper::storeEtugas($request);
+        $file = FileHelper::upload($request->file('file'), 'uploads/tugas-mahasiswa/');
+
+        $database = StudentDatabaseHelper::storeEtugas($request, $file);
         return $database;
     }
 }

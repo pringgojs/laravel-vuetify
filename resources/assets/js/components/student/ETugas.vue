@@ -25,7 +25,7 @@
         <v-flex sm12 v-if="isLoaded">
             <v-data-table
                 :headers="headerTable"
-                :items="bodyTable"
+                :items="$store.state.obj_list_etugas"
                 hide-actions
                 class="elevation-1"
             >
@@ -50,9 +50,14 @@
                             </template>
                         </td>
                         <td class="text-xs-center">
-                            <template v-if="props.item.file_url">
+                            <template v-if="!props.item.nilai_mahasiswa">
                                 <v-btn flat icon color="pink">
                                     <v-icon>close</v-icon>
+                                </v-btn>
+                            </template>
+                            <template v-if="props.item.nilai_mahasiswa">
+                                <v-btn flat icon color="info">
+                                    <v-icon>check</v-icon>
                                 </v-btn>
                             </template>
                         </td>
@@ -85,7 +90,6 @@ export default {
                 { text: 'File Tugas', value: 'file_url' },
                 { text: 'Status', value: 'id' },
             ],
-            bodyTable: [],
             semesters: [],
             descriptionSemester: '',
             filter: '',
@@ -110,8 +114,9 @@ export default {
             var app = this;
             axios.get('student/e-tugas').then(function (resp) {
                 app.isLoaded = true;
-                app.bodyTable = resp.data.data;
+                app.$store.state.obj_list_etugas =  resp.data.data;
                 app.semesters = resp.data.data_semester;
+                console.log(resp.data)
             })
             .catch(function (resp) {
                 app.showSnackbar("oops, something went wrong. Please try again!");

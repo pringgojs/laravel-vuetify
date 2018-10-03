@@ -62,16 +62,14 @@ class StudentDatabaseHelper
         return $response;
     }
 
-    public static function storeEtugas($request)
+    public static function storeEtugas($request, $file)
     {
-        $file = FileHelper::upload($request->file('file'), 'uploads/tugas-mahasiswa/');
-        
-        $url = config('api.url').'/student/etugas/store/';
-        \Log::info($url);
+        $url = config('api.url').'/student/etugas/store';
         $data = array('user' => ResponseHelper::user(), 'request' => $request->toArray(), 'file' => $file);
         $response = Curl::to($url)
         ->withData($data)
         ->post();
+        \Log::info($response);
         
         return $response;
     }

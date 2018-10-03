@@ -34728,7 +34728,8 @@ __WEBPACK_IMPORTED_MODULE_3__routes__["a" /* default */].beforeEach(function (to
 // Vuex store
 var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
     state: {
-        obj_etugas: null,
+        obj_list_etugas: [],
+        obj_etugas: [],
         form_dialog_detail_etugas: false,
         count: 0,
         snackbarText: '',
@@ -101579,6 +101580,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -101588,7 +101594,6 @@ __WEBPACK_IMPORTED_MODULE_1_moment__["locale"]('id');
     data: function data() {
         return {
             headerTable: [{ text: 'Modul', value: 'modul' }, { text: 'Matakuliah', value: 'matakuliah' }, { text: 'Kelas', value: 'kelas' }, { text: 'Dosen', value: 'nama' }, { text: 'Judul Materi', value: 'judul' }, { text: 'Keterangan', value: 'keterangan' }, { text: 'Due Date', value: 'due_date' }, { text: 'File Tugas', value: 'file_url' }, { text: 'Status', value: 'id' }],
-            bodyTable: [],
             semesters: [],
             descriptionSemester: '',
             filter: '',
@@ -101615,8 +101620,9 @@ __WEBPACK_IMPORTED_MODULE_1_moment__["locale"]('id');
             var app = this;
             axios.get('student/e-tugas').then(function (resp) {
                 app.isLoaded = true;
-                app.bodyTable = resp.data.data;
+                app.$store.state.obj_list_etugas = resp.data.data;
                 app.semesters = resp.data.data_semester;
+                console.log(resp.data);
             }).catch(function (resp) {
                 app.showSnackbar("oops, something went wrong. Please try again!");
             });
@@ -101761,7 +101767,7 @@ var render = function() {
                 staticClass: "elevation-1",
                 attrs: {
                   headers: _vm.headerTable,
-                  items: _vm.bodyTable,
+                  items: _vm.$store.state.obj_list_etugas,
                   "hide-actions": ""
                 },
                 scopedSlots: _vm._u([
@@ -101886,7 +101892,7 @@ var render = function() {
                             "td",
                             { staticClass: "text-xs-center" },
                             [
-                              props.item.file_url
+                              !props.item.nilai_mahasiswa
                                 ? [
                                     _c(
                                       "v-btn",
@@ -101898,6 +101904,23 @@ var render = function() {
                                         }
                                       },
                                       [_c("v-icon", [_vm._v("close")])],
+                                      1
+                                    )
+                                  ]
+                                : _vm._e(),
+                              _vm._v(" "),
+                              props.item.nilai_mahasiswa
+                                ? [
+                                    _c(
+                                      "v-btn",
+                                      {
+                                        attrs: {
+                                          flat: "",
+                                          icon: "",
+                                          color: "info"
+                                        }
+                                      },
+                                      [_c("v-icon", [_vm._v("check")])],
                                       1
                                     )
                                   ]
@@ -102601,6 +102624,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 __WEBPACK_IMPORTED_MODULE_0_moment__["locale"]('id');
@@ -102622,8 +102660,7 @@ var FilePond = __WEBPACK_IMPORTED_MODULE_1_vue_filepond___default()(__WEBPACK_IM
             snackbarText: '',
             snackbar: false,
             tugas_id: '',
-            myFiles: '',
-            keterangan: ''
+            myFiles: ''
         };
     },
 
@@ -102631,13 +102668,18 @@ var FilePond = __WEBPACK_IMPORTED_MODULE_1_vue_filepond___default()(__WEBPACK_IM
         FilePond: FilePond
     },
     computed: {
-        getID: function getID() {
-            return this.$store.state.obj_etugas;
+        setKeterangan: function setKeterangan() {
+            return this.$store.state.obj_etugas.etugas_nilai_mahasiswa ? this.$store.state.obj_etugas.etugas_nilai_mahasiswa.keterangan : '';
+        },
+        etugas_nilai_mahasiswa: function etugas_nilai_mahasiswa() {
+            return this.$store.state.obj_etugas.etugas_nilai_mahasiswa ? this.$store.state.obj_etugas.etugas_nilai_mahasiswa : '';
         },
         formDialogDetail: function formDialogDetail() {
             return this.$store.state.form_dialog_detail_etugas;
         }
     },
+    mounted: function mounted() {},
+
     methods: {
         initData: function initData() {
             var app = this;
@@ -102681,7 +102723,7 @@ var FilePond = __WEBPACK_IMPORTED_MODULE_1_vue_filepond___default()(__WEBPACK_IM
             if (file.length) {
                 form.append('file', file[0].file);
             }
-            form.append('keterangan', app.keterangan);
+            form.append('keterangan', $('#keterangan').val());
             form.append('tugas_id', app.$store.state.obj_etugas.etugas.id);
             form.append('kelas_id', app.$store.state.obj_etugas.etugas.kelas);
             axios.post('student/e-tugas/store', form, { headers: { 'Content-Type': 'multipart/form-data' } }).then(function (resp) {
@@ -102690,6 +102732,7 @@ var FilePond = __WEBPACK_IMPORTED_MODULE_1_vue_filepond___default()(__WEBPACK_IM
                     app.myFiles = [];
                     app.showSnackbar('Tugas berhasil diunggah');
                     app.$store.state.form_dialog_detail_etugas = false;
+                    app.$store.state.obj_list_etugas = resp.data.data_tugas;
                 }
             }).catch(function (e) {
                 console.log(e);
@@ -102748,7 +102791,7 @@ var render = function() {
                   _c("v-toolbar-title", [
                     _vm._v(
                       _vm._s(
-                        _vm.$store.state.obj_etugas
+                        _vm.$store.state.form_dialog_detail_etugas
                           ? _vm.$store.state.obj_etugas.etugas.judul
                           : ""
                       )
@@ -102793,7 +102836,7 @@ var render = function() {
                           _c("v-list-tile-sub-title", [
                             _vm._v(
                               _vm._s(
-                                _vm.$store.state.obj_etugas
+                                _vm.$store.state.form_dialog_detail_etugas
                                   ? _vm.$store.state.obj_etugas.etugas_pegawai
                                       .nama
                                   : ""
@@ -102819,7 +102862,7 @@ var render = function() {
                           _c("v-list-tile-sub-title", [
                             _vm._v(
                               _vm._s(
-                                _vm.$store.state.obj_etugas
+                                _vm.$store.state.form_dialog_detail_etugas
                                   ? _vm.$store.state.obj_etugas
                                       .etugas_matakuliah.matakuliah
                                   : ""
@@ -102829,7 +102872,7 @@ var render = function() {
                             _vm._v(
                               " " +
                                 _vm._s(
-                                  _vm.$store.state.obj_etugas
+                                  _vm.$store.state.form_dialog_detail_etugas
                                     ? _vm.$store.state.obj_etugas.etugas_modul
                                         .modul
                                     : ""
@@ -102855,7 +102898,7 @@ var render = function() {
                           _c("v-list-tile-sub-title", [
                             _vm._v(
                               _vm._s(
-                                _vm.$store.state.obj_etugas
+                                _vm.$store.state.form_dialog_detail_etugas
                                   ? _vm.$store.state.obj_etugas.etugas
                                       .keterangan
                                   : ""
@@ -102884,7 +102927,7 @@ var render = function() {
                             _vm._v(
                               _vm._s(
                                 _vm.dateView(
-                                  _vm.$store.state.obj_etugas
+                                  _vm.$store.state.form_dialog_detail_etugas
                                     ? _vm.$store.state.obj_etugas.etugas
                                         .due_date
                                     : ""
@@ -102924,14 +102967,9 @@ var render = function() {
                                 attrs: {
                                   box: "",
                                   name: "input-7-4",
-                                  placeholder: "Tambah keterangan"
-                                },
-                                model: {
-                                  value: _vm.keterangan,
-                                  callback: function($$v) {
-                                    _vm.keterangan = $$v
-                                  },
-                                  expression: "keterangan"
+                                  id: "keterangan",
+                                  placeholder: "Tambah keterangan",
+                                  value: _vm.setKeterangan
                                 }
                               })
                             ],
@@ -102963,7 +103001,52 @@ var render = function() {
                       })
                     ],
                     1
-                  )
+                  ),
+                  _vm._v(" "),
+                  _vm.etugas_nilai_mahasiswa
+                    ? _c(
+                        "v-list-tile",
+                        { attrs: { avatar: "" } },
+                        [
+                          _c(
+                            "v-list-tile-content",
+                            [
+                              _c("v-list-tile-title", [
+                                _vm._v("File yang sudah diupload")
+                              ]),
+                              _vm._v(" "),
+                              _c(
+                                "v-list-tile-sub-title",
+                                [
+                                  _vm.etugas_nilai_mahasiswa.file_url
+                                    ? [
+                                        _c(
+                                          "a",
+                                          {
+                                            attrs: {
+                                              href:
+                                                _vm.etugas_nilai_mahasiswa
+                                                  .file_url
+                                            }
+                                          },
+                                          [
+                                            _vm._v(
+                                              " \n                                Download file tugas\n                            "
+                                            )
+                                          ]
+                                        )
+                                      ]
+                                    : _vm._e()
+                                ],
+                                2
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    : _vm._e()
                 ],
                 1
               )
