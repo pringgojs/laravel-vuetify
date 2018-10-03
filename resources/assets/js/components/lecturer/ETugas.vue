@@ -3,7 +3,7 @@
         <h1 class="font-weight-light">E Tugas</h1>
         <div class="subheading">Tambahkan tugas sebagai bahwan evaluasi mahasiswa dalam memahami pelajaran</div>
         
-        <content-loader v-if="!isLoaded" height="250"></content-loader>
+        <content-loader v-if="!isLoaded" :height="250"></content-loader>
         <v-flex md5 mt-5 v-if="isLoaded">
             <v-select 
                 :items="semesters"

@@ -69,7 +69,17 @@ class StudentDatabaseHelper
         $response = Curl::to($url)
         ->withData($data)
         ->post();
-        \Log::info($response);
+        
+        return $response;
+    }
+
+    public static function getEtugasGetBySemester($kuliah)
+    {
+        $url = config('api.url').'/student/etugas/kuliah/'.$kuliah;
+        $data = array('user' => ResponseHelper::user());
+        $response = Curl::to($url)
+        ->withData($data)
+        ->post();
         
         return $response;
     }

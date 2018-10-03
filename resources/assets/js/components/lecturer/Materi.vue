@@ -3,7 +3,7 @@
         <h1 class="font-weight-light">Materi</h1>
         <div class="subheading">Tambahkan materi sebagai penunjang belajar mahasiswa</div>
         
-        <content-loader v-if="!isLoaded" height="250"></content-loader>
+        <content-loader v-if="!isLoaded" :height="250"></content-loader>
         <v-flex md5 mt-5 v-if="isLoaded">
             <v-select 
                 :items="semesters"

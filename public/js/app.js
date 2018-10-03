@@ -89126,7 +89126,7 @@ var render = function() {
       ]),
       _vm._v(" "),
       !_vm.isLoaded
-        ? _c("content-loader", { attrs: { height: "250" } })
+        ? _c("content-loader", { attrs: { height: 250 } })
         : _vm._e(),
       _vm._v(" "),
       _vm.isLoaded
@@ -98364,7 +98364,7 @@ var render = function() {
       ]),
       _vm._v(" "),
       !_vm.isLoaded
-        ? _c("content-loader", { attrs: { height: "250" } })
+        ? _c("content-loader", { attrs: { height: 250 } })
         : _vm._e(),
       _vm._v(" "),
       _vm.isLoaded
@@ -99127,7 +99127,7 @@ var render = function() {
       ]),
       _vm._v(" "),
       !_vm.isLoaded
-        ? _c("content-loader", { attrs: { height: "250" } })
+        ? _c("content-loader", { attrs: { height: 250 } })
         : _vm._e(),
       _vm._v(" "),
       _vm.isLoaded
@@ -99705,7 +99705,7 @@ var render = function() {
       ]),
       _vm._v(" "),
       !_vm.isLoaded
-        ? _c("content-loader", { attrs: { height: "250" } })
+        ? _c("content-loader", { attrs: { height: 250 } })
         : _vm._e(),
       _vm._v(" "),
       _vm.isLoaded
@@ -100106,7 +100106,7 @@ var render = function() {
       ]),
       _vm._v(" "),
       !_vm.isLoaded
-        ? _c("content-loader", { attrs: { height: "250" } })
+        ? _c("content-loader", { attrs: { height: 250 } })
         : _vm._e(),
       _vm._v(" "),
       _vm.isLoaded
@@ -100636,7 +100636,7 @@ var render = function() {
       ]),
       _vm._v(" "),
       !_vm.isLoaded
-        ? _c("content-loader", { attrs: { height: "250" } })
+        ? _c("content-loader", { attrs: { height: 250 } })
         : _vm._e(),
       _vm._v(" "),
       _vm.isLoaded
@@ -101593,9 +101593,8 @@ __WEBPACK_IMPORTED_MODULE_1_moment__["locale"]('id');
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            headerTable: [{ text: 'Modul', value: 'modul' }, { text: 'Matakuliah', value: 'matakuliah' }, { text: 'Kelas', value: 'kelas' }, { text: 'Dosen', value: 'nama' }, { text: 'Judul Materi', value: 'judul' }, { text: 'Keterangan', value: 'keterangan' }, { text: 'Due Date', value: 'due_date' }, { text: 'File Tugas', value: 'file_url' }, { text: 'Status', value: 'id' }],
+            headerTable: [{ text: 'Modul', value: 'modul' }, { text: 'Matakuliah', value: 'matakuliah' }, { text: 'Kelas', value: 'kelas' }, { text: 'Dosen', value: 'nama' }, { text: 'Judul Materi', value: 'judul' }, { text: 'Keterangan', value: 'keterangan' }, { text: 'Due Date', value: 'due_date' }, { text: 'File Lampiran Tugas', value: 'file_url' }, { text: 'Status', value: 'id' }],
             semesters: [],
-            descriptionSemester: '',
             filter: '',
             snackbarText: '',
             snackbar: false,
@@ -101622,7 +101621,7 @@ __WEBPACK_IMPORTED_MODULE_1_moment__["locale"]('id');
                 app.isLoaded = true;
                 app.$store.state.obj_list_etugas = resp.data.data;
                 app.semesters = resp.data.data_semester;
-                console.log(resp.data);
+                console.log(app.semesters);
             }).catch(function (resp) {
                 app.showSnackbar("oops, something went wrong. Please try again!");
             });
@@ -101682,7 +101681,7 @@ var render = function() {
       ]),
       _vm._v(" "),
       !_vm.isLoaded
-        ? _c("content-loader", { attrs: { height: "250" } })
+        ? _c("content-loader", { attrs: { height: 250 } })
         : _vm._e(),
       _vm._v(" "),
       _vm.isLoaded
@@ -101693,7 +101692,7 @@ var render = function() {
               _c("v-select", {
                 attrs: {
                   items: _vm.semesters,
-                  label: "Filter jadwal",
+                  label: "Pilih matakuliah",
                   "item-text": "tahun",
                   "item-value": "kuliah",
                   solo: ""
@@ -101714,12 +101713,8 @@ var render = function() {
                             " / " +
                             _vm._s(data.item.semester) +
                             " - " +
-                            _vm._s(data.item.jurusan) +
-                            " (" +
-                            _vm._s(data.item.kelas) +
-                            " " +
-                            _vm._s(data.item.pararel) +
-                            ")\n            "
+                            _vm._s(data.item.matakuliah) +
+                            "\n            "
                         )
                       ]
                     }
@@ -101734,12 +101729,8 @@ var render = function() {
                             " / " +
                             _vm._s(data.item.semester) +
                             " - " +
-                            _vm._s(data.item.jurusan) +
-                            " (" +
-                            _vm._s(data.item.kelas) +
-                            " " +
-                            _vm._s(data.item.pararel) +
-                            ")\n            "
+                            _vm._s(data.item.matakuliah) +
+                            "\n            "
                         )
                       ]
                     }
@@ -102061,7 +102052,7 @@ var render = function() {
       ]),
       _vm._v(" "),
       !_vm.isLoaded
-        ? _c("content-loader", { attrs: { height: "250" } })
+        ? _c("content-loader", { attrs: { height: 250 } })
         : _vm._e(),
       _vm._v(" "),
       _vm.isLoaded
@@ -102295,7 +102286,7 @@ var render = function() {
       ]),
       _vm._v(" "),
       !_vm.isLoaded
-        ? _c("content-loader", { attrs: { height: "250" } })
+        ? _c("content-loader", { attrs: { height: 250 } })
         : _vm._e(),
       _vm._v(" "),
       _vm.isLoaded

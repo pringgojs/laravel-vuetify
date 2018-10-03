@@ -2,22 +2,22 @@
     <v-flex sm12>
         <h1 class="font-weight-light">E Tugas</h1>
         <div class="subheading">Daftar tugas kuliah. Selesaikan tugas secara cepat dan tepat waktu</div>
-        <content-loader v-if="!isLoaded" height="250"></content-loader>
+        <content-loader v-if="!isLoaded" :height="250"></content-loader>
         <v-flex md5 mt-5 v-if="isLoaded">
             <v-select 
                 :items="semesters"
                 v-model="filter"
-                label="Filter jadwal"
+                label="Pilih matakuliah"
                 item-text="tahun"
                 item-value="kuliah"
                 @change="selectSemester()"
                 solo
             >
                 <template slot="selection" slot-scope="data">
-                    {{ data.item.tahun }} / {{ data.item.semester }} - {{ data.item.jurusan }} ({{data.item.kelas}} {{data.item.pararel}})
+                    {{ data.item.tahun }} / {{ data.item.semester }} - {{ data.item.matakuliah }}
                 </template>
                 <template slot="item" slot-scope="data">
-                    {{ data.item.tahun }} / {{ data.item.semester }} - {{ data.item.jurusan }} ({{data.item.kelas}} {{data.item.pararel}})
+                    {{ data.item.tahun }} / {{ data.item.semester }} - {{ data.item.matakuliah }}
                 </template>
             </v-select>
         </v-flex>
@@ -87,11 +87,10 @@ export default {
                 { text: 'Judul Materi', value: 'judul' },
                 { text: 'Keterangan', value: 'keterangan' },
                 { text: 'Due Date', value: 'due_date' },
-                { text: 'File Tugas', value: 'file_url' },
+                { text: 'File Lampiran Tugas', value: 'file_url' },
                 { text: 'Status', value: 'id' },
             ],
             semesters: [],
-            descriptionSemester: '',
             filter: '',
             snackbarText: '',
             snackbar: false,
@@ -116,7 +115,7 @@ export default {
                 app.isLoaded = true;
                 app.$store.state.obj_list_etugas =  resp.data.data;
                 app.semesters = resp.data.data_semester;
-                console.log(resp.data)
+                console.log(app.semesters)
             })
             .catch(function (resp) {
                 app.showSnackbar("oops, something went wrong. Please try again!");

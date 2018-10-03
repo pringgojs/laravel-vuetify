@@ -2,7 +2,7 @@
     <v-flex sm12>
         <h1 class="font-weight-light">Jadwal</h1>
         <div class="subheading">Modul untuk perkuliahan</div>
-        <content-loader v-if="!isLoaded" height="250"></content-loader>
+        <content-loader v-if="!isLoaded" :height="250"></content-loader>
         
         <v-flex sm12 v-if="isLoaded" mt-5>
             <v-data-table

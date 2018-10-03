@@ -2,7 +2,7 @@
     <v-flex sm12>
         <h1 class="font-weight-light"> Materi Baru</h1>
         <div class="subheading">Tambahkan materi sebagai penunjang belajar mahasiswa</div>
-        <content-loader v-if="!isLoaded" height="250"></content-loader>
+        <content-loader v-if="!isLoaded" :height="250"></content-loader>
 
         <v-flex sm12 md6  v-if="isLoaded">
             <v-flex md12 mt-5>

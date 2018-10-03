@@ -51,4 +51,10 @@ class StudentController extends Controller
         $database = StudentDatabaseHelper::storeEtugas($request, $file);
         return $database;
     }
+
+    public function eTugasGetBySemester($kuliah)
+    {
+        $database = StudentDatabaseHelper::geteTugasGetBySemester($kuliah);
+        return $database;
+    }
 }
