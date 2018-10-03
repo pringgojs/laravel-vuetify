@@ -68,16 +68,9 @@
         </v-flex>
 
         <v-snackbar
-            v-model="snackbar"
-                right
-                bottom
-                >
+            v-model="snackbar" right bottom  >
                 {{snackbarText}}
-                <v-btn
-                    dark
-                    flat
-                    @click="snackbar = false"
-                >
+                <v-btn dark flat @click="snackbar = false" >
                     Close
                 </v-btn>
         </v-snackbar>
@@ -147,7 +140,7 @@ export default {
                 app.moduls = resp.data.data;
             })
             .catch(function (resp) {
-                showSnackbar("oops, something went wrong. Please try again!");
+                app.showSnackbar("oops, something went wrong. Please try again!");
             });
         },
         submit() {

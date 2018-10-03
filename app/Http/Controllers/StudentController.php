@@ -42,4 +42,10 @@ class StudentController extends Controller
         $database = StudentDatabaseHelper::getEtugasDetail($id);
         return $database;
     }
+
+    public function eTugasStore(Request $request)
+    {
+        $database = StudentDatabaseHelper::storeEtugas($request);
+        return $database;
+    }
 }

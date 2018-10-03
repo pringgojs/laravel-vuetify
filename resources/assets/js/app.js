@@ -32,8 +32,8 @@ router.beforeEach((to, from, next) => {
 // Vuex store
 const store = new Vuex.Store({
     state: {
-        detailEtugasId: 0,
-        formDetailEtugas: false,
+        obj_etugas: null,
+        form_dialog_detail_etugas: false,
         count: 0,
         snackbarText: '',
         snackbar: false,

@@ -1,83 +1,121 @@
 <template>
     <v-layout row justify-center>
-        <v-dialog v-model="formDialogDetail" fullscreen hide-overlay transition="dialog-bottom-transition">
-        <v-card>
-            <v-toolbar dark color="primary">
-            <v-btn icon dark @click="closeFormDialog">
-                <v-icon>close</v-icon>
-            </v-btn>
-            <v-toolbar-title>Pendidikan Agama</v-toolbar-title>
-            <v-spacer></v-spacer>
-            <v-toolbar-items>
-                <v-btn dark flat @click.native="saveFormDialog">Save</v-btn>
-            </v-toolbar-items>
-            </v-toolbar>
-            <v-list three-line subheader>
-            <v-subheader>Detail Etugas</v-subheader>
-            <v-list-tile avatar>
-                <v-list-tile-content>
-                <v-list-tile-title>Content filtering</v-list-tile-title>
-                <v-list-tile-sub-title>Set the content filtering level to restrict apps that can be downloaded</v-list-tile-sub-title>
-                </v-list-tile-content>
-            </v-list-tile>
-            <v-list-tile avatar>
-                <v-list-tile-content>
-                <v-list-tile-title>Password</v-list-tile-title>
-                <v-list-tile-sub-title>Require password for purchase or use password to restrict purchase</v-list-tile-sub-title>
-                </v-list-tile-content>
-            </v-list-tile>
-            </v-list>
-            <v-divider></v-divider>
-            <v-list three-line subheader>
-            <v-subheader>General</v-subheader>
-            <v-list-tile avatar>
-                <v-list-tile-action>
-                <v-checkbox ></v-checkbox>
-                </v-list-tile-action>
-                <v-list-tile-content>
-                <v-list-tile-title>Notifications</v-list-tile-title>
-                <v-list-tile-sub-title>Notify me about updates to apps or games that I downloaded</v-list-tile-sub-title>
-                </v-list-tile-content>
-            </v-list-tile>
-            <v-list-tile avatar>
-                <v-list-tile-action>
-                <v-checkbox></v-checkbox>
-                </v-list-tile-action>
-                <v-list-tile-content>
-                <v-list-tile-title>Sound</v-list-tile-title>
-                <v-list-tile-sub-title>Auto-update apps at any time. Data charges may apply</v-list-tile-sub-title>
-                </v-list-tile-content>
-            </v-list-tile>
-            <v-list-tile avatar>
-                <v-list-tile-action>
-                <v-checkbox></v-checkbox>
-                </v-list-tile-action>
-                <v-list-tile-content>
-                <v-list-tile-title>Auto-add widgets</v-list-tile-title>
-                <v-list-tile-sub-title>Automatically add home screen widgets</v-list-tile-sub-title>
-                </v-list-tile-content>
-            </v-list-tile>
-            </v-list>
-        </v-card>
+        <v-dialog v-model="$store.state.form_dialog_detail_etugas" fullscreen hide-overlay transition="dialog-bottom-transition">
+            <v-card>
+                <v-toolbar dark color="primary">
+                <v-btn icon dark @click="closeFormDialog">
+                    <v-icon>close</v-icon>
+                </v-btn>
+                <v-toolbar-title>{{$store.state.obj_etugas ? $store.state.obj_etugas.etugas.judul : ''}}</v-toolbar-title>
+                <v-spacer></v-spacer>
+                <v-toolbar-items>
+                    <v-btn dark flat @click="submit">Save</v-btn>
+                </v-toolbar-items>
+                </v-toolbar>
+                <v-list three-line subheader>
+                <v-subheader>Detail Etugas</v-subheader>
+                <v-list-tile avatar>
+                    <v-list-tile-content>
+                    <v-list-tile-title>Dosen</v-list-tile-title>
+                    <v-list-tile-sub-title>{{$store.state.obj_etugas ? $store.state.obj_etugas.etugas_pegawai.nama : ''}}</v-list-tile-sub-title>
+                    </v-list-tile-content>
+                </v-list-tile>
+                <v-list-tile avatar>
+                    <v-list-tile-content>
+                    <v-list-tile-title>Matakuliah</v-list-tile-title>
+                    <v-list-tile-sub-title>{{$store.state.obj_etugas ? $store.state.obj_etugas.etugas_matakuliah.matakuliah : ''}} <br> {{$store.state.obj_etugas ? $store.state.obj_etugas.etugas_modul.modul : ''}}</v-list-tile-sub-title>
+                    </v-list-tile-content>
+                </v-list-tile>
+                <v-list-tile avatar>
+                    <v-list-tile-content>
+                    <v-list-tile-title>Deskripsi Tugas</v-list-tile-title>
+                    <v-list-tile-sub-title>{{$store.state.obj_etugas ? $store.state.obj_etugas.etugas.keterangan : ''}}</v-list-tile-sub-title>
+                    </v-list-tile-content>
+                </v-list-tile>
+                <v-list-tile avatar>
+                    <v-list-tile-content>
+                    <v-list-tile-title>Batas Pengumpulan</v-list-tile-title>
+                    <v-list-tile-sub-title>{{dateView($store.state.obj_etugas ? $store.state.obj_etugas.etugas.due_date : '')}}</v-list-tile-sub-title>
+                    </v-list-tile-content>
+                </v-list-tile>
+                </v-list>
+                <v-divider></v-divider>
+                <v-list three-line subheader>
+                <v-subheader>Upload Tugas</v-subheader>
+                <v-list-tile avatar>
+                    <v-list-tile-content>
+                        <v-list-tile-sub-title>
+                            <v-textarea
+                                box
+                                name="input-7-4"
+                                placeholder="Tambah keterangan"
+                                v-model="keterangan"
+                                ></v-textarea>
+                        </v-list-tile-sub-title>
+                    </v-list-tile-content>
+                </v-list-tile>
+                <br>
+                <v-flex xs12 style="padding:15px">
+                    <p>Tambahkan File (Optional)</p>
+                    <file-pond
+                        name="file"
+                        ref="pond"
+                        label-idle="Drop files here..."
+                        allow-multiple="false"
+                        v-bind:files="myFiles"/>
+                </v-flex>
+                </v-list>
+            </v-card>
         </v-dialog>
+        <v-snackbar
+            v-model="snackbar" right bottom  >
+                {{snackbarText}}
+                <v-btn dark flat @click="snackbar = false" >
+                    Close
+                </v-btn>
+        </v-snackbar>
     </v-layout>
 </template>
 
 <script>
+import * as moment from 'moment';
+moment.locale('id');
+
+// Import Vue FilePond
+import vueFilePond from 'vue-filepond';
+import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
+import FilePondPluginFileValidateSize from 'filepond-plugin-file-validate-size';
+import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
+import FilePondPluginFileEncode from 'filepond-plugin-file-encode';
+// Import FilePond styles
+import 'filepond/dist/filepond.min.css';
+import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
+const FilePond = vueFilePond( 
+    FilePondPluginImagePreview,
+    FilePondPluginFileValidateSize,
+    FilePondPluginFileValidateType,
+    FilePondPluginFileEncode
+);
+
 export default {
     data () {
         return {
-            tugas_id: ''
+            snackbarText: '',
+            snackbar: false,
+            tugas_id: '',
+            myFiles: '',
+            keterangan: '',
         }
     },
-    
-    // computed for return object to template in vuex
+    components: {
+        FilePond
+    },
     computed: {
         getID() {
-            return this.$store.state.detailEetugasId
+            return this.$store.state.obj_etugas
         },
         formDialogDetail() {
-            return this.$store.state.formDetailEtugas
+            return this.$store.state.form_dialog_detail_etugas
         }
     },
     methods: {
@@ -93,11 +131,51 @@ export default {
             // });
         },
         saveFormDialog() {
-            this.$store.state.formDetailEtugas = false
+            this.$store.state.form_dialog_detail_etugas = false
         },
         closeFormDialog() {
-            console.log('x')
-            this.$store.state.formDetailEtugas = false
+            this.$store.state.form_dialog_detail_etugas = false
+        },
+        dateView(date) {
+            if (date != '0000-00-00 00:00:00') {
+                return moment(date).format("dddd, Do MMMM YYYY, h:mm:ss a");
+            }
+            return '-'
+        },
+        showSnackbar(text) {
+            var app = this;
+            app.snackbarText = text;
+            app.snackbar = true;
+        },
+        submit() {
+            var app = this;
+            if (app.keterangan == '') {
+                app.showSnackbar('keterangan harus diisi');
+                return false;
+            }
+            
+            var file = app.$refs.pond.getFiles();
+            let form = new FormData();
+            
+            form.append('file', '');
+            if (file.length) {
+                form.append('file', file[0].file);
+            }
+            form.append('keterangan', app.keterangan)
+            form.append('tugas_id', app.$store.state.obj_etugas.etugas.id)
+            form.append('kelas_id', app.$store.state.obj_etugas.etugas.kelas)
+            axios.post( 'student/e-tugas/store', form, { headers: {'Content-Type': 'multipart/form-data'}}).then(function (resp) {
+                if (resp.data.code == 200) {
+                    app.keterangan = '';
+                    app.myFiles = [];
+                    app.showSnackbar('Tugas berhasil diunggah');
+                    app.$store.state.form_dialog_detail_etugas = false;
+                }
+            })
+            .catch(function(e) {
+                console.log(e);
+                app.showSnackbar('Tugas gagal diunggah');
+            });
         }
     }
 }

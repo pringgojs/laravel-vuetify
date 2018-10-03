@@ -61,15 +61,6 @@
             </v-data-table>
         </v-flex>
 
-        <!-- floating button -->
-        <v-layout column class="fab-container">
-            <router-link to="e-tugas/add">
-                <v-btn fab dark color="pink" >
-                    <v-icon>add</v-icon>
-                </v-btn>
-            </router-link>
-        </v-layout>
-
         <!-- modal -->
         <detail-etugas></detail-etugas>
     </v-flex>
@@ -145,13 +136,13 @@ export default {
             var app = this;
 
             axios.get('student/e-tugas/detail/'+id).then(function (resp) {
-                app.bodyTable = resp.data.data;
+                console.log(resp.data);
+                app.$store.state.obj_etugas = resp.data
+                app.$store.state.form_dialog_detail_etugas = true
             })
             .catch(function (resp) {
                 app.showSnackbar("oops, something went wrong. Please try again!");
             });
-            this.$store.state.formDetailEtugas = true
-            this.$store.state.detailEtugasId = id
         },
         dateView(date) {
             if (date != '0000-00-00 00:00:00') {
