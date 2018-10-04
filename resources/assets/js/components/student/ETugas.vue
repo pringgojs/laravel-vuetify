@@ -118,7 +118,6 @@ export default {
                 app.isLoaded = true;
                 app.$store.state.obj_list_etugas =  resp.data.data;
                 app.semesters = resp.data.data_semester;
-                console.log(app.semesters)
             })
             .catch(function (resp) {
                 app.showSnackbar("oops, something went wrong. Please try again!");
@@ -143,7 +142,6 @@ export default {
             var app = this;
 
             axios.get('student/e-tugas/detail/'+id).then(function (resp) {
-                console.log(resp.data);
                 app.$store.state.obj_etugas = resp.data
                 app.$store.state.form_dialog_detail_etugas = true
             })

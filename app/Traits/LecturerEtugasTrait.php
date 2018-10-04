@@ -55,4 +55,16 @@ trait LecturerEtugasTrait
         return $database;
     }
 
+    public function detailEtugas($id)
+    {
+        $database = DatabaseHelper::detailEtugas($id);
+        return $database;
+    }
+
+    public function setNilaiEtugas(Request $request)
+    {
+        $database = DatabaseHelper::setNilaiEtugas($request);
+        return $database;
+    }
+
 }

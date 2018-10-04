@@ -219,7 +219,7 @@ export default {
                 app.moduls = resp.data.data;
             })
             .catch(function (resp) {
-                showSnackbar("oops, something went wrong. Please try again!");
+                app.showSnackbar("oops, something went wrong. Please try again!");
             });
         },
         submit() {

@@ -120,6 +120,16 @@ class DatabaseHelper
         return $response;
     }
 
+    public static function detailEtugas($id)
+    {
+        $url = config('api.url').'/lecturer/e-tugas/detail/'.$id;
+        $data = array('user' => ResponseHelper::user());
+        $response = Curl::to($url)
+            ->withData($data)
+            ->post();
+        return $response;
+    }
+
     public static function updateEtugas($request, $file, $id)
     {
         $url = config('api.url').'/lecturer/e-tugas/update/'.$id;
@@ -149,6 +159,16 @@ class DatabaseHelper
         ->withData($data)
         ->post();
 
+        return $response;
+    }
+
+    public static function setNilaiEtugas($request)
+    {
+        $url = config('api.url').'/lecturer/e-tugas/set-nilai';
+        $data = array('user' => ResponseHelper::user(), 'request' => $request->toArray());
+        $response = Curl::to($url)
+            ->withData($data)
+            ->post();
         return $response;
     }
 

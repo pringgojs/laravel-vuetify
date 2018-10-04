@@ -1,5 +1,6 @@
 <template>
     <v-flex sm12>
+        
         <h1 class="font-weight-light">E Tugas</h1>
         <div class="subheading">Tambahkan tugas sebagai bahwan evaluasi mahasiswa dalam memahami pelajaran</div>
         
@@ -22,7 +23,9 @@
                 </template>
             </v-select>
         </v-flex>
-            
+        <template v-if="loadDetail">
+            <v-progress-linear :indeterminate="true" style="margin-bottom:0px"></v-progress-linear>
+        </template>
         <v-flex sm12 v-if="isLoaded">
             <v-data-table
                 :headers="headerTable"
@@ -35,13 +38,13 @@
                         <td>{{ props.item.modul }}</td>
                         <td class="text-xs-left" :id="'matakuliah-'+props.item.id">{{ props.item.matakuliah }}</td>
                         <td class="text-xs-left" :id="'kelas-'+props.item.id">{{ props.item.tahun }} / {{ props.item.semester }} - {{ props.item.program }} {{ props.item.jurusan }} ({{props.item.kelas}} {{props.item.pararel}})</td>
-                        <td class="text-xs-left" :id="'judul-'+props.item.id">{{ props.item.judul }}</td>
+                        <td class="text-xs-left" :id="'judul-'+props.item.id">{{ props.item.judul }} </td>
                         <td class="text-xs-center" :id="'keterangan-'+props.item.id">{{ props.item.keterangan }}</td>
                         <td class="text-xs-center" :id="'due-date-'+props.item.id">{{ dateView(props.item.due_date) }}</td>
                         <td class="text-xs-center"><template v-if="props.item.file_url"><a slot="activator" v-bind:href="props.item.file_url"> Download File </a></template></td>
                         <td class="text-xs-center">
                             <v-layout justify-space-around>
-                                <v-btn flat icon color="info" @click="remove(props.item.id)">
+                                <v-btn flat icon color="info" slot="activator"  @click="detail(props.item.id)">
                                     <v-icon dark>list_alt</v-icon>
                                 </v-btn>
                                 <router-link :to="'/e-tugas/edit/'+props.item.id">
@@ -85,8 +88,10 @@
                 </v-dialog>
             </v-layout>
         </template>
-    </v-flex>
 
+        <!-- detail etugas -->
+        <e-tugas-detail></e-tugas-detail>
+    </v-flex>
 </template>
 
 <script>
@@ -101,10 +106,10 @@ export default {
                 { text: 'Modul', value: 'modul' },
                 { text: 'Matakuliah', value: 'matakuliah' },
                 { text: 'Kelas', value: 'kelas' },
-                { text: 'Judul Materi', value: 'judul' },
+                { text: 'Judul Tugas', value: 'judul' },
                 { text: 'Keterangan', value: 'keterangan' },
                 { text: 'Due Date', value: 'due_date' },
-                { text: 'File Materi', value: 'file_url' },
+                { text: 'File Tugas', value: 'file_url' },
                 { text: 'Aksi', value: 'id' },
             ],
             bodyTable: [],
@@ -115,6 +120,7 @@ export default {
             snackbar: false,
             isLoaded: false,
             dialog: false,
+            loadDetail: false,
             title_confirm: '',
             desc_confirm: '',
             remove_id: ''
@@ -127,6 +133,19 @@ export default {
         this.initData();
     },
     methods: {
+        detail(id) {
+            var app = this;
+            app.loadDetail = true
+            axios.get('lecturer/e-tugas/detail/'+id).then(function (resp) {
+                app.loadDetail = false
+                app.$store.state.obj_etugas = resp.data
+                app.$store.state.form_dialog_detail_etugas = true
+                app.$store.state.obj_list_etugas = resp.data.etugas_kelas_mahasiswa
+            })
+            .catch(function (resp) {
+                app.showSnackbar("oops, something went wrong. Please try again!");
+            });
+        },
         initData() {
             var app = this;
             axios.get('lecturer/e-tugas').then(function (resp) {

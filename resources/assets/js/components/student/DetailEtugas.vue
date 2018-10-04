@@ -168,7 +168,7 @@ export default {
         },
         submit() {
             var app = this;
-            if (app.keterangan == '') {
+            if ($('#keterangan').val() == '') {
                 app.showSnackbar('keterangan harus diisi');
                 return false;
             }
@@ -193,7 +193,6 @@ export default {
                 }
             })
             .catch(function(e) {
-                console.log(e);
                 app.showSnackbar('Tugas gagal diunggah');
             });
         }

@@ -16540,524 +16540,6 @@ module.exports = Vue;
 /* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-/* WEBPACK VAR INJECTION */(function(process) {
-
-var utils = __webpack_require__(2);
-var normalizeHeaderName = __webpack_require__(176);
-
-var DEFAULT_CONTENT_TYPE = {
-  'Content-Type': 'application/x-www-form-urlencoded'
-};
-
-function setContentTypeIfUnset(headers, value) {
-  if (!utils.isUndefined(headers) && utils.isUndefined(headers['Content-Type'])) {
-    headers['Content-Type'] = value;
-  }
-}
-
-function getDefaultAdapter() {
-  var adapter;
-  if (typeof XMLHttpRequest !== 'undefined') {
-    // For browsers use XHR adapter
-    adapter = __webpack_require__(20);
-  } else if (typeof process !== 'undefined') {
-    // For node use HTTP adapter
-    adapter = __webpack_require__(20);
-  }
-  return adapter;
-}
-
-var defaults = {
-  adapter: getDefaultAdapter(),
-
-  transformRequest: [function transformRequest(data, headers) {
-    normalizeHeaderName(headers, 'Content-Type');
-    if (utils.isFormData(data) ||
-      utils.isArrayBuffer(data) ||
-      utils.isBuffer(data) ||
-      utils.isStream(data) ||
-      utils.isFile(data) ||
-      utils.isBlob(data)
-    ) {
-      return data;
-    }
-    if (utils.isArrayBufferView(data)) {
-      return data.buffer;
-    }
-    if (utils.isURLSearchParams(data)) {
-      setContentTypeIfUnset(headers, 'application/x-www-form-urlencoded;charset=utf-8');
-      return data.toString();
-    }
-    if (utils.isObject(data)) {
-      setContentTypeIfUnset(headers, 'application/json;charset=utf-8');
-      return JSON.stringify(data);
-    }
-    return data;
-  }],
-
-  transformResponse: [function transformResponse(data) {
-    /*eslint no-param-reassign:0*/
-    if (typeof data === 'string') {
-      try {
-        data = JSON.parse(data);
-      } catch (e) { /* Ignore */ }
-    }
-    return data;
-  }],
-
-  timeout: 0,
-
-  xsrfCookieName: 'XSRF-TOKEN',
-  xsrfHeaderName: 'X-XSRF-TOKEN',
-
-  maxContentLength: -1,
-
-  validateStatus: function validateStatus(status) {
-    return status >= 200 && status < 300;
-  }
-};
-
-defaults.headers = {
-  common: {
-    'Accept': 'application/json, text/plain, */*'
-  }
-};
-
-utils.forEach(['delete', 'get', 'head'], function forEachMethodNoData(method) {
-  defaults.headers[method] = {};
-});
-
-utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
-  defaults.headers[method] = utils.merge(DEFAULT_CONTENT_TYPE);
-});
-
-module.exports = defaults;
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8)))
-
-/***/ }),
-/* 8 */
-/***/ (function(module, exports) {
-
-// shim for using process in browser
-var process = module.exports = {};
-
-// cached from whatever global is present so that test runners that stub it
-// don't break things.  But we need to wrap it in a try catch in case it is
-// wrapped in strict mode code which doesn't define any globals.  It's inside a
-// function because try/catches deoptimize in certain engines.
-
-var cachedSetTimeout;
-var cachedClearTimeout;
-
-function defaultSetTimout() {
-    throw new Error('setTimeout has not been defined');
-}
-function defaultClearTimeout () {
-    throw new Error('clearTimeout has not been defined');
-}
-(function () {
-    try {
-        if (typeof setTimeout === 'function') {
-            cachedSetTimeout = setTimeout;
-        } else {
-            cachedSetTimeout = defaultSetTimout;
-        }
-    } catch (e) {
-        cachedSetTimeout = defaultSetTimout;
-    }
-    try {
-        if (typeof clearTimeout === 'function') {
-            cachedClearTimeout = clearTimeout;
-        } else {
-            cachedClearTimeout = defaultClearTimeout;
-        }
-    } catch (e) {
-        cachedClearTimeout = defaultClearTimeout;
-    }
-} ())
-function runTimeout(fun) {
-    if (cachedSetTimeout === setTimeout) {
-        //normal enviroments in sane situations
-        return setTimeout(fun, 0);
-    }
-    // if setTimeout wasn't available but was latter defined
-    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
-        cachedSetTimeout = setTimeout;
-        return setTimeout(fun, 0);
-    }
-    try {
-        // when when somebody has screwed with setTimeout but no I.E. maddness
-        return cachedSetTimeout(fun, 0);
-    } catch(e){
-        try {
-            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
-            return cachedSetTimeout.call(null, fun, 0);
-        } catch(e){
-            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
-            return cachedSetTimeout.call(this, fun, 0);
-        }
-    }
-
-
-}
-function runClearTimeout(marker) {
-    if (cachedClearTimeout === clearTimeout) {
-        //normal enviroments in sane situations
-        return clearTimeout(marker);
-    }
-    // if clearTimeout wasn't available but was latter defined
-    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
-        cachedClearTimeout = clearTimeout;
-        return clearTimeout(marker);
-    }
-    try {
-        // when when somebody has screwed with setTimeout but no I.E. maddness
-        return cachedClearTimeout(marker);
-    } catch (e){
-        try {
-            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
-            return cachedClearTimeout.call(null, marker);
-        } catch (e){
-            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
-            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
-            return cachedClearTimeout.call(this, marker);
-        }
-    }
-
-
-
-}
-var queue = [];
-var draining = false;
-var currentQueue;
-var queueIndex = -1;
-
-function cleanUpNextTick() {
-    if (!draining || !currentQueue) {
-        return;
-    }
-    draining = false;
-    if (currentQueue.length) {
-        queue = currentQueue.concat(queue);
-    } else {
-        queueIndex = -1;
-    }
-    if (queue.length) {
-        drainQueue();
-    }
-}
-
-function drainQueue() {
-    if (draining) {
-        return;
-    }
-    var timeout = runTimeout(cleanUpNextTick);
-    draining = true;
-
-    var len = queue.length;
-    while(len) {
-        currentQueue = queue;
-        queue = [];
-        while (++queueIndex < len) {
-            if (currentQueue) {
-                currentQueue[queueIndex].run();
-            }
-        }
-        queueIndex = -1;
-        len = queue.length;
-    }
-    currentQueue = null;
-    draining = false;
-    runClearTimeout(timeout);
-}
-
-process.nextTick = function (fun) {
-    var args = new Array(arguments.length - 1);
-    if (arguments.length > 1) {
-        for (var i = 1; i < arguments.length; i++) {
-            args[i - 1] = arguments[i];
-        }
-    }
-    queue.push(new Item(fun, args));
-    if (queue.length === 1 && !draining) {
-        runTimeout(drainQueue);
-    }
-};
-
-// v8 likes predictible objects
-function Item(fun, array) {
-    this.fun = fun;
-    this.array = array;
-}
-Item.prototype.run = function () {
-    this.fun.apply(null, this.array);
-};
-process.title = 'browser';
-process.browser = true;
-process.env = {};
-process.argv = [];
-process.version = ''; // empty string to avoid regexp issues
-process.versions = {};
-
-function noop() {}
-
-process.on = noop;
-process.addListener = noop;
-process.once = noop;
-process.off = noop;
-process.removeListener = noop;
-process.removeAllListeners = noop;
-process.emit = noop;
-process.prependListener = noop;
-process.prependOnceListener = noop;
-
-process.listeners = function (name) { return [] }
-
-process.binding = function (name) {
-    throw new Error('process.binding is not supported');
-};
-
-process.cwd = function () { return '/' };
-process.chdir = function (dir) {
-    throw new Error('process.chdir is not supported');
-};
-process.umask = function() { return 0; };
-
-
-/***/ }),
-/* 9 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/*
-  MIT License http://www.opensource.org/licenses/mit-license.php
-  Author Tobias Koppers @sokra
-  Modified by Evan You @yyx990803
-*/
-
-var hasDocument = typeof document !== 'undefined'
-
-if (typeof DEBUG !== 'undefined' && DEBUG) {
-  if (!hasDocument) {
-    throw new Error(
-    'vue-style-loader cannot be used in a non-browser environment. ' +
-    "Use { target: 'node' } in your Webpack config to indicate a server-rendering environment."
-  ) }
-}
-
-var listToStyles = __webpack_require__(201)
-
-/*
-type StyleObject = {
-  id: number;
-  parts: Array<StyleObjectPart>
-}
-
-type StyleObjectPart = {
-  css: string;
-  media: string;
-  sourceMap: ?string
-}
-*/
-
-var stylesInDom = {/*
-  [id: number]: {
-    id: number,
-    refs: number,
-    parts: Array<(obj?: StyleObjectPart) => void>
-  }
-*/}
-
-var head = hasDocument && (document.head || document.getElementsByTagName('head')[0])
-var singletonElement = null
-var singletonCounter = 0
-var isProduction = false
-var noop = function () {}
-var options = null
-var ssrIdKey = 'data-vue-ssr-id'
-
-// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
-// tags it will allow on a page
-var isOldIE = typeof navigator !== 'undefined' && /msie [6-9]\b/.test(navigator.userAgent.toLowerCase())
-
-module.exports = function (parentId, list, _isProduction, _options) {
-  isProduction = _isProduction
-
-  options = _options || {}
-
-  var styles = listToStyles(parentId, list)
-  addStylesToDom(styles)
-
-  return function update (newList) {
-    var mayRemove = []
-    for (var i = 0; i < styles.length; i++) {
-      var item = styles[i]
-      var domStyle = stylesInDom[item.id]
-      domStyle.refs--
-      mayRemove.push(domStyle)
-    }
-    if (newList) {
-      styles = listToStyles(parentId, newList)
-      addStylesToDom(styles)
-    } else {
-      styles = []
-    }
-    for (var i = 0; i < mayRemove.length; i++) {
-      var domStyle = mayRemove[i]
-      if (domStyle.refs === 0) {
-        for (var j = 0; j < domStyle.parts.length; j++) {
-          domStyle.parts[j]()
-        }
-        delete stylesInDom[domStyle.id]
-      }
-    }
-  }
-}
-
-function addStylesToDom (styles /* Array<StyleObject> */) {
-  for (var i = 0; i < styles.length; i++) {
-    var item = styles[i]
-    var domStyle = stylesInDom[item.id]
-    if (domStyle) {
-      domStyle.refs++
-      for (var j = 0; j < domStyle.parts.length; j++) {
-        domStyle.parts[j](item.parts[j])
-      }
-      for (; j < item.parts.length; j++) {
-        domStyle.parts.push(addStyle(item.parts[j]))
-      }
-      if (domStyle.parts.length > item.parts.length) {
-        domStyle.parts.length = item.parts.length
-      }
-    } else {
-      var parts = []
-      for (var j = 0; j < item.parts.length; j++) {
-        parts.push(addStyle(item.parts[j]))
-      }
-      stylesInDom[item.id] = { id: item.id, refs: 1, parts: parts }
-    }
-  }
-}
-
-function createStyleElement () {
-  var styleElement = document.createElement('style')
-  styleElement.type = 'text/css'
-  head.appendChild(styleElement)
-  return styleElement
-}
-
-function addStyle (obj /* StyleObjectPart */) {
-  var update, remove
-  var styleElement = document.querySelector('style[' + ssrIdKey + '~="' + obj.id + '"]')
-
-  if (styleElement) {
-    if (isProduction) {
-      // has SSR styles and in production mode.
-      // simply do nothing.
-      return noop
-    } else {
-      // has SSR styles but in dev mode.
-      // for some reason Chrome can't handle source map in server-rendered
-      // style tags - source maps in <style> only works if the style tag is
-      // created and inserted dynamically. So we remove the server rendered
-      // styles and inject new ones.
-      styleElement.parentNode.removeChild(styleElement)
-    }
-  }
-
-  if (isOldIE) {
-    // use singleton mode for IE9.
-    var styleIndex = singletonCounter++
-    styleElement = singletonElement || (singletonElement = createStyleElement())
-    update = applyToSingletonTag.bind(null, styleElement, styleIndex, false)
-    remove = applyToSingletonTag.bind(null, styleElement, styleIndex, true)
-  } else {
-    // use multi-style-tag mode in all other cases
-    styleElement = createStyleElement()
-    update = applyToTag.bind(null, styleElement)
-    remove = function () {
-      styleElement.parentNode.removeChild(styleElement)
-    }
-  }
-
-  update(obj)
-
-  return function updateStyle (newObj /* StyleObjectPart */) {
-    if (newObj) {
-      if (newObj.css === obj.css &&
-          newObj.media === obj.media &&
-          newObj.sourceMap === obj.sourceMap) {
-        return
-      }
-      update(obj = newObj)
-    } else {
-      remove()
-    }
-  }
-}
-
-var replaceText = (function () {
-  var textStore = []
-
-  return function (index, replacement) {
-    textStore[index] = replacement
-    return textStore.filter(Boolean).join('\n')
-  }
-})()
-
-function applyToSingletonTag (styleElement, index, remove, obj) {
-  var css = remove ? '' : obj.css
-
-  if (styleElement.styleSheet) {
-    styleElement.styleSheet.cssText = replaceText(index, css)
-  } else {
-    var cssNode = document.createTextNode(css)
-    var childNodes = styleElement.childNodes
-    if (childNodes[index]) styleElement.removeChild(childNodes[index])
-    if (childNodes.length) {
-      styleElement.insertBefore(cssNode, childNodes[index])
-    } else {
-      styleElement.appendChild(cssNode)
-    }
-  }
-}
-
-function applyToTag (styleElement, obj) {
-  var css = obj.css
-  var media = obj.media
-  var sourceMap = obj.sourceMap
-
-  if (media) {
-    styleElement.setAttribute('media', media)
-  }
-  if (options.ssrId) {
-    styleElement.setAttribute(ssrIdKey, obj.id)
-  }
-
-  if (sourceMap) {
-    // https://developer.chrome.com/devtools/docs/javascript-debugging
-    // this makes source maps inside style tags work properly in Chrome
-    css += '\n/*# sourceURL=' + sourceMap.sources[0] + ' */'
-    // http://stackoverflow.com/a/26603875
-    css += '\n/*# sourceMappingURL=data:application/json;base64,' + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + ' */'
-  }
-
-  if (styleElement.styleSheet) {
-    styleElement.styleSheet.cssText = css
-  } else {
-    while (styleElement.firstChild) {
-      styleElement.removeChild(styleElement.firstChild)
-    }
-    styleElement.appendChild(document.createTextNode(css))
-  }
-}
-
-
-/***/ }),
-/* 10 */
-/***/ (function(module, exports, __webpack_require__) {
-
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
  * vue-filepond v3.0.3
  * A handy FilePond adapter component for Vue
@@ -17258,7 +16740,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 
 /***/ }),
-/* 11 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -18141,7 +17623,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 
 /***/ }),
-/* 12 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -18278,7 +17760,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 
 /***/ }),
-/* 13 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -18474,7 +17956,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 
 /***/ }),
-/* 14 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -18619,7 +18101,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 
 /***/ }),
-/* 15 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
@@ -18650,7 +18132,7 @@ if(false) {
 }
 
 /***/ }),
-/* 16 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
@@ -18679,6 +18161,524 @@ if(false) {
 	// When the module is disposed, remove the <style> tags
 	module.hot.dispose(function() { update(); });
 }
+
+/***/ }),
+/* 14 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(process) {
+
+var utils = __webpack_require__(2);
+var normalizeHeaderName = __webpack_require__(176);
+
+var DEFAULT_CONTENT_TYPE = {
+  'Content-Type': 'application/x-www-form-urlencoded'
+};
+
+function setContentTypeIfUnset(headers, value) {
+  if (!utils.isUndefined(headers) && utils.isUndefined(headers['Content-Type'])) {
+    headers['Content-Type'] = value;
+  }
+}
+
+function getDefaultAdapter() {
+  var adapter;
+  if (typeof XMLHttpRequest !== 'undefined') {
+    // For browsers use XHR adapter
+    adapter = __webpack_require__(20);
+  } else if (typeof process !== 'undefined') {
+    // For node use HTTP adapter
+    adapter = __webpack_require__(20);
+  }
+  return adapter;
+}
+
+var defaults = {
+  adapter: getDefaultAdapter(),
+
+  transformRequest: [function transformRequest(data, headers) {
+    normalizeHeaderName(headers, 'Content-Type');
+    if (utils.isFormData(data) ||
+      utils.isArrayBuffer(data) ||
+      utils.isBuffer(data) ||
+      utils.isStream(data) ||
+      utils.isFile(data) ||
+      utils.isBlob(data)
+    ) {
+      return data;
+    }
+    if (utils.isArrayBufferView(data)) {
+      return data.buffer;
+    }
+    if (utils.isURLSearchParams(data)) {
+      setContentTypeIfUnset(headers, 'application/x-www-form-urlencoded;charset=utf-8');
+      return data.toString();
+    }
+    if (utils.isObject(data)) {
+      setContentTypeIfUnset(headers, 'application/json;charset=utf-8');
+      return JSON.stringify(data);
+    }
+    return data;
+  }],
+
+  transformResponse: [function transformResponse(data) {
+    /*eslint no-param-reassign:0*/
+    if (typeof data === 'string') {
+      try {
+        data = JSON.parse(data);
+      } catch (e) { /* Ignore */ }
+    }
+    return data;
+  }],
+
+  timeout: 0,
+
+  xsrfCookieName: 'XSRF-TOKEN',
+  xsrfHeaderName: 'X-XSRF-TOKEN',
+
+  maxContentLength: -1,
+
+  validateStatus: function validateStatus(status) {
+    return status >= 200 && status < 300;
+  }
+};
+
+defaults.headers = {
+  common: {
+    'Accept': 'application/json, text/plain, */*'
+  }
+};
+
+utils.forEach(['delete', 'get', 'head'], function forEachMethodNoData(method) {
+  defaults.headers[method] = {};
+});
+
+utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
+  defaults.headers[method] = utils.merge(DEFAULT_CONTENT_TYPE);
+});
+
+module.exports = defaults;
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(15)))
+
+/***/ }),
+/* 15 */
+/***/ (function(module, exports) {
+
+// shim for using process in browser
+var process = module.exports = {};
+
+// cached from whatever global is present so that test runners that stub it
+// don't break things.  But we need to wrap it in a try catch in case it is
+// wrapped in strict mode code which doesn't define any globals.  It's inside a
+// function because try/catches deoptimize in certain engines.
+
+var cachedSetTimeout;
+var cachedClearTimeout;
+
+function defaultSetTimout() {
+    throw new Error('setTimeout has not been defined');
+}
+function defaultClearTimeout () {
+    throw new Error('clearTimeout has not been defined');
+}
+(function () {
+    try {
+        if (typeof setTimeout === 'function') {
+            cachedSetTimeout = setTimeout;
+        } else {
+            cachedSetTimeout = defaultSetTimout;
+        }
+    } catch (e) {
+        cachedSetTimeout = defaultSetTimout;
+    }
+    try {
+        if (typeof clearTimeout === 'function') {
+            cachedClearTimeout = clearTimeout;
+        } else {
+            cachedClearTimeout = defaultClearTimeout;
+        }
+    } catch (e) {
+        cachedClearTimeout = defaultClearTimeout;
+    }
+} ())
+function runTimeout(fun) {
+    if (cachedSetTimeout === setTimeout) {
+        //normal enviroments in sane situations
+        return setTimeout(fun, 0);
+    }
+    // if setTimeout wasn't available but was latter defined
+    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
+        cachedSetTimeout = setTimeout;
+        return setTimeout(fun, 0);
+    }
+    try {
+        // when when somebody has screwed with setTimeout but no I.E. maddness
+        return cachedSetTimeout(fun, 0);
+    } catch(e){
+        try {
+            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
+            return cachedSetTimeout.call(null, fun, 0);
+        } catch(e){
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
+            return cachedSetTimeout.call(this, fun, 0);
+        }
+    }
+
+
+}
+function runClearTimeout(marker) {
+    if (cachedClearTimeout === clearTimeout) {
+        //normal enviroments in sane situations
+        return clearTimeout(marker);
+    }
+    // if clearTimeout wasn't available but was latter defined
+    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
+        cachedClearTimeout = clearTimeout;
+        return clearTimeout(marker);
+    }
+    try {
+        // when when somebody has screwed with setTimeout but no I.E. maddness
+        return cachedClearTimeout(marker);
+    } catch (e){
+        try {
+            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
+            return cachedClearTimeout.call(null, marker);
+        } catch (e){
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
+            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
+            return cachedClearTimeout.call(this, marker);
+        }
+    }
+
+
+
+}
+var queue = [];
+var draining = false;
+var currentQueue;
+var queueIndex = -1;
+
+function cleanUpNextTick() {
+    if (!draining || !currentQueue) {
+        return;
+    }
+    draining = false;
+    if (currentQueue.length) {
+        queue = currentQueue.concat(queue);
+    } else {
+        queueIndex = -1;
+    }
+    if (queue.length) {
+        drainQueue();
+    }
+}
+
+function drainQueue() {
+    if (draining) {
+        return;
+    }
+    var timeout = runTimeout(cleanUpNextTick);
+    draining = true;
+
+    var len = queue.length;
+    while(len) {
+        currentQueue = queue;
+        queue = [];
+        while (++queueIndex < len) {
+            if (currentQueue) {
+                currentQueue[queueIndex].run();
+            }
+        }
+        queueIndex = -1;
+        len = queue.length;
+    }
+    currentQueue = null;
+    draining = false;
+    runClearTimeout(timeout);
+}
+
+process.nextTick = function (fun) {
+    var args = new Array(arguments.length - 1);
+    if (arguments.length > 1) {
+        for (var i = 1; i < arguments.length; i++) {
+            args[i - 1] = arguments[i];
+        }
+    }
+    queue.push(new Item(fun, args));
+    if (queue.length === 1 && !draining) {
+        runTimeout(drainQueue);
+    }
+};
+
+// v8 likes predictible objects
+function Item(fun, array) {
+    this.fun = fun;
+    this.array = array;
+}
+Item.prototype.run = function () {
+    this.fun.apply(null, this.array);
+};
+process.title = 'browser';
+process.browser = true;
+process.env = {};
+process.argv = [];
+process.version = ''; // empty string to avoid regexp issues
+process.versions = {};
+
+function noop() {}
+
+process.on = noop;
+process.addListener = noop;
+process.once = noop;
+process.off = noop;
+process.removeListener = noop;
+process.removeAllListeners = noop;
+process.emit = noop;
+process.prependListener = noop;
+process.prependOnceListener = noop;
+
+process.listeners = function (name) { return [] }
+
+process.binding = function (name) {
+    throw new Error('process.binding is not supported');
+};
+
+process.cwd = function () { return '/' };
+process.chdir = function (dir) {
+    throw new Error('process.chdir is not supported');
+};
+process.umask = function() { return 0; };
+
+
+/***/ }),
+/* 16 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/*
+  MIT License http://www.opensource.org/licenses/mit-license.php
+  Author Tobias Koppers @sokra
+  Modified by Evan You @yyx990803
+*/
+
+var hasDocument = typeof document !== 'undefined'
+
+if (typeof DEBUG !== 'undefined' && DEBUG) {
+  if (!hasDocument) {
+    throw new Error(
+    'vue-style-loader cannot be used in a non-browser environment. ' +
+    "Use { target: 'node' } in your Webpack config to indicate a server-rendering environment."
+  ) }
+}
+
+var listToStyles = __webpack_require__(201)
+
+/*
+type StyleObject = {
+  id: number;
+  parts: Array<StyleObjectPart>
+}
+
+type StyleObjectPart = {
+  css: string;
+  media: string;
+  sourceMap: ?string
+}
+*/
+
+var stylesInDom = {/*
+  [id: number]: {
+    id: number,
+    refs: number,
+    parts: Array<(obj?: StyleObjectPart) => void>
+  }
+*/}
+
+var head = hasDocument && (document.head || document.getElementsByTagName('head')[0])
+var singletonElement = null
+var singletonCounter = 0
+var isProduction = false
+var noop = function () {}
+var options = null
+var ssrIdKey = 'data-vue-ssr-id'
+
+// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
+// tags it will allow on a page
+var isOldIE = typeof navigator !== 'undefined' && /msie [6-9]\b/.test(navigator.userAgent.toLowerCase())
+
+module.exports = function (parentId, list, _isProduction, _options) {
+  isProduction = _isProduction
+
+  options = _options || {}
+
+  var styles = listToStyles(parentId, list)
+  addStylesToDom(styles)
+
+  return function update (newList) {
+    var mayRemove = []
+    for (var i = 0; i < styles.length; i++) {
+      var item = styles[i]
+      var domStyle = stylesInDom[item.id]
+      domStyle.refs--
+      mayRemove.push(domStyle)
+    }
+    if (newList) {
+      styles = listToStyles(parentId, newList)
+      addStylesToDom(styles)
+    } else {
+      styles = []
+    }
+    for (var i = 0; i < mayRemove.length; i++) {
+      var domStyle = mayRemove[i]
+      if (domStyle.refs === 0) {
+        for (var j = 0; j < domStyle.parts.length; j++) {
+          domStyle.parts[j]()
+        }
+        delete stylesInDom[domStyle.id]
+      }
+    }
+  }
+}
+
+function addStylesToDom (styles /* Array<StyleObject> */) {
+  for (var i = 0; i < styles.length; i++) {
+    var item = styles[i]
+    var domStyle = stylesInDom[item.id]
+    if (domStyle) {
+      domStyle.refs++
+      for (var j = 0; j < domStyle.parts.length; j++) {
+        domStyle.parts[j](item.parts[j])
+      }
+      for (; j < item.parts.length; j++) {
+        domStyle.parts.push(addStyle(item.parts[j]))
+      }
+      if (domStyle.parts.length > item.parts.length) {
+        domStyle.parts.length = item.parts.length
+      }
+    } else {
+      var parts = []
+      for (var j = 0; j < item.parts.length; j++) {
+        parts.push(addStyle(item.parts[j]))
+      }
+      stylesInDom[item.id] = { id: item.id, refs: 1, parts: parts }
+    }
+  }
+}
+
+function createStyleElement () {
+  var styleElement = document.createElement('style')
+  styleElement.type = 'text/css'
+  head.appendChild(styleElement)
+  return styleElement
+}
+
+function addStyle (obj /* StyleObjectPart */) {
+  var update, remove
+  var styleElement = document.querySelector('style[' + ssrIdKey + '~="' + obj.id + '"]')
+
+  if (styleElement) {
+    if (isProduction) {
+      // has SSR styles and in production mode.
+      // simply do nothing.
+      return noop
+    } else {
+      // has SSR styles but in dev mode.
+      // for some reason Chrome can't handle source map in server-rendered
+      // style tags - source maps in <style> only works if the style tag is
+      // created and inserted dynamically. So we remove the server rendered
+      // styles and inject new ones.
+      styleElement.parentNode.removeChild(styleElement)
+    }
+  }
+
+  if (isOldIE) {
+    // use singleton mode for IE9.
+    var styleIndex = singletonCounter++
+    styleElement = singletonElement || (singletonElement = createStyleElement())
+    update = applyToSingletonTag.bind(null, styleElement, styleIndex, false)
+    remove = applyToSingletonTag.bind(null, styleElement, styleIndex, true)
+  } else {
+    // use multi-style-tag mode in all other cases
+    styleElement = createStyleElement()
+    update = applyToTag.bind(null, styleElement)
+    remove = function () {
+      styleElement.parentNode.removeChild(styleElement)
+    }
+  }
+
+  update(obj)
+
+  return function updateStyle (newObj /* StyleObjectPart */) {
+    if (newObj) {
+      if (newObj.css === obj.css &&
+          newObj.media === obj.media &&
+          newObj.sourceMap === obj.sourceMap) {
+        return
+      }
+      update(obj = newObj)
+    } else {
+      remove()
+    }
+  }
+}
+
+var replaceText = (function () {
+  var textStore = []
+
+  return function (index, replacement) {
+    textStore[index] = replacement
+    return textStore.filter(Boolean).join('\n')
+  }
+})()
+
+function applyToSingletonTag (styleElement, index, remove, obj) {
+  var css = remove ? '' : obj.css
+
+  if (styleElement.styleSheet) {
+    styleElement.styleSheet.cssText = replaceText(index, css)
+  } else {
+    var cssNode = document.createTextNode(css)
+    var childNodes = styleElement.childNodes
+    if (childNodes[index]) styleElement.removeChild(childNodes[index])
+    if (childNodes.length) {
+      styleElement.insertBefore(cssNode, childNodes[index])
+    } else {
+      styleElement.appendChild(cssNode)
+    }
+  }
+}
+
+function applyToTag (styleElement, obj) {
+  var css = obj.css
+  var media = obj.media
+  var sourceMap = obj.sourceMap
+
+  if (media) {
+    styleElement.setAttribute('media', media)
+  }
+  if (options.ssrId) {
+    styleElement.setAttribute(ssrIdKey, obj.id)
+  }
+
+  if (sourceMap) {
+    // https://developer.chrome.com/devtools/docs/javascript-debugging
+    // this makes source maps inside style tags work properly in Chrome
+    css += '\n/*# sourceURL=' + sourceMap.sources[0] + ' */'
+    // http://stackoverflow.com/a/26603875
+    css += '\n/*# sourceMappingURL=data:application/json;base64,' + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + ' */'
+  }
+
+  if (styleElement.styleSheet) {
+    styleElement.styleSheet.cssText = css
+  } else {
+    while (styleElement.firstChild) {
+      styleElement.removeChild(styleElement.firstChild)
+    }
+    styleElement.appendChild(document.createTextNode(css))
+  }
+}
+
 
 /***/ }),
 /* 17 */
@@ -64690,7 +64690,7 @@ if (typeof jQuery === 'undefined') {
 var utils = __webpack_require__(2);
 var bind = __webpack_require__(19);
 var Axios = __webpack_require__(175);
-var defaults = __webpack_require__(7);
+var defaults = __webpack_require__(14);
 
 /**
  * Create an instance of Axios
@@ -64773,7 +64773,7 @@ function isSlowBuffer (obj) {
 "use strict";
 
 
-var defaults = __webpack_require__(7);
+var defaults = __webpack_require__(14);
 var utils = __webpack_require__(2);
 var InterceptorManager = __webpack_require__(184);
 var dispatchRequest = __webpack_require__(185);
@@ -65305,7 +65305,7 @@ module.exports = InterceptorManager;
 var utils = __webpack_require__(2);
 var transformData = __webpack_require__(186);
 var isCancel = __webpack_require__(22);
-var defaults = __webpack_require__(7);
+var defaults = __webpack_require__(14);
 
 /**
  * Throws a `Cancel` if cancellation has been requested.
@@ -65809,7 +65809,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(8)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(15)))
 
 /***/ }),
 /* 193 */
@@ -87998,6 +87998,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('home', __webpack_require_
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('e-tugas', __webpack_require__(27));
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('e-tugas-add', __webpack_require__(151));
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('e-tugas-edit', __webpack_require__(153));
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('e-tugas-detail', __webpack_require__(254));
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('schedule', __webpack_require__(154));
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('report', __webpack_require__(157));
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('materi', __webpack_require__(155));
@@ -88531,7 +88532,7 @@ var content = __webpack_require__(200);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(9)("b0be8e36", content, false, {});
+var update = __webpack_require__(16)("b0be8e36", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -88693,6 +88694,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -88701,7 +88707,7 @@ __WEBPACK_IMPORTED_MODULE_1_moment__["locale"]('id');
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            headerTable: [{ text: 'Modul', value: 'modul' }, { text: 'Matakuliah', value: 'matakuliah' }, { text: 'Kelas', value: 'kelas' }, { text: 'Judul Materi', value: 'judul' }, { text: 'Keterangan', value: 'keterangan' }, { text: 'Due Date', value: 'due_date' }, { text: 'File Materi', value: 'file_url' }, { text: 'Aksi', value: 'id' }],
+            headerTable: [{ text: 'Modul', value: 'modul' }, { text: 'Matakuliah', value: 'matakuliah' }, { text: 'Kelas', value: 'kelas' }, { text: 'Judul Tugas', value: 'judul' }, { text: 'Keterangan', value: 'keterangan' }, { text: 'Due Date', value: 'due_date' }, { text: 'File Tugas', value: 'file_url' }, { text: 'Aksi', value: 'id' }],
             bodyTable: [],
             semesters: [],
             descriptionSemester: '',
@@ -88710,6 +88716,7 @@ __WEBPACK_IMPORTED_MODULE_1_moment__["locale"]('id');
             snackbar: false,
             isLoaded: false,
             dialog: false,
+            loadDetail: false,
             title_confirm: '',
             desc_confirm: '',
             remove_id: ''
@@ -88724,6 +88731,18 @@ __WEBPACK_IMPORTED_MODULE_1_moment__["locale"]('id');
     },
 
     methods: {
+        detail: function detail(id) {
+            var app = this;
+            app.loadDetail = true;
+            axios.get('lecturer/e-tugas/detail/' + id).then(function (resp) {
+                app.loadDetail = false;
+                app.$store.state.obj_etugas = resp.data;
+                app.$store.state.form_dialog_detail_etugas = true;
+                app.$store.state.obj_list_etugas = resp.data.etugas_kelas_mahasiswa;
+            }).catch(function (resp) {
+                app.showSnackbar("oops, something went wrong. Please try again!");
+            });
+        },
         initData: function initData() {
             var app = this;
             axios.get('lecturer/e-tugas').then(function (resp) {
@@ -89202,6 +89221,15 @@ var render = function() {
           )
         : _vm._e(),
       _vm._v(" "),
+      _vm.loadDetail
+        ? [
+            _c("v-progress-linear", {
+              staticStyle: { "margin-bottom": "0px" },
+              attrs: { indeterminate: true }
+            })
+          ]
+        : _vm._e(),
+      _vm._v(" "),
       _vm.isLoaded
         ? _c(
             "v-flex",
@@ -89261,7 +89289,7 @@ var render = function() {
                               staticClass: "text-xs-left",
                               attrs: { id: "judul-" + props.item.id }
                             },
-                            [_vm._v(_vm._s(props.item.judul))]
+                            [_vm._v(_vm._s(props.item.judul) + " ")]
                           ),
                           _vm._v(" "),
                           _c(
@@ -89317,15 +89345,17 @@ var render = function() {
                                     "v-btn",
                                     {
                                       attrs: {
+                                        slot: "activator",
                                         flat: "",
                                         icon: "",
                                         color: "info"
                                       },
                                       on: {
                                         click: function($event) {
-                                          _vm.remove(props.item.id)
+                                          _vm.detail(props.item.id)
                                         }
-                                      }
+                                      },
+                                      slot: "activator"
                                     },
                                     [
                                       _c("v-icon", { attrs: { dark: "" } }, [
@@ -89489,7 +89519,9 @@ var render = function() {
           ],
           1
         )
-      ]
+      ],
+      _vm._v(" "),
+      _c("e-tugas-detail")
     ],
     2
   )
@@ -89511,19 +89543,19 @@ if (false) {
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_content_loader__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_filepond__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_filepond__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_filepond___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue_filepond__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_filepond_plugin_image_preview__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_filepond_plugin_image_preview__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_filepond_plugin_image_preview___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_filepond_plugin_image_preview__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_filepond_plugin_file_validate_size__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_filepond_plugin_file_validate_size__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_filepond_plugin_file_validate_size___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_filepond_plugin_file_validate_size__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_filepond_plugin_file_validate_type__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_filepond_plugin_file_validate_type__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_filepond_plugin_file_validate_type___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_filepond_plugin_file_validate_type__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_filepond_plugin_file_encode__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_filepond_plugin_file_encode__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_filepond_plugin_file_encode___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_filepond_plugin_file_encode__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_filepond_dist_filepond_min_css__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_filepond_dist_filepond_min_css__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_filepond_dist_filepond_min_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_filepond_dist_filepond_min_css__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_filepond_plugin_image_preview_dist_filepond_plugin_image_preview_css__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_filepond_plugin_image_preview_dist_filepond_plugin_image_preview_css__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_filepond_plugin_image_preview_dist_filepond_plugin_image_preview_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_filepond_plugin_image_preview_dist_filepond_plugin_image_preview_css__);
 //
 //
@@ -89740,7 +89772,7 @@ var FilePond = __WEBPACK_IMPORTED_MODULE_1_vue_filepond___default()(__WEBPACK_IM
                 app.descriptionSemester = resp.data.keterangan;
                 app.moduls = resp.data.data;
             }).catch(function (resp) {
-                showSnackbar("oops, something went wrong. Please try again!");
+                app.showSnackbar("oops, something went wrong. Please try again!");
             });
         },
         submit: function submit() {
@@ -98804,19 +98836,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_content_loader__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_moment__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_moment__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_filepond__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_filepond__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_filepond___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_vue_filepond__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_filepond_plugin_image_preview__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_filepond_plugin_image_preview__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_filepond_plugin_image_preview___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_filepond_plugin_image_preview__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_filepond_plugin_file_validate_size__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_filepond_plugin_file_validate_size__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_filepond_plugin_file_validate_size___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_filepond_plugin_file_validate_size__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_filepond_plugin_file_validate_type__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_filepond_plugin_file_validate_type__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_filepond_plugin_file_validate_type___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_filepond_plugin_file_validate_type__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_filepond_plugin_file_encode__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_filepond_plugin_file_encode__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_filepond_plugin_file_encode___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_filepond_plugin_file_encode__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_filepond_dist_filepond_min_css__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_filepond_dist_filepond_min_css__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_filepond_dist_filepond_min_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_filepond_dist_filepond_min_css__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_filepond_plugin_image_preview_dist_filepond_plugin_image_preview_css__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_filepond_plugin_image_preview_dist_filepond_plugin_image_preview_css__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_filepond_plugin_image_preview_dist_filepond_plugin_image_preview_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_filepond_plugin_image_preview_dist_filepond_plugin_image_preview_css__);
 //
 //
@@ -99889,7 +99921,7 @@ var content = __webpack_require__(217);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(9)("4e14bc48", content, false, {});
+var update = __webpack_require__(16)("4e14bc48", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -100422,19 +100454,19 @@ if (false) {
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_content_loader__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_filepond__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_filepond__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_filepond___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue_filepond__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_filepond_plugin_image_preview__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_filepond_plugin_image_preview__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_filepond_plugin_image_preview___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_filepond_plugin_image_preview__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_filepond_plugin_file_validate_size__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_filepond_plugin_file_validate_size__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_filepond_plugin_file_validate_size___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_filepond_plugin_file_validate_size__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_filepond_plugin_file_validate_type__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_filepond_plugin_file_validate_type__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_filepond_plugin_file_validate_type___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_filepond_plugin_file_validate_type__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_filepond_plugin_file_encode__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_filepond_plugin_file_encode__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_filepond_plugin_file_encode___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_filepond_plugin_file_encode__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_filepond_dist_filepond_min_css__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_filepond_dist_filepond_min_css__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_filepond_dist_filepond_min_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_filepond_dist_filepond_min_css__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_filepond_plugin_image_preview_dist_filepond_plugin_image_preview_css__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_filepond_plugin_image_preview_dist_filepond_plugin_image_preview_css__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_filepond_plugin_image_preview_dist_filepond_plugin_image_preview_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_filepond_plugin_image_preview_dist_filepond_plugin_image_preview_css__);
 //
 //
@@ -101474,7 +101506,7 @@ var content = __webpack_require__(230);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(9)("39b10236", content, false, {});
+var update = __webpack_require__(16)("39b10236", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -101623,7 +101655,6 @@ __WEBPACK_IMPORTED_MODULE_1_moment__["locale"]('id');
                 app.isLoaded = true;
                 app.$store.state.obj_list_etugas = resp.data.data;
                 app.semesters = resp.data.data_semester;
-                console.log(app.semesters);
             }).catch(function (resp) {
                 app.showSnackbar("oops, something went wrong. Please try again!");
             });
@@ -101646,7 +101677,6 @@ __WEBPACK_IMPORTED_MODULE_1_moment__["locale"]('id');
             var app = this;
 
             axios.get('student/e-tugas/detail/' + id).then(function (resp) {
-                console.log(resp.data);
                 app.$store.state.obj_etugas = resp.data;
                 app.$store.state.form_dialog_detail_etugas = true;
             }).catch(function (resp) {
@@ -102545,19 +102575,19 @@ if (false) {
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_moment__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_moment__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_filepond__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_filepond__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_filepond___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue_filepond__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_filepond_plugin_image_preview__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_filepond_plugin_image_preview__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_filepond_plugin_image_preview___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_filepond_plugin_image_preview__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_filepond_plugin_file_validate_size__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_filepond_plugin_file_validate_size__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_filepond_plugin_file_validate_size___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_filepond_plugin_file_validate_size__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_filepond_plugin_file_validate_type__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_filepond_plugin_file_validate_type__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_filepond_plugin_file_validate_type___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_filepond_plugin_file_validate_type__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_filepond_plugin_file_encode__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_filepond_plugin_file_encode__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_filepond_plugin_file_encode___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_filepond_plugin_file_encode__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_filepond_dist_filepond_min_css__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_filepond_dist_filepond_min_css__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_filepond_dist_filepond_min_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_filepond_dist_filepond_min_css__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_filepond_plugin_image_preview_dist_filepond_plugin_image_preview_css__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_filepond_plugin_image_preview_dist_filepond_plugin_image_preview_css__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_filepond_plugin_image_preview_dist_filepond_plugin_image_preview_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_filepond_plugin_image_preview_dist_filepond_plugin_image_preview_css__);
 //
 //
@@ -102725,7 +102755,7 @@ var FilePond = __WEBPACK_IMPORTED_MODULE_1_vue_filepond___default()(__WEBPACK_IM
         },
         submit: function submit() {
             var app = this;
-            if (app.keterangan == '') {
+            if ($('#keterangan').val() == '') {
                 app.showSnackbar('keterangan harus diisi');
                 return false;
             }
@@ -102749,7 +102779,6 @@ var FilePond = __WEBPACK_IMPORTED_MODULE_1_vue_filepond___default()(__WEBPACK_IM
                     app.$store.state.obj_list_etugas = resp.data.data_tugas;
                 }
             }).catch(function (e) {
-                console.log(e);
                 app.showSnackbar('Tugas gagal diunggah');
             });
         }
@@ -104702,13 +104731,829 @@ return Promise$1;
 
 //# sourceMappingURL=es6-promise.map
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8), __webpack_require__(4)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(15), __webpack_require__(4)))
 
 /***/ }),
 /* 245 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 246 */,
+/* 247 */,
+/* 248 */,
+/* 249 */,
+/* 250 */,
+/* 251 */,
+/* 252 */,
+/* 253 */,
+/* 254 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(255)
+/* template */
+var __vue_template__ = __webpack_require__(256)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/lecturer/EtugasDetail.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-5f3cf438", Component.options)
+  } else {
+    hotAPI.reload("data-v-5f3cf438", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 255 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_moment__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_moment__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+__WEBPACK_IMPORTED_MODULE_0_moment__["locale"]('id');
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            nama_mahasiswa: '',
+            dialog: false,
+            is_save: false,
+            snackbarText: '',
+            snackbar: false,
+            headerTable: [{ text: 'NIM', value: 'nrp' }, { text: 'Nama', value: 'nama' }, { text: 'Keterangan Tugas', value: 'nilai.keterangan' }, { text: 'Tanggal Unggah', value: 'nilai.updated_at' }, { text: 'File Tugas', value: 'nilai.file_url' }, { text: 'Nilai', value: 'nilai.nilai' }, { text: 'Aksi', value: 'nilai.id' }],
+            data: {
+                nilai: '',
+                tugas_id: ''
+            }
+        };
+    },
+
+    computed: {
+        setKeterangan: function setKeterangan() {
+            return this.$store.state.obj_etugas.etugas_nilai_mahasiswa ? this.$store.state.obj_etugas.etugas_nilai_mahasiswa.keterangan : '';
+        },
+        etugas_nilai_mahasiswa: function etugas_nilai_mahasiswa() {
+            return this.$store.state.obj_etugas.etugas_nilai_mahasiswa ? this.$store.state.obj_etugas.etugas_nilai_mahasiswa : '';
+        },
+        formDialogDetail: function formDialogDetail() {
+            return this.$store.state.form_dialog_detail_etugas;
+        }
+    },
+    mounted: function mounted() {},
+
+    methods: {
+        setNilai: function setNilai(tugas_id, mahasiswa_id) {
+            this.dialog = true;
+            this.data.tugas_id = tugas_id;
+            this.nama_mahasiswa = $('#nama-' + mahasiswa_id).html();
+        },
+        saveFormDialog: function saveFormDialog() {
+            this.$store.state.form_dialog_detail_etugas = false;
+        },
+        closeFormDialog: function closeFormDialog() {
+            this.$store.state.form_dialog_detail_etugas = false;
+        },
+        dateView: function dateView(date) {
+            if (date != '0000-00-00 00:00:00') {
+                return __WEBPACK_IMPORTED_MODULE_0_moment__(date).format("dddd, Do MMMM YYYY, h:mm:ss a");
+            }
+            return '-';
+        },
+        download: function download() {},
+        showSnackbar: function showSnackbar(text) {
+            var app = this;
+            app.snackbarText = text;
+            app.snackbar = true;
+        },
+        storeNilai: function storeNilai() {
+            var app = this;
+            app.is_save = true;
+            axios.post('lecturer/e-tugas/set-nilai', app.data).then(function (resp) {
+                app.is_save = false;
+                app.dialog = false;
+
+                app.$store.state.obj_list_etugas = resp.data.etugas_kelas_mahasiswa;
+                app.showSnackbar("Data berhasil disimpan!");
+                return true;
+            }).catch(function (resp) {
+                app.is_save = false;
+                app.dialog = false;
+                app.showSnackbar("oops, something went wrong. Please try again!");
+            });
+        }
+    }
+});
+
+/***/ }),
+/* 256 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "v-layout",
+    { attrs: { row: "", "justify-center": "" } },
+    [
+      _c(
+        "v-dialog",
+        {
+          attrs: {
+            fullscreen: "",
+            "hide-overlay": "",
+            transition: "dialog-bottom-transition"
+          },
+          model: {
+            value: _vm.$store.state.form_dialog_detail_etugas,
+            callback: function($$v) {
+              _vm.$set(_vm.$store.state, "form_dialog_detail_etugas", $$v)
+            },
+            expression: "$store.state.form_dialog_detail_etugas"
+          }
+        },
+        [
+          _c(
+            "v-card",
+            [
+              _c(
+                "v-toolbar",
+                { attrs: { dark: "", color: "primary" } },
+                [
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { icon: "", dark: "" },
+                      on: { click: _vm.closeFormDialog }
+                    },
+                    [_c("v-icon", [_vm._v("close")])],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("v-toolbar-title", [
+                    _vm._v(
+                      _vm._s(
+                        _vm.$store.state.form_dialog_detail_etugas
+                          ? _vm.$store.state.obj_etugas.etugas.judul
+                          : ""
+                      )
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("v-spacer"),
+                  _vm._v(" "),
+                  _c(
+                    "v-toolbar-items",
+                    [
+                      _c(
+                        "v-btn",
+                        {
+                          attrs: { dark: "", flat: "" },
+                          on: { click: _vm.download }
+                        },
+                        [_vm._v("Download Excel")]
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-list",
+                { attrs: { "three-line": "", subheader: "" } },
+                [
+                  _c("v-subheader", [_vm._v("Detail Etugas")]),
+                  _vm._v(" "),
+                  _c(
+                    "v-list-tile",
+                    { attrs: { avatar: "" } },
+                    [
+                      _c(
+                        "v-list-tile-content",
+                        [
+                          _c("v-list-tile-title", [_vm._v("Matakuliah")]),
+                          _vm._v(" "),
+                          _c("v-list-tile-sub-title", [
+                            _vm._v(
+                              _vm._s(
+                                _vm.$store.state.form_dialog_detail_etugas
+                                  ? _vm.$store.state.obj_etugas
+                                      .etugas_matakuliah.matakuliah
+                                  : ""
+                              ) + " "
+                            ),
+                            _c("br"),
+                            _vm._v(
+                              " " +
+                                _vm._s(
+                                  _vm.$store.state.form_dialog_detail_etugas
+                                    ? _vm.$store.state.obj_etugas.etugas_modul
+                                        .modul
+                                    : ""
+                                )
+                            )
+                          ])
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-list-tile",
+                    { attrs: { avatar: "" } },
+                    [
+                      _c(
+                        "v-list-tile-content",
+                        [
+                          _c("v-list-tile-title", [_vm._v("Deskripsi Tugas")]),
+                          _vm._v(" "),
+                          _c("v-list-tile-sub-title", [
+                            _vm._v(
+                              _vm._s(
+                                _vm.$store.state.form_dialog_detail_etugas
+                                  ? _vm.$store.state.obj_etugas.etugas
+                                      .keterangan
+                                  : ""
+                              )
+                            )
+                          ])
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-list-tile",
+                    { attrs: { avatar: "" } },
+                    [
+                      _c(
+                        "v-list-tile-content",
+                        [
+                          _c("v-list-tile-title", [
+                            _vm._v("Batas Pengumpulan")
+                          ]),
+                          _vm._v(" "),
+                          _c("v-list-tile-sub-title", [
+                            _vm._v(
+                              _vm._s(
+                                _vm.dateView(
+                                  _vm.$store.state.form_dialog_detail_etugas
+                                    ? _vm.$store.state.obj_etugas.etugas
+                                        .due_date
+                                    : ""
+                                )
+                              )
+                            )
+                          ])
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-list-tile",
+                    { attrs: { avatar: "" } },
+                    [
+                      _c(
+                        "v-list-tile-content",
+                        [
+                          _c("v-list-tile-title", [_vm._v("Rekapitulasi")]),
+                          _vm._v(" "),
+                          _c("v-list-tile-sub-title", [
+                            _vm._v(
+                              "\n                            " +
+                                _vm._s(
+                                  _vm.$store.state.form_dialog_detail_etugas
+                                    ? _vm.$store.state.obj_etugas
+                                        .etugas_kelas_mahasiswa.length
+                                    : 0
+                                ) +
+                                " Total mahasiswa "
+                            ),
+                            _c("br"),
+                            _vm._v(
+                              "\n                            " +
+                                _vm._s(
+                                  _vm.$store.state.form_dialog_detail_etugas
+                                    ? _vm.$store.state.obj_etugas
+                                        .etugas_nilai_mahasiswa.length
+                                    : 0
+                                ) +
+                                " Orang sudah upload "
+                            ),
+                            _c("br"),
+                            _vm._v(
+                              "\n                            " +
+                                _vm._s(
+                                  _vm.$store.state.form_dialog_detail_etugas
+                                    ? _vm.$store.state.obj_etugas
+                                        .etugas_kelas_mahasiswa.length -
+                                      _vm.$store.state.obj_etugas
+                                        .etugas_nilai_mahasiswa.length
+                                    : 0
+                                ) +
+                                " Orang belum upload "
+                            ),
+                            _c("br")
+                          ])
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c("v-divider"),
+              _vm._v(" "),
+              _c(
+                "v-list",
+                { attrs: { "three-line": "", subheader: "" } },
+                [
+                  _c("v-subheader", [_vm._v("Upload Tugas")]),
+                  _vm._v(" "),
+                  _c(
+                    "v-flex",
+                    { attrs: { sm12: "" } },
+                    [
+                      _c("v-data-table", {
+                        staticClass: "elevation-1",
+                        attrs: {
+                          headers: _vm.headerTable,
+                          items: _vm.$store.state.obj_list_etugas,
+                          "hide-actions": ""
+                        },
+                        scopedSlots: _vm._u([
+                          {
+                            key: "items",
+                            fn: function(props) {
+                              return [
+                                _c(
+                                  "tr",
+                                  { attrs: { id: "tr-" + props.item.id } },
+                                  [
+                                    _c("td", [_vm._v(_vm._s(props.item.nrp))]),
+                                    _vm._v(" "),
+                                    _c(
+                                      "td",
+                                      {
+                                        staticClass: "text-xs-left",
+                                        attrs: {
+                                          id: "nama-" + props.item.nomor
+                                        }
+                                      },
+                                      [_vm._v(_vm._s(props.item.nama))]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "td",
+                                      {
+                                        staticClass: "text-xs-left",
+                                        attrs: {
+                                          id: "keterangan-" + props.item.nomor
+                                        }
+                                      },
+                                      [
+                                        _vm._v(
+                                          _vm._s(
+                                            props.item.nilai
+                                              ? props.item.nilai.keterangan
+                                              : ""
+                                          )
+                                        )
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "td",
+                                      {
+                                        staticClass: "text-xs-center",
+                                        attrs: {
+                                          id: "due-date-" + props.item.nomor
+                                        }
+                                      },
+                                      [
+                                        _vm._v(
+                                          _vm._s(
+                                            props.item.nilai
+                                              ? _vm.dateView(
+                                                  props.item.nilai.updated_at
+                                                )
+                                              : ""
+                                          )
+                                        )
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "td",
+                                      { staticClass: "text-xs-center" },
+                                      [
+                                        props.item.nilai
+                                          ? [
+                                              props.item.nilai.file_url
+                                                ? _c(
+                                                    "a",
+                                                    {
+                                                      attrs: {
+                                                        slot: "activator",
+                                                        href:
+                                                          props.item.file_url
+                                                      },
+                                                      slot: "activator"
+                                                    },
+                                                    [_vm._v(" Download File ")]
+                                                  )
+                                                : _vm._e()
+                                            ]
+                                          : _vm._e()
+                                      ],
+                                      2
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "td",
+                                      { staticClass: "text-xs-center" },
+                                      [
+                                        _vm._v(
+                                          _vm._s(
+                                            props.item.nilai
+                                              ? props.item.nilai.nilai
+                                              : ""
+                                          )
+                                        )
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "td",
+                                      { staticClass: "text-xs-center" },
+                                      [
+                                        props.item.nilai
+                                          ? _c(
+                                              "v-layout",
+                                              {
+                                                attrs: {
+                                                  "justify-space-around": ""
+                                                }
+                                              },
+                                              [
+                                                _c(
+                                                  "v-btn",
+                                                  {
+                                                    attrs: {
+                                                      slot: "activator",
+                                                      flat: "",
+                                                      icon: "",
+                                                      color: "info"
+                                                    },
+                                                    on: {
+                                                      click: function($event) {
+                                                        _vm.setNilai(
+                                                          props.item.nilai.id,
+                                                          props.item.nomor
+                                                        )
+                                                      }
+                                                    },
+                                                    slot: "activator"
+                                                  },
+                                                  [
+                                                    _c(
+                                                      "v-icon",
+                                                      { attrs: { dark: "" } },
+                                                      [_vm._v("edit")]
+                                                    )
+                                                  ],
+                                                  1
+                                                )
+                                              ],
+                                              1
+                                            )
+                                          : _vm._e()
+                                      ],
+                                      1
+                                    )
+                                  ]
+                                )
+                              ]
+                            }
+                          }
+                        ])
+                      })
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      [
+        _c(
+          "v-layout",
+          { attrs: { row: "", "justify-center": "" } },
+          [
+            _c(
+              "v-dialog",
+              {
+                attrs: { persistent: "", "max-width": "390" },
+                model: {
+                  value: _vm.dialog,
+                  callback: function($$v) {
+                    _vm.dialog = $$v
+                  },
+                  expression: "dialog"
+                }
+              },
+              [
+                _c(
+                  "v-card",
+                  [
+                    _c("v-card-title", { staticClass: "headline" }, [
+                      _vm._v(_vm._s(_vm.nama_mahasiswa))
+                    ]),
+                    _vm._v(" "),
+                    _c("v-text-field", {
+                      staticStyle: { margin: "10px" },
+                      attrs: { label: "Masukkan nilai tugas" },
+                      model: {
+                        value: _vm.data.nilai,
+                        callback: function($$v) {
+                          _vm.$set(_vm.data, "nilai", $$v)
+                        },
+                        expression: "data.nilai"
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "v-card-actions",
+                      [
+                        _c("v-spacer"),
+                        _vm._v(" "),
+                        _c(
+                          "v-btn",
+                          {
+                            attrs: { flat: "" },
+                            nativeOn: {
+                              click: function($event) {
+                                _vm.dialog = false
+                              }
+                            }
+                          },
+                          [_vm._v("Batalkan")]
+                        ),
+                        _vm._v(" "),
+                        !_vm.is_save
+                          ? _c(
+                              "v-btn",
+                              {
+                                attrs: { color: "info" },
+                                on: { click: _vm.storeNilai }
+                              },
+                              [_vm._v("\n                Simpan\n            ")]
+                            )
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _vm.is_save
+                          ? _c(
+                              "v-btn",
+                              { attrs: { flat: "" } },
+                              [
+                                _c("v-progress-circular", {
+                                  attrs: { indeterminate: "", color: "primary" }
+                                })
+                              ],
+                              1
+                            )
+                          : _vm._e()
+                      ],
+                      1
+                    )
+                  ],
+                  1
+                )
+              ],
+              1
+            )
+          ],
+          1
+        )
+      ],
+      _vm._v(" "),
+      _c(
+        "v-snackbar",
+        {
+          attrs: { right: "", bottom: "" },
+          model: {
+            value: _vm.snackbar,
+            callback: function($$v) {
+              _vm.snackbar = $$v
+            },
+            expression: "snackbar"
+          }
+        },
+        [
+          _vm._v("\n        " + _vm._s(_vm.snackbarText) + "\n        "),
+          _c(
+            "v-btn",
+            {
+              attrs: { dark: "", flat: "" },
+              on: {
+                click: function($event) {
+                  _vm.snackbar = false
+                }
+              }
+            },
+            [_vm._v("\n            Close\n        ")]
+          )
+        ],
+        1
+      )
+    ],
+    2
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-5f3cf438", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);
