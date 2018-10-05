@@ -50,6 +50,7 @@
                             </template>
                         </td>
                         <td class="text-xs-center" :id="'due-date-'+props.item.id">{{ props.item.nilai_mahasiswa ? dateView(props.item.nilai_mahasiswa.updated_at) : '-'}}</td>
+                        <td class="text-xs-center">{{ props.item.nilai_mahasiswa ? props.item.nilai_mahasiswa.nilai : ''}}</td>
 
                         <td class="text-xs-center">
                             <template v-if="!props.item.nilai_mahasiswa">
@@ -91,6 +92,7 @@ export default {
                 { text: 'Due Date', value: 'due_date' },
                 { text: 'File Lampiran Tugas', value: 'file_url' },
                 { text: 'Tanggal Upload', value: 'id' },
+                { text: 'Nilai', value: 'nilai' },
                 { text: 'Status', value: 'id' },
             ],
             semesters: [],

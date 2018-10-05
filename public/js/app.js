@@ -101619,6 +101619,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -101627,7 +101628,7 @@ __WEBPACK_IMPORTED_MODULE_1_moment__["locale"]('id');
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            headerTable: [{ text: 'Modul', value: 'modul' }, { text: 'Matakuliah', value: 'matakuliah' }, { text: 'Kelas', value: 'kelas' }, { text: 'Dosen', value: 'nama' }, { text: 'Judul Tugas', value: 'judul' }, { text: 'Keterangan', value: 'keterangan' }, { text: 'Due Date', value: 'due_date' }, { text: 'File Lampiran Tugas', value: 'file_url' }, { text: 'Tanggal Upload', value: 'id' }, { text: 'Status', value: 'id' }],
+            headerTable: [{ text: 'Modul', value: 'modul' }, { text: 'Matakuliah', value: 'matakuliah' }, { text: 'Kelas', value: 'kelas' }, { text: 'Dosen', value: 'nama' }, { text: 'Judul Tugas', value: 'judul' }, { text: 'Keterangan', value: 'keterangan' }, { text: 'Due Date', value: 'due_date' }, { text: 'File Lampiran Tugas', value: 'file_url' }, { text: 'Tanggal Upload', value: 'id' }, { text: 'Nilai', value: 'nilai' }, { text: 'Status', value: 'id' }],
             semesters: [],
             filter: '',
             snackbarText: '',
@@ -101931,6 +101932,16 @@ var render = function() {
                               )
                             ]
                           ),
+                          _vm._v(" "),
+                          _c("td", { staticClass: "text-xs-center" }, [
+                            _vm._v(
+                              _vm._s(
+                                props.item.nilai_mahasiswa
+                                  ? props.item.nilai_mahasiswa.nilai
+                                  : ""
+                              )
+                            )
+                          ]),
                           _vm._v(" "),
                           _c(
                             "td",
