@@ -104995,6 +104995,10 @@ __WEBPACK_IMPORTED_MODULE_0_moment__["locale"]('id');
         },
         storeNilai: function storeNilai() {
             var app = this;
+            if (app.data.nilai == '') {
+                app.showSnackbar("Nilai harus diisi");
+                return false;
+            }
             app.is_save = true;
             axios.post('lecturer/e-tugas/set-nilai', app.data).then(function (resp) {
                 app.is_save = false;
