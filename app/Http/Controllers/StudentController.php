@@ -14,6 +14,12 @@ class StudentController extends Controller
         return $view = view('student');
     }
 
+    public function dashboard()
+    {
+        $database = StudentDatabaseHelper::getDashboard();
+        return $database;
+    }
+
     public function schedule()
     {
         $database = StudentDatabaseHelper::getScheduleIndex();

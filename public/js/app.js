@@ -34393,15 +34393,19 @@ module.exports = Component.exports
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(257)
+}
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = null
+var __vue_script__ = __webpack_require__(259)
 /* template */
 var __vue_template__ = __webpack_require__(228)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
-var __vue_styles__ = null
+var __vue_styles__ = injectStyle
 /* scopeId */
 var __vue_scopeId__ = null
 /* moduleIdentifier (server only) */
@@ -34679,7 +34683,7 @@ module.exports = Component.exports
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(168);
-module.exports = __webpack_require__(245);
+module.exports = __webpack_require__(248);
 
 
 /***/ }),
@@ -34693,7 +34697,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuetify__ = __webpack_require__(194);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuetify___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_vuetify__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__routes__ = __webpack_require__(195);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_es6_promise_auto__ = __webpack_require__(243);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_es6_promise_auto__ = __webpack_require__(246);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_es6_promise_auto___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_es6_promise_auto__);
 
 /**
@@ -87998,7 +88002,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('home', __webpack_require_
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('e-tugas', __webpack_require__(27));
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('e-tugas-add', __webpack_require__(151));
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('e-tugas-edit', __webpack_require__(153));
-__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('e-tugas-detail', __webpack_require__(254));
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('e-tugas-detail', __webpack_require__(240));
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('schedule', __webpack_require__(154));
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('report', __webpack_require__(157));
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('materi', __webpack_require__(155));
@@ -88008,7 +88012,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('not-found', __webpack_req
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('redirect', __webpack_require__(160));
 
 // // student
-__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('layout-student', __webpack_require__(240));
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('layout-student', __webpack_require__(243));
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('beranda', __webpack_require__(161));
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('etugas', __webpack_require__(162));
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('jadwal', __webpack_require__(163));
@@ -88255,13 +88259,46 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       dialog: false,
       drawer: null,
-      items: [{ icon: 'home', text: 'Beranda', link: '/home' }, { icon: 'history', text: 'E-tugas', link: '/e-tugas' }, { icon: 'content_copy', text: 'Materi', link: '/materi' }, { icon: 'date_range', text: 'Jadwal', link: '/schedule' }, { icon: 'assessment', text: 'Laporan', link: '/report' }]
+      items: [{ icon: 'home', text: 'Beranda', link: '/home' }, { icon: 'history', text: 'E-tugas', link: '/e-tugas' }, { icon: 'content_copy', text: 'Materi', link: '/materi' }, { icon: 'date_range', text: 'Jadwal', link: '/schedule' }],
+      children: [{ text: 'Nilai Permodul', link: 'nilai-per-modul' }, { text: 'Nilai Akhir', link: 'nilai-akhir' }],
+      mo_icon: 'keyboard_arrow_up',
+      mo_icon_down: 'keyboard_arrow_down',
+      mo_text: 'Nilai',
+      mo_model: false
     };
   },
   props: {
@@ -88332,11 +88369,7 @@ var render = function() {
                         [
                           _c(
                             "v-list-tile-action",
-                            [
-                              _c("v-icon", { staticClass: "ml-0 pl-3" }, [
-                                _vm._v(_vm._s(item.icon))
-                              ])
-                            ],
+                            [_c("v-icon", {}, [_vm._v(_vm._s(item.icon))])],
                             1
                           ),
                           _vm._v(" "),
@@ -88357,7 +88390,71 @@ var render = function() {
                         1
                       )
                 ]
-              })
+              }),
+              _vm._v(" "),
+              _c(
+                "v-list-group",
+                {
+                  key: _vm.mo_text,
+                  attrs: {
+                    "prepend-icon": _vm.mo_model
+                      ? _vm.mo_icon
+                      : _vm.mo_icon_down,
+                    "append-icon": ""
+                  },
+                  model: {
+                    value: _vm.mo_model,
+                    callback: function($$v) {
+                      _vm.mo_model = $$v
+                    },
+                    expression: "mo_model"
+                  }
+                },
+                [
+                  _c(
+                    "v-list-tile",
+                    { attrs: { slot: "activator" }, slot: "activator" },
+                    [
+                      _c(
+                        "v-list-tile-content",
+                        [
+                          _c("v-list-tile-title", [
+                            _vm._v(
+                              "\n                Laporan Nilai\n              "
+                            )
+                          ])
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _vm._l(_vm.children, function(child, i) {
+                    return _c(
+                      "v-list-tile",
+                      { key: i, on: { click: function($event) {} } },
+                      [
+                        _c(
+                          "v-list-tile-content",
+                          [
+                            _c("v-list-tile-title", [
+                              _vm._v(
+                                "\n                " +
+                                  _vm._s(child.text) +
+                                  "\n              "
+                              )
+                            ])
+                          ],
+                          1
+                        )
+                      ],
+                      1
+                    )
+                  })
+                ],
+                2
+              )
             ],
             2
           )
@@ -88393,7 +88490,7 @@ var render = function() {
               _c(
                 "span",
                 { staticClass: "hidden-sm-and-down font-weight-regular" },
-                [_vm._v("Dosen Jaga")]
+                [_vm._v("Manajemen Tugas")]
               )
             ],
             1
@@ -101476,11 +101573,308 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "div",
+    "v-flex",
+    { attrs: { sm12: "" } },
     [
-      _c("h1", { staticClass: "font-weight-light" }, [_vm._v("Beranda")]),
+      _c("h1", { staticClass: "font-weight-light" }, [_vm._v("Tugas Baru")]),
       _vm._v(" "),
-      _c("v-btn", { attrs: { small: "" } }, [_vm._v("Normal")])
+      _c("div", { staticClass: "subheading" }, [
+        _vm._v("Daftar tugas yang belum terselesaikan")
+      ]),
+      _vm._v(" "),
+      !_vm.isLoaded
+        ? _c("content-loader", { attrs: { height: 250 } })
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.isLoaded
+        ? _c(
+            "v-flex",
+            { attrs: { md5: "", "mt-5": "" } },
+            [
+              _c("v-select", {
+                attrs: {
+                  items: _vm.semesters,
+                  label: "Pilih matakuliah",
+                  "item-text": "tahun",
+                  "item-value": "kuliah",
+                  solo: ""
+                },
+                on: {
+                  change: function($event) {
+                    _vm.selectSemester()
+                  }
+                },
+                scopedSlots: _vm._u([
+                  {
+                    key: "selection",
+                    fn: function(data) {
+                      return [
+                        _vm._v(
+                          "\n                " +
+                            _vm._s(data.item.tahun) +
+                            " / " +
+                            _vm._s(data.item.semester) +
+                            " - " +
+                            _vm._s(data.item.matakuliah) +
+                            "\n            "
+                        )
+                      ]
+                    }
+                  },
+                  {
+                    key: "item",
+                    fn: function(data) {
+                      return [
+                        _vm._v(
+                          "\n                " +
+                            _vm._s(data.item.tahun) +
+                            " / " +
+                            _vm._s(data.item.semester) +
+                            " - " +
+                            _vm._s(data.item.matakuliah) +
+                            "\n            "
+                        )
+                      ]
+                    }
+                  }
+                ]),
+                model: {
+                  value: _vm.filter,
+                  callback: function($$v) {
+                    _vm.filter = $$v
+                  },
+                  expression: "filter"
+                }
+              })
+            ],
+            1
+          )
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.isLoaded
+        ? _c(
+            "v-flex",
+            { attrs: { sm12: "" } },
+            [
+              _c("v-data-table", {
+                staticClass: "elevation-1",
+                attrs: {
+                  headers: _vm.headerTable,
+                  items: _vm.$store.state.obj_list_etugas,
+                  "hide-actions": ""
+                },
+                scopedSlots: _vm._u([
+                  {
+                    key: "items",
+                    fn: function(props) {
+                      return [
+                        props.item
+                          ? _c("tr", { attrs: { id: "tr-" + props.item.id } }, [
+                              _c(
+                                "td",
+                                { staticStyle: { "min-width": "250px" } },
+                                [_vm._v(_vm._s(props.item.modul))]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "td",
+                                {
+                                  staticClass: "text-xs-left",
+                                  attrs: { id: "matakuliah-" + props.item.id }
+                                },
+                                [_vm._v(_vm._s(props.item.matakuliah))]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "td",
+                                {
+                                  staticClass: "text-xs-left",
+                                  attrs: { id: "kelas-" + props.item.id }
+                                },
+                                [
+                                  _vm._v(
+                                    _vm._s(props.item.tahun) +
+                                      " / " +
+                                      _vm._s(props.item.semester) +
+                                      " - " +
+                                      _vm._s(props.item.program) +
+                                      " " +
+                                      _vm._s(props.item.jurusan) +
+                                      " (" +
+                                      _vm._s(props.item.kelas) +
+                                      " " +
+                                      _vm._s(props.item.pararel) +
+                                      ")"
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "td",
+                                {
+                                  staticClass: "text-xs-left",
+                                  attrs: { id: "dosen-" + props.item.id }
+                                },
+                                [_vm._v(_vm._s(props.item.nama))]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "td",
+                                {
+                                  staticClass: "text-xs-left",
+                                  attrs: { id: "judul-" + props.item.id }
+                                },
+                                [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: { slot: "activator" },
+                                      on: {
+                                        click: function($event) {
+                                          _vm.detail(props.item.id)
+                                        }
+                                      },
+                                      slot: "activator"
+                                    },
+                                    [
+                                      _vm._v(
+                                        " \n                            " +
+                                          _vm._s(props.item.judul) +
+                                          "\n                        "
+                                      )
+                                    ]
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "td",
+                                {
+                                  staticClass: "text-xs-center",
+                                  attrs: { id: "keterangan-" + props.item.id }
+                                },
+                                [_vm._v(_vm._s(props.item.keterangan))]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "td",
+                                {
+                                  staticClass: "text-xs-center",
+                                  attrs: { id: "due-date-" + props.item.id }
+                                },
+                                [
+                                  _vm._v(
+                                    _vm._s(_vm.dateView(props.item.due_date))
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "td",
+                                { staticClass: "text-xs-center" },
+                                [
+                                  props.item.file_url
+                                    ? [
+                                        _c(
+                                          "a",
+                                          {
+                                            attrs: { href: props.item.file_url }
+                                          },
+                                          [
+                                            _vm._v(
+                                              " \n                                Download file tugas\n                            "
+                                            )
+                                          ]
+                                        )
+                                      ]
+                                    : _vm._e()
+                                ],
+                                2
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "td",
+                                {
+                                  staticClass: "text-xs-center",
+                                  attrs: { id: "due-date-" + props.item.id }
+                                },
+                                [
+                                  _vm._v(
+                                    _vm._s(
+                                      props.item.nilai_mahasiswa
+                                        ? _vm.dateView(
+                                            props.item.nilai_mahasiswa
+                                              .updated_at
+                                          )
+                                        : "-"
+                                    )
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c("td", { staticClass: "text-xs-center" }, [
+                                _vm._v(
+                                  _vm._s(
+                                    props.item.nilai_mahasiswa
+                                      ? props.item.nilai_mahasiswa.nilai
+                                      : ""
+                                  )
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c(
+                                "td",
+                                { staticClass: "text-xs-center" },
+                                [
+                                  !props.item.nilai_mahasiswa
+                                    ? [
+                                        _c(
+                                          "v-btn",
+                                          {
+                                            attrs: {
+                                              flat: "",
+                                              icon: "",
+                                              color: "pink"
+                                            }
+                                          },
+                                          [_c("v-icon", [_vm._v("close")])],
+                                          1
+                                        )
+                                      ]
+                                    : _vm._e(),
+                                  _vm._v(" "),
+                                  props.item.nilai_mahasiswa
+                                    ? [
+                                        _c(
+                                          "v-btn",
+                                          {
+                                            attrs: {
+                                              flat: "",
+                                              icon: "",
+                                              color: "info"
+                                            }
+                                          },
+                                          [_c("v-icon", [_vm._v("check")])],
+                                          1
+                                        )
+                                      ]
+                                    : _vm._e()
+                                ],
+                                2
+                              )
+                            ])
+                          : _vm._e()
+                      ]
+                    }
+                  }
+                ])
+              })
+            ],
+            1
+          )
+        : _vm._e(),
+      _vm._v(" "),
+      _c("detail-etugas")
     ],
     1
   )
@@ -103182,6 +103576,818 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
+Component.options.__file = "resources/assets/js/components/lecturer/EtugasDetail.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-5f3cf438", Component.options)
+  } else {
+    hotAPI.reload("data-v-5f3cf438", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 241 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_moment__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_moment__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+__WEBPACK_IMPORTED_MODULE_0_moment__["locale"]('id');
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            nama_mahasiswa: '',
+            dialog: false,
+            is_save: false,
+            snackbarText: '',
+            snackbar: false,
+            headerTable: [{ text: 'NIM', value: 'nrp' }, { text: 'Nama', value: 'nama' }, { text: 'Keterangan Tugas', value: 'nilai.keterangan' }, { text: 'Tanggal Unggah', value: 'nilai.updated_at' }, { text: 'File Tugas', value: 'nilai.file_url' }, { text: 'Nilai', value: 'nilai.nilai' }, { text: 'Aksi', value: 'nilai.id' }],
+            data: {
+                nilai: '',
+                tugas_id: ''
+            }
+        };
+    },
+
+    computed: {
+        setKeterangan: function setKeterangan() {
+            return this.$store.state.obj_etugas.etugas_nilai_mahasiswa ? this.$store.state.obj_etugas.etugas_nilai_mahasiswa.keterangan : '';
+        },
+        etugas_nilai_mahasiswa: function etugas_nilai_mahasiswa() {
+            return this.$store.state.obj_etugas.etugas_nilai_mahasiswa ? this.$store.state.obj_etugas.etugas_nilai_mahasiswa : '';
+        },
+        formDialogDetail: function formDialogDetail() {
+            return this.$store.state.form_dialog_detail_etugas;
+        }
+    },
+    mounted: function mounted() {},
+
+    methods: {
+        setNilai: function setNilai(tugas_id, mahasiswa_id) {
+            this.dialog = true;
+            this.data.tugas_id = tugas_id;
+            this.nama_mahasiswa = $('#nama-' + mahasiswa_id).html();
+        },
+        saveFormDialog: function saveFormDialog() {
+            this.$store.state.form_dialog_detail_etugas = false;
+        },
+        closeFormDialog: function closeFormDialog() {
+            this.$store.state.form_dialog_detail_etugas = false;
+        },
+        dateView: function dateView(date) {
+            if (date != '0000-00-00 00:00:00') {
+                return __WEBPACK_IMPORTED_MODULE_0_moment__(date).format("dddd, Do MMMM YYYY, h:mm:ss a");
+            }
+            return '-';
+        },
+        download: function download() {},
+        showSnackbar: function showSnackbar(text) {
+            var app = this;
+            app.snackbarText = text;
+            app.snackbar = true;
+        },
+        storeNilai: function storeNilai() {
+            var app = this;
+            if (app.data.nilai == '') {
+                app.showSnackbar("Nilai harus diisi");
+                return false;
+            }
+            app.is_save = true;
+            axios.post('lecturer/e-tugas/set-nilai', app.data).then(function (resp) {
+                app.is_save = false;
+                app.dialog = false;
+
+                app.$store.state.obj_list_etugas = resp.data.etugas_kelas_mahasiswa;
+                app.showSnackbar("Data berhasil disimpan!");
+                return true;
+            }).catch(function (resp) {
+                app.is_save = false;
+                app.dialog = false;
+                app.showSnackbar("oops, something went wrong. Please try again!");
+            });
+        }
+    }
+});
+
+/***/ }),
+/* 242 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "v-layout",
+    { attrs: { row: "", "justify-center": "" } },
+    [
+      _c(
+        "v-dialog",
+        {
+          attrs: {
+            fullscreen: "",
+            "hide-overlay": "",
+            transition: "dialog-bottom-transition"
+          },
+          model: {
+            value: _vm.$store.state.form_dialog_detail_etugas,
+            callback: function($$v) {
+              _vm.$set(_vm.$store.state, "form_dialog_detail_etugas", $$v)
+            },
+            expression: "$store.state.form_dialog_detail_etugas"
+          }
+        },
+        [
+          _c(
+            "v-card",
+            [
+              _c(
+                "v-toolbar",
+                { attrs: { dark: "", color: "primary" } },
+                [
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { icon: "", dark: "" },
+                      on: { click: _vm.closeFormDialog }
+                    },
+                    [_c("v-icon", [_vm._v("close")])],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("v-toolbar-title", [
+                    _vm._v(
+                      _vm._s(
+                        _vm.$store.state.form_dialog_detail_etugas
+                          ? _vm.$store.state.obj_etugas.etugas.judul
+                          : ""
+                      )
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("v-spacer"),
+                  _vm._v(" "),
+                  _c(
+                    "v-toolbar-items",
+                    [
+                      _c(
+                        "v-btn",
+                        {
+                          attrs: { dark: "", flat: "" },
+                          on: { click: _vm.download }
+                        },
+                        [_vm._v("Download Excel")]
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-list",
+                { attrs: { "three-line": "", subheader: "" } },
+                [
+                  _c("v-subheader", [_vm._v("Detail Etugas")]),
+                  _vm._v(" "),
+                  _c(
+                    "v-list-tile",
+                    { attrs: { avatar: "" } },
+                    [
+                      _c(
+                        "v-list-tile-content",
+                        [
+                          _c("v-list-tile-title", [_vm._v("Matakuliah")]),
+                          _vm._v(" "),
+                          _c("v-list-tile-sub-title", [
+                            _vm._v(
+                              _vm._s(
+                                _vm.$store.state.form_dialog_detail_etugas
+                                  ? _vm.$store.state.obj_etugas
+                                      .etugas_matakuliah.matakuliah
+                                  : ""
+                              ) + " "
+                            ),
+                            _c("br"),
+                            _vm._v(
+                              " " +
+                                _vm._s(
+                                  _vm.$store.state.form_dialog_detail_etugas
+                                    ? _vm.$store.state.obj_etugas.etugas_modul
+                                        .modul
+                                    : ""
+                                )
+                            )
+                          ])
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-list-tile",
+                    { attrs: { avatar: "" } },
+                    [
+                      _c(
+                        "v-list-tile-content",
+                        [
+                          _c("v-list-tile-title", [_vm._v("Deskripsi Tugas")]),
+                          _vm._v(" "),
+                          _c("v-list-tile-sub-title", [
+                            _vm._v(
+                              _vm._s(
+                                _vm.$store.state.form_dialog_detail_etugas
+                                  ? _vm.$store.state.obj_etugas.etugas
+                                      .keterangan
+                                  : ""
+                              )
+                            )
+                          ])
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-list-tile",
+                    { attrs: { avatar: "" } },
+                    [
+                      _c(
+                        "v-list-tile-content",
+                        [
+                          _c("v-list-tile-title", [
+                            _vm._v("Batas Pengumpulan")
+                          ]),
+                          _vm._v(" "),
+                          _c("v-list-tile-sub-title", [
+                            _vm._v(
+                              _vm._s(
+                                _vm.dateView(
+                                  _vm.$store.state.form_dialog_detail_etugas
+                                    ? _vm.$store.state.obj_etugas.etugas
+                                        .due_date
+                                    : ""
+                                )
+                              )
+                            )
+                          ])
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-list-tile",
+                    { attrs: { avatar: "" } },
+                    [
+                      _c(
+                        "v-list-tile-content",
+                        [
+                          _c("v-list-tile-title", [_vm._v("Rekapitulasi")]),
+                          _vm._v(" "),
+                          _c("v-list-tile-sub-title", [
+                            _vm._v(
+                              "\n                            " +
+                                _vm._s(
+                                  _vm.$store.state.form_dialog_detail_etugas
+                                    ? _vm.$store.state.obj_etugas
+                                        .etugas_kelas_mahasiswa.length
+                                    : 0
+                                ) +
+                                " Total mahasiswa "
+                            ),
+                            _c("br"),
+                            _vm._v(
+                              "\n                            " +
+                                _vm._s(
+                                  _vm.$store.state.form_dialog_detail_etugas
+                                    ? _vm.$store.state.obj_etugas
+                                        .etugas_nilai_mahasiswa.length
+                                    : 0
+                                ) +
+                                " Orang sudah upload "
+                            ),
+                            _c("br"),
+                            _vm._v(
+                              "\n                            " +
+                                _vm._s(
+                                  _vm.$store.state.form_dialog_detail_etugas
+                                    ? _vm.$store.state.obj_etugas
+                                        .etugas_kelas_mahasiswa.length -
+                                      _vm.$store.state.obj_etugas
+                                        .etugas_nilai_mahasiswa.length
+                                    : 0
+                                ) +
+                                " Orang belum upload "
+                            ),
+                            _c("br")
+                          ])
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c("v-divider"),
+              _vm._v(" "),
+              _c(
+                "v-list",
+                { attrs: { "three-line": "", subheader: "" } },
+                [
+                  _c("v-subheader", [_vm._v("Upload Tugas")]),
+                  _vm._v(" "),
+                  _c(
+                    "v-flex",
+                    { attrs: { sm12: "" } },
+                    [
+                      _c("v-data-table", {
+                        staticClass: "elevation-1",
+                        attrs: {
+                          headers: _vm.headerTable,
+                          items: _vm.$store.state.obj_list_etugas,
+                          "hide-actions": ""
+                        },
+                        scopedSlots: _vm._u([
+                          {
+                            key: "items",
+                            fn: function(props) {
+                              return [
+                                _c(
+                                  "tr",
+                                  { attrs: { id: "tr-" + props.item.id } },
+                                  [
+                                    _c("td", [_vm._v(_vm._s(props.item.nrp))]),
+                                    _vm._v(" "),
+                                    _c(
+                                      "td",
+                                      {
+                                        staticClass: "text-xs-left",
+                                        attrs: {
+                                          id: "nama-" + props.item.nomor
+                                        }
+                                      },
+                                      [_vm._v(_vm._s(props.item.nama))]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "td",
+                                      {
+                                        staticClass: "text-xs-left",
+                                        attrs: {
+                                          id: "keterangan-" + props.item.nomor
+                                        }
+                                      },
+                                      [
+                                        _vm._v(
+                                          _vm._s(
+                                            props.item.nilai
+                                              ? props.item.nilai.keterangan
+                                              : ""
+                                          )
+                                        )
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "td",
+                                      {
+                                        staticClass: "text-xs-center",
+                                        attrs: {
+                                          id: "due-date-" + props.item.nomor
+                                        }
+                                      },
+                                      [
+                                        _vm._v(
+                                          _vm._s(
+                                            props.item.nilai
+                                              ? _vm.dateView(
+                                                  props.item.nilai.updated_at
+                                                )
+                                              : ""
+                                          )
+                                        )
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "td",
+                                      { staticClass: "text-xs-center" },
+                                      [
+                                        props.item.nilai
+                                          ? [
+                                              props.item.nilai.file_url
+                                                ? _c(
+                                                    "a",
+                                                    {
+                                                      attrs: {
+                                                        slot: "activator",
+                                                        href:
+                                                          props.item.file_url
+                                                      },
+                                                      slot: "activator"
+                                                    },
+                                                    [_vm._v(" Download File ")]
+                                                  )
+                                                : _vm._e()
+                                            ]
+                                          : _vm._e()
+                                      ],
+                                      2
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "td",
+                                      { staticClass: "text-xs-center" },
+                                      [
+                                        _vm._v(
+                                          _vm._s(
+                                            props.item.nilai
+                                              ? props.item.nilai.nilai
+                                              : ""
+                                          )
+                                        )
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "td",
+                                      { staticClass: "text-xs-center" },
+                                      [
+                                        props.item.nilai
+                                          ? _c(
+                                              "v-layout",
+                                              {
+                                                attrs: {
+                                                  "justify-space-around": ""
+                                                }
+                                              },
+                                              [
+                                                _c(
+                                                  "v-btn",
+                                                  {
+                                                    attrs: {
+                                                      slot: "activator",
+                                                      flat: "",
+                                                      icon: "",
+                                                      color: "info"
+                                                    },
+                                                    on: {
+                                                      click: function($event) {
+                                                        _vm.setNilai(
+                                                          props.item.nilai.id,
+                                                          props.item.nomor
+                                                        )
+                                                      }
+                                                    },
+                                                    slot: "activator"
+                                                  },
+                                                  [
+                                                    _c(
+                                                      "v-icon",
+                                                      { attrs: { dark: "" } },
+                                                      [_vm._v("edit")]
+                                                    )
+                                                  ],
+                                                  1
+                                                )
+                                              ],
+                                              1
+                                            )
+                                          : _vm._e()
+                                      ],
+                                      1
+                                    )
+                                  ]
+                                )
+                              ]
+                            }
+                          }
+                        ])
+                      })
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      [
+        _c(
+          "v-layout",
+          { attrs: { row: "", "justify-center": "" } },
+          [
+            _c(
+              "v-dialog",
+              {
+                attrs: { persistent: "", "max-width": "390" },
+                model: {
+                  value: _vm.dialog,
+                  callback: function($$v) {
+                    _vm.dialog = $$v
+                  },
+                  expression: "dialog"
+                }
+              },
+              [
+                _c(
+                  "v-card",
+                  [
+                    _c("v-card-title", { staticClass: "headline" }, [
+                      _vm._v(_vm._s(_vm.nama_mahasiswa))
+                    ]),
+                    _vm._v(" "),
+                    _c("v-text-field", {
+                      staticStyle: { margin: "10px" },
+                      attrs: { label: "Masukkan nilai tugas" },
+                      model: {
+                        value: _vm.data.nilai,
+                        callback: function($$v) {
+                          _vm.$set(_vm.data, "nilai", $$v)
+                        },
+                        expression: "data.nilai"
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "v-card-actions",
+                      [
+                        _c("v-spacer"),
+                        _vm._v(" "),
+                        _c(
+                          "v-btn",
+                          {
+                            attrs: { flat: "" },
+                            nativeOn: {
+                              click: function($event) {
+                                _vm.dialog = false
+                              }
+                            }
+                          },
+                          [_vm._v("Batalkan")]
+                        ),
+                        _vm._v(" "),
+                        !_vm.is_save
+                          ? _c(
+                              "v-btn",
+                              {
+                                attrs: { color: "info" },
+                                on: { click: _vm.storeNilai }
+                              },
+                              [_vm._v("\n                Simpan\n            ")]
+                            )
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _vm.is_save
+                          ? _c(
+                              "v-btn",
+                              { attrs: { flat: "" } },
+                              [
+                                _c("v-progress-circular", {
+                                  attrs: { indeterminate: "", color: "primary" }
+                                })
+                              ],
+                              1
+                            )
+                          : _vm._e()
+                      ],
+                      1
+                    )
+                  ],
+                  1
+                )
+              ],
+              1
+            )
+          ],
+          1
+        )
+      ],
+      _vm._v(" "),
+      _c(
+        "v-snackbar",
+        {
+          attrs: { right: "", bottom: "" },
+          model: {
+            value: _vm.snackbar,
+            callback: function($$v) {
+              _vm.snackbar = $$v
+            },
+            expression: "snackbar"
+          }
+        },
+        [
+          _vm._v("\n        " + _vm._s(_vm.snackbarText) + "\n        "),
+          _c(
+            "v-btn",
+            {
+              attrs: { dark: "", flat: "" },
+              on: {
+                click: function($event) {
+                  _vm.snackbar = false
+                }
+              }
+            },
+            [_vm._v("\n            Close\n        ")]
+          )
+        ],
+        1
+      )
+    ],
+    2
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-5f3cf438", module.exports)
+  }
+}
+
+/***/ }),
+/* 243 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(244)
+/* template */
+var __vue_template__ = __webpack_require__(245)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
 Component.options.__file = "resources/assets/js/components/student/Layout.vue"
 
 /* hot reload */
@@ -103204,7 +104410,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 241 */
+/* 244 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -103329,7 +104535,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 242 */
+/* 245 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -103544,18 +104750,18 @@ if (false) {
 }
 
 /***/ }),
-/* 243 */
+/* 246 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 // This file can be required in Browserify and Node.js for automatic polyfill
 // To use it:  require('es6-promise/auto');
 
-module.exports = __webpack_require__(244).polyfill();
+module.exports = __webpack_require__(247).polyfill();
 
 
 /***/ }),
-/* 244 */
+/* 247 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(process, global) {/*!
@@ -104745,121 +105951,68 @@ return Promise$1;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(15), __webpack_require__(4)))
 
 /***/ }),
-/* 245 */
+/* 248 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 246 */,
-/* 247 */,
-/* 248 */,
 /* 249 */,
 /* 250 */,
 /* 251 */,
 /* 252 */,
 /* 253 */,
-/* 254 */
+/* 254 */,
+/* 255 */,
+/* 256 */,
+/* 257 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var disposed = false
-var normalizeComponent = __webpack_require__(1)
-/* script */
-var __vue_script__ = __webpack_require__(255)
-/* template */
-var __vue_template__ = __webpack_require__(256)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/components/lecturer/EtugasDetail.vue"
+// style-loader: Adds some css to the DOM by adding a <style> tag
 
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-5f3cf438", Component.options)
-  } else {
-    hotAPI.reload("data-v-5f3cf438", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
+// load the styles
+var content = __webpack_require__(258);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(16)("5012d01e", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-7dbed06a\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Home.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-7dbed06a\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Home.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
 
-module.exports = Component.exports
+/***/ }),
+/* 258 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(5)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.fab-container {\r\n  position: fixed;\r\n  bottom: 20px;\r\n  right: 0;\n}\r\n", ""]);
+
+// exports
 
 
 /***/ }),
-/* 255 */
+/* 259 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_moment__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_moment__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_content_loader__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_moment__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_moment__);
 //
 //
 //
@@ -104938,637 +106091,76 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 
-__WEBPACK_IMPORTED_MODULE_0_moment__["locale"]('id');
+
+__WEBPACK_IMPORTED_MODULE_1_moment__["locale"]('id');
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            nama_mahasiswa: '',
-            dialog: false,
-            is_save: false,
+            headerTable: [{ text: 'Modul', value: 'modul' }, { text: 'Matakuliah', value: 'matakuliah' }, { text: 'Kelas', value: 'kelas' }, { text: 'Dosen', value: 'nama' }, { text: 'Judul Tugas', value: 'judul' }, { text: 'Keterangan', value: 'keterangan' }, { text: 'Due Date', value: 'due_date' }, { text: 'File Lampiran Tugas', value: 'file_url' }, { text: 'Tanggal Upload', value: 'id' }, { text: 'Nilai', value: 'nilai' }, { text: 'Status', value: 'id' }],
+            semesters: [],
+            filter: '',
             snackbarText: '',
             snackbar: false,
-            headerTable: [{ text: 'NIM', value: 'nrp' }, { text: 'Nama', value: 'nama' }, { text: 'Keterangan Tugas', value: 'nilai.keterangan' }, { text: 'Tanggal Unggah', value: 'nilai.updated_at' }, { text: 'File Tugas', value: 'nilai.file_url' }, { text: 'Nilai', value: 'nilai.nilai' }, { text: 'Aksi', value: 'nilai.id' }],
-            data: {
-                nilai: '',
-                tugas_id: ''
-            }
+            isLoaded: false,
+            dialog: false,
+            title_confirm: '',
+            desc_confirm: '',
+            detail_id: ''
         };
     },
 
-    computed: {
-        setKeterangan: function setKeterangan() {
-            return this.$store.state.obj_etugas.etugas_nilai_mahasiswa ? this.$store.state.obj_etugas.etugas_nilai_mahasiswa.keterangan : '';
-        },
-        etugas_nilai_mahasiswa: function etugas_nilai_mahasiswa() {
-            return this.$store.state.obj_etugas.etugas_nilai_mahasiswa ? this.$store.state.obj_etugas.etugas_nilai_mahasiswa : '';
-        },
-        formDialogDetail: function formDialogDetail() {
-            return this.$store.state.form_dialog_detail_etugas;
-        }
+    components: {
+        ContentLoader: __WEBPACK_IMPORTED_MODULE_0_vue_content_loader__["a" /* ContentLoader */]
     },
-    mounted: function mounted() {},
+    mounted: function mounted() {
+        this.initData();
+        var count = this.$store.state.count;
+    },
 
     methods: {
-        setNilai: function setNilai(tugas_id, mahasiswa_id) {
-            this.dialog = true;
-            this.data.tugas_id = tugas_id;
-            this.nama_mahasiswa = $('#nama-' + mahasiswa_id).html();
+        initData: function initData() {
+            var app = this;
+            axios.get('student/dashboard').then(function (resp) {
+                app.isLoaded = true;
+                app.$store.state.obj_list_etugas = resp.data.data;
+                app.semesters = resp.data.data_semester;
+            }).catch(function (resp) {
+                app.showSnackbar("oops, something went wrong. Please try again!");
+            });
         },
-        saveFormDialog: function saveFormDialog() {
-            this.$store.state.form_dialog_detail_etugas = false;
-        },
-        closeFormDialog: function closeFormDialog() {
-            this.$store.state.form_dialog_detail_etugas = false;
-        },
-        dateView: function dateView(date) {
-            if (date != '0000-00-00 00:00:00') {
-                return __WEBPACK_IMPORTED_MODULE_0_moment__(date).format("dddd, Do MMMM YYYY, h:mm:ss a");
-            }
-            return '-';
-        },
-        download: function download() {},
         showSnackbar: function showSnackbar(text) {
             var app = this;
             app.snackbarText = text;
             app.snackbar = true;
         },
-        storeNilai: function storeNilai() {
+        selectSemester: function selectSemester() {
+            if (!this.filter) return false;
             var app = this;
-            if (app.data.nilai == '') {
-                app.showSnackbar("Nilai harus diisi");
-                return false;
-            }
-            app.is_save = true;
-            axios.post('lecturer/e-tugas/set-nilai', app.data).then(function (resp) {
-                app.is_save = false;
-                app.dialog = false;
-
-                app.$store.state.obj_list_etugas = resp.data.etugas_kelas_mahasiswa;
-                app.showSnackbar("Data berhasil disimpan!");
-                return true;
+            axios.get('student/e-tugas/kuliah/' + app.filter).then(function (resp) {
+                app.bodyTable = resp.data.data;
             }).catch(function (resp) {
-                app.is_save = false;
-                app.dialog = false;
                 app.showSnackbar("oops, something went wrong. Please try again!");
             });
+        },
+        detail: function detail(id) {
+            var app = this;
+
+            axios.get('student/e-tugas/detail/' + id).then(function (resp) {
+                app.$store.state.obj_etugas = resp.data;
+                app.$store.state.form_dialog_detail_etugas = true;
+            }).catch(function (resp) {
+                app.showSnackbar("oops, something went wrong. Please try again!");
+            });
+        },
+        dateView: function dateView(date) {
+            if (date != '0000-00-00 00:00:00') {
+                return __WEBPACK_IMPORTED_MODULE_1_moment__(date).format("dddd, Do MMMM YYYY, h:mm:ss a");
+            }
+            return '-';
         }
     }
 });
-
-/***/ }),
-/* 256 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "v-layout",
-    { attrs: { row: "", "justify-center": "" } },
-    [
-      _c(
-        "v-dialog",
-        {
-          attrs: {
-            fullscreen: "",
-            "hide-overlay": "",
-            transition: "dialog-bottom-transition"
-          },
-          model: {
-            value: _vm.$store.state.form_dialog_detail_etugas,
-            callback: function($$v) {
-              _vm.$set(_vm.$store.state, "form_dialog_detail_etugas", $$v)
-            },
-            expression: "$store.state.form_dialog_detail_etugas"
-          }
-        },
-        [
-          _c(
-            "v-card",
-            [
-              _c(
-                "v-toolbar",
-                { attrs: { dark: "", color: "primary" } },
-                [
-                  _c(
-                    "v-btn",
-                    {
-                      attrs: { icon: "", dark: "" },
-                      on: { click: _vm.closeFormDialog }
-                    },
-                    [_c("v-icon", [_vm._v("close")])],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c("v-toolbar-title", [
-                    _vm._v(
-                      _vm._s(
-                        _vm.$store.state.form_dialog_detail_etugas
-                          ? _vm.$store.state.obj_etugas.etugas.judul
-                          : ""
-                      )
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("v-spacer"),
-                  _vm._v(" "),
-                  _c(
-                    "v-toolbar-items",
-                    [
-                      _c(
-                        "v-btn",
-                        {
-                          attrs: { dark: "", flat: "" },
-                          on: { click: _vm.download }
-                        },
-                        [_vm._v("Download Excel")]
-                      )
-                    ],
-                    1
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-list",
-                { attrs: { "three-line": "", subheader: "" } },
-                [
-                  _c("v-subheader", [_vm._v("Detail Etugas")]),
-                  _vm._v(" "),
-                  _c(
-                    "v-list-tile",
-                    { attrs: { avatar: "" } },
-                    [
-                      _c(
-                        "v-list-tile-content",
-                        [
-                          _c("v-list-tile-title", [_vm._v("Matakuliah")]),
-                          _vm._v(" "),
-                          _c("v-list-tile-sub-title", [
-                            _vm._v(
-                              _vm._s(
-                                _vm.$store.state.form_dialog_detail_etugas
-                                  ? _vm.$store.state.obj_etugas
-                                      .etugas_matakuliah.matakuliah
-                                  : ""
-                              ) + " "
-                            ),
-                            _c("br"),
-                            _vm._v(
-                              " " +
-                                _vm._s(
-                                  _vm.$store.state.form_dialog_detail_etugas
-                                    ? _vm.$store.state.obj_etugas.etugas_modul
-                                        .modul
-                                    : ""
-                                )
-                            )
-                          ])
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "v-list-tile",
-                    { attrs: { avatar: "" } },
-                    [
-                      _c(
-                        "v-list-tile-content",
-                        [
-                          _c("v-list-tile-title", [_vm._v("Deskripsi Tugas")]),
-                          _vm._v(" "),
-                          _c("v-list-tile-sub-title", [
-                            _vm._v(
-                              _vm._s(
-                                _vm.$store.state.form_dialog_detail_etugas
-                                  ? _vm.$store.state.obj_etugas.etugas
-                                      .keterangan
-                                  : ""
-                              )
-                            )
-                          ])
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "v-list-tile",
-                    { attrs: { avatar: "" } },
-                    [
-                      _c(
-                        "v-list-tile-content",
-                        [
-                          _c("v-list-tile-title", [
-                            _vm._v("Batas Pengumpulan")
-                          ]),
-                          _vm._v(" "),
-                          _c("v-list-tile-sub-title", [
-                            _vm._v(
-                              _vm._s(
-                                _vm.dateView(
-                                  _vm.$store.state.form_dialog_detail_etugas
-                                    ? _vm.$store.state.obj_etugas.etugas
-                                        .due_date
-                                    : ""
-                                )
-                              )
-                            )
-                          ])
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "v-list-tile",
-                    { attrs: { avatar: "" } },
-                    [
-                      _c(
-                        "v-list-tile-content",
-                        [
-                          _c("v-list-tile-title", [_vm._v("Rekapitulasi")]),
-                          _vm._v(" "),
-                          _c("v-list-tile-sub-title", [
-                            _vm._v(
-                              "\n                            " +
-                                _vm._s(
-                                  _vm.$store.state.form_dialog_detail_etugas
-                                    ? _vm.$store.state.obj_etugas
-                                        .etugas_kelas_mahasiswa.length
-                                    : 0
-                                ) +
-                                " Total mahasiswa "
-                            ),
-                            _c("br"),
-                            _vm._v(
-                              "\n                            " +
-                                _vm._s(
-                                  _vm.$store.state.form_dialog_detail_etugas
-                                    ? _vm.$store.state.obj_etugas
-                                        .etugas_nilai_mahasiswa.length
-                                    : 0
-                                ) +
-                                " Orang sudah upload "
-                            ),
-                            _c("br"),
-                            _vm._v(
-                              "\n                            " +
-                                _vm._s(
-                                  _vm.$store.state.form_dialog_detail_etugas
-                                    ? _vm.$store.state.obj_etugas
-                                        .etugas_kelas_mahasiswa.length -
-                                      _vm.$store.state.obj_etugas
-                                        .etugas_nilai_mahasiswa.length
-                                    : 0
-                                ) +
-                                " Orang belum upload "
-                            ),
-                            _c("br")
-                          ])
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c("v-divider"),
-              _vm._v(" "),
-              _c(
-                "v-list",
-                { attrs: { "three-line": "", subheader: "" } },
-                [
-                  _c("v-subheader", [_vm._v("Upload Tugas")]),
-                  _vm._v(" "),
-                  _c(
-                    "v-flex",
-                    { attrs: { sm12: "" } },
-                    [
-                      _c("v-data-table", {
-                        staticClass: "elevation-1",
-                        attrs: {
-                          headers: _vm.headerTable,
-                          items: _vm.$store.state.obj_list_etugas,
-                          "hide-actions": ""
-                        },
-                        scopedSlots: _vm._u([
-                          {
-                            key: "items",
-                            fn: function(props) {
-                              return [
-                                _c(
-                                  "tr",
-                                  { attrs: { id: "tr-" + props.item.id } },
-                                  [
-                                    _c("td", [_vm._v(_vm._s(props.item.nrp))]),
-                                    _vm._v(" "),
-                                    _c(
-                                      "td",
-                                      {
-                                        staticClass: "text-xs-left",
-                                        attrs: {
-                                          id: "nama-" + props.item.nomor
-                                        }
-                                      },
-                                      [_vm._v(_vm._s(props.item.nama))]
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "td",
-                                      {
-                                        staticClass: "text-xs-left",
-                                        attrs: {
-                                          id: "keterangan-" + props.item.nomor
-                                        }
-                                      },
-                                      [
-                                        _vm._v(
-                                          _vm._s(
-                                            props.item.nilai
-                                              ? props.item.nilai.keterangan
-                                              : ""
-                                          )
-                                        )
-                                      ]
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "td",
-                                      {
-                                        staticClass: "text-xs-center",
-                                        attrs: {
-                                          id: "due-date-" + props.item.nomor
-                                        }
-                                      },
-                                      [
-                                        _vm._v(
-                                          _vm._s(
-                                            props.item.nilai
-                                              ? _vm.dateView(
-                                                  props.item.nilai.updated_at
-                                                )
-                                              : ""
-                                          )
-                                        )
-                                      ]
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "td",
-                                      { staticClass: "text-xs-center" },
-                                      [
-                                        props.item.nilai
-                                          ? [
-                                              props.item.nilai.file_url
-                                                ? _c(
-                                                    "a",
-                                                    {
-                                                      attrs: {
-                                                        slot: "activator",
-                                                        href:
-                                                          props.item.file_url
-                                                      },
-                                                      slot: "activator"
-                                                    },
-                                                    [_vm._v(" Download File ")]
-                                                  )
-                                                : _vm._e()
-                                            ]
-                                          : _vm._e()
-                                      ],
-                                      2
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "td",
-                                      { staticClass: "text-xs-center" },
-                                      [
-                                        _vm._v(
-                                          _vm._s(
-                                            props.item.nilai
-                                              ? props.item.nilai.nilai
-                                              : ""
-                                          )
-                                        )
-                                      ]
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "td",
-                                      { staticClass: "text-xs-center" },
-                                      [
-                                        props.item.nilai
-                                          ? _c(
-                                              "v-layout",
-                                              {
-                                                attrs: {
-                                                  "justify-space-around": ""
-                                                }
-                                              },
-                                              [
-                                                _c(
-                                                  "v-btn",
-                                                  {
-                                                    attrs: {
-                                                      slot: "activator",
-                                                      flat: "",
-                                                      icon: "",
-                                                      color: "info"
-                                                    },
-                                                    on: {
-                                                      click: function($event) {
-                                                        _vm.setNilai(
-                                                          props.item.nilai.id,
-                                                          props.item.nomor
-                                                        )
-                                                      }
-                                                    },
-                                                    slot: "activator"
-                                                  },
-                                                  [
-                                                    _c(
-                                                      "v-icon",
-                                                      { attrs: { dark: "" } },
-                                                      [_vm._v("edit")]
-                                                    )
-                                                  ],
-                                                  1
-                                                )
-                                              ],
-                                              1
-                                            )
-                                          : _vm._e()
-                                      ],
-                                      1
-                                    )
-                                  ]
-                                )
-                              ]
-                            }
-                          }
-                        ])
-                      })
-                    ],
-                    1
-                  )
-                ],
-                1
-              )
-            ],
-            1
-          )
-        ],
-        1
-      ),
-      _vm._v(" "),
-      [
-        _c(
-          "v-layout",
-          { attrs: { row: "", "justify-center": "" } },
-          [
-            _c(
-              "v-dialog",
-              {
-                attrs: { persistent: "", "max-width": "390" },
-                model: {
-                  value: _vm.dialog,
-                  callback: function($$v) {
-                    _vm.dialog = $$v
-                  },
-                  expression: "dialog"
-                }
-              },
-              [
-                _c(
-                  "v-card",
-                  [
-                    _c("v-card-title", { staticClass: "headline" }, [
-                      _vm._v(_vm._s(_vm.nama_mahasiswa))
-                    ]),
-                    _vm._v(" "),
-                    _c("v-text-field", {
-                      staticStyle: { margin: "10px" },
-                      attrs: { label: "Masukkan nilai tugas" },
-                      model: {
-                        value: _vm.data.nilai,
-                        callback: function($$v) {
-                          _vm.$set(_vm.data, "nilai", $$v)
-                        },
-                        expression: "data.nilai"
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c(
-                      "v-card-actions",
-                      [
-                        _c("v-spacer"),
-                        _vm._v(" "),
-                        _c(
-                          "v-btn",
-                          {
-                            attrs: { flat: "" },
-                            nativeOn: {
-                              click: function($event) {
-                                _vm.dialog = false
-                              }
-                            }
-                          },
-                          [_vm._v("Batalkan")]
-                        ),
-                        _vm._v(" "),
-                        !_vm.is_save
-                          ? _c(
-                              "v-btn",
-                              {
-                                attrs: { color: "info" },
-                                on: { click: _vm.storeNilai }
-                              },
-                              [_vm._v("\n                Simpan\n            ")]
-                            )
-                          : _vm._e(),
-                        _vm._v(" "),
-                        _vm.is_save
-                          ? _c(
-                              "v-btn",
-                              { attrs: { flat: "" } },
-                              [
-                                _c("v-progress-circular", {
-                                  attrs: { indeterminate: "", color: "primary" }
-                                })
-                              ],
-                              1
-                            )
-                          : _vm._e()
-                      ],
-                      1
-                    )
-                  ],
-                  1
-                )
-              ],
-              1
-            )
-          ],
-          1
-        )
-      ],
-      _vm._v(" "),
-      _c(
-        "v-snackbar",
-        {
-          attrs: { right: "", bottom: "" },
-          model: {
-            value: _vm.snackbar,
-            callback: function($$v) {
-              _vm.snackbar = $$v
-            },
-            expression: "snackbar"
-          }
-        },
-        [
-          _vm._v("\n        " + _vm._s(_vm.snackbarText) + "\n        "),
-          _c(
-            "v-btn",
-            {
-              attrs: { dark: "", flat: "" },
-              on: {
-                click: function($event) {
-                  _vm.snackbar = false
-                }
-              }
-            },
-            [_vm._v("\n            Close\n        ")]
-          )
-        ],
-        1
-      )
-    ],
-    2
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-5f3cf438", module.exports)
-  }
-}
 
 /***/ })
 /******/ ]);

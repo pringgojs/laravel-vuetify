@@ -7,6 +7,17 @@ use App\Helpers\ResponseHelper;
 
 class StudentDatabaseHelper
 {
+    public static function getDashboard()
+    {
+        $url = config('api.url').'/student/dashboard';
+        $data = array('user' => ResponseHelper::user());
+        $response = Curl::to($url)
+        ->withData($data)
+        ->post();
+        
+        return $response;
+    }
+
     public static function getScheduleIndex()
     {
         $url = config('api.url').'/student/schedule';

@@ -19,7 +19,7 @@
 
           <v-list-tile v-else :key="item.text" @click="link(item.link)">
             <v-list-tile-action>
-              <v-icon class="ml-0 pl-3">{{ item.icon }}</v-icon>
+              <v-icon class="">{{ item.icon }}</v-icon>
             </v-list-tile-action>
             <v-list-tile-content>
               <v-list-tile-title>
@@ -28,6 +28,34 @@
             </v-list-tile-content>
           </v-list-tile>
         </template>
+         
+          <v-list-group
+            class=""
+            v-model="mo_model"
+            :key="mo_text"
+            :prepend-icon="mo_model ? mo_icon : mo_icon_down"
+            append-icon=""
+            >
+            <v-list-tile slot="activator">
+              
+              <v-list-tile-content>
+                <v-list-tile-title>
+                  Laporan Nilai
+                </v-list-tile-title>
+              </v-list-tile-content>
+            </v-list-tile>
+            <v-list-tile
+              v-for="(child, i) in children"
+              :key="i"
+              @click=""
+            >
+              <v-list-tile-content>
+                <v-list-tile-title>
+                  {{ child.text }}
+                </v-list-tile-title>
+              </v-list-tile-content>
+            </v-list-tile>
+          </v-list-group>
       </v-list>
     </v-navigation-drawer>
 
@@ -41,7 +69,7 @@
     >
       <v-toolbar-title style="width: 300px" class="ml-0 pl-0">
         <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
-        <span class="hidden-sm-and-down font-weight-regular">Dosen Jaga</span>
+        <span class="hidden-sm-and-down font-weight-regular">Manajemen Tugas</span>
       </v-toolbar-title>
       <v-text-field
         flat
@@ -101,8 +129,15 @@
         { icon: 'history', text: 'E-tugas', link: '/e-tugas' },
         { icon: 'content_copy', text: 'Materi', link: '/materi' },
         { icon: 'date_range', text: 'Jadwal', link: '/schedule' },
-        { icon: 'assessment', text: 'Laporan', link: '/report' },
-      ]
+      ],
+      children: [
+        { text: 'Nilai Permodul', link: 'nilai-per-modul'},
+        { text: 'Nilai Akhir', link: 'nilai-akhir'},
+      ],
+      mo_icon: 'keyboard_arrow_up',
+      mo_icon_down: 'keyboard_arrow_down',
+      mo_text: 'Nilai',
+      mo_model: false,
     }),
     props: {
       source: String

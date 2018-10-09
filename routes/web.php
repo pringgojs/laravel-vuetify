@@ -19,6 +19,7 @@ Route::group(['prefix' => 'student', 'middleware' => 'role:student'], function (
     Route::post('e-tugas/store', 'StudentController@eTugasStore');
     Route::get('e-tugas/detail/{id}', 'StudentController@eTugasDetail');
     Route::get('e-tugas', 'StudentController@eTugas');
+    Route::get('dashboard', 'StudentController@dashboard');
     Route::get('/', 'StudentController@index');
 });
 
