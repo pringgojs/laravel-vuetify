@@ -34732,6 +34732,7 @@ __WEBPACK_IMPORTED_MODULE_3__routes__["a" /* default */].beforeEach(function (to
 // Vuex store
 var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
     state: {
+        table_headers: [],
         obj_list_etugas: [],
         obj_etugas: [],
         form_dialog_detail_etugas: false,
@@ -87951,32 +87952,35 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_vue__;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_lecturer_MateriAdd_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9__components_lecturer_MateriAdd_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_lecturer_NilaiPermodul_vue__ = __webpack_require__(265);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_lecturer_NilaiPermodul_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10__components_lecturer_NilaiPermodul_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_lecturer_Report_vue__ = __webpack_require__(157);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_lecturer_Report_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11__components_lecturer_Report_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_Login_vue__ = __webpack_require__(158);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_Login_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_12__components_Login_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_NotFound_vue__ = __webpack_require__(159);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_NotFound_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_13__components_NotFound_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_Redirect_vue__ = __webpack_require__(160);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_Redirect_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_14__components_Redirect_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__components_student_Home_vue__ = __webpack_require__(161);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__components_student_Home_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_15__components_student_Home_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__components_student_ETugas_vue__ = __webpack_require__(162);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__components_student_ETugas_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_16__components_student_ETugas_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__components_student_Schedule_vue__ = __webpack_require__(163);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__components_student_Schedule_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_17__components_student_Schedule_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__components_student_Materi_vue__ = __webpack_require__(164);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__components_student_Materi_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_18__components_student_Materi_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__components_student_Report_vue__ = __webpack_require__(165);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__components_student_Report_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_19__components_student_Report_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__components_student_DetailEtugas_vue__ = __webpack_require__(166);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__components_student_DetailEtugas_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_20__components_student_DetailEtugas_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_lecturer_NilaiPermodulDetail_vue__ = __webpack_require__(270);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_lecturer_NilaiPermodulDetail_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11__components_lecturer_NilaiPermodulDetail_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_lecturer_Report_vue__ = __webpack_require__(157);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_lecturer_Report_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_12__components_lecturer_Report_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_Login_vue__ = __webpack_require__(158);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_Login_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_13__components_Login_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_NotFound_vue__ = __webpack_require__(159);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_NotFound_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_14__components_NotFound_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__components_Redirect_vue__ = __webpack_require__(160);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__components_Redirect_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_15__components_Redirect_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__components_student_Home_vue__ = __webpack_require__(161);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__components_student_Home_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_16__components_student_Home_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__components_student_ETugas_vue__ = __webpack_require__(162);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__components_student_ETugas_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_17__components_student_ETugas_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__components_student_Schedule_vue__ = __webpack_require__(163);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__components_student_Schedule_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_18__components_student_Schedule_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__components_student_Materi_vue__ = __webpack_require__(164);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__components_student_Materi_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_19__components_student_Materi_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__components_student_Report_vue__ = __webpack_require__(165);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__components_student_Report_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_20__components_student_Report_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__components_student_DetailEtugas_vue__ = __webpack_require__(166);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__components_student_DetailEtugas_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_21__components_student_DetailEtugas_vue__);
 
 
 
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]);
 
 // lecturer
+
 
 
 
@@ -88011,6 +88015,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('report', __webpack_requir
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('materi', __webpack_require__(155));
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('materi-add', __webpack_require__(156));
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('nilai-permodul', __webpack_require__(265));
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('nilai-permodul-detail', __webpack_require__(270));
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('login', __webpack_require__(158));
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('not-found', __webpack_require__(159));
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('redirect', __webpack_require__(160));
@@ -88026,7 +88031,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('detail-etugas', __webpack
 
 var routes = [{
     path: '/',
-    component: __WEBPACK_IMPORTED_MODULE_14__components_Redirect_vue___default.a,
+    component: __WEBPACK_IMPORTED_MODULE_15__components_Redirect_vue___default.a,
     name: 'redirect',
     meta: {
         title: 'redirect - Dosen Jaga',
@@ -88090,7 +88095,7 @@ var routes = [{
     }
 }, {
     path: '/report',
-    component: __WEBPACK_IMPORTED_MODULE_11__components_lecturer_Report_vue___default.a,
+    component: __WEBPACK_IMPORTED_MODULE_12__components_lecturer_Report_vue___default.a,
     name: 'lecturerReport',
     meta: {
         title: 'Laporan - Dosen Jaga',
@@ -88114,7 +88119,7 @@ var routes = [{
     }
 }, {
     path: '/login',
-    component: __WEBPACK_IMPORTED_MODULE_12__components_Login_vue___default.a,
+    component: __WEBPACK_IMPORTED_MODULE_13__components_Login_vue___default.a,
     name: 'login',
     meta: {
         title: 'Login - Dosen Jaga',
@@ -88122,7 +88127,7 @@ var routes = [{
     }
 }, {
     path: '/not-found',
-    component: __WEBPACK_IMPORTED_MODULE_13__components_NotFound_vue___default.a,
+    component: __WEBPACK_IMPORTED_MODULE_14__components_NotFound_vue___default.a,
     name: 'notFound',
     meta: {
         title: '404 - Dosen Jaga',
@@ -88133,35 +88138,35 @@ var routes = [{
 // student
 {
     path: '/beranda',
-    component: __WEBPACK_IMPORTED_MODULE_15__components_student_Home_vue___default.a,
+    component: __WEBPACK_IMPORTED_MODULE_16__components_student_Home_vue___default.a,
     name: 'studentBeranda',
     meta: {
         title: 'Beranda - Dosen Jaga'
     }
 }, {
     path: '/etugas',
-    component: __WEBPACK_IMPORTED_MODULE_16__components_student_ETugas_vue___default.a,
+    component: __WEBPACK_IMPORTED_MODULE_17__components_student_ETugas_vue___default.a,
     name: 'studentEtugas',
     meta: {
         title: 'Etugas - Dosen Jaga'
     }
 }, {
     path: '/materi-kuliah',
-    component: __WEBPACK_IMPORTED_MODULE_18__components_student_Materi_vue___default.a,
+    component: __WEBPACK_IMPORTED_MODULE_19__components_student_Materi_vue___default.a,
     name: 'studentMateri',
     meta: {
         title: 'Materi - Dosen Jaga'
     }
 }, {
     path: '/laporan',
-    component: __WEBPACK_IMPORTED_MODULE_19__components_student_Report_vue___default.a,
+    component: __WEBPACK_IMPORTED_MODULE_20__components_student_Report_vue___default.a,
     name: 'studentLaporan',
     meta: {
         title: 'Laporan - Dosen Jaga'
     }
 }, {
     path: '/jadwal',
-    component: __WEBPACK_IMPORTED_MODULE_17__components_student_Schedule_vue___default.a,
+    component: __WEBPACK_IMPORTED_MODULE_18__components_student_Schedule_vue___default.a,
     name: 'studentJadwal',
     meta: {
         title: 'Jadwal - Dosen Jaga'
@@ -106402,14 +106407,19 @@ __WEBPACK_IMPORTED_MODULE_1_moment__["locale"]('id');
     },
 
     methods: {
-        detail: function detail(id) {
+        detail: function detail(nomor_nilai_master_modul) {
             var app = this;
             app.loadDetail = true;
-            axios.get('lecturer/e-tugas/detail/' + id).then(function (resp) {
+            axios.get('lecturer/report/nilai-permodul/detail/' + nomor_nilai_master_modul).then(function (resp) {
                 app.loadDetail = false;
                 app.$store.state.obj_etugas = resp.data;
                 app.$store.state.form_dialog_detail_etugas = true;
-                app.$store.state.obj_list_etugas = resp.data.etugas_kelas_mahasiswa;
+                app.$store.state.obj_list_etugas = resp.data.kelas_mahasiswa;
+                console.log(resp.data);
+                // initialize table header data
+                resp.data.table_headers.forEach(function (item) {
+                    app.$store.state.table_headers.push({ text: item, value: item.toLowerCase() });
+                });
             }).catch(function (resp) {
                 app.showSnackbar("oops, something went wrong. Please try again!");
             });
@@ -106430,10 +106440,8 @@ __WEBPACK_IMPORTED_MODULE_1_moment__["locale"]('id');
         },
         selectSemester: function selectSemester() {
             if (!this.filter) return false;
-            console.log("asd");
             var app = this;
             axios.get('lecturer/report/nilai-permodul/kuliah/' + app.filter).then(function (resp) {
-                console.log(resp.data);
                 app.bodyTable = resp.data.data;
             }).catch(function (resp) {
                 app.showSnackbar("oops, something went wrong. Please try again!");
@@ -106657,7 +106665,9 @@ var render = function() {
                                       },
                                       on: {
                                         click: function($event) {
-                                          _vm.detail(props.item.id)
+                                          _vm.detail(
+                                            props.item.nomor_nilai_master_modul
+                                          )
                                         }
                                       },
                                       slot: "activator"
@@ -106774,7 +106784,7 @@ var render = function() {
         )
       ],
       _vm._v(" "),
-      _c("e-tugas-detail")
+      _c("nilai-permodul-detail")
     ],
     2
   )
@@ -106786,6 +106796,552 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-hot-reload-api")      .rerender("data-v-3870be5e", module.exports)
+  }
+}
+
+/***/ }),
+/* 270 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(271)
+/* template */
+var __vue_template__ = __webpack_require__(272)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/lecturer/NilaiPermodulDetail.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-6b05b602", Component.options)
+  } else {
+    hotAPI.reload("data-v-6b05b602", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 271 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_moment__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_moment__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+__WEBPACK_IMPORTED_MODULE_0_moment__["locale"]('id');
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            nama_mahasiswa: '',
+            dialog: false,
+            is_save: false,
+            snackbarText: '',
+            snackbar: false,
+            headerTable: [],
+            data: {
+                nilai: '',
+                tugas_id: ''
+            }
+        };
+    },
+
+    computed: {
+        setKeterangan: function setKeterangan() {
+            return this.$store.state.obj_etugas.etugas_nilai_mahasiswa ? this.$store.state.obj_etugas.etugas_nilai_mahasiswa.keterangan : '';
+        },
+        etugas_nilai_mahasiswa: function etugas_nilai_mahasiswa() {
+            return this.$store.state.obj_etugas.etugas_nilai_mahasiswa ? this.$store.state.obj_etugas.etugas_nilai_mahasiswa : '';
+        },
+        formDialogDetail: function formDialogDetail() {
+            return this.$store.state.form_dialog_detail_etugas;
+        }
+    },
+    mutation: {},
+    methods: {
+        setNilai: function setNilai(tugas_id, mahasiswa_id) {
+            this.dialog = true;
+            this.data.tugas_id = tugas_id;
+            this.nama_mahasiswa = $('#nama-' + mahasiswa_id).html();
+        },
+        saveFormDialog: function saveFormDialog() {
+            this.$store.state.form_dialog_detail_etugas = false;
+        },
+        closeFormDialog: function closeFormDialog() {
+            this.$store.state.form_dialog_detail_etugas = false;
+        },
+        dateView: function dateView(date) {
+            if (date != '0000-00-00 00:00:00') {
+                return __WEBPACK_IMPORTED_MODULE_0_moment__(date).format("dddd, Do MMMM YYYY, h:mm:ss a");
+            }
+            return '-';
+        },
+        download: function download() {},
+        showSnackbar: function showSnackbar(text) {
+            var app = this;
+            app.snackbarText = text;
+            app.snackbar = true;
+        },
+        nilai: function nilai(index, obj) {
+            index += 1;
+            var t = 'tugas_' + index;
+            return obj[t];
+        },
+        storeNilai: function storeNilai() {
+            var app = this;
+            if (app.data.nilai == '') {
+                app.showSnackbar("Nilai harus diisi");
+                return false;
+            }
+            app.is_save = true;
+            axios.post('lecturer/e-tugas/set-nilai', app.data).then(function (resp) {
+                app.is_save = false;
+                app.dialog = false;
+
+                app.$store.state.obj_list_etugas = resp.data.etugas_kelas_mahasiswa;
+                app.showSnackbar("Data berhasil disimpan!");
+                return true;
+            }).catch(function (resp) {
+                app.is_save = false;
+                app.dialog = false;
+                app.showSnackbar("oops, something went wrong. Please try again!");
+            });
+        }
+    }
+});
+
+/***/ }),
+/* 272 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "v-layout",
+    { attrs: { row: "", "justify-center": "" } },
+    [
+      _c(
+        "v-dialog",
+        {
+          attrs: {
+            fullscreen: "",
+            "hide-overlay": "",
+            transition: "dialog-bottom-transition"
+          },
+          model: {
+            value: _vm.$store.state.form_dialog_detail_etugas,
+            callback: function($$v) {
+              _vm.$set(_vm.$store.state, "form_dialog_detail_etugas", $$v)
+            },
+            expression: "$store.state.form_dialog_detail_etugas"
+          }
+        },
+        [
+          _c(
+            "v-card",
+            [
+              _c(
+                "v-toolbar",
+                { attrs: { dark: "", color: "primary" } },
+                [
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { icon: "", dark: "" },
+                      on: { click: _vm.closeFormDialog }
+                    },
+                    [_c("v-icon", [_vm._v("close")])],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("v-toolbar-title", [
+                    _vm._v(
+                      _vm._s(
+                        _vm.$store.state.form_dialog_detail_etugas
+                          ? _vm.$store.state.obj_etugas.nilai_master_modul.modul
+                          : ""
+                      )
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("v-spacer"),
+                  _vm._v(" "),
+                  _c(
+                    "v-toolbar-items",
+                    [
+                      _c(
+                        "v-btn",
+                        {
+                          attrs: { dark: "", flat: "" },
+                          on: { click: _vm.download }
+                        },
+                        [_vm._v("Download Excel")]
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-list",
+                { attrs: { "three-line": "", subheader: "" } },
+                [
+                  _c("v-subheader", [_vm._v("Detail Etugas")]),
+                  _vm._v(" "),
+                  _c(
+                    "v-list-tile",
+                    { attrs: { avatar: "" } },
+                    [
+                      _c(
+                        "v-list-tile-content",
+                        [
+                          _c("v-list-tile-title", [_vm._v("Matakuliah")]),
+                          _vm._v(" "),
+                          _c("v-list-tile-sub-title", [_vm._v("-")])
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c("v-divider"),
+              _vm._v(" "),
+              _c(
+                "v-list",
+                { attrs: { "three-line": "", subheader: "" } },
+                [
+                  _c("v-subheader", [_vm._v("Upload Tugas")]),
+                  _vm._v(" "),
+                  _c(
+                    "v-flex",
+                    { attrs: { sm12: "" } },
+                    [
+                      _c("v-data-table", {
+                        staticClass: "elevation-1",
+                        attrs: {
+                          headers: _vm.$store.state.table_headers,
+                          items: _vm.$store.state.obj_list_etugas,
+                          "hide-actions": ""
+                        },
+                        scopedSlots: _vm._u([
+                          {
+                            key: "items",
+                            fn: function(props) {
+                              return [
+                                _c(
+                                  "tr",
+                                  { attrs: { id: "tr-" + props.item.id } },
+                                  [
+                                    _c("td", [_vm._v(_vm._s(props.item.nrp))]),
+                                    _vm._v(" "),
+                                    _c(
+                                      "td",
+                                      {
+                                        staticClass: "text-xs-left",
+                                        attrs: {
+                                          id: "nama-" + props.item.nomor
+                                        }
+                                      },
+                                      [_vm._v(_vm._s(props.item.nama))]
+                                    ),
+                                    _vm._v(" "),
+                                    _vm._l(
+                                      _vm.$store.state.obj_etugas
+                                        .list_etugas_by_master_modul,
+                                      function(item, index) {
+                                        return _c(
+                                          "td",
+                                          { staticClass: "text-xs-left" },
+                                          [
+                                            _vm._v(
+                                              _vm._s(
+                                                _vm.nilai(index, props.item)
+                                              )
+                                            )
+                                          ]
+                                        )
+                                      }
+                                    ),
+                                    _vm._v(" "),
+                                    _c("td", { staticClass: "text-xs-left" }, [
+                                      _vm._v(_vm._s(props.item.rata_rata))
+                                    ])
+                                  ],
+                                  2
+                                )
+                              ]
+                            }
+                          }
+                        ])
+                      })
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      [
+        _c(
+          "v-layout",
+          { attrs: { row: "", "justify-center": "" } },
+          [
+            _c(
+              "v-dialog",
+              {
+                attrs: { persistent: "", "max-width": "390" },
+                model: {
+                  value: _vm.dialog,
+                  callback: function($$v) {
+                    _vm.dialog = $$v
+                  },
+                  expression: "dialog"
+                }
+              },
+              [
+                _c(
+                  "v-card",
+                  [
+                    _c("v-card-title", { staticClass: "headline" }, [
+                      _vm._v(_vm._s(_vm.nama_mahasiswa))
+                    ]),
+                    _vm._v(" "),
+                    _c("v-text-field", {
+                      staticStyle: { margin: "10px" },
+                      attrs: { label: "Masukkan nilai tugas" },
+                      model: {
+                        value: _vm.data.nilai,
+                        callback: function($$v) {
+                          _vm.$set(_vm.data, "nilai", $$v)
+                        },
+                        expression: "data.nilai"
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "v-card-actions",
+                      [
+                        _c("v-spacer"),
+                        _vm._v(" "),
+                        _c(
+                          "v-btn",
+                          {
+                            attrs: { flat: "" },
+                            nativeOn: {
+                              click: function($event) {
+                                _vm.dialog = false
+                              }
+                            }
+                          },
+                          [_vm._v("Batalkan")]
+                        ),
+                        _vm._v(" "),
+                        !_vm.is_save
+                          ? _c(
+                              "v-btn",
+                              {
+                                attrs: { color: "info" },
+                                on: { click: _vm.storeNilai }
+                              },
+                              [_vm._v("\n                Simpan\n            ")]
+                            )
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _vm.is_save
+                          ? _c(
+                              "v-btn",
+                              { attrs: { flat: "" } },
+                              [
+                                _c("v-progress-circular", {
+                                  attrs: { indeterminate: "", color: "primary" }
+                                })
+                              ],
+                              1
+                            )
+                          : _vm._e()
+                      ],
+                      1
+                    )
+                  ],
+                  1
+                )
+              ],
+              1
+            )
+          ],
+          1
+        )
+      ],
+      _vm._v(" "),
+      _c(
+        "v-snackbar",
+        {
+          attrs: { right: "", bottom: "" },
+          model: {
+            value: _vm.snackbar,
+            callback: function($$v) {
+              _vm.snackbar = $$v
+            },
+            expression: "snackbar"
+          }
+        },
+        [
+          _vm._v("\n        " + _vm._s(_vm.snackbarText) + "\n        "),
+          _c(
+            "v-btn",
+            {
+              attrs: { dark: "", flat: "" },
+              on: {
+                click: function($event) {
+                  _vm.snackbar = false
+                }
+              }
+            },
+            [_vm._v("\n            Close\n        ")]
+          )
+        ],
+        1
+      )
+    ],
+    2
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-6b05b602", module.exports)
   }
 }
 

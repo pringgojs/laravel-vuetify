@@ -32,6 +32,7 @@ router.beforeEach((to, from, next) => {
 // Vuex store
 const store = new Vuex.Store({
     state: {
+        table_headers: [],
         obj_list_etugas: [],
         obj_etugas: [],
         form_dialog_detail_etugas: false,

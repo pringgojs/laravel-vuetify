@@ -13,6 +13,7 @@ import Schedule from './components/lecturer/Schedule.vue'
 import Materi from './components/lecturer/Materi.vue'
 import MateriAdd from './components/lecturer/MateriAdd.vue'
 import NilaiPermodul from './components/lecturer/NilaiPermodul.vue'
+import NilaiPermodulDetail from './components/lecturer/NilaiPermodulDetail.vue'
 import Report from './components/lecturer/Report.vue'
 import Login from './components/Login.vue'
 import NotFound from './components/NotFound.vue'
@@ -38,6 +39,7 @@ Vue.component('report', require('./components/lecturer/Report.vue'))
 Vue.component('materi', require('./components/lecturer/Materi.vue'))
 Vue.component('materi-add', require('./components/lecturer/MateriAdd.vue'))
 Vue.component('nilai-permodul', require('./components/lecturer/NilaiPermodul.vue'))
+Vue.component('nilai-permodul-detail', require('./components/lecturer/NilaiPermodulDetail.vue'))
 Vue.component('login', require('./components/Login.vue'))
 Vue.component('not-found', require('./components/NotFound.vue'))
 Vue.component('redirect', require('./components/Redirect.vue'))

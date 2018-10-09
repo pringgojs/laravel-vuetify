@@ -41,7 +41,7 @@
                         <td class="text-xs-left" :id="'judul-'+props.item.id">{{ props.item.total_tugas }} </td>
                         <td class="text-xs-center">
                             <v-layout justify-space-around>
-                                <v-btn flat icon color="info" slot="activator"  @click="detail(props.item.id)">
+                                <v-btn flat icon color="info" slot="activator"  @click="detail(props.item.nomor_nilai_master_modul)">
                                     <v-icon dark>list_alt</v-icon>
                                 </v-btn>
                             </v-layout>
@@ -77,8 +77,8 @@
             </v-layout>
         </template>
 
-        <!-- detail etugas -->
-        <e-tugas-detail></e-tugas-detail>
+        <!-- detail -->
+        <nilai-permodul-detail></nilai-permodul-detail>
     </v-flex>
 </template>
 
@@ -118,14 +118,19 @@ export default {
         this.initData();
     },
     methods: {
-        detail(id) {
+        detail(nomor_nilai_master_modul) {
             var app = this;
             app.loadDetail = true
-            axios.get('lecturer/e-tugas/detail/'+id).then(function (resp) {
+            axios.get('lecturer/report/nilai-permodul/detail/'+nomor_nilai_master_modul).then(function (resp) {
                 app.loadDetail = false
                 app.$store.state.obj_etugas = resp.data
                 app.$store.state.form_dialog_detail_etugas = true
-                app.$store.state.obj_list_etugas = resp.data.etugas_kelas_mahasiswa
+                app.$store.state.obj_list_etugas = resp.data.kelas_mahasiswa
+                console.log(resp.data)
+                // initialize table header data
+                resp.data.table_headers.forEach(item => {
+                   app.$store.state.table_headers.push({ text: item, value: item.toLowerCase() })
+                })
             })
             .catch(function (resp) {
                 app.showSnackbar("oops, something went wrong. Please try again!");
@@ -148,10 +153,8 @@ export default {
         },
         selectSemester() {
             if (!this.filter) return false;
-            console.log("asd")
             var app = this;
             axios.get('lecturer/report/nilai-permodul/kuliah/'+app.filter).then(function (resp) {
-                console.log(resp.data)
                 app.bodyTable = resp.data.data;
             })
             .catch(function (resp) {
