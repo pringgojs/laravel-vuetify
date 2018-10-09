@@ -40,6 +40,11 @@ Route::group(['prefix' => 'lecturer', 'middleware' => 'role:lecturer'], function
     Route::post('e-tugas/store', 'LecturerController@storeEtugas');
     Route::get('e-tugas', 'LecturerController@indexEtugas');
 
+    // Report
+    Route::group(['prefix' => 'report', 'namespace' => 'Lecturer'], function () {
+        Route::get('nilai-permodul/kuliah/{id}', 'LecturerReportController@kuliah');
+        Route::get('nilai-permodul', 'LecturerReportController@nilaiPermodul');
+    });
     // schedule
     Route::get('schedule/get-by-semester/{kuliah}', 'LecturerController@getBySemester');
     Route::get('schedule', 'LecturerController@schedule');

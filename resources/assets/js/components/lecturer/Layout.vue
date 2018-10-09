@@ -47,7 +47,7 @@
             <v-list-tile
               v-for="(child, i) in children"
               :key="i"
-              @click=""
+              @click="link(child.link)"
             >
               <v-list-tile-content>
                 <v-list-tile-title>
@@ -131,8 +131,8 @@
         { icon: 'date_range', text: 'Jadwal', link: '/schedule' },
       ],
       children: [
-        { text: 'Nilai Permodul', link: 'nilai-per-modul'},
-        { text: 'Nilai Akhir', link: 'nilai-akhir'},
+        { text: 'Nilai Permodul', link: '/nilai-permodul'},
+        { text: 'Nilai Akhir', link: '/nilai-akhir'},
       ],
       mo_icon: 'keyboard_arrow_up',
       mo_icon_down: 'keyboard_arrow_down',

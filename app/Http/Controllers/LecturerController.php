@@ -29,7 +29,6 @@ class LecturerController extends Controller
 
     public function getBySemester($kuliah)
     {
-        \Log::info($kuliah);
         $database = DatabaseHelper::getScheduleBySemester($kuliah);
         return $database;
     }
