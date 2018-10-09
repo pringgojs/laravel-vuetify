@@ -126,8 +126,8 @@ export default {
                 app.$store.state.obj_etugas = resp.data
                 app.$store.state.form_dialog_detail_etugas = true
                 app.$store.state.obj_list_etugas = resp.data.kelas_mahasiswa
-                console.log(resp.data)
                 // initialize table header data
+                app.$store.state.table_headers = []
                 resp.data.table_headers.forEach(item => {
                    app.$store.state.table_headers.push({ text: item, value: item.toLowerCase() })
                 })
