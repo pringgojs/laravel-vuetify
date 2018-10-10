@@ -100,8 +100,6 @@
         { icon: 'home', text: 'Beranda', link: '/beranda'},
         { icon: 'history', text: 'E-tugas', link: '/etugas' },
         { icon: 'content_copy', text: 'Materi', link: '/materi-kuliah' },
-        { icon: 'date_range', text: 'Jadwal', link: '/jadwal' },
-        { icon: 'assessment', text: 'Laporan', link: '/laporan' },
       ]
     }),
     props: {
