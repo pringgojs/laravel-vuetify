@@ -59,7 +59,7 @@ const routes = [
         component: Redirect,
         name: 'redirect',
         meta: {
-            title: 'redirect - Dosen Jaga',
+            title: 'Selamat Datang - Dosen Jaga',
             type: 'lecturer'
         }
     },

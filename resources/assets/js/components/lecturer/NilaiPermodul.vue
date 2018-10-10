@@ -1,7 +1,7 @@
 <template>
     <v-flex sm12>
         
-        <h1 class="font-weight-light">E Tugas</h1>
+        <h1 class="font-weight-light">Nilai Permodul</h1>
         <div class="subheading">Rincian tugas dikelompokkan permodul</div>
         
         <content-loader v-if="!isLoaded" :height="250"></content-loader>
@@ -9,7 +9,7 @@
             <v-select 
                 :items="semesters"
                 v-model="filter"
-                label="Filter kelas"
+                label="Pilih kelas"
                 item-text="tahun"
                 item-value="kuliah"
                 @change="selectSemester()"

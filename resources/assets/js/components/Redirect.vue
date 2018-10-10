@@ -1,27 +1,17 @@
 <template>
-    <div @click="increment">click me {{counts}} - {{detailEtugasId}}</div>
+    <v-content>
+      <v-container fluid fill-height>
+        <v-layout justify-center align-center>
+            <v-flex>
+                <img src="walpaper.png" alt=""></img>
+            </v-flex>
+        </v-layout>
+      </v-container>
+    </v-content>
 </template>
 
 <script>
 export default {
-    mounted() {
-        let count = this.$store.state.count
-        console.log('mounted ' + count)
-    },
     
-    // computed for return object to template in vuex
-    computed: {
-        counts() {
-            return this.$store.state.count
-        },
-        detailEtugasId() {
-            return this.$store.state.detailEtugasId
-        }
-    },
-    methods: {
-        increment() {
-            this.$store.commit('increment')
-        }
-    }
 }
 </script>
