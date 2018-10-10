@@ -287,7 +287,6 @@ export default {
                 }
             })
             .catch(function(e) {
-                console.log(e);
                 app.showSnackbar('E-Tugas gagal disimpan');
             });
         }

@@ -49,7 +49,7 @@
                                 </a>
                             </template>
                         </td>
-                        <td class="text-xs-center" :id="'due-date-'+props.item.id">{{ props.item.nilai_mahasiswa ? dateView(props.item.nilai_mahasiswa.updated_at) : '-'}}</td>
+                        <td class="text-xs-center" :style="statusLate(props.item.due_date, props.item.nilai_mahasiswa)" :id="'due-date-'+props.item.id">{{ props.item.nilai_mahasiswa ? dateView(props.item.nilai_mahasiswa.updated_at) : '-'}}</td>
                         <td class="text-xs-center">{{ props.item.nilai_mahasiswa ? props.item.nilai_mahasiswa.nilai : ''}}</td>
 
                         <td class="text-xs-center">
@@ -156,6 +156,17 @@ export default {
                 return moment(date).format("dddd, Do MMMM YYYY, h:mm:ss a");
             }
             return '-'
+        },
+        statusLate(due_date, obj_nilai) {
+            if (!obj_nilai) {
+                return "color: red"
+            }
+
+            if (obj_nilai.updated_at > due_date) {
+                return "color: red"
+            }
+
+            return ""
         }
     }
 }

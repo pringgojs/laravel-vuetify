@@ -60,7 +60,7 @@
                                     <td>{{ props.item.nrp }}</td>
                                     <td class="text-xs-left" :id="'nama-'+props.item.nomor">{{ props.item.nama }}</td>
                                     <td class="text-xs-left" :id="'keterangan-'+props.item.nomor">{{ props.item.nilai ? props.item.nilai.keterangan : ''}}</td>
-                                    <td class="text-xs-center" :id="'due-date-'+props.item.nomor">{{ props.item.nilai ? dateView(props.item.nilai.updated_at) : '' }}</td>
+                                    <td class="text-xs-center" :style="statusLate($store.state.form_dialog_detail_etugas ? $store.state.obj_etugas.etugas.due_date : '', props.item.nilai)" :id="'due-date-'+props.item.nomor">{{ props.item.nilai ? dateView(props.item.nilai.updated_at) : '' }}</td>
                                     <td class="text-xs-center">
                                         <template v-if="props.item.nilai">
                                             <a slot="activator" v-if="props.item.nilai.file_url" v-bind:href="props.item.file_url"> Download File </a>
@@ -208,6 +208,17 @@ export default {
                     app.dialog = false
                     app.showSnackbar("oops, something went wrong. Please try again!")
                 })
+        },
+        statusLate(due_date, obj_nilai) {
+            if (!obj_nilai) {
+                return "color: red"
+            }
+
+            if (obj_nilai.updated_at > due_date) {
+                return "color: red"
+            }
+
+            return ""
         }
     }
 }

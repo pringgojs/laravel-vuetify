@@ -90041,7 +90041,6 @@ var FilePond = __WEBPACK_IMPORTED_MODULE_1_vue_filepond___default()(__WEBPACK_IM
                     app.showSnackbar('E-Tugas berhasil ditambahkan');
                 }
             }).catch(function (e) {
-                console.log(e);
                 app.showSnackbar('E-Tugas gagal ditambahkan');
             });
         }
@@ -99356,7 +99355,6 @@ var FilePond = __WEBPACK_IMPORTED_MODULE_2_vue_filepond___default()(__WEBPACK_IM
                     app.$router.push('/e-tugas');
                 }
             }).catch(function (e) {
-                console.log(e);
                 app.showSnackbar('E-Tugas gagal disimpan');
             });
         }
@@ -103476,6 +103474,17 @@ __WEBPACK_IMPORTED_MODULE_1_moment__["locale"]('id');
                 return __WEBPACK_IMPORTED_MODULE_1_moment__(date).format("dddd, Do MMMM YYYY, h:mm:ss a");
             }
             return '-';
+        },
+        statusLate: function statusLate(due_date, obj_nilai) {
+            if (!obj_nilai) {
+                return "color: red";
+            }
+
+            if (obj_nilai.updated_at > due_date) {
+                return "color: red";
+            }
+
+            return "";
         }
     }
 });
@@ -103705,6 +103714,10 @@ var render = function() {
                             "td",
                             {
                               staticClass: "text-xs-center",
+                              style: _vm.statusLate(
+                                props.item.due_date,
+                                props.item.nilai_mahasiswa
+                              ),
                               attrs: { id: "due-date-" + props.item.id }
                             },
                             [
@@ -105197,6 +105210,17 @@ __WEBPACK_IMPORTED_MODULE_0_moment__["locale"]('id');
                 app.dialog = false;
                 app.showSnackbar("oops, something went wrong. Please try again!");
             });
+        },
+        statusLate: function statusLate(due_date, obj_nilai) {
+            if (!obj_nilai) {
+                return "color: red";
+            }
+
+            if (obj_nilai.updated_at > due_date) {
+                return "color: red";
+            }
+
+            return "";
         }
     }
 });
@@ -105495,6 +105519,14 @@ var render = function() {
                                       "td",
                                       {
                                         staticClass: "text-xs-center",
+                                        style: _vm.statusLate(
+                                          _vm.$store.state
+                                            .form_dialog_detail_etugas
+                                            ? _vm.$store.state.obj_etugas.etugas
+                                                .due_date
+                                            : "",
+                                          props.item.nilai
+                                        ),
                                         attrs: {
                                           id: "due-date-" + props.item.nomor
                                         }
