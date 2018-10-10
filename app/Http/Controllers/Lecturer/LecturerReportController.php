@@ -43,4 +43,15 @@ class LecturerReportController extends Controller
         return $response;
     }
 
+    public function sync($id_modul)
+    {
+        $url = config('api.url').'/lecturer/report/nilai-permodul/sync';
+        $data = array('user' => ResponseHelper::user(), 'id_modul' => $id_modul);
+        $response = Curl::to($url)
+        ->withData($data)
+        ->post();
+
+        return $response;
+    }
+
 }

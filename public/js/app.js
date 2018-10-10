@@ -101313,6 +101313,7 @@ __WEBPACK_IMPORTED_MODULE_1_moment__["locale"]('id');
                 app.$store.state.form_dialog_detail_etugas = true;
                 app.$store.state.obj_list_etugas = resp.data.kelas_mahasiswa;
                 // initialize table header data
+                console.log(app.$store.state.obj_etugas);
                 app.$store.state.table_headers = [];
                 resp.data.table_headers.forEach(function (item) {
                     app.$store.state.table_headers.push({ text: item, value: item.toLowerCase() });
@@ -101764,35 +101765,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 __WEBPACK_IMPORTED_MODULE_0_moment__["locale"]('id');
@@ -101845,10 +101817,12 @@ __WEBPACK_IMPORTED_MODULE_0_moment__["locale"]('id');
         },
         save: function save() {
             var app = this;
-            axios.post('lecturer/sync/', app.data).then(function (resp) {
+            var nilai_master_modul = app.$store.state.obj_etugas ? app.$store.state.obj_etugas.nilai_master_modul.nomor : 0;
+            console.log(nilai_master_modul);
+            axios.get('lecturer/report/nilai-permodul/sync/' + nilai_master_modul).then(function (resp) {
                 app.is_save = false;
                 app.dialog = false;
-
+                console.log(resp.data);
                 app.$store.state.obj_list_etugas = resp.data.etugas_kelas_mahasiswa;
                 app.showSnackbar("Data berhasil disimpan!");
                 return true;
@@ -102065,98 +102039,6 @@ var render = function() {
         1
       ),
       _vm._v(" "),
-      [
-        _c(
-          "v-layout",
-          { attrs: { row: "", "justify-center": "" } },
-          [
-            _c(
-              "v-dialog",
-              {
-                attrs: { persistent: "", "max-width": "390" },
-                model: {
-                  value: _vm.dialog,
-                  callback: function($$v) {
-                    _vm.dialog = $$v
-                  },
-                  expression: "dialog"
-                }
-              },
-              [
-                _c(
-                  "v-card",
-                  [
-                    _c("v-card-title", { staticClass: "headline" }, [
-                      _vm._v(_vm._s(_vm.nama_mahasiswa))
-                    ]),
-                    _vm._v(" "),
-                    _c("v-text-field", {
-                      staticStyle: { margin: "10px" },
-                      attrs: { label: "Masukkan nilai tugas" },
-                      model: {
-                        value: _vm.data.nilai,
-                        callback: function($$v) {
-                          _vm.$set(_vm.data, "nilai", $$v)
-                        },
-                        expression: "data.nilai"
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c(
-                      "v-card-actions",
-                      [
-                        _c("v-spacer"),
-                        _vm._v(" "),
-                        _c(
-                          "v-btn",
-                          {
-                            attrs: { flat: "" },
-                            nativeOn: {
-                              click: function($event) {
-                                _vm.dialog = false
-                              }
-                            }
-                          },
-                          [_vm._v("Batalkan")]
-                        ),
-                        _vm._v(" "),
-                        !_vm.is_save
-                          ? _c(
-                              "v-btn",
-                              {
-                                attrs: { color: "info" },
-                                on: { click: _vm.storeNilai }
-                              },
-                              [_vm._v("\n                Simpan\n            ")]
-                            )
-                          : _vm._e(),
-                        _vm._v(" "),
-                        _vm.is_save
-                          ? _c(
-                              "v-btn",
-                              { attrs: { flat: "" } },
-                              [
-                                _c("v-progress-circular", {
-                                  attrs: { indeterminate: "", color: "primary" }
-                                })
-                              ],
-                              1
-                            )
-                          : _vm._e()
-                      ],
-                      1
-                    )
-                  ],
-                  1
-                )
-              ],
-              1
-            )
-          ],
-          1
-        )
-      ],
-      _vm._v(" "),
       _c(
         "v-snackbar",
         {
@@ -102187,7 +102069,7 @@ var render = function() {
         1
       )
     ],
-    2
+    1
   )
 }
 var staticRenderFns = []

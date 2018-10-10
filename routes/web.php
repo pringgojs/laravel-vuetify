@@ -42,6 +42,7 @@ Route::group(['prefix' => 'lecturer', 'middleware' => 'role:lecturer'], function
 
     // Report
     Route::group(['prefix' => 'report', 'namespace' => 'Lecturer'], function () {
+        Route::get('nilai-permodul/sync/{id_master_modul}', 'LecturerReportController@sync');
         Route::get('nilai-permodul/detail/{id_master_modul}', 'LecturerReportController@detailModul');
         Route::get('nilai-permodul/kuliah/{id}', 'LecturerReportController@kuliah');
         Route::get('nilai-permodul', 'LecturerReportController@nilaiPermodul');

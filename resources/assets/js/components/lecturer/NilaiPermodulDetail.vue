@@ -46,35 +46,6 @@
             </v-card>
         </v-dialog>
 
-        <!-- input nilai -->
-        <template>
-        <v-layout row justify-center>
-            <v-dialog v-model="dialog" persistent max-width="390">
-            <v-card>
-                <v-card-title class="headline">{{nama_mahasiswa}}</v-card-title>
-                <v-text-field
-                    label="Masukkan nilai tugas"
-                    style="margin:10px"
-                    v-model="data.nilai"
-                ></v-text-field>
-                <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn flat @click.native="dialog = false">Batalkan</v-btn>
-                <v-btn color="info" @click="storeNilai" v-if="!is_save">
-                    Simpan
-                </v-btn>
-                <v-btn flat v-if="is_save">
-                    <v-progress-circular
-                        indeterminate
-                        color="primary"
-                    ></v-progress-circular>
-                </v-btn>
-                </v-card-actions>
-            </v-card>
-            </v-dialog>
-        </v-layout>
-        </template>
-
         <!-- snackbar -->
         <v-snackbar v-model="snackbar" right bottom >
             {{snackbarText}}
@@ -138,11 +109,13 @@ export default {
         },
         save() {
             var app = this
-            axios.post('lecturer/sync/', app.data)
+            var nilai_master_modul = app.$store.state.obj_etugas ? app.$store.state.obj_etugas.nilai_master_modul.nomor : 0 
+            console.log(nilai_master_modul);
+            axios.get('lecturer/report/nilai-permodul/sync/'+nilai_master_modul)
                 .then(function (resp) {
                     app.is_save = false
                     app.dialog = false
-
+                    console.log(resp.data);
                     app.$store.state.obj_list_etugas = resp.data.etugas_kelas_mahasiswa
                     app.showSnackbar("Data berhasil disimpan!")
                     return true
