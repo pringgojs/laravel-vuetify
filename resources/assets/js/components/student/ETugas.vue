@@ -118,6 +118,7 @@ export default {
             var app = this;
             axios.get('student/e-tugas').then(function (resp) {
                 app.isLoaded = true;
+                app.$store.state.obj_list_etugas = null
                 app.$store.state.obj_list_etugas =  resp.data.data;
                 app.semesters = resp.data.data_semester;
             })
@@ -134,7 +135,9 @@ export default {
             if (!this.filter) return false;
             var app = this;
             axios.get('student/e-tugas/kuliah/'+app.filter).then(function (resp) {
-                app.bodyTable = resp.data.data;
+                app.$store.state.obj_list_etugas = null
+                console.log(resp.data)
+                app.$store.state.obj_list_etugas = resp.data.data
             })
             .catch(function (resp) {
                 app.showSnackbar("oops, something went wrong. Please try again!");

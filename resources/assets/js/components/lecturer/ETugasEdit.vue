@@ -255,6 +255,11 @@ export default {
                 return false;
             }
 
+            if (!app.keterangan) {
+                app.showSnackbar('Keterangan tugas harus diisi');
+                return false;
+            }
+
             if (!app.date) {
                 app.showSnackbar('Tanggal harus diisi');
                 return false;

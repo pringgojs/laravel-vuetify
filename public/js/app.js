@@ -89975,6 +89975,7 @@ var FilePond = __WEBPACK_IMPORTED_MODULE_1_vue_filepond___default()(__WEBPACK_IM
                 app.descriptionSemester = resp.data.keterangan;
                 app.bodyTable = resp.data.data;
                 app.semesters = resp.data.data_semester;
+                console.log(app.semesters);
             }).catch(function (resp) {
                 app.showSnackbar("oops, something went wrong. Please try again!");
             });
@@ -90008,6 +90009,11 @@ var FilePond = __WEBPACK_IMPORTED_MODULE_1_vue_filepond___default()(__WEBPACK_IM
 
             if (!app.judul) {
                 app.showSnackbar('Judul tugas harus diisi');
+                return false;
+            }
+
+            if (!app.keterangan) {
+                app.showSnackbar('Keterangan tugas harus diisi');
                 return false;
             }
 
@@ -98655,6 +98661,8 @@ var render = function() {
                                 " / " +
                                 _vm._s(data.item.semester) +
                                 " - " +
+                                _vm._s(data.item.matakuliah) +
+                                " - " +
                                 _vm._s(data.item.jurusan) +
                                 " (" +
                                 _vm._s(data.item.kelas) +
@@ -98674,6 +98682,8 @@ var render = function() {
                                 _vm._s(data.item.tahun) +
                                 " / " +
                                 _vm._s(data.item.semester) +
+                                " - " +
+                                _vm._s(data.item.matakuliah) +
                                 " - " +
                                 _vm._s(data.item.jurusan) +
                                 " (" +
@@ -99321,6 +99331,11 @@ var FilePond = __WEBPACK_IMPORTED_MODULE_2_vue_filepond___default()(__WEBPACK_IM
 
             if (!app.judul) {
                 app.showSnackbar('Judul tugas harus diisi');
+                return false;
+            }
+
+            if (!app.keterangan) {
+                app.showSnackbar('Keterangan tugas harus diisi');
                 return false;
             }
 
@@ -103324,6 +103339,7 @@ __WEBPACK_IMPORTED_MODULE_1_moment__["locale"]('id');
             var app = this;
             axios.get('student/e-tugas').then(function (resp) {
                 app.isLoaded = true;
+                app.$store.state.obj_list_etugas = null;
                 app.$store.state.obj_list_etugas = resp.data.data;
                 app.semesters = resp.data.data_semester;
             }).catch(function (resp) {
@@ -103339,7 +103355,9 @@ __WEBPACK_IMPORTED_MODULE_1_moment__["locale"]('id');
             if (!this.filter) return false;
             var app = this;
             axios.get('student/e-tugas/kuliah/' + app.filter).then(function (resp) {
-                app.bodyTable = resp.data.data;
+                app.$store.state.obj_list_etugas = null;
+                console.log(resp.data);
+                app.$store.state.obj_list_etugas = resp.data.data;
             }).catch(function (resp) {
                 app.showSnackbar("oops, something went wrong. Please try again!");
             });
@@ -104464,6 +104482,7 @@ var FilePond = __WEBPACK_IMPORTED_MODULE_1_vue_filepond___default()(__WEBPACK_IM
                     app.myFiles = [];
                     app.showSnackbar('Tugas berhasil diunggah');
                     app.$store.state.form_dialog_detail_etugas = false;
+                    app.$store.state.obj_list_etugas = null;
                     app.$store.state.obj_list_etugas = resp.data.data_tugas;
                 }
             }).catch(function (e) {
@@ -104540,7 +104559,7 @@ var render = function() {
                           attrs: { dark: "", flat: "" },
                           on: { click: _vm.submit }
                         },
-                        [_vm._v("Save")]
+                        [_vm._v("Upload Tugas")]
                       )
                     ],
                     1

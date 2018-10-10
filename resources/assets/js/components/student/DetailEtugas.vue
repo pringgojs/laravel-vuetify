@@ -9,7 +9,7 @@
                 <v-toolbar-title>{{$store.state.form_dialog_detail_etugas ? $store.state.obj_etugas.etugas.judul : ''}}</v-toolbar-title>
                 <v-spacer></v-spacer>
                 <v-toolbar-items>
-                    <v-btn dark flat @click="submit">Save</v-btn>
+                    <v-btn dark flat @click="submit">Upload Tugas</v-btn>
                 </v-toolbar-items>
                 </v-toolbar>
                 <v-list three-line subheader>
@@ -181,6 +181,7 @@ export default {
                     app.myFiles = [];
                     app.showSnackbar('Tugas berhasil diunggah');
                     app.$store.state.form_dialog_detail_etugas = false;
+                    app.$store.state.obj_list_etugas = null
                     app.$store.state.obj_list_etugas =  resp.data.data_tugas;
                 }
             })

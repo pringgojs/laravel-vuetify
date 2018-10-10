@@ -16,10 +16,10 @@
                     solo
                 >
                     <template slot="selection" slot-scope="data">
-                        {{ data.item.tahun }} / {{ data.item.semester }} - {{ data.item.jurusan }} ({{data.item.kelas}} {{data.item.pararel}})
+                        {{ data.item.tahun }} / {{ data.item.semester }} - {{ data.item.matakuliah}} - {{ data.item.jurusan }} ({{data.item.kelas}} {{data.item.pararel}})
                     </template>
                     <template slot="item" slot-scope="data">
-                        {{ data.item.tahun }} / {{ data.item.semester }} - {{ data.item.jurusan }} ({{data.item.kelas}} {{data.item.pararel}})
+                        {{ data.item.tahun }} / {{ data.item.semester }} - {{ data.item.matakuliah}} - {{ data.item.jurusan }} ({{data.item.kelas}} {{data.item.pararel}})
                     </template>
                 </v-select>
             </v-flex>
@@ -201,6 +201,7 @@ export default {
                 app.descriptionSemester = resp.data.keterangan;
                 app.bodyTable = resp.data.data;
                 app.semesters = resp.data.data_semester;
+                console.log(app.semesters)
             })
             .catch(function (resp) {
                 app.showSnackbar("oops, something went wrong. Please try again!");
@@ -236,6 +237,11 @@ export default {
 
             if (!app.judul) {
                 app.showSnackbar('Judul tugas harus diisi');
+                return false;
+            }
+
+            if (!app.keterangan) {
+                app.showSnackbar('Keterangan tugas harus diisi');
                 return false;
             }
 
