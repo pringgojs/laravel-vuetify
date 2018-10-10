@@ -89996,23 +89996,28 @@ var FilePond = __WEBPACK_IMPORTED_MODULE_1_vue_filepond___default()(__WEBPACK_IM
         },
         submit: function submit() {
             var app = this;
-            if (app.judul == '') {
+            if (!app.filter) {
+                app.showSnackbar('Anda belum memilih kelas.');
+                return false;
+            }
+
+            if (!app.nilai_master_modul) {
+                app.showSnackbar('Anda belum memilih modul.');
+                return false;
+            }
+
+            if (!app.judul) {
                 app.showSnackbar('Judul tugas harus diisi');
                 return false;
             }
 
-            if (app.nilai_master_modul == '') {
-                app.showSnackbar('Modul harus diisi');
-                return false;
-            }
-
-            if (app.date == '') {
+            if (!app.date) {
                 app.showSnackbar('Tanggal harus diisi');
                 return false;
             }
 
-            if (app.time == '') {
-                app.showSnackbar('Waktu harus diisi');
+            if (!app.time) {
+                app.showSnackbar('Batas waktu harus diisi');
                 return false;
             }
 
@@ -99305,23 +99310,28 @@ var FilePond = __WEBPACK_IMPORTED_MODULE_2_vue_filepond___default()(__WEBPACK_IM
         },
         submit: function submit() {
             var app = this;
-            if (app.judul == '') {
+            if (!app.filter) {
+                app.showSnackbar('Anda belum memilih kelas.');
+                return false;
+            }
+
+            if (!app.nilai_master_modul) {
+                app.showSnackbar('Anda belum memilih modul.');
+                return false;
+            }
+
+            if (!app.judul) {
                 app.showSnackbar('Judul tugas harus diisi');
                 return false;
             }
 
-            if (app.nilai_master_modul == '') {
-                app.showSnackbar('Modul harus diisi');
-                return false;
-            }
-
-            if (app.date == '') {
+            if (!app.date) {
                 app.showSnackbar('Tanggal harus diisi');
                 return false;
             }
 
-            if (app.time == '') {
-                app.showSnackbar('Waktu harus diisi');
+            if (!app.time) {
+                app.showSnackbar('Batas waktu harus diisi');
                 return false;
             }
 
