@@ -140,14 +140,6 @@ export default {
     methods: {
         initData() {
             let app = this
-            // axios.get('student/e-tugas/detail').then(function (resp) {
-            //     app.isLoaded = true;
-            //     app.bodyTable = resp.data.data;
-            //     app.semesters = resp.data.data_semester;
-            // })
-            // .catch(function (resp) {
-            //     app.showSnackbar("oops, something went wrong. Please try again!");
-            // });
         },
         saveFormDialog() {
             this.$store.state.form_dialog_detail_etugas = false

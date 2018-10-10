@@ -9,7 +9,7 @@
                     <v-toolbar-title>{{$store.state.form_dialog_detail_etugas ? $store.state.obj_etugas.nilai_master_modul.modul : ''}}</v-toolbar-title>
                     <v-spacer></v-spacer>
                     <v-toolbar-items>
-                        <v-btn dark flat @click="download">Download Excel</v-btn>
+                        <v-btn dark flat @click="save">Simpan Nilai</v-btn>
                     </v-toolbar-items>
                 </v-toolbar>
                 <v-list three-line subheader>
@@ -136,27 +136,9 @@ export default {
             }
             return '-'
         },
-        download() {
-
-        },
-        showSnackbar(text) {
+        save() {
             var app = this
-            app.snackbarText = text
-            app.snackbar = true
-        },
-        nilai(index, obj) {
-            index+=1
-            var t = 'tugas_'+index
-            return obj[t]
-        },
-        storeNilai() {
-            var app = this
-            if (app.data.nilai == '') {
-                app.showSnackbar("Nilai harus diisi")
-                return false
-            }
-            app.is_save = true
-            axios.post('lecturer/e-tugas/set-nilai', app.data)
+            axios.post('lecturer/sync/', app.data)
                 .then(function (resp) {
                     app.is_save = false
                     app.dialog = false
@@ -170,6 +152,16 @@ export default {
                     app.dialog = false
                     app.showSnackbar("oops, something went wrong. Please try again!")
                 })
+        },
+        showSnackbar(text) {
+            var app = this
+            app.snackbarText = text
+            app.snackbar = true
+        },
+        nilai(index, obj) {
+            index+=1
+            var t = 'tugas_'+index
+            return obj[t]
         }
     }
 }

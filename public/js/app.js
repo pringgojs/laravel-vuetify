@@ -101312,7 +101312,6 @@ __WEBPACK_IMPORTED_MODULE_1_moment__["locale"]('id');
                 app.$store.state.obj_etugas = resp.data;
                 app.$store.state.form_dialog_detail_etugas = true;
                 app.$store.state.obj_list_etugas = resp.data.kelas_mahasiswa;
-                console.log(app.$store.state.obj_etugas);
                 // initialize table header data
                 app.$store.state.table_headers = [];
                 resp.data.table_headers.forEach(function (item) {
@@ -101844,25 +101843,9 @@ __WEBPACK_IMPORTED_MODULE_0_moment__["locale"]('id');
             }
             return '-';
         },
-        download: function download() {},
-        showSnackbar: function showSnackbar(text) {
+        save: function save() {
             var app = this;
-            app.snackbarText = text;
-            app.snackbar = true;
-        },
-        nilai: function nilai(index, obj) {
-            index += 1;
-            var t = 'tugas_' + index;
-            return obj[t];
-        },
-        storeNilai: function storeNilai() {
-            var app = this;
-            if (app.data.nilai == '') {
-                app.showSnackbar("Nilai harus diisi");
-                return false;
-            }
-            app.is_save = true;
-            axios.post('lecturer/e-tugas/set-nilai', app.data).then(function (resp) {
+            axios.post('lecturer/sync/', app.data).then(function (resp) {
                 app.is_save = false;
                 app.dialog = false;
 
@@ -101874,6 +101857,16 @@ __WEBPACK_IMPORTED_MODULE_0_moment__["locale"]('id');
                 app.dialog = false;
                 app.showSnackbar("oops, something went wrong. Please try again!");
             });
+        },
+        showSnackbar: function showSnackbar(text) {
+            var app = this;
+            app.snackbarText = text;
+            app.snackbar = true;
+        },
+        nilai: function nilai(index, obj) {
+            index += 1;
+            var t = 'tugas_' + index;
+            return obj[t];
         }
     }
 });
@@ -101943,9 +101936,9 @@ var render = function() {
                         "v-btn",
                         {
                           attrs: { dark: "", flat: "" },
-                          on: { click: _vm.download }
+                          on: { click: _vm.save }
                         },
-                        [_vm._v("Download Excel")]
+                        [_vm._v("Simpan Nilai")]
                       )
                     ],
                     1
@@ -104548,14 +104541,6 @@ var FilePond = __WEBPACK_IMPORTED_MODULE_1_vue_filepond___default()(__WEBPACK_IM
     methods: {
         initData: function initData() {
             var app = this;
-            // axios.get('student/e-tugas/detail').then(function (resp) {
-            //     app.isLoaded = true;
-            //     app.bodyTable = resp.data.data;
-            //     app.semesters = resp.data.data_semester;
-            // })
-            // .catch(function (resp) {
-            //     app.showSnackbar("oops, something went wrong. Please try again!");
-            // });
         },
         saveFormDialog: function saveFormDialog() {
             this.$store.state.form_dialog_detail_etugas = false;
