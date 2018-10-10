@@ -89396,6 +89396,8 @@ var render = function() {
                             " / " +
                             _vm._s(data.item.semester) +
                             " - " +
+                            _vm._s(data.item.matakuliah) +
+                            " - " +
                             _vm._s(data.item.jurusan) +
                             " (" +
                             _vm._s(data.item.kelas) +
@@ -89415,6 +89417,8 @@ var render = function() {
                             _vm._s(data.item.tahun) +
                             " / " +
                             _vm._s(data.item.semester) +
+                            " - " +
+                            _vm._s(data.item.matakuliah) +
                             " - " +
                             _vm._s(data.item.jurusan) +
                             " (" +
@@ -101446,6 +101450,8 @@ var render = function() {
                             " / " +
                             _vm._s(data.item.semester) +
                             " - " +
+                            _vm._s(data.item.matakuliah) +
+                            " - " +
                             _vm._s(data.item.jurusan) +
                             " (" +
                             _vm._s(data.item.kelas) +
@@ -101465,6 +101471,8 @@ var render = function() {
                             _vm._s(data.item.tahun) +
                             " / " +
                             _vm._s(data.item.semester) +
+                            " - " +
+                            _vm._s(data.item.matakuliah) +
                             " - " +
                             _vm._s(data.item.jurusan) +
                             " (" +
@@ -103356,7 +103364,6 @@ __WEBPACK_IMPORTED_MODULE_1_moment__["locale"]('id');
             var app = this;
             axios.get('student/e-tugas/kuliah/' + app.filter).then(function (resp) {
                 app.$store.state.obj_list_etugas = null;
-                console.log(resp.data);
                 app.$store.state.obj_list_etugas = resp.data.data;
             }).catch(function (resp) {
                 app.showSnackbar("oops, something went wrong. Please try again!");

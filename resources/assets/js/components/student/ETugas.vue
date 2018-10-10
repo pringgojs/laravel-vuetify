@@ -136,7 +136,6 @@ export default {
             var app = this;
             axios.get('student/e-tugas/kuliah/'+app.filter).then(function (resp) {
                 app.$store.state.obj_list_etugas = null
-                console.log(resp.data)
                 app.$store.state.obj_list_etugas = resp.data.data
             })
             .catch(function (resp) {

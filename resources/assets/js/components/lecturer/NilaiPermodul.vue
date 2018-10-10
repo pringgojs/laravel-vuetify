@@ -16,10 +16,10 @@
                 solo
             >
                 <template slot="selection" slot-scope="data">
-                    {{ data.item.tahun }} / {{ data.item.semester }} - {{ data.item.jurusan }} ({{data.item.kelas}} {{data.item.pararel}})
+                    {{ data.item.tahun }} / {{ data.item.semester }} - {{ data.item.matakuliah }} - {{ data.item.jurusan }} ({{data.item.kelas}} {{data.item.pararel}})
                 </template>
                 <template slot="item" slot-scope="data">
-                    {{ data.item.tahun }} / {{ data.item.semester }} - {{ data.item.jurusan }} ({{data.item.kelas}} {{data.item.pararel}})
+                    {{ data.item.tahun }} / {{ data.item.semester }} - {{ data.item.matakuliah }} - {{ data.item.jurusan }} ({{data.item.kelas}} {{data.item.pararel}})
                 </template>
             </v-select>
         </v-flex>
