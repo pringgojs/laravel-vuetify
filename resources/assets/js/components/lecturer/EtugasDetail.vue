@@ -198,7 +198,8 @@ export default {
                 .then(function (resp) {
                     app.is_save = false
                     app.dialog = false
-
+                    app.data.nilai = 0
+                    app.data.tugas_id = ''
                     app.$store.state.obj_list_etugas = resp.data.etugas_kelas_mahasiswa
                     app.showSnackbar("Data berhasil disimpan!")
                     return true
@@ -206,6 +207,8 @@ export default {
                 .catch(function (resp) {
                     app.is_save = false
                     app.dialog = false
+                    app.data.nilai = 0
+                    app.data.tugas_id = ''
                     app.showSnackbar("oops, something went wrong. Please try again!")
                 })
         },

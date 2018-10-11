@@ -10,6 +10,10 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('tes', function () {
+    $x = \DB::table('nilai_modul')->get();
+    dd($x);
+});
 Route::group(['prefix' => 'student', 'middleware' => 'role:student'], function () {
     
     Route::get('materi/kuliah/{kuliah}', 'StudentController@materiGetBySemester');

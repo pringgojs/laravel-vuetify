@@ -100416,6 +100416,8 @@ var render = function() {
                             " / " +
                             _vm._s(data.item.semester) +
                             " - " +
+                            _vm._s(data.item.matakuliah) +
+                            " - " +
                             _vm._s(data.item.jurusan) +
                             " (" +
                             _vm._s(data.item.kelas) +
@@ -100435,6 +100437,8 @@ var render = function() {
                             _vm._s(data.item.tahun) +
                             " / " +
                             _vm._s(data.item.semester) +
+                            " - " +
+                            _vm._s(data.item.matakuliah) +
                             " - " +
                             _vm._s(data.item.jurusan) +
                             " (" +
@@ -100834,6 +100838,7 @@ var FilePond = __WEBPACK_IMPORTED_MODULE_1_vue_filepond___default()(__WEBPACK_IM
                 app.descriptionSemester = resp.data.keterangan;
                 app.bodyTable = resp.data.data;
                 app.semesters = resp.data.data_semester;
+                console.log(app.semesters);
             }).catch(function (resp) {
                 showSnackbar("oops, something went wrong. Please try again!");
             });
@@ -100950,6 +100955,8 @@ var render = function() {
                                 " / " +
                                 _vm._s(data.item.semester) +
                                 " - " +
+                                _vm._s(data.item.matakuliah) +
+                                " - " +
                                 _vm._s(data.item.jurusan) +
                                 " (" +
                                 _vm._s(data.item.kelas) +
@@ -100969,6 +100976,8 @@ var render = function() {
                                 _vm._s(data.item.tahun) +
                                 " / " +
                                 _vm._s(data.item.semester) +
+                                " - " +
+                                _vm._s(data.item.matakuliah) +
                                 " - " +
                                 _vm._s(data.item.jurusan) +
                                 " (" +
@@ -105104,13 +105113,16 @@ __WEBPACK_IMPORTED_MODULE_0_moment__["locale"]('id');
             axios.post('lecturer/e-tugas/set-nilai', app.data).then(function (resp) {
                 app.is_save = false;
                 app.dialog = false;
-
+                app.data.nilai = 0;
+                app.data.tugas_id = '';
                 app.$store.state.obj_list_etugas = resp.data.etugas_kelas_mahasiswa;
                 app.showSnackbar("Data berhasil disimpan!");
                 return true;
             }).catch(function (resp) {
                 app.is_save = false;
                 app.dialog = false;
+                app.data.nilai = 0;
+                app.data.tugas_id = '';
                 app.showSnackbar("oops, something went wrong. Please try again!");
             });
         },
@@ -105857,9 +105869,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       window.location.href = base_url + '/logout';
     }
   },
-  mounted: function mounted() {
-    console.log('mon');
-  }
+  mounted: function mounted() {}
 });
 
 /***/ }),

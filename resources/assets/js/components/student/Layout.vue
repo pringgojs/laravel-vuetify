@@ -115,7 +115,6 @@
       }
     },
     mounted() {
-      console.log('mon')
     }
   }
 </script>
