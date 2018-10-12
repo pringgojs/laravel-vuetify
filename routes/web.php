@@ -10,10 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('tes', function () {
-    $x = \DB::table('nilai_modul')->get();
-    dd($x);
-});
+
 Route::group(['prefix' => 'student', 'middleware' => 'role:student'], function () {
     
     Route::get('materi/kuliah/{kuliah}', 'StudentController@materiGetBySemester');
@@ -27,34 +24,45 @@ Route::group(['prefix' => 'student', 'middleware' => 'role:student'], function (
     Route::get('/', 'StudentController@index');
 });
 
-Route::group(['prefix' => 'lecturer', 'middleware' => 'role:lecturer'], function () {
-    // materi
-    Route::get('materi/get-by-semester/{kuliah}', 'LecturerController@getByKuliahMateri');
-    Route::get('materi/remove/{id}', 'LecturerController@deleteMateri');
-    Route::post('materi/store', 'LecturerController@storeMateri');
-    Route::get('materi', 'LecturerController@indexMateri');
+Route::group(['prefix' => 'lecturer', 'middleware' => 'role:lecturer', 'namespace' => 'Lecturer'], function () {
 
-    // e-tugas
-    Route::post('e-tugas/set-nilai', 'LecturerController@setNilaiEtugas');
-    Route::get('e-tugas/get-by-semester/{kuliah}', 'LecturerController@getByKuliahEtugas');
-    Route::post('e-tugas/update/{id}', 'LecturerController@updateEtugas');
-    Route::get('e-tugas/detail/{id}', 'LecturerController@detailEtugas');
-    Route::get('e-tugas/edit/{id}', 'LecturerController@editEtugas');
-    Route::get('e-tugas/remove/{id}', 'LecturerController@deleteEtugas');
-    Route::post('e-tugas/store', 'LecturerController@storeEtugas');
-    Route::get('e-tugas', 'LecturerController@indexEtugas');
-
-    // Report
-    Route::group(['prefix' => 'report', 'namespace' => 'Lecturer'], function () {
-        Route::get('nilai-permodul/sync/{id_master_modul}', 'LecturerReportController@sync');
-        Route::get('nilai-permodul/detail/{id_master_modul}', 'LecturerReportController@detailModul');
-        Route::get('nilai-permodul/kuliah/{id}', 'LecturerReportController@kuliah');
-        Route::get('nilai-permodul', 'LecturerReportController@nilaiPermodul');
+    Route::group(['prefix' => 'materi'], function () {
+        Route::get('get-by-semester/{kuliah}', 'MateriController@getByKuliah');
+        Route::get('remove/{id}', 'MateriController@delete');
+        Route::post('store', 'MateriController@store');
+        Route::get('/', 'MateriController@index');
     });
-    // schedule
-    Route::get('schedule/get-by-semester/{kuliah}', 'LecturerController@getBySemester');
-    Route::get('schedule', 'LecturerController@schedule');
-    Route::get('/', 'LecturerController@index');
+
+    Route::group(['prefix' => 'e-tugas'], function () {
+        Route::post('set-nilai', 'EtugasController@setNilai');
+        Route::post('filter', 'EtugasController@filter');
+        Route::post('update/{id}', 'EtugasController@update');
+        Route::get('detail/{id}', 'EtugasController@detail');
+        Route::get('edit/{id}', 'EtugasController@edit');
+        Route::get('remove/{id}', 'EtugasController@delete');
+        Route::post('store', 'EtugasController@store');
+        Route::get('/', 'EtugasController@index');
+    });
+
+    Route::group(['prefix' => 'report'], function () {
+        Route::get('nilai-permodul/sync/{id_master_modul}', 'ReportController@sync');
+        Route::get('nilai-permodul/detail/{id_master_modul}', 'ReportController@detailModul');
+        Route::get('nilai-permodul/kuliah/{id}', 'ReportController@kuliah');
+        Route::get('nilai-permodul', 'ReportController@nilaiPermodul');
+    });
+
+    Route::group(['prefix' => 'schedule'], function () {
+        Route::get('get-by-semester/{kuliah}', 'ScheduleController@getBySemester');
+        Route::get('/', 'ScheduleController@index');
+    });
+
+    Route::get('/', 'DashboardController@index');
+});
+Route::group(['prefix' => 'filter'], function () {
+    Route::post('get-modul', 'FilterController@getModul');
+    Route::post('get-matakuliah', 'FilterController@getMatakuliah');
+    Route::get('get-kelas/{tahun}/{semester}', 'FilterController@getKelas');
+    Route::get('get-semester', 'FilterController@getSemester');
 });
 
 Route::post('login', 'Auth\LoginController@login');

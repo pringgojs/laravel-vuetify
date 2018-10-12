@@ -4,150 +4,179 @@
         <div class="subheading">Tambahkan tugas sebagai bahan evaluasi belajar mahasiswa</div>
         <content-loader v-if="!isLoaded" :height="250"></content-loader>
 
-        <v-flex sm12 md6  v-if="isLoaded">
-            <v-flex md12 mt-5>
-                <v-select 
-                    :items="semesters"
-                    v-model="filter"
-                    label="Pilih Kelas"
-                    item-text="tahun"
-                    item-value="kuliah"
-                    @change="selectSemester()"
-                    solo
-                >
-                    <template slot="selection" slot-scope="data">
-                        {{ data.item.tahun }} / {{ data.item.semester }} - {{ data.item.matakuliah}} - {{ data.item.jurusan }} ({{data.item.kelas}} {{data.item.pararel}})
-                    </template>
-                    <template slot="item" slot-scope="data">
-                        {{ data.item.tahun }} / {{ data.item.semester }} - {{ data.item.matakuliah}} - {{ data.item.jurusan }} ({{data.item.kelas}} {{data.item.pararel}})
-                    </template>
-                </v-select>
-            </v-flex>
-            <v-flex md12>
-                <v-select 
-                    :items="moduls"
-                    v-model="nilai_master_modul"
-                    label="Modul"
-                    item-text="modul"
-                    item-value="nomor_nilai_master_modul"
-                    solo
-                >
-                    <template slot="selection" slot-scope="data">
-                        {{ data.item.modul }}
-                    </template>
-                    <template slot="item" slot-scope="data">
-                        {{ data.item.modul }}
-                    </template>
-                </v-select>
-            </v-flex>
-            <v-flex xs12 sm12 md12>
-                <v-text-field
-                    label="Judul Tugas"
-                    v-model="judul"
-                    solo
-                ></v-text-field>
-            </v-flex>
-            <v-flex xs12>
-                <v-textarea
-                solo
-                name="input-7-4"
-                label="Keterangan"
-                v-model="keterangan"
-                ></v-textarea>
-            </v-flex>
-            <!-- time picker -->
-            <v-layout row wrap pa-2>
+        <v-container fluid grid-list-xl v-if="isLoaded">
+            <v-layout wrap align-center>
+                <v-flex md4 mt-5 d-flex>
+                    <v-select 
+                        :items="filter.list_semester"
+                        v-model="filter.semester"
+                        label="Pilih semester"
+                        item-text="tahun"
+                        item-value="semester"
+                        @change="selectKelas()"
+                        solo
+                    >
+                        <template slot="selection" slot-scope="data">
+                            {{ data.item.semester }}
+                        </template>
+                        <template slot="item" slot-scope="data">
+                            {{ data.item.semester }}
+                        </template>
+                    </v-select>
+                </v-flex>
+                <v-flex md4 mt-5 d-flex>
+                    <v-select 
+                        :items="filter.list_kelas"
+                        v-model="filter.kelas"
+                        label="Pilih kelas"
+                        item-text="kode"
+                        item-value="nomor"
+                        @change="selectMatakuliah()"
+                        solo
+                    >
+                        <template slot="selection" slot-scope="data">
+                            {{ data.item.kode }}
+                        </template>
+                        <template slot="item" slot-scope="data">
+                            {{ data.item.kode }}
+                        </template>
+                    </v-select>
+                </v-flex>
+                <v-flex md4 mt-5 d-flex>
+                    <v-select 
+                        :items="filter.list_matakuliah"
+                        v-model="filter.matakuliah"
+                        label="Pilih matakuliah"
+                        item-text="matakuliah"
+                        item-value="nomor"
+                        @change="selectModul()"
+                        solo
+                    >
+                        <template slot="selection" slot-scope="data">
+                            {{ data.item.matakuliah }}
+                        </template>
+                        <template slot="item" slot-scope="data">
+                            {{ data.item.matakuliah }}
+                        </template>
+                    </v-select>
+                </v-flex>
+                <v-flex md12>
+                    <v-select 
+                        :items="list_modul"
+                        v-model="nilai_master_modul"
+                        label="Pilih Modul"
+                        item-text="modul"
+                        item-value="nomor"
+                        solo
+                    >
+                        <template slot="selection" slot-scope="data">
+                            {{ data.item.modul }}
+                        </template>
+                        <template slot="item" slot-scope="data">
+                            {{ data.item.modul }}
+                        </template>
+                    </v-select>
+                </v-flex>
+                <v-flex xs12 sm12 md12>
+                    <v-text-field
+                        label="Judul Tugas"
+                        v-model="judul"
+                        solo
+                    ></v-text-field>
+                </v-flex>
                 <v-flex xs12>
-                <p>Tetapkan batas waktu pengumpulan</p>
+                    <v-textarea
+                    solo
+                    name="input-7-4"
+                    label="Keterangan"
+                    v-model="keterangan"
+                    ></v-textarea>
                 </v-flex>
-                <!-- date -->
-                <v-flex xs12 sm6 md6>
-                    <v-menu
-                        ref="menu_date"
-                        :close-on-content-click="false"
-                        v-model="menu"
-                        :nudge-right="40"
-                        :return-value.sync="date"
-                        lazy
-                        transition="scale-transition"
-                        offset-y
-                        full-width
-                        min-width="290px"
-                    >
-                        <v-text-field
-                        slot="activator"
-                        v-model="date"
-                        placeholder="Tanggal"
-                        readonly
-                        solo
-                        append-icon="event"
-                        ></v-text-field>
-                        <v-date-picker v-model="date" no-title scrollable>
-                            <v-spacer></v-spacer>
-                            <v-btn flat color="primary" @click="menu = false">Cancel</v-btn>
-                            <v-btn flat color="primary" @click="$refs.menu_date.save(date)">OK</v-btn>
-                        </v-date-picker>
-                    </v-menu>
+                <!-- time picker -->
+                <v-layout row wrap pa-2>
+                    <v-flex xs12>
+                    <p>Tetapkan batas waktu pengumpulan</p>
+                    </v-flex>
+                    <!-- date -->
+                    <v-flex xs12 sm6 md6>
+                        <v-menu
+                            ref="menu_date"
+                            :close-on-content-click="false"
+                            v-model="menu"
+                            :nudge-right="40"
+                            :return-value.sync="date"
+                            lazy
+                            transition="scale-transition"
+                            offset-y
+                            full-width
+                            min-width="290px"
+                        >
+                            <v-text-field
+                            slot="activator"
+                            v-model="date"
+                            placeholder="Tanggal"
+                            readonly
+                            solo
+                            append-icon="event"
+                            ></v-text-field>
+                            <v-date-picker v-model="date" no-title scrollable>
+                                <v-spacer></v-spacer>
+                                <v-btn flat color="primary" @click="menu = false">Cancel</v-btn>
+                                <v-btn flat color="primary" @click="$refs.menu_date.save(date)">OK</v-btn>
+                            </v-date-picker>
+                        </v-menu>
+                    </v-flex>
+                    <!-- time -->
+                    <v-flex xs12 sm6 md6>
+                        <v-menu
+                            ref="menu_time"
+                            :close-on-content-click="false"
+                            v-model="menu2"
+                            :nudge-right="40"
+                            :return-value.sync="time"
+                            lazy
+                            transition="scale-transition"
+                            offset-y
+                            full-width
+                            max-width="290px"
+                            min-width="290px"
+                        >
+                            <v-text-field
+                            slot="activator"
+                            v-model="time"
+                            placeholder="Jam"
+                            readonly
+                            solo
+                            append-icon="schedule"
+                            ></v-text-field>
+                            <v-time-picker
+                            v-if="menu2"
+                            v-model="time"
+                            @change="$refs.menu_time.save(time)"
+                            ></v-time-picker>
+                        </v-menu>
+                    </v-flex>
+                </v-layout>
+                
+                <v-flex xs12>
+                    <p>Tambahkan File (Optional)</p>
+                    <file-pond
+                        name="file"
+                        ref="pond"
+                        label-idle="Drop files here..."
+                        allow-multiple="false"
+                        v-bind:files="myFiles"/>
                 </v-flex>
-                <!-- time -->
-                <v-flex xs12 sm6 md6>
-                    <v-menu
-                        ref="menu_time"
-                        :close-on-content-click="false"
-                        v-model="menu2"
-                        :nudge-right="40"
-                        :return-value.sync="time"
-                        lazy
-                        transition="scale-transition"
-                        offset-y
-                        full-width
-                        max-width="290px"
-                        min-width="290px"
-                    >
-                        <v-text-field
-                        slot="activator"
-                        v-model="time"
-                        placeholder="Jam"
-                        readonly
-                        solo
-                        append-icon="schedule"
-                        ></v-text-field>
-                        <v-time-picker
-                        v-if="menu2"
-                        v-model="time"
-                        @change="$refs.menu_time.save(time)"
-                        ></v-time-picker>
-                    </v-menu>
-                </v-flex>
+                <router-link to="/e-tugas"><v-btn flat >Kembali</v-btn></router-link>
+                <v-btn color="info" @click="submit">Simpan</v-btn>
             </v-layout>
-            
-            <v-flex xs12>
-                <p>Tambahkan File (Optional)</p>
-                <file-pond
-                    name="file"
-                    ref="pond"
-                    label-idle="Drop files here..."
-                    allow-multiple="false"
-                    v-bind:files="myFiles"/>
-            </v-flex>
-            <router-link to="/e-tugas"><v-btn flat >Kembali</v-btn></router-link>
-            <v-btn color="info" @click="submit">Simpan</v-btn>
+        </v-container>
 
-        </v-flex>
-
-        <v-snackbar
-            v-model="snackbar"
-                right
-                bottom
-                >
-                {{snackbarText}}
-                <v-btn
-                    dark
-                    flat
-                    @click="snackbar = false"
-                >
-                    Close
-                </v-btn>
+        <v-snackbar v-model="snackbar" right bottom >
+            {{snackbarText}}
+            <v-btn dark flat @click="snackbar = false" >
+                Close
+            </v-btn>
         </v-snackbar>
     </v-flex>
 </template>
@@ -177,10 +206,8 @@ export default {
             isLoaded: false,
             snackbarText: '',
             snackbar: false,
-            nilai_master_modul: '',
-            semesters: [],
             moduls: [],
-            filter: '',
+            list_modul: [],
             myFiles: '',
             judul: '',
             keterangan: '',
@@ -188,6 +215,15 @@ export default {
             menu: false,
             time: null,
             menu2: false,
+            nilai_master_modul: '',
+            filter: {
+                list_semester: [],
+                list_kelas: [],
+                list_matakuliah: [],
+                semester: '',
+                kelas: '',
+                matakuliah: '',
+            }
         }
     },
     mounted() {
@@ -196,15 +232,13 @@ export default {
     methods: {
         initData() {
             var app = this;
-            axios.get('lecturer/schedule').then(function (resp) {
+            app.isLoaded = true;
+            axios.get('filter/get-semester').then(function (resp) {
                 app.isLoaded = true;
-                app.descriptionSemester = resp.data.keterangan;
-                app.bodyTable = resp.data.data;
-                app.semesters = resp.data.data_semester;
-                console.log(app.semesters)
+                app.list_semester = resp.data;
             })
             .catch(function (resp) {
-                app.showSnackbar("oops, something went wrong. Please try again!");
+                app.showSnackbar("Terjadi kegagalan sistem. Silahkan coba lagi!");
             });
         },
         showSnackbar(text) {
@@ -212,21 +246,43 @@ export default {
             app.snackbarText = text;
             app.snackbar = true;
         },
-        selectSemester() {
-            if (!this.filter) return false;
+        selectKelas() {
+            if (!this.filter.semester) return false;
             var app = this;
-            axios.get('lecturer/schedule/get-by-semester/'+app.filter).then(function (resp) {
-                app.descriptionSemester = resp.data.keterangan;
-                app.moduls = resp.data.data;
+            axios.get('filter/get-kelas/'+app.filter.semester).then(function (resp) {
+                app.filter.list_kelas = ''
+                app.filter.list_kelas = resp.data
             })
             .catch(function (resp) {
-                app.showSnackbar("oops, something went wrong. Please try again!");
+                app.showSnackbar("Terjadi kegagalan sistem. Silahkan coba lagi!");
+            });
+        },
+        selectMatakuliah() {
+            if (!this.filter.kelas) return false;
+            var app = this;
+            axios.post('filter/get-matakuliah', app.filter).then(function (resp) {
+                app.filter.list_matakuliah = ''
+                app.filter.list_matakuliah = resp.data
+            })
+            .catch(function (resp) {
+                app.showSnackbar("Terjadi kegagalan sistem. Silahkan coba lagi!");
+            });
+        },
+        selectModul() {
+            if (!this.filter.matakuliah) return false;
+            var app = this;
+            axios.post('filter/get-modul', app.filter).then(function (resp) {
+                app.list_modul = ''
+                app.list_modul = resp.data
+            })
+            .catch(function (resp) {
+                app.showSnackbar("Terjadi kegagalan sistem. Silahkan coba lagi!");
             });
         },
         submit() {
             var app = this;
-            if (!app.filter) {
-                app.showSnackbar('Anda belum memilih kelas.');
+            if (!app.filter.matakuliah) {
+                app.showSnackbar('Silahkan memilih kelas terlebih dahulu.');
                 return false;
             }
 
