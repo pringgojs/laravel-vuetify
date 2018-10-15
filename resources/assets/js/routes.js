@@ -12,6 +12,7 @@ import ETugasEdit from './components/lecturer/ETugasEdit.vue'
 import Schedule from './components/lecturer/Schedule.vue'
 import Materi from './components/lecturer/Materi.vue'
 import MateriAdd from './components/lecturer/MateriAdd.vue'
+import MateriEdit from './components/lecturer/MateriEdit.vue'
 import NilaiPermodul from './components/lecturer/NilaiPermodul.vue'
 import NilaiPermodulDetail from './components/lecturer/NilaiPermodulDetail.vue'
 import Report from './components/lecturer/Report.vue'
@@ -38,6 +39,7 @@ Vue.component('schedule', require('./components/lecturer/Schedule.vue'))
 Vue.component('report', require('./components/lecturer/Report.vue'))
 Vue.component('materi', require('./components/lecturer/Materi.vue'))
 Vue.component('materi-add', require('./components/lecturer/MateriAdd.vue'))
+Vue.component('materi-edit', require('./components/lecturer/MateriEdit.vue'))
 Vue.component('nilai-permodul', require('./components/lecturer/NilaiPermodul.vue'))
 Vue.component('nilai-permodul-detail', require('./components/lecturer/NilaiPermodulDetail.vue'))
 Vue.component('login', require('./components/Login.vue'))
@@ -123,6 +125,15 @@ const routes = [
         name: 'lecturerMateriAdd',
         meta: {
             title: 'Materi Baru - Dosen Jaga',
+            type: 'lecturer'
+        }
+    },
+    {
+        path: '/materi/edit/:id',
+        component: MateriEdit,
+        name: 'lecturerMateriEdit',
+        meta: {
+            title: 'Materi Edit - Dosen Jaga',
             type: 'lecturer'
         }
     },

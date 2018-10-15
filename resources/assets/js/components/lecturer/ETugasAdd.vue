@@ -6,61 +6,62 @@
 
         <v-container fluid grid-list-xl v-if="isLoaded">
             <v-layout wrap align-center>
-                <v-flex md4 mt-5 d-flex>
-                    <v-select 
-                        :items="filter.list_semester"
-                        v-model="filter.semester"
-                        label="Pilih semester"
-                        item-text="tahun"
-                        item-value="semester"
-                        @change="selectKelas()"
-                        solo
-                    >
-                        <template slot="selection" slot-scope="data">
-                            {{ data.item.semester }}
-                        </template>
-                        <template slot="item" slot-scope="data">
-                            {{ data.item.semester }}
-                        </template>
-                    </v-select>
-                </v-flex>
-                <v-flex md4 mt-5 d-flex>
-                    <v-select 
-                        :items="filter.list_kelas"
-                        v-model="filter.kelas"
-                        label="Pilih kelas"
-                        item-text="kode"
-                        item-value="nomor"
-                        @change="selectMatakuliah()"
-                        solo
-                    >
-                        <template slot="selection" slot-scope="data">
-                            {{ data.item.kode }}
-                        </template>
-                        <template slot="item" slot-scope="data">
-                            {{ data.item.kode }}
-                        </template>
-                    </v-select>
-                </v-flex>
-                <v-flex md4 mt-5 d-flex>
-                    <v-select 
-                        :items="filter.list_matakuliah"
-                        v-model="filter.matakuliah"
-                        label="Pilih matakuliah"
-                        item-text="matakuliah"
-                        item-value="nomor"
-                        @change="selectModul()"
-                        solo
-                    >
-                        <template slot="selection" slot-scope="data">
-                            {{ data.item.matakuliah }}
-                        </template>
-                        <template slot="item" slot-scope="data">
-                            {{ data.item.matakuliah }}
-                        </template>
-                    </v-select>
-                </v-flex>
-
+                <template>
+                    <v-flex md4 mt-5 d-flex>
+                        <v-select 
+                            :items="filter.list_semester"
+                            v-model="filter.semester"
+                            label="Pilih semester"
+                            item-text="tahun"
+                            item-value="semester"
+                            @change="selectKelas()"
+                            solo
+                        >
+                            <template slot="selection" slot-scope="data">
+                                {{ data.item.semester }}
+                            </template>
+                            <template slot="item" slot-scope="data">
+                                {{ data.item.semester }}
+                            </template>
+                        </v-select>
+                    </v-flex>
+                    <v-flex md4 mt-5 d-flex>
+                        <v-select 
+                            :items="filter.list_kelas"
+                            v-model="filter.kelas"
+                            label="Pilih kelas"
+                            item-text="kode"
+                            item-value="nomor"
+                            @change="selectMatakuliah()"
+                            solo
+                        >
+                            <template slot="selection" slot-scope="data">
+                                {{ data.item.kode }}
+                            </template>
+                            <template slot="item" slot-scope="data">
+                                {{ data.item.kode }}
+                            </template>
+                        </v-select>
+                    </v-flex>
+                    <v-flex md4 mt-5 d-flex>
+                        <v-select 
+                            :items="filter.list_matakuliah"
+                            v-model="filter.matakuliah"
+                            label="Pilih matakuliah"
+                            item-text="matakuliah"
+                            item-value="nomor"
+                            @change="selectModul()"
+                            solo
+                        >
+                            <template slot="selection" slot-scope="data">
+                                {{ data.item.matakuliah }}
+                            </template>
+                            <template slot="item" slot-scope="data">
+                                {{ data.item.matakuliah }}
+                            </template>
+                        </v-select>
+                    </v-flex>
+                </template>
                 <v-flex md12>
                     <v-select 
                         :items="list_modul"
@@ -186,20 +187,20 @@
 import { ContentLoader } from 'vue-content-loader'
 
 // Import Vue FilePond
-import vueFilePond from 'vue-filepond';
-import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
-import FilePondPluginFileValidateSize from 'filepond-plugin-file-validate-size';
-import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
-import FilePondPluginFileEncode from 'filepond-plugin-file-encode';
+import vueFilePond from 'vue-filepond'
+import FilePondPluginImagePreview from 'filepond-plugin-image-preview'
+import FilePondPluginFileValidateSize from 'filepond-plugin-file-validate-size'
+import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type'
+import FilePondPluginFileEncode from 'filepond-plugin-file-encode'
 // Import FilePond styles
-import 'filepond/dist/filepond.min.css';
-import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
+import 'filepond/dist/filepond.min.css'
+import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css'
 const FilePond = vueFilePond( 
     FilePondPluginImagePreview,
     FilePondPluginFileValidateSize,
     FilePondPluginFileValidateType,
     FilePondPluginFileEncode
-);
+)
 
 export default {
     data () {
@@ -227,95 +228,95 @@ export default {
         }
     },
     mounted() {
-        this.initData();
+        this.initData()
     },
     methods: {
         initData() {
-            var app = this;
-            app.isLoaded = true;
+            var app = this
+            app.isLoaded = true
             axios.get('filter/get-semester').then(function (resp) {
-                app.isLoaded = true;
-                app.list_semester = resp.data;
+                app.isLoaded = true
+                app.filter.list_semester = resp.data
             })
             .catch(function (resp) {
-                app.showSnackbar("Terjadi kegagalan sistem. Silahkan coba lagi!");
-            });
+                app.showSnackbar("Terjadi kegagalan sistem. Silahkan coba lagi!")
+            })
         },
         showSnackbar(text) {
-            var app = this;
-            app.snackbarText = text;
-            app.snackbar = true;
+            var app = this
+            app.snackbarText = text
+            app.snackbar = true
         },
         selectKelas() {
-            if (!this.filter.semester) return false;
-            var app = this;
+            if (!this.filter.semester) return false
+            var app = this
             axios.get('filter/get-kelas/'+app.filter.semester).then(function (resp) {
                 app.filter.list_kelas = ''
                 app.filter.list_kelas = resp.data
             })
             .catch(function (resp) {
-                app.showSnackbar("Terjadi kegagalan sistem. Silahkan coba lagi!");
-            });
+                app.showSnackbar("Terjadi kegagalan sistem. Silahkan coba lagi!")
+            })
         },
         selectMatakuliah() {
-            if (!this.filter.kelas) return false;
-            var app = this;
+            if (!this.filter.kelas) return false
+            var app = this
             axios.post('filter/get-matakuliah', app.filter).then(function (resp) {
                 app.filter.list_matakuliah = ''
                 app.filter.list_matakuliah = resp.data
             })
             .catch(function (resp) {
-                app.showSnackbar("Terjadi kegagalan sistem. Silahkan coba lagi!");
-            });
+                app.showSnackbar("Terjadi kegagalan sistem. Silahkan coba lagi!")
+            })
         },
         selectModul() {
-            if (!this.filter.matakuliah) return false;
-            var app = this;
+            if (!this.filter.matakuliah) return false
+            var app = this
             axios.post('filter/get-modul', app.filter).then(function (resp) {
                 app.list_modul = ''
                 app.list_modul = resp.data
             })
             .catch(function (resp) {
-                app.showSnackbar("Terjadi kegagalan sistem. Silahkan coba lagi!");
-            });
+                app.showSnackbar("Terjadi kegagalan sistem. Silahkan coba lagi!")
+            })
         },
         submit() {
-            var app = this;
+            var app = this
             if (!app.filter.matakuliah) {
-                app.showSnackbar('Silahkan memilih kelas terlebih dahulu.');
-                return false;
+                app.showSnackbar('Silahkan memilih kelas terlebih dahulu.')
+                return false
             }
 
             if (!app.nilai_master_modul) {
-                app.showSnackbar('Anda belum memilih modul.');
-                return false;
+                app.showSnackbar('Anda belum memilih modul.')
+                return false
             }
 
             if (!app.judul) {
-                app.showSnackbar('Judul tugas harus diisi');
-                return false;
+                app.showSnackbar('Judul tugas harus diisi')
+                return false
             }
 
             if (!app.keterangan) {
-                app.showSnackbar('Keterangan tugas harus diisi');
-                return false;
+                app.showSnackbar('Keterangan tugas harus diisi')
+                return false
             }
 
             if (!app.date) {
-                app.showSnackbar('Tanggal harus diisi');
-                return false;
+                app.showSnackbar('Tanggal harus diisi')
+                return false
             }
 
             if (!app.time) {
-                app.showSnackbar('Batas waktu harus diisi');
-                return false;
+                app.showSnackbar('Batas waktu harus diisi')
+                return false
             }
             
-            var file = app.$refs.pond.getFiles();
-            let form = new FormData();
-            form.append('file', '');
+            var file = app.$refs.pond.getFiles()
+            let form = new FormData()
+            form.append('file', '')
             if (file.length) {
-                form.append('file', file[0].file);
+                form.append('file', file[0].file)
             }
             
             form.append('judul', app.judul)
@@ -325,15 +326,15 @@ export default {
             form.append('nilai_master_modul', app.nilai_master_modul)
             axios.post( 'lecturer/e-tugas/store', form, { headers: {'Content-Type': 'multipart/form-data'}}).then(function (resp) {
                 if (resp.data.code == 200) {
-                    app.judul = '';
-                    app.keterangan = '';
-                    app.myFiles = [];
-                    app.showSnackbar('E-Tugas berhasil ditambahkan');
+                    app.judul = ''
+                    app.keterangan = ''
+                    app.myFiles = []
+                    app.showSnackbar('E-Tugas berhasil ditambahkan')
                 }
             })
             .catch(function(e) {
-                app.showSnackbar('E-Tugas gagal ditambahkan');
-            });
+                app.showSnackbar('E-Tugas gagal ditambahkan')
+            })
         }
     },
     components: {

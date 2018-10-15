@@ -27,7 +27,9 @@ Route::group(['prefix' => 'student', 'middleware' => 'role:student'], function (
 Route::group(['prefix' => 'lecturer', 'middleware' => 'role:lecturer', 'namespace' => 'Lecturer'], function () {
 
     Route::group(['prefix' => 'materi'], function () {
-        Route::get('get-by-semester/{kuliah}', 'MateriController@getByKuliah');
+        Route::post('filter', 'MateriController@filter');
+        Route::post('update/{id}', 'MateriController@update');
+        Route::get('edit/{id}', 'MateriController@edit');
         Route::get('remove/{id}', 'MateriController@delete');
         Route::post('store', 'MateriController@store');
         Route::get('/', 'MateriController@index');

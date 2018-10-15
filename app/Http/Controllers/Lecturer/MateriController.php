@@ -32,6 +32,27 @@ class MateriController extends Controller
         return $response;
     }
 
+    public function edit($id)
+    {
+        $url = config('api.url').'/lecturer/materi/edit/'.$id;
+        $data = array('user' => ResponseHelper::user());
+        $response = Curl::to($url)
+            ->withData($data)
+            ->post();
+        return $response;
+    }
+
+    public function update(Request $request, $id)
+    {
+        $file = FileHelper::upload($request->file('file'), 'uploads/materi/');
+        $url = config('api.url').'/lecturer/materi/update/'.$id;
+        $data = array('user' => ResponseHelper::user(), 'request' => $request->toArray(), 'file' => $file);
+        $response = Curl::to($url)
+            ->withData($data)
+            ->post();
+        return $response;
+    }
+
     public function delete($id)
     {
         $url = config('api.url').'/lecturer/materi/delete/'.$id;
@@ -40,23 +61,23 @@ class MateriController extends Controller
             ->withData($data)
             ->post();
         
-        return json_decode($response);
-        if (file_exists($database->url)) {
+        $response = json_decode($response);
+        if (file_exists($response->url)) {
             try {
-                \File::delete($database->url);
+                \File::delete($response->url);
             } catch (\Exception $e) {
             }
         }
         return 1;
     }
 
-    public function getByKuliahMateri($kuliah)
+    public function filter(Request $request)
     {
-        $url = config('api.url').'/lecturer/materi/get-by-kuliah';
-        $data = array('user' => ResponseHelper::user(), 'kuliah' => $kuliah);
+        $url = config('api.url').'/lecturer/materi/filter';
+        $data = array('user' => ResponseHelper::user(), 'request' => $request->toArray());
         $response = Curl::to($url)
-        ->withData($data)
-        ->post();
+            ->withData($data)
+            ->post();
 
         return $response;
     }

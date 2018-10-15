@@ -61,9 +61,10 @@ class EtugasController extends Controller
             ->withData($data)
             ->post();
 
-        if (file_exists($database->url)) {
+        $response = json_decode($response);
+        if (file_exists($response->url)) {
             try {
-                \File::delete($database->url);
+                \File::delete($response->url);
             } catch (\Exception $e) {
             }
         }
