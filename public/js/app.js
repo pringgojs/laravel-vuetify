@@ -89432,7 +89432,7 @@ var render = function() {
       _vm._v(" "),
       _c("div", { staticClass: "subheading" }, [
         _vm._v(
-          "Tambahkan tugas sebagai bahwan evaluasi mahasiswa dalam memahami pelajaran"
+          "Tambahkan tugas sebagai bahan evaluasi mahasiswa dalam memahami pelajaran"
         )
       ]),
       _vm._v(" "),
@@ -90140,6 +90140,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -90160,7 +90161,6 @@ var FilePond = __WEBPACK_IMPORTED_MODULE_1_vue_filepond___default()(__WEBPACK_IM
             isLoaded: false,
             snackbarText: '',
             snackbar: false,
-            moduls: [],
             list_modul: [],
             myFiles: '',
             judul: '',
@@ -99417,6 +99417,40 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_filepond_dist_filepond_min_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_filepond_dist_filepond_min_css__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_filepond_plugin_image_preview_dist_filepond_plugin_image_preview_css__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_filepond_plugin_image_preview_dist_filepond_plugin_image_preview_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_filepond_plugin_image_preview_dist_filepond_plugin_image_preview_css__);
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -99589,13 +99623,12 @@ var FilePond = __WEBPACK_IMPORTED_MODULE_2_vue_filepond___default()(__WEBPACK_IM
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
-        return {
+        return _defineProperty({
             isLoaded: false,
             snackbarText: '',
             snackbar: false,
             nilai_master_modul: '',
-            semesters: [],
-            moduls: [],
+            list_modul: [],
             filter: '',
             myFiles: '',
             judul: '',
@@ -99605,9 +99638,15 @@ var FilePond = __WEBPACK_IMPORTED_MODULE_2_vue_filepond___default()(__WEBPACK_IM
             time: null,
             menu2: false,
             id: '',
-            kuliah_edit: '',
-            modul_edit: ''
-        };
+            tugas: ''
+        }, 'filter', {
+            list_semester: [],
+            list_kelas: [],
+            list_matakuliah: [],
+            semester: '',
+            kelas: '',
+            matakuliah: ''
+        });
     },
     mounted: function mounted() {
         this.initData();
@@ -99621,17 +99660,22 @@ var FilePond = __WEBPACK_IMPORTED_MODULE_2_vue_filepond___default()(__WEBPACK_IM
             var app = this;
             axios.get('lecturer/e-tugas/edit/' + this.id).then(function (resp) {
                 app.isLoaded = true;
-                app.moduls = resp.data.data_modul;
-                app.semesters = resp.data.data_semester;
-                app.kuliah_edit = resp.data.tugas.kuliah;
-                app.modul_edit = resp.data.tugas.nilai_master_modul;
+                console.log(resp.data);
+                app.filter.list_semester = resp.data.list_semester;
+                app.filter.list_kelas = resp.data.list_kelas;
+                app.filter.list_matakuliah = resp.data.list_matakuliah;
+                app.filter.semester = resp.data.kuliah.tahun + '/' + resp.data.kuliah.semester;
+                app.filter.kelas = resp.data.tugas.kelas;
+                app.filter.matakuliah = resp.data.kuliah.matakuliah;
+                app.tugas = resp.data.tugas;
+                // data tugas
+                app.nilai_master_modul = resp.data.tugas.nilai_master_modul;
+                app.list_modul = resp.data.list_modul;
                 app.judul = resp.data.tugas.judul;
                 app.keterangan = resp.data.tugas.keterangan;
                 var due_date = resp.data.tugas.due_date.split(' ');
                 app.date = due_date[0] == '0000-00-00' ? __WEBPACK_IMPORTED_MODULE_1_moment__().format('YYYY-MM-DD') : due_date[0];
                 app.time = due_date[1];
-                app.filter = resp.data.tugas.kuliah;
-                app.nilai_master_modul = resp.data.tugas.nilai_master_modul;
             }).catch(function (resp) {
                 app.showSnackbar("oops, something went wrong. Please try again!");
             });
@@ -99641,14 +99685,34 @@ var FilePond = __WEBPACK_IMPORTED_MODULE_2_vue_filepond___default()(__WEBPACK_IM
             app.snackbarText = text;
             app.snackbar = true;
         },
-        selectSemester: function selectSemester() {
-            if (!this.filter) return false;
+        selectKelas: function selectKelas() {
+            if (!this.filter.semester) return false;
             var app = this;
-            axios.get('lecturer/schedule/get-by-semester/' + app.filter).then(function (resp) {
-                app.descriptionSemester = resp.data.keterangan;
-                app.moduls = resp.data.data;
+            axios.get('filter/get-kelas/' + app.filter.semester).then(function (resp) {
+                app.filter.list_kelas = '';
+                app.filter.list_kelas = resp.data;
             }).catch(function (resp) {
-                app.showSnackbar("oops, something went wrong. Please try again!");
+                app.showSnackbar("Terjadi kegagalan sistem. Silahkan coba lagi!");
+            });
+        },
+        selectMatakuliah: function selectMatakuliah() {
+            if (!this.filter.kelas) return false;
+            var app = this;
+            axios.post('filter/get-matakuliah', app.filter).then(function (resp) {
+                app.filter.list_matakuliah = '';
+                app.filter.list_matakuliah = resp.data;
+            }).catch(function (resp) {
+                app.showSnackbar("Terjadi kegagalan sistem. Silahkan coba lagi!");
+            });
+        },
+        selectModul: function selectModul() {
+            if (!this.filter.matakuliah) return false;
+            var app = this;
+            axios.post('filter/get-modul', app.filter).then(function (resp) {
+                app.list_modul = '';
+                app.list_modul = resp.data;
+            }).catch(function (resp) {
+                app.showSnackbar("Terjadi kegagalan sistem. Silahkan coba lagi!");
             });
         },
         submit: function submit() {
@@ -99740,264 +99804,443 @@ var render = function() {
       _vm._v(" "),
       _vm.isLoaded
         ? _c(
-            "v-flex",
-            { attrs: { sm12: "", md6: "" } },
+            "v-container",
+            { attrs: { fluid: "", "grid-list-xl": "" } },
             [
               _c(
-                "v-flex",
-                { attrs: { md12: "", "mt-5": "" } },
-                [
-                  _c("v-select", {
-                    attrs: {
-                      items: _vm.semesters,
-                      label: "Pilih Kelas",
-                      "item-text": "tahun",
-                      "item-value": "kuliah",
-                      solo: ""
-                    },
-                    on: {
-                      change: function($event) {
-                        _vm.selectSemester()
-                      }
-                    },
-                    scopedSlots: _vm._u([
-                      {
-                        key: "selection",
-                        fn: function(data) {
-                          return [
-                            _vm._v(
-                              "\n                    " +
-                                _vm._s(data.item.tahun) +
-                                " / " +
-                                _vm._s(data.item.semester) +
-                                " - " +
-                                _vm._s(data.item.jurusan) +
-                                " (" +
-                                _vm._s(data.item.kelas) +
-                                " " +
-                                _vm._s(data.item.pararel) +
-                                ")\n                "
-                            )
-                          ]
-                        }
-                      },
-                      {
-                        key: "item",
-                        fn: function(data) {
-                          return [
-                            _vm._v(
-                              "\n                    " +
-                                _vm._s(data.item.tahun) +
-                                " / " +
-                                _vm._s(data.item.semester) +
-                                " - " +
-                                _vm._s(data.item.jurusan) +
-                                " (" +
-                                _vm._s(data.item.kelas) +
-                                " " +
-                                _vm._s(data.item.pararel) +
-                                ")\n                "
-                            )
-                          ]
-                        }
-                      }
-                    ]),
-                    model: {
-                      value: _vm.filter,
-                      callback: function($$v) {
-                        _vm.filter = $$v
-                      },
-                      expression: "filter"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-flex",
-                { attrs: { md12: "" } },
-                [
-                  _c("v-select", {
-                    attrs: {
-                      items: _vm.moduls,
-                      label: "Modul",
-                      "item-text": "modul",
-                      "item-value": "nomor_nilai_master_modul",
-                      solo: ""
-                    },
-                    scopedSlots: _vm._u([
-                      {
-                        key: "selection",
-                        fn: function(data) {
-                          return [
-                            _vm._v(
-                              "\n                    " +
-                                _vm._s(data.item.modul) +
-                                "\n                "
-                            )
-                          ]
-                        }
-                      },
-                      {
-                        key: "item",
-                        fn: function(data) {
-                          return [
-                            _vm._v(
-                              "\n                    " +
-                                _vm._s(data.item.modul) +
-                                "\n                "
-                            )
-                          ]
-                        }
-                      }
-                    ]),
-                    model: {
-                      value: _vm.nilai_master_modul,
-                      callback: function($$v) {
-                        _vm.nilai_master_modul = $$v
-                      },
-                      expression: "nilai_master_modul"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-flex",
-                { attrs: { xs12: "", sm12: "", md12: "" } },
-                [
-                  _c("v-text-field", {
-                    attrs: { label: "Judul Tugas", solo: "" },
-                    model: {
-                      value: _vm.judul,
-                      callback: function($$v) {
-                        _vm.judul = $$v
-                      },
-                      expression: "judul"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-flex",
-                { attrs: { xs12: "" } },
-                [
-                  _c("v-textarea", {
-                    attrs: { solo: "", name: "input-7-4", label: "Keterangan" },
-                    model: {
-                      value: _vm.keterangan,
-                      callback: function($$v) {
-                        _vm.keterangan = $$v
-                      },
-                      expression: "keterangan"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
                 "v-layout",
-                { attrs: { row: "", wrap: "", "pa-2": "" } },
+                { attrs: { wrap: "", "align-center": "" } },
                 [
-                  _c("v-flex", { attrs: { xs12: "" } }, [
-                    _c("p", [_vm._v("Tetapkan batas waktu pengumpulan")])
-                  ]),
+                  _c(
+                    "v-flex",
+                    { attrs: { md4: "", xs12: "", "d-flex": "" } },
+                    [
+                      _c("v-select", {
+                        attrs: {
+                          items: _vm.filter.list_semester,
+                          label: "Pilih semester",
+                          "item-text": "semester",
+                          "item-value": "semester",
+                          solo: ""
+                        },
+                        on: {
+                          change: function($event) {
+                            _vm.selectKelas()
+                          }
+                        },
+                        scopedSlots: _vm._u([
+                          {
+                            key: "selection",
+                            fn: function(data) {
+                              return [
+                                _vm._v(
+                                  "\n                        " +
+                                    _vm._s(data.item.semester) +
+                                    "\n                    "
+                                )
+                              ]
+                            }
+                          },
+                          {
+                            key: "item",
+                            fn: function(data) {
+                              return [
+                                _vm._v(
+                                  "\n                        " +
+                                    _vm._s(data.item.semester) +
+                                    "\n                    "
+                                )
+                              ]
+                            }
+                          }
+                        ]),
+                        model: {
+                          value: _vm.filter.semester,
+                          callback: function($$v) {
+                            _vm.$set(_vm.filter, "semester", $$v)
+                          },
+                          expression: "filter.semester"
+                        }
+                      })
+                    ],
+                    1
+                  ),
                   _vm._v(" "),
                   _c(
                     "v-flex",
-                    { attrs: { xs12: "", sm6: "", md6: "" } },
+                    { attrs: { md4: "", xs12: "", "d-flex": "" } },
                     [
-                      _c(
-                        "v-menu",
-                        {
-                          ref: "menu_date",
-                          attrs: {
-                            "close-on-content-click": false,
-                            "nudge-right": 40,
-                            "return-value": _vm.date,
-                            lazy: "",
-                            transition: "scale-transition",
-                            "offset-y": "",
-                            "full-width": "",
-                            "min-width": "290px"
-                          },
-                          on: {
-                            "update:returnValue": function($event) {
-                              _vm.date = $event
-                            }
-                          },
-                          model: {
-                            value: _vm.menu,
-                            callback: function($$v) {
-                              _vm.menu = $$v
-                            },
-                            expression: "menu"
+                      _c("v-select", {
+                        attrs: {
+                          items: _vm.filter.list_kelas,
+                          label: "Pilih kelas",
+                          "item-text": "kode",
+                          "item-value": "nomor",
+                          solo: ""
+                        },
+                        on: {
+                          change: function($event) {
+                            _vm.selectMatakuliah()
                           }
                         },
-                        [
-                          _c("v-text-field", {
-                            attrs: {
-                              slot: "activator",
-                              placeholder: "Tanggal",
-                              readonly: "",
-                              solo: "",
-                              "append-icon": "event"
-                            },
-                            slot: "activator",
-                            model: {
-                              value: _vm.date,
-                              callback: function($$v) {
-                                _vm.date = $$v
-                              },
-                              expression: "date"
+                        scopedSlots: _vm._u([
+                          {
+                            key: "selection",
+                            fn: function(data) {
+                              return [
+                                _vm._v(
+                                  "\n                        " +
+                                    _vm._s(data.item.kode) +
+                                    "\n                    "
+                                )
+                              ]
                             }
-                          }),
-                          _vm._v(" "),
+                          },
+                          {
+                            key: "item",
+                            fn: function(data) {
+                              return [
+                                _vm._v(
+                                  "\n                        " +
+                                    _vm._s(data.item.kode) +
+                                    "\n                    "
+                                )
+                              ]
+                            }
+                          }
+                        ]),
+                        model: {
+                          value: _vm.filter.kelas,
+                          callback: function($$v) {
+                            _vm.$set(_vm.filter, "kelas", $$v)
+                          },
+                          expression: "filter.kelas"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-flex",
+                    { attrs: { md4: "", xs12: "", "d-flex": "" } },
+                    [
+                      _c("v-select", {
+                        attrs: {
+                          items: _vm.filter.list_matakuliah,
+                          label: "Pilih matakuliah",
+                          "item-text": "matakuliah",
+                          "item-value": "nomor",
+                          solo: ""
+                        },
+                        on: {
+                          change: function($event) {
+                            _vm.selectModul()
+                          }
+                        },
+                        scopedSlots: _vm._u([
+                          {
+                            key: "selection",
+                            fn: function(data) {
+                              return [
+                                _vm._v(
+                                  "\n                        " +
+                                    _vm._s(data.item.matakuliah) +
+                                    "\n                    "
+                                )
+                              ]
+                            }
+                          },
+                          {
+                            key: "item",
+                            fn: function(data) {
+                              return [
+                                _vm._v(
+                                  "\n                        " +
+                                    _vm._s(data.item.matakuliah) +
+                                    "\n                    "
+                                )
+                              ]
+                            }
+                          }
+                        ]),
+                        model: {
+                          value: _vm.filter.matakuliah,
+                          callback: function($$v) {
+                            _vm.$set(_vm.filter, "matakuliah", $$v)
+                          },
+                          expression: "filter.matakuliah"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-flex",
+                    { attrs: { md12: "" } },
+                    [
+                      _c("v-select", {
+                        attrs: {
+                          items: _vm.list_modul,
+                          label: "Modul",
+                          "item-text": "modul",
+                          "item-value": "nomor",
+                          solo: ""
+                        },
+                        scopedSlots: _vm._u([
+                          {
+                            key: "selection",
+                            fn: function(data) {
+                              return [
+                                _vm._v(
+                                  "\n                        " +
+                                    _vm._s(data.item.modul) +
+                                    "\n                    "
+                                )
+                              ]
+                            }
+                          },
+                          {
+                            key: "item",
+                            fn: function(data) {
+                              return [
+                                _vm._v(
+                                  "\n                        " +
+                                    _vm._s(data.item.modul) +
+                                    "\n                    "
+                                )
+                              ]
+                            }
+                          }
+                        ]),
+                        model: {
+                          value: _vm.nilai_master_modul,
+                          callback: function($$v) {
+                            _vm.nilai_master_modul = $$v
+                          },
+                          expression: "nilai_master_modul"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-flex",
+                    { attrs: { xs12: "", sm12: "", md12: "" } },
+                    [
+                      _c("v-text-field", {
+                        attrs: { label: "Judul Tugas", solo: "" },
+                        model: {
+                          value: _vm.judul,
+                          callback: function($$v) {
+                            _vm.judul = $$v
+                          },
+                          expression: "judul"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-flex",
+                    { attrs: { xs12: "" } },
+                    [
+                      _c("v-textarea", {
+                        attrs: {
+                          solo: "",
+                          name: "input-7-4",
+                          label: "Keterangan"
+                        },
+                        model: {
+                          value: _vm.keterangan,
+                          callback: function($$v) {
+                            _vm.keterangan = $$v
+                          },
+                          expression: "keterangan"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-layout",
+                    { attrs: { row: "", wrap: "", "pa-2": "" } },
+                    [
+                      _c("v-flex", { attrs: { xs12: "" } }, [
+                        _c("p", [_vm._v("Tetapkan batas waktu pengumpulan")])
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "v-flex",
+                        { attrs: { xs12: "", sm6: "", md6: "" } },
+                        [
                           _c(
-                            "v-date-picker",
+                            "v-menu",
                             {
-                              attrs: { "no-title": "", scrollable: "" },
+                              ref: "menu_date",
+                              attrs: {
+                                "close-on-content-click": false,
+                                "nudge-right": 40,
+                                "return-value": _vm.date,
+                                lazy: "",
+                                transition: "scale-transition",
+                                "offset-y": "",
+                                "full-width": "",
+                                "min-width": "290px"
+                              },
+                              on: {
+                                "update:returnValue": function($event) {
+                                  _vm.date = $event
+                                }
+                              },
                               model: {
-                                value: _vm.date,
+                                value: _vm.menu,
                                 callback: function($$v) {
-                                  _vm.date = $$v
+                                  _vm.menu = $$v
                                 },
-                                expression: "date"
+                                expression: "menu"
                               }
                             },
                             [
-                              _c("v-spacer"),
+                              _c("v-text-field", {
+                                attrs: {
+                                  slot: "activator",
+                                  placeholder: "Tanggal",
+                                  readonly: "",
+                                  solo: "",
+                                  "append-icon": "event"
+                                },
+                                slot: "activator",
+                                model: {
+                                  value: _vm.date,
+                                  callback: function($$v) {
+                                    _vm.date = $$v
+                                  },
+                                  expression: "date"
+                                }
+                              }),
                               _vm._v(" "),
                               _c(
-                                "v-btn",
+                                "v-date-picker",
                                 {
-                                  attrs: { flat: "", color: "primary" },
-                                  on: {
-                                    click: function($event) {
-                                      _vm.menu = false
-                                    }
+                                  attrs: { "no-title": "", scrollable: "" },
+                                  model: {
+                                    value: _vm.date,
+                                    callback: function($$v) {
+                                      _vm.date = $$v
+                                    },
+                                    expression: "date"
                                   }
                                 },
-                                [_vm._v("Cancel")]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "v-btn",
-                                {
-                                  attrs: { flat: "", color: "primary" },
-                                  on: {
-                                    click: function($event) {
-                                      _vm.$refs.menu_date.save(_vm.date)
-                                    }
-                                  }
-                                },
-                                [_vm._v("OK")]
+                                [
+                                  _c("v-spacer"),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-btn",
+                                    {
+                                      attrs: { flat: "", color: "primary" },
+                                      on: {
+                                        click: function($event) {
+                                          _vm.menu = false
+                                        }
+                                      }
+                                    },
+                                    [_vm._v("Cancel")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-btn",
+                                    {
+                                      attrs: { flat: "", color: "primary" },
+                                      on: {
+                                        click: function($event) {
+                                          _vm.$refs.menu_date.save(_vm.date)
+                                        }
+                                      }
+                                    },
+                                    [_vm._v("OK")]
+                                  )
+                                ],
+                                1
                               )
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-flex",
+                        { attrs: { xs12: "", sm6: "", md6: "" } },
+                        [
+                          _c(
+                            "v-menu",
+                            {
+                              ref: "menu_time",
+                              attrs: {
+                                "close-on-content-click": false,
+                                "nudge-right": 40,
+                                "return-value": _vm.time,
+                                lazy: "",
+                                transition: "scale-transition",
+                                "offset-y": "",
+                                "full-width": "",
+                                "max-width": "290px",
+                                "min-width": "290px"
+                              },
+                              on: {
+                                "update:returnValue": function($event) {
+                                  _vm.time = $event
+                                }
+                              },
+                              model: {
+                                value: _vm.menu2,
+                                callback: function($$v) {
+                                  _vm.menu2 = $$v
+                                },
+                                expression: "menu2"
+                              }
+                            },
+                            [
+                              _c("v-text-field", {
+                                attrs: {
+                                  slot: "activator",
+                                  placeholder: "Jam",
+                                  readonly: "",
+                                  solo: "",
+                                  "append-icon": "schedule"
+                                },
+                                slot: "activator",
+                                model: {
+                                  value: _vm.time,
+                                  callback: function($$v) {
+                                    _vm.time = $$v
+                                  },
+                                  expression: "time"
+                                }
+                              }),
+                              _vm._v(" "),
+                              _vm.menu2
+                                ? _c("v-time-picker", {
+                                    on: {
+                                      change: function($event) {
+                                        _vm.$refs.menu_time.save(_vm.time)
+                                      }
+                                    },
+                                    model: {
+                                      value: _vm.time,
+                                      callback: function($$v) {
+                                        _vm.time = $$v
+                                      },
+                                      expression: "time"
+                                    }
+                                  })
+                                : _vm._e()
                             ],
                             1
                           )
@@ -100010,115 +100253,57 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "v-flex",
-                    { attrs: { xs12: "", sm6: "", md6: "" } },
+                    { attrs: { xs12: "" } },
                     [
-                      _c(
-                        "v-menu",
-                        {
-                          ref: "menu_time",
-                          attrs: {
-                            "close-on-content-click": false,
-                            "nudge-right": 40,
-                            "return-value": _vm.time,
-                            lazy: "",
-                            transition: "scale-transition",
-                            "offset-y": "",
-                            "full-width": "",
-                            "max-width": "290px",
-                            "min-width": "290px"
-                          },
-                          on: {
-                            "update:returnValue": function($event) {
-                              _vm.time = $event
-                            }
-                          },
-                          model: {
-                            value: _vm.menu2,
-                            callback: function($$v) {
-                              _vm.menu2 = $$v
-                            },
-                            expression: "menu2"
-                          }
-                        },
-                        [
-                          _c("v-text-field", {
-                            attrs: {
-                              slot: "activator",
-                              placeholder: "Jam",
-                              readonly: "",
-                              solo: "",
-                              "append-icon": "schedule"
-                            },
-                            slot: "activator",
-                            model: {
-                              value: _vm.time,
-                              callback: function($$v) {
-                                _vm.time = $$v
-                              },
-                              expression: "time"
-                            }
-                          }),
-                          _vm._v(" "),
-                          _vm.menu2
-                            ? _c("v-time-picker", {
-                                on: {
-                                  change: function($event) {
-                                    _vm.$refs.menu_time.save(_vm.time)
-                                  }
+                      _c("p", [_vm._v("Tambahkan File (Optional)")]),
+                      _vm._v(" "),
+                      _c("file-pond", {
+                        ref: "pond",
+                        attrs: {
+                          name: "file",
+                          "label-idle": "Drop files here...",
+                          "allow-multiple": "false",
+                          files: _vm.myFiles
+                        }
+                      }),
+                      _vm._v(" "),
+                      _vm.tugas.file_url
+                        ? [
+                            _c(
+                              "a",
+                              {
+                                attrs: {
+                                  slot: "activator",
+                                  href: _vm.tugas.file_url
                                 },
-                                model: {
-                                  value: _vm.time,
-                                  callback: function($$v) {
-                                    _vm.time = $$v
-                                  },
-                                  expression: "time"
-                                }
-                              })
-                            : _vm._e()
-                        ],
-                        1
-                      )
+                                slot: "activator"
+                              },
+                              [_vm._v(" Download File ")]
+                            )
+                          ]
+                        : _vm._e()
+                    ],
+                    2
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "router-link",
+                    { attrs: { to: "/e-tugas" } },
+                    [
+                      _c("v-btn", { attrs: { flat: "" } }, [
+                        _vm._v("Saya berubah pikiran")
+                      ])
                     ],
                     1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    { attrs: { color: "info" }, on: { click: _vm.submit } },
+                    [_vm._v("Simpan")]
                   )
                 ],
                 1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-flex",
-                { attrs: { xs12: "" } },
-                [
-                  _c("p", [_vm._v("Tambahkan File (Optional)")]),
-                  _vm._v(" "),
-                  _c("file-pond", {
-                    ref: "pond",
-                    attrs: {
-                      name: "file",
-                      "label-idle": "Drop files here...",
-                      "allow-multiple": "false",
-                      files: _vm.myFiles
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "router-link",
-                { attrs: { to: "/e-tugas" } },
-                [
-                  _c("v-btn", { attrs: { flat: "" } }, [
-                    _vm._v("Saya berubah pikiran")
-                  ])
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-btn",
-                { attrs: { color: "info" }, on: { click: _vm.submit } },
-                [_vm._v("Simpan")]
               )
             ],
             1
@@ -100138,9 +100323,7 @@ var render = function() {
           }
         },
         [
-          _vm._v(
-            "\n            " + _vm._s(_vm.snackbarText) + "\n            "
-          ),
+          _vm._v("\n        " + _vm._s(_vm.snackbarText) + "\n        "),
           _c(
             "v-btn",
             {
@@ -100151,7 +100334,7 @@ var render = function() {
                 }
               }
             },
-            [_vm._v("\n                Close\n            ")]
+            [_vm._v("\n            Close\n        ")]
           )
         ],
         1

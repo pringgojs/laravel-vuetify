@@ -60,6 +60,7 @@
                         </template>
                     </v-select>
                 </v-flex>
+
                 <v-flex md12>
                     <v-select 
                         :items="list_modul"
@@ -206,7 +207,6 @@ export default {
             isLoaded: false,
             snackbarText: '',
             snackbar: false,
-            moduls: [],
             list_modul: [],
             myFiles: '',
             judul: '',

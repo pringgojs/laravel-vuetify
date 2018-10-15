@@ -2,7 +2,7 @@
     <v-flex sm12>
         
         <h1 class="font-weight-light">E Tugas</h1>
-        <div class="subheading">Tambahkan tugas sebagai bahwan evaluasi mahasiswa dalam memahami pelajaran</div>
+        <div class="subheading">Tambahkan tugas sebagai bahan evaluasi mahasiswa dalam memahami pelajaran</div>
         
         <content-loader v-if="!isLoaded" :height="250"></content-loader>
         <v-container fluid grid-list-xl v-if="isLoaded">
