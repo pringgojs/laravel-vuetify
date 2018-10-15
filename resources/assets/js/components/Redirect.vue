@@ -3,7 +3,7 @@
       <v-container fluid fill-height>
         <v-layout justify-center align-center>
             <v-flex>
-                <img src="walpaper.png" alt=""></img>
+                <img src="walpaper.png" alt=""/>
             </v-flex>
         </v-layout>
       </v-container>

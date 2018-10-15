@@ -184,7 +184,6 @@ export default {
                 app.loadDetail = false
                 app.bodyTable = ''
                 app.bodyTable = resp.data
-                console.log(resp.data)
             })
             .catch(function (resp) {
                 app.showSnackbar("Terjadi kegagalan sistem. Silahkan coba lagi!")

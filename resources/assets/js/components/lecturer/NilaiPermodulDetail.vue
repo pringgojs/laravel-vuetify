@@ -110,12 +110,10 @@ export default {
         save() {
             var app = this
             var nilai_master_modul = app.$store.state.obj_etugas ? app.$store.state.obj_etugas.nilai_master_modul.nomor : 0 
-            console.log(nilai_master_modul);
             axios.get('lecturer/report/nilai-permodul/sync/'+nilai_master_modul)
                 .then(function (resp) {
                     app.is_save = false
                     app.dialog = false
-                    console.log(resp.data);
                     app.$store.state.obj_list_etugas = resp.data.etugas_kelas_mahasiswa
                     app.showSnackbar("Data berhasil disimpan!")
                     return true

@@ -147,8 +147,8 @@
         this.$router.push(link)
       },
       logout() {
-        let base_url = window.location.origin;
-        window.location.href = base_url+'/logout';
+        let base_url = window.location.origin
+        window.location.href = base_url+'/logout'
       }
     }
   }

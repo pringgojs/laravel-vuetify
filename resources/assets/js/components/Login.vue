@@ -100,7 +100,7 @@
   }
 </script>
 <script>
-var axios = require('axios');
+var axios = require('axios')
 
 export default {
     data () {
@@ -122,60 +122,59 @@ export default {
     },
     methods: {
         toggleForm() {
-            var app = this;
+            var app = this
 
             if (app.isStudentFormActive) {
-                app.label = 'Username';
-                app.isStudentFormActive = false;
-                app.data.type = 'dosen';
-                app.labelBy = 'mahasiswa';
-                app.showSnackbar('Anda berganti signin');
-                return true;
+                app.label = 'Username'
+                app.isStudentFormActive = false
+                app.data.type = 'dosen'
+                app.labelBy = 'mahasiswa'
+                app.showSnackbar('Anda berganti signin')
+                return true
             }
             
-            app.label = 'Nomer Induk Mahasiswa (NIM)';
-            app.isStudentFormActive = true;
-            app.data.type = 'mahasiswa';
-            app.labelBy = 'dosen';
-            app.showSnackbar('Anda berganti signin');
+            app.label = 'Nomer Induk Mahasiswa (NIM)'
+            app.isStudentFormActive = true
+            app.data.type = 'mahasiswa'
+            app.labelBy = 'dosen'
+            app.showSnackbar('Anda berganti signin')
         },
         login() {
-            console.log("work");
-            var app = this;
-            app.errors = [];
-            event.preventDefault();
-            app.validate();
+            var app = this
+            app.errors = []
+            event.preventDefault()
+            app.validate()
 
             if (app.errors.length) {
-                app.snackbarText = 'Semua inputan harus terisi';
-                app.snackbar = true;
+                app.snackbarText = 'Semua inputan harus terisi'
+                app.snackbar = true
                 
-                return true;
+                return true
             }
 
-            var data = app.data;
+            var data = app.data
             axios.post('login', data).then(function (resp) {
                 if (resp.data.status ==1) {
-                    app.showSnackbar('Selamat datang, Anda berhasil masuk');
-                    window.location.href = resp.data.url;
-                    return true;
+                    app.showSnackbar('Selamat datang, Anda berhasil masuk')
+                    window.location.href = resp.data.url
+                    return true
                 }
-                app.showSnackbar('Data tidak ditemukan, silahkan coba lagi.');
+                app.showSnackbar('Data tidak ditemukan, silahkan coba lagi.')
 
             })
             .catch(function (resp) {
-                app.showSnackbar('oops, something went wrong. Please try again!');
-            });
+                app.showSnackbar('oops, something went wrong. Please try again!')
+            })
         },
         validate() {
-            var app = this;
-            if (!app.data.username) app.errors.push(app.label + ' tidak boleh kosong');
-            if (!app.data.password) app.errors.push('password tidak boleh kosong');
+            var app = this
+            if (!app.data.username) app.errors.push(app.label + ' tidak boleh kosong')
+            if (!app.data.password) app.errors.push('password tidak boleh kosong')
         },
         showSnackbar(text) {
-            var app = this;
-            app.snackbarText = text;
-            app.snackbar = true;
+            var app = this
+            app.snackbarText = text
+            app.snackbar = true
         }
     }
 }

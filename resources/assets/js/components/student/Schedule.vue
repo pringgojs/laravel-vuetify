@@ -65,23 +65,23 @@ export default {
         ContentLoader
     },
     mounted() {
-        this.initData();
+        this.initData()
     },
     methods: {
         initData() {
-            var app = this;
+            var app = this
             axios.get('student/schedule').then(function (resp) {
-                app.isLoaded = true;
-                app.bodyTable = resp.data.data;
+                app.isLoaded = true
+                app.bodyTable = resp.data.data
             })
             .catch(function (resp) {
-                app.showSnackbar("oops, something went wrong. Please try again!");
-            });
+                app.showSnackbar("oops, something went wrong. Please try again!")
+            })
         },
         showSnackbar(text) {
-            var app = this;
-            app.snackbarText = text;
-            app.snackbar = true;
+            var app = this
+            app.snackbarText = text
+            app.snackbar = true
         }
     }
 }

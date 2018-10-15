@@ -75,9 +75,9 @@
 </template>
 
 <script>
-import { ContentLoader } from 'vue-content-loader';
-import * as moment from 'moment';
-moment.locale('id');
+import { ContentLoader } from 'vue-content-loader'
+import * as moment from 'moment'
+moment.locale('id')
 
 export default {
     data () {
@@ -110,52 +110,52 @@ export default {
         ContentLoader
     },
     mounted() {
-        this.initData();
+        this.initData()
         let count = this.$store.state.count
     },
     methods: {
         initData() {
-            var app = this;
+            var app = this
             axios.get('student/e-tugas').then(function (resp) {
-                app.isLoaded = true;
+                app.isLoaded = true
                 app.$store.state.obj_list_etugas = null
-                app.$store.state.obj_list_etugas =  resp.data.data;
-                app.semesters = resp.data.data_semester;
+                app.$store.state.obj_list_etugas =  resp.data.data
+                app.semesters = resp.data.data_semester
             })
             .catch(function (resp) {
-                app.showSnackbar("oops, something went wrong. Please try again!");
-            });
+                app.showSnackbar("oops, something went wrong. Please try again!")
+            })
         },
         showSnackbar(text) {
-            var app = this;
-            app.snackbarText = text;
-            app.snackbar = true;
+            var app = this
+            app.snackbarText = text
+            app.snackbar = true
         },
         selectSemester() {
-            if (!this.filter) return false;
-            var app = this;
+            if (!this.filter) return false
+            var app = this
             axios.get('student/e-tugas/kuliah/'+app.filter).then(function (resp) {
                 app.$store.state.obj_list_etugas = null
                 app.$store.state.obj_list_etugas = resp.data.data
             })
             .catch(function (resp) {
-                app.showSnackbar("oops, something went wrong. Please try again!");
-            });
+                app.showSnackbar("oops, something went wrong. Please try again!")
+            })
         },
         detail(id) {
-            var app = this;
+            var app = this
 
             axios.get('student/e-tugas/detail/'+id).then(function (resp) {
                 app.$store.state.obj_etugas = resp.data
                 app.$store.state.form_dialog_detail_etugas = true
             })
             .catch(function (resp) {
-                app.showSnackbar("oops, something went wrong. Please try again!");
-            });
+                app.showSnackbar("oops, something went wrong. Please try again!")
+            })
         },
         dateView(date) {
             if (date != '0000-00-00 00:00:00') {
-                return moment(date).format("dddd, Do MMMM YYYY, h:mm:ss a");
+                return moment(date).format("dddd, Do MMMM YYYY, h:mm:ss a")
             }
             return '-'
         },
@@ -176,8 +176,8 @@ export default {
 
 <style>
 .fab-container {
-  position: fixed;
-  bottom: 20px;
-  right: 0;
+  position: fixed
+  bottom: 20px
+  right: 0
 }
 </style>

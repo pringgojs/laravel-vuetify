@@ -93,24 +93,24 @@
 </template>
 
 <script>
-import * as moment from 'moment';
-moment.locale('id');
+import * as moment from 'moment'
+moment.locale('id')
 
 // Import Vue FilePond
-import vueFilePond from 'vue-filepond';
-import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
-import FilePondPluginFileValidateSize from 'filepond-plugin-file-validate-size';
-import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
-import FilePondPluginFileEncode from 'filepond-plugin-file-encode';
+import vueFilePond from 'vue-filepond'
+import FilePondPluginImagePreview from 'filepond-plugin-image-preview'
+import FilePondPluginFileValidateSize from 'filepond-plugin-file-validate-size'
+import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type'
+import FilePondPluginFileEncode from 'filepond-plugin-file-encode'
 // Import FilePond styles
-import 'filepond/dist/filepond.min.css';
-import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
+import 'filepond/dist/filepond.min.css'
+import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css'
 const FilePond = vueFilePond( 
     FilePondPluginImagePreview,
     FilePondPluginFileValidateSize,
     FilePondPluginFileValidateType,
     FilePondPluginFileEncode
-);
+)
 
 export default {
     data () {
@@ -149,45 +149,45 @@ export default {
         },
         dateView(date) {
             if (date != '0000-00-00 00:00:00') {
-                return moment(date).format("dddd, Do MMMM YYYY, h:mm:ss a");
+                return moment(date).format("dddd, Do MMMM YYYY, h:mm:ss a")
             }
             return '-'
         },
         showSnackbar(text) {
-            var app = this;
-            app.snackbarText = text;
-            app.snackbar = true;
+            var app = this
+            app.snackbarText = text
+            app.snackbar = true
         },
         submit() {
-            var app = this;
+            var app = this
             if ($('#keterangan').val() == '') {
-                app.showSnackbar('keterangan harus diisi');
-                return false;
+                app.showSnackbar('keterangan harus diisi')
+                return false
             }
             
-            var file = app.$refs.pond.getFiles();
-            let form = new FormData();
+            var file = app.$refs.pond.getFiles()
+            let form = new FormData()
             
-            form.append('file', '');
+            form.append('file', '')
             if (file.length) {
-                form.append('file', file[0].file);
+                form.append('file', file[0].file)
             }
             form.append('keterangan', $('#keterangan').val())
             form.append('tugas_id', app.$store.state.obj_etugas.etugas.id)
             form.append('kelas_id', app.$store.state.obj_etugas.etugas.kelas)
             axios.post( 'student/e-tugas/store', form, { headers: {'Content-Type': 'multipart/form-data'}}).then(function (resp) {
                 if (resp.data.code == 200) {
-                    app.keterangan = '';
-                    app.myFiles = [];
-                    app.showSnackbar('Tugas berhasil diunggah');
-                    app.$store.state.form_dialog_detail_etugas = false;
+                    app.keterangan = ''
+                    app.myFiles = []
+                    app.showSnackbar('Tugas berhasil diunggah')
+                    app.$store.state.form_dialog_detail_etugas = false
                     app.$store.state.obj_list_etugas = null
-                    app.$store.state.obj_list_etugas =  resp.data.data_tugas;
+                    app.$store.state.obj_list_etugas =  resp.data.data_tugas
                 }
             })
             .catch(function(e) {
-                app.showSnackbar('Tugas gagal diunggah');
-            });
+                app.showSnackbar('Tugas gagal diunggah')
+            })
         }
     }
 }

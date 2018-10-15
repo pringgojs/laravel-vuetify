@@ -137,9 +137,9 @@
 </template>
 
 <script>
-import { ContentLoader } from 'vue-content-loader';
-import * as moment from 'moment';
-moment.locale('id');
+import { ContentLoader } from 'vue-content-loader'
+import * as moment from 'moment'
+moment.locale('id')
 
 export default {
     data () {
@@ -180,22 +180,22 @@ export default {
         ContentLoader
     },
     mounted() {
-        this.initData();
+        this.initData()
     },
     methods: {
         initData() {
-            var app = this;
+            var app = this
             axios.get('lecturer/e-tugas').then(function (resp) {
-                app.isLoaded = true;
-                app.bodyTable = resp.data.list_tugas;
-                app.filter.list_semester = resp.data.list_semester;
+                app.isLoaded = true
+                app.bodyTable = resp.data.list_tugas
+                app.filter.list_semester = resp.data.list_semester
             })
             .catch(function (resp) {
-                app.showSnackbar("oops, something went wrong. Please try again!");
-            });
+                app.showSnackbar("oops, something went wrong. Please try again!")
+            })
         },
         detail(id) {
-            var app = this;
+            var app = this
             app.loadDetail = true
             axios.get('lecturer/e-tugas/detail/'+id).then(function (resp) {
                 app.loadDetail = false
@@ -204,39 +204,39 @@ export default {
                 app.$store.state.obj_list_etugas = resp.data.etugas_kelas_mahasiswa
             })
             .catch(function (resp) {
-                app.showSnackbar("oops, something went wrong. Please try again!");
-            });
+                app.showSnackbar("oops, something went wrong. Please try again!")
+            })
         },
         showSnackbar(text) {
-            var app = this;
-            app.snackbarText = text;
-            app.snackbar = true;
+            var app = this
+            app.snackbarText = text
+            app.snackbar = true
         },
         selectKelas() {
-            if (!this.filter.semester) return false;
-            var app = this;
+            if (!this.filter.semester) return false
+            var app = this
             axios.get('filter/get-kelas/'+app.filter.semester).then(function (resp) {
                 app.filter.list_kelas = ''
                 app.filter.list_kelas = resp.data
             })
             .catch(function (resp) {
-                app.showSnackbar("Terjadi kegagalan sistem. Silahkan coba lagi!");
-            });
+                app.showSnackbar("Terjadi kegagalan sistem. Silahkan coba lagi!")
+            })
         },
         selectMatakuliah() {
-            if (!this.filter.kelas) return false;
-            var app = this;
+            if (!this.filter.kelas) return false
+            var app = this
             axios.post('filter/get-matakuliah', app.filter).then(function (resp) {
                 app.filter.list_matakuliah = ''
                 app.filter.list_matakuliah = resp.data
             })
             .catch(function (resp) {
-                app.showSnackbar("Terjadi kegagalan sistem. Silahkan coba lagi!");
-            });
+                app.showSnackbar("Terjadi kegagalan sistem. Silahkan coba lagi!")
+            })
         },
         selectData() {
-            if (!this.filter.matakuliah) return false;
-            var app = this;
+            if (!this.filter.matakuliah) return false
+            var app = this
             app.loadDetail = true
             axios.post('lecturer/e-tugas/filter', app.filter).then(function (resp) {
                 app.loadDetail = false
@@ -244,40 +244,39 @@ export default {
                 app.bodyTable = resp.data
             })
             .catch(function (resp) {
-                app.showSnackbar("Terjadi kegagalan sistem. Silahkan coba lagi!");
-            });
+                app.showSnackbar("Terjadi kegagalan sistem. Silahkan coba lagi!")
+            })
         },
         remove(id) {
-            this.dialog = true;
+            this.dialog = true
 
-            let matakuliah = $('#matakuliah-'+id).html();
-            let kelas = $('#kelas-'+id).html();
-            let judul = $('#judul-'+id).html();
-            let keterangan = $('#keterangan-'+id).html();
-            let app = this;
-            app.title_confirm = 'Yakin ingin menghapus tugas ?';
-            app.desc_confirm = 'Tugas dengan judul "'+judul+' kelas ' +kelas+ '" yang dihapus tidak bisa dikembalikan.';
-            app.remove_id = id;
+            let matakuliah = $('#matakuliah-'+id).html()
+            let kelas = $('#kelas-'+id).html()
+            let judul = $('#judul-'+id).html()
+            let keterangan = $('#keterangan-'+id).html()
+            let app = this
+            app.title_confirm = 'Yakin ingin menghapus tugas ?'
+            app.desc_confirm = 'Tugas dengan judul "'+judul+' kelas ' +kelas+ '" yang dihapus tidak bisa dikembalikan.'
+            app.remove_id = id
         },
         sureRemoveMe() {
-            let app = this;
+            let app = this
             axios.get('lecturer/e-tugas/remove/'+app.remove_id).then(function (resp) {
-                app.dialog = false;
-                app.showSnackbar("Berhasil menghapus data");
-                $('#tr-'+app.remove_id).fadeOut();
+                app.dialog = false
+                app.showSnackbar("Berhasil menghapus data")
+                $('#tr-'+app.remove_id).fadeOut()
             })
             .catch(function (resp) {
-                app.dialog = false;
-                app.showSnackbar("oops, something went wrong. Please try again!");
-            });
+                app.dialog = false
+                app.showSnackbar("oops, something went wrong. Please try again!")
+            })
         },
         dateView(date) {
             if (date != '0000-00-00 00:00:00') {
-                return moment(date).format("dddd, MMMM Do YYYY, h:mm:ss a");
+                return moment(date).format("dddd, MMMM Do YYYY, h:mm:ss a")
             }
 
             return '-'
-
         }
     }
 }
@@ -285,8 +284,8 @@ export default {
 
 <style>
 .fab-container {
-  position: fixed;
-  bottom: 20px;
-  right: 0;
+  position: fixed
+  bottom: 20px
+  right: 0
 }
 </style>

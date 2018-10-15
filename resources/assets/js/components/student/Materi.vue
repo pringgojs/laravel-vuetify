@@ -81,34 +81,34 @@ export default {
         ContentLoader
     },
     mounted() {
-        this.initData();
+        this.initData()
     },
     methods: {
         initData() {
-            var app = this;
+            var app = this
             axios.get('student/materi').then(function (resp) {
-                app.isLoaded = true;
-                app.bodyTable = resp.data.data;
-                app.semesters = resp.data.data_semester;
+                app.isLoaded = true
+                app.bodyTable = resp.data.data
+                app.semesters = resp.data.data_semester
             })
             .catch(function (resp) {
-                app.showSnackbar("oops, something went wrong. Please try again!");
-            });
+                app.showSnackbar("oops, something went wrong. Please try again!")
+            })
         },
         showSnackbar(text) {
-            var app = this;
-            app.snackbarText = text;
-            app.snackbar = true;
+            var app = this
+            app.snackbarText = text
+            app.snackbar = true
         },
         selectSemester() {
-            if (!this.filter) return false;
-            var app = this;
+            if (!this.filter) return false
+            var app = this
             axios.get('student/materi/kuliah/'+app.filter).then(function (resp) {
-                app.bodyTable = resp.data.data;
+                app.bodyTable = resp.data.data
             })
             .catch(function (resp) {
-                app.showSnackbar("oops, something went wrong. Please try again!");
-            });
+                app.showSnackbar("oops, something went wrong. Please try again!")
+            })
         }
     }
 }

@@ -186,24 +186,24 @@
 
 <script>
 import { ContentLoader } from 'vue-content-loader'
-import * as moment from 'moment';
-moment.locale('id');
+import * as moment from 'moment'
+moment.locale('id')
 
 // Import Vue FilePond
-import vueFilePond from 'vue-filepond';
-import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
-import FilePondPluginFileValidateSize from 'filepond-plugin-file-validate-size';
-import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
-import FilePondPluginFileEncode from 'filepond-plugin-file-encode';
+import vueFilePond from 'vue-filepond'
+import FilePondPluginImagePreview from 'filepond-plugin-image-preview'
+import FilePondPluginFileValidateSize from 'filepond-plugin-file-validate-size'
+import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type'
+import FilePondPluginFileEncode from 'filepond-plugin-file-encode'
 // Import FilePond styles
-import 'filepond/dist/filepond.min.css';
-import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
+import 'filepond/dist/filepond.min.css'
+import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css'
 const FilePond = vueFilePond( 
     FilePondPluginImagePreview,
     FilePondPluginFileValidateSize,
     FilePondPluginFileValidateType,
     FilePondPluginFileEncode
-);
+)
 
 export default {
     data () {
@@ -234,113 +234,113 @@ export default {
         }
     },
     mounted() {
-        this.initData();
+        this.initData()
     },
     created() {
         this.id = this.$route.params.id
     },
     methods: {
         initData() {
-            var app = this;
+            var app = this
             axios.get('lecturer/e-tugas/edit/'+this.id).then(function (resp) {
-                app.isLoaded = true;
+                app.isLoaded = true
                 console.log(resp.data)
-                app.filter.list_semester = resp.data.list_semester;
-                app.filter.list_kelas = resp.data.list_kelas;
-                app.filter.list_matakuliah = resp.data.list_matakuliah;
+                app.filter.list_semester = resp.data.list_semester
+                app.filter.list_kelas = resp.data.list_kelas
+                app.filter.list_matakuliah = resp.data.list_matakuliah
                 app.filter.semester = resp.data.kuliah.tahun+'/'+resp.data.kuliah.semester
                 app.filter.kelas = resp.data.tugas.kelas
                 app.filter.matakuliah = resp.data.kuliah.matakuliah
                 app.tugas = resp.data.tugas
                 // data tugas
                 app.nilai_master_modul = resp.data.tugas.nilai_master_modul
-                app.list_modul = resp.data.list_modul;
+                app.list_modul = resp.data.list_modul
                 app.judul = resp.data.tugas.judul
                 app.keterangan = resp.data.tugas.keterangan
-                let due_date = resp.data.tugas.due_date.split(' ');
+                let due_date = resp.data.tugas.due_date.split(' ')
                 app.date = due_date[0] == '0000-00-00' ? moment().format('YYYY-MM-DD') : due_date[0]
                 app.time = due_date[1]
             })
             .catch(function (resp) {
-                app.showSnackbar("oops, something went wrong. Please try again!");
-            });
+                app.showSnackbar("oops, something went wrong. Please try again!")
+            })
         },
         showSnackbar(text) {
-            var app = this;
-            app.snackbarText = text;
-            app.snackbar = true;
+            var app = this
+            app.snackbarText = text
+            app.snackbar = true
         },
         selectKelas() {
-            if (!this.filter.semester) return false;
-            var app = this;
+            if (!this.filter.semester) return false
+            var app = this
             axios.get('filter/get-kelas/'+app.filter.semester).then(function (resp) {
                 app.filter.list_kelas = ''
                 app.filter.list_kelas = resp.data
             })
             .catch(function (resp) {
-                app.showSnackbar("Terjadi kegagalan sistem. Silahkan coba lagi!");
-            });
+                app.showSnackbar("Terjadi kegagalan sistem. Silahkan coba lagi!")
+            })
         },
         selectMatakuliah() {
-            if (!this.filter.kelas) return false;
-            var app = this;
+            if (!this.filter.kelas) return false
+            var app = this
             axios.post('filter/get-matakuliah', app.filter).then(function (resp) {
                 app.filter.list_matakuliah = ''
                 app.filter.list_matakuliah = resp.data
             })
             .catch(function (resp) {
-                app.showSnackbar("Terjadi kegagalan sistem. Silahkan coba lagi!");
-            });
+                app.showSnackbar("Terjadi kegagalan sistem. Silahkan coba lagi!")
+            })
         },
         selectModul() {
-            if (!this.filter.matakuliah) return false;
-            var app = this;
+            if (!this.filter.matakuliah) return false
+            var app = this
             axios.post('filter/get-modul', app.filter).then(function (resp) {
                 app.list_modul = ''
                 app.list_modul = resp.data
             })
             .catch(function (resp) {
-                app.showSnackbar("Terjadi kegagalan sistem. Silahkan coba lagi!");
-            });
+                app.showSnackbar("Terjadi kegagalan sistem. Silahkan coba lagi!")
+            })
         },
         submit() {
-            var app = this;
+            var app = this
             if (!app.filter) {
-                app.showSnackbar('Anda belum memilih kelas.');
-                return false;
+                app.showSnackbar('Anda belum memilih kelas.')
+                return false
             }
 
             if (!app.nilai_master_modul) {
-                app.showSnackbar('Anda belum memilih modul.');
-                return false;
+                app.showSnackbar('Anda belum memilih modul.')
+                return false
             }
 
             if (!app.judul) {
-                app.showSnackbar('Judul tugas harus diisi');
-                return false;
+                app.showSnackbar('Judul tugas harus diisi')
+                return false
             }
 
             if (!app.keterangan) {
-                app.showSnackbar('Keterangan tugas harus diisi');
-                return false;
+                app.showSnackbar('Keterangan tugas harus diisi')
+                return false
             }
 
             if (!app.date) {
-                app.showSnackbar('Tanggal harus diisi');
-                return false;
+                app.showSnackbar('Tanggal harus diisi')
+                return false
             }
 
             if (!app.time) {
-                app.showSnackbar('Batas waktu harus diisi');
-                return false;
+                app.showSnackbar('Batas waktu harus diisi')
+                return false
             }
             
-            var file = app.$refs.pond.getFiles();
-            let form = new FormData();
+            var file = app.$refs.pond.getFiles()
+            let form = new FormData()
             if (file.length) {
-                form.append('file', file[0].file);
+                form.append('file', file[0].file)
             } else {
-                form.append('file', '');
+                form.append('file', '')
             }
             form.append('judul', app.judul)
             form.append('tanggal', app.date)
@@ -349,16 +349,16 @@ export default {
             form.append('nilai_master_modul', app.nilai_master_modul)
             axios.post( 'lecturer/e-tugas/update/'+app.id, form, { headers: {'Content-Type': 'multipart/form-data'}}).then(function (resp) {
                 if (resp.data.code == 200) {
-                    app.judul = '';
-                    app.keterangan = '';
-                    app.myFiles = [];
-                    app.showSnackbar('E-Tugas berhasil disimpan');
+                    app.judul = ''
+                    app.keterangan = ''
+                    app.myFiles = []
+                    app.showSnackbar('E-Tugas berhasil disimpan')
                     app.$router.push('/e-tugas') 
                 }
             })
             .catch(function(e) {
-                app.showSnackbar('E-Tugas gagal disimpan');
-            });
+                app.showSnackbar('E-Tugas gagal disimpan')
+            })
         }
     },
     components: {
