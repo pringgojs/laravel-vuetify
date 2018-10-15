@@ -16,7 +16,7 @@ Route::group(['prefix' => 'student', 'middleware' => 'role:student'], function (
     Route::get('materi/kuliah/{kuliah}', 'StudentController@materiGetBySemester');
     Route::get('materi', 'StudentController@materi');
     Route::get('schedule', 'StudentController@schedule');
-    Route::get('e-tugas/kuliah/{kuliah}', 'StudentController@eTugasGetBySemester');
+    Route::post('e-tugas/filter', 'StudentController@eTugasFilter');
     Route::post('e-tugas/store', 'StudentController@eTugasStore');
     Route::get('e-tugas/detail/{id}', 'StudentController@eTugasDetail');
     Route::get('e-tugas', 'StudentController@eTugas');
@@ -49,7 +49,7 @@ Route::group(['prefix' => 'lecturer', 'middleware' => 'role:lecturer', 'namespac
     Route::group(['prefix' => 'report'], function () {
         Route::get('nilai-permodul/sync/{id_master_modul}', 'ReportController@sync');
         Route::get('nilai-permodul/detail/{id_master_modul}', 'ReportController@detailModul');
-        Route::get('nilai-permodul/kuliah/{id}', 'ReportController@kuliah');
+        Route::post('nilai-permodul/filter', 'ReportController@filter');
         Route::get('nilai-permodul', 'ReportController@nilaiPermodul');
     });
 

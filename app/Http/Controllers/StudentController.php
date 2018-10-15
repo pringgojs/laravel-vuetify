@@ -58,9 +58,9 @@ class StudentController extends Controller
         return $database;
     }
 
-    public function eTugasGetBySemester($kuliah)
+    public function eTugasFilter(Request $request)
     {
-        $database = StudentDatabaseHelper::geteTugasGetBySemester($kuliah);
+        $database = StudentDatabaseHelper::eTugasFilter($request);
         return $database;
     }
 }

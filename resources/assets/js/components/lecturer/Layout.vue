@@ -132,7 +132,6 @@
       ],
       children: [
         { text: 'Nilai Permodul', link: '/nilai-permodul'},
-        { text: 'Nilai Akhir', link: '/nilai-akhir'},
       ],
       mo_icon: 'keyboard_arrow_up',
       mo_icon_down: 'keyboard_arrow_down',

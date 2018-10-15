@@ -3,24 +3,66 @@
         <h1 class="font-weight-light">E Tugas</h1>
         <div class="subheading">Daftar tugas kuliah. Selesaikan tugas secara cepat dan tepat waktu</div>
         <content-loader v-if="!isLoaded" :height="250"></content-loader>
-        <v-flex md5 mt-5 v-if="isLoaded">
-            <v-select 
-                :items="semesters"
-                v-model="filter"
-                label="Pilih matakuliah"
-                item-text="tahun"
-                item-value="kuliah"
-                @change="selectSemester()"
-                solo
-            >
-                <template slot="selection" slot-scope="data">
-                    {{ data.item.tahun }} / {{ data.item.semester }} - {{ data.item.matakuliah }}
-                </template>
-                <template slot="item" slot-scope="data">
-                    {{ data.item.tahun }} / {{ data.item.semester }} - {{ data.item.matakuliah }}
-                </template>
-            </v-select>
-        </v-flex>
+        <template>
+            <v-container fluid grid-list-xl v-if="isLoaded">
+                <v-layout wrap align-center>
+                    <v-flex md4 mt-5 d-flex>
+                        <v-select 
+                            :items="filter.list_semester"
+                            v-model="filter.semester"
+                            label="Pilih semester"
+                            item-text="tahun"
+                            item-value="semester"
+                            @change="selectKelas()"
+                            solo
+                        >
+                            <template slot="selection" slot-scope="data">
+                                {{ data.item.semester }}
+                            </template>
+                            <template slot="item" slot-scope="data">
+                                {{ data.item.semester }}
+                            </template>
+                        </v-select>
+                    </v-flex>
+                    <v-flex md4 mt-5 d-flex>
+                        <v-select 
+                            :items="filter.list_kelas"
+                            v-model="filter.kelas"
+                            label="Pilih kelas"
+                            item-text="kode"
+                            item-value="nomor"
+                            @change="selectMatakuliah()"
+                            solo
+                        >
+                            <template slot="selection" slot-scope="data">
+                                {{ data.item.kode }}
+                            </template>
+                            <template slot="item" slot-scope="data">
+                                {{ data.item.kode }}
+                            </template>
+                        </v-select>
+                    </v-flex>
+                    <v-flex md4 mt-5 d-flex>
+                        <v-select 
+                            :items="filter.list_matakuliah"
+                            v-model="filter.matakuliah"
+                            label="Pilih matakuliah"
+                            item-text="matakuliah"
+                            item-value="nomor"
+                            @change="selectData()"
+                            solo
+                        >
+                            <template slot="selection" slot-scope="data">
+                                {{ data.item.matakuliah }}
+                            </template>
+                            <template slot="item" slot-scope="data">
+                                {{ data.item.matakuliah }}
+                            </template>
+                        </v-select>
+                    </v-flex>
+                </v-layout>
+            </v-container>
+        </template>
             
         <v-flex sm12 v-if="isLoaded">
             <v-data-table
@@ -95,8 +137,15 @@ export default {
                 { text: 'Nilai', value: 'nilai' },
                 { text: 'Status', value: 'id' },
             ],
-            semesters: [],
-            filter: '',
+            
+            filter: {
+                list_semester: [],
+                list_kelas: [],
+                list_matakuliah: [],
+                semester: '',
+                kelas: '',
+                matakuliah: '',
+            },
             snackbarText: '',
             snackbar: false,
             isLoaded: false,
@@ -119,8 +168,8 @@ export default {
             axios.get('student/e-tugas').then(function (resp) {
                 app.isLoaded = true
                 app.$store.state.obj_list_etugas = null
-                app.$store.state.obj_list_etugas =  resp.data.data
-                app.semesters = resp.data.data_semester
+                app.$store.state.obj_list_etugas =  resp.data.list_tugas
+                app.filter.list_semester = resp.data.list_semester
             })
             .catch(function (resp) {
                 app.showSnackbar("oops, something went wrong. Please try again!")
@@ -131,15 +180,42 @@ export default {
             app.snackbarText = text
             app.snackbar = true
         },
-        selectSemester() {
-            if (!this.filter) return false
+        selectKelas() {
+            if (!this.filter.semester) return false
             var app = this
-            axios.get('student/e-tugas/kuliah/'+app.filter).then(function (resp) {
-                app.$store.state.obj_list_etugas = null
-                app.$store.state.obj_list_etugas = resp.data.data
+            axios.get('filter/get-kelas/'+app.filter.semester).then(function (resp) {
+                app.filter.list_kelas = ''
+                app.filter.list_kelas = resp.data
             })
             .catch(function (resp) {
-                app.showSnackbar("oops, something went wrong. Please try again!")
+                app.showSnackbar("Terjadi kegagalan sistem. Silahkan coba lagi!")
+            })
+        },
+        selectMatakuliah() {
+            if (!this.filter.kelas) return false
+            var app = this
+            axios.post('filter/get-matakuliah', app.filter).then(function (resp) {
+                app.filter.list_matakuliah = ''
+                app.filter.list_matakuliah = resp.data
+            })
+            .catch(function (resp) {
+                app.showSnackbar("Terjadi kegagalan sistem. Silahkan coba lagi!")
+            })
+        },
+        selectData() {
+            if (!this.filter.matakuliah) return false
+            var app = this
+            app.loadDetail = true
+            axios.post('student/e-tugas/filter', app.filter).then(function (resp) {
+                app.loadDetail = false
+                app.bodyTable = ''
+                app.$store.state.obj_list_etugas = null
+                app.$store.state.obj_list_etugas =  resp.data
+                console.log(resp.data)
+
+            })
+            .catch(function (resp) {
+                app.showSnackbar("Terjadi kegagalan sistem. Silahkan coba lagi!")
             })
         },
         detail(id) {

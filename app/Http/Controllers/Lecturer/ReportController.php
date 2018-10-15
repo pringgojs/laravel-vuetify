@@ -21,10 +21,10 @@ class ReportController extends Controller
         return $response;
     }
 
-    public function kuliah($id)
+    public function filter(Request $request)
     {
-        $url = config('api.url').'/lecturer/report/nilai-permodul/kuliah';
-        $data = array('user' => ResponseHelper::user(), 'kuliah' => $id);
+        $url = config('api.url').'/lecturer/report/nilai-permodul/filter';
+        $data = array('user' => ResponseHelper::user(), 'request' => $request->toArray());
         $response = Curl::to($url)
             ->withData($data)
             ->post();
