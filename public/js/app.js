@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 169);
+/******/ 	return __webpack_require__(__webpack_require__.s = 170);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -1902,7 +1902,7 @@
             try {
                 oldLocale = globalLocale._abbr;
                 var aliasedRequire = require;
-                __webpack_require__(206)("./" + name);
+                __webpack_require__(207)("./" + name);
                 getSetGlobalLocale(oldLocale);
             } catch (e) {}
         }
@@ -4693,7 +4693,7 @@ module.exports = function normalizeComponent (
 
 
 var bind = __webpack_require__(19);
-var isBuffer = __webpack_require__(176);
+var isBuffer = __webpack_require__(177);
 
 /*global toString:true*/
 
@@ -5006,7 +5006,7 @@ module.exports = {
 /* unused harmony export FacebookLoader */
 /* unused harmony export ListLoader */
 /* unused harmony export InstagramLoader */
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_helper_vue_jsx_merge_props__ = __webpack_require__(205);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_helper_vue_jsx_merge_props__ = __webpack_require__(206);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_helper_vue_jsx_merge_props___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_helper_vue_jsx_merge_props__);
 
 
@@ -5590,7 +5590,7 @@ if (typeof DEBUG !== 'undefined' && DEBUG) {
   ) }
 }
 
-var listToStyles = __webpack_require__(203)
+var listToStyles = __webpack_require__(204)
 
 /*
 type StyleObject = {
@@ -5800,6 +5800,1632 @@ function applyToTag (styleElement, obj) {
 
 /***/ }),
 /* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
+ * vue-filepond v3.0.3
+ * A handy FilePond adapter component for Vue
+ * 
+ * Copyright (c) 2018 PQINA
+ * https://pqina.nl/filepond
+ * 
+ * Licensed under the MIT license.
+ */
+
+(function (global, factory) {
+    if (true) {
+        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [exports, __webpack_require__(14), __webpack_require__(210)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
+				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+    } else if (typeof exports !== "undefined") {
+        factory(exports, require('vue'), require('filepond'));
+    } else {
+        var mod = {
+            exports: {}
+        };
+        factory(mod.exports, global.Vue, global.FilePond);
+        global.vueFilePond = mod.exports;
+    }
+})(this, function (exports, _vue, _filepond) {
+    'use strict';
+
+    Object.defineProperty(exports, "__esModule", {
+        value: true
+    });
+    exports.setOptions = undefined;
+
+    var _vue2 = _interopRequireDefault(_vue);
+
+    function _interopRequireDefault(obj) {
+        return obj && obj.__esModule ? obj : {
+            default: obj
+        };
+    }
+
+    // Methods not made available to the component
+    var filteredComponentMethods = ['setOptions', 'on', 'off', 'onOnce', 'appendTo', 'insertAfter', 'insertBefore', 'isAttachedTo', 'replaceElement', 'restoreElement', 'destroy'];
+
+    // Test if is supported on this client
+    var isSupported = (0, _filepond.supported)();
+
+    // Setup initial prop types and update when plugins are added
+    var getNativeConstructorFromType = function getNativeConstructorFromType(type) {
+        return {
+            string: String,
+            boolean: Boolean,
+            array: Array,
+            function: Function,
+            int: Number,
+            serverapi: Object
+        }[type];
+    };
+
+    // Activated props
+    var props = {};
+
+    // Events that need to be mapped to emitters
+    var events = [];
+
+    // Props to watch
+    var watch = {};
+
+    // all active instances
+    var instances = [];
+
+    // global options
+    var globalOptions = {};
+    var setOptions = exports.setOptions = function setOptions(options) {
+        globalOptions = Object.assign(globalOptions, options);
+        instances.forEach(function (instance) {
+            instance.setOptions(globalOptions);
+        });
+    };
+
+    exports.default = function () {
+
+        // register plugins in FilePond
+        _filepond.registerPlugin.apply(undefined, arguments);
+
+        // build events and props array
+        events.length = 0;
+
+        var _loop = function _loop(prop) {
+            // don't add events to the props array
+            if (/^on/.test(prop)) {
+                events.push(prop);
+                return 'continue';
+            }
+
+            // get property type ( can be either a String or the type defined within FilePond )
+            props[prop] = [String, getNativeConstructorFromType(_filepond.OptionTypes[prop])];
+
+            // setup watcher
+            watch[prop] = function (value) {
+                this._pond[prop] = value;
+            };
+        };
+
+        for (var prop in _filepond.OptionTypes) {
+            var _ret = _loop(prop);
+
+            if (_ret === 'continue') continue;
+        }
+
+        // create 
+        return _vue2.default.component('FilePond', {
+            name: 'FilePond',
+            props: props,
+            watch: watch,
+            render: function render(h) {
+                return h('div', {
+                    'class': {
+                        'filepond--wrapper': true
+                    }
+                }, [h('input', {
+                    attrs: {
+                        id: this.id,
+                        name: this.name,
+                        type: 'file',
+                        'class': this.className,
+                        required: this.required,
+                        multiple: this.allowMultiple,
+                        accept: this.acceptedFileTypes,
+                        capture: this.captureMethod
+                    }
+                })]);
+            },
+
+            // Will setup FilePond instance when mounted
+            mounted: function mounted() {
+                var _this = this;
+
+                // exit here if not supported
+                if (!isSupported) {
+                    return;
+                }
+
+                // get pond element
+                this._element = this.$el.querySelector('input');
+
+                // Map FilePond callback methods to Vue $emitters
+                var options = events.reduce(function (obj, value) {
+                    obj[value] = function () {
+                        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+                            args[_key] = arguments[_key];
+                        }
+
+                        _this.$emit.apply(_this, [value.substr(2)].concat(args));
+                    };
+                    return obj;
+                }, {});
+
+                // Scoop up attributes that might not have been caught by Vue ( because the props object is extended dynamically )
+                var attrs = Object.assign({}, this.$attrs);
+
+                // Create our pond
+                this._pond = (0, _filepond.create)(this._element, Object.assign(globalOptions, options, attrs, this.$options.propsData));
+
+                // Copy instance method references to component instance
+                Object.keys(this._pond).filter(function (key) {
+                    return !filteredComponentMethods.includes(key);
+                }).forEach(function (key) {
+                    _this[key] = _this._pond[key];
+                });
+
+                // Add to instances so we can apply global options when used
+                instances.push(this._pond);
+            },
+
+
+            // Will clean up FilePond instance when unmounted
+            beforeDestroy: function beforeDestroy() {
+                // exit when no pond defined
+                if (!this._pond) {
+                    return;
+                }
+
+                // bye bye pond
+                this._pond.destroy();
+
+                // remove from instances
+                var index = instances.indexOf(this._pond);
+                if (index >= 0) {
+                    instances.splice(index, 1);
+                }
+            }
+        });
+    };
+});
+
+
+
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/*
+ * FilePondPluginImagePreview 2.0.1
+ * Licensed under MIT, https://opensource.org/licenses/MIT
+ * Please visit https://pqina.nl/filepond for details.
+ */
+(function(global, factory) {
+   true
+    ? (module.exports = factory())
+    : typeof define === 'function' && define.amd
+      ? define(factory)
+      : (global.FilePondPluginImagePreview = factory());
+})(this, function() {
+  'use strict';
+
+  // test if file is of type image and can be viewed in canvas
+  var isPreviewableImage = function isPreviewableImage(file) {
+    return /^image/.test(file.type);
+  }; // && !/svg/.test(file.type);
+
+  var asyncGenerator = (function() {
+    function AwaitValue(value) {
+      this.value = value;
+    }
+
+    function AsyncGenerator(gen) {
+      var front, back;
+
+      function send(key, arg) {
+        return new Promise(function(resolve, reject) {
+          var request = {
+            key: key,
+            arg: arg,
+            resolve: resolve,
+            reject: reject,
+            next: null
+          };
+
+          if (back) {
+            back = back.next = request;
+          } else {
+            front = back = request;
+            resume(key, arg);
+          }
+        });
+      }
+
+      function resume(key, arg) {
+        try {
+          var result = gen[key](arg);
+          var value = result.value;
+
+          if (value instanceof AwaitValue) {
+            Promise.resolve(value.value).then(
+              function(arg) {
+                resume('next', arg);
+              },
+              function(arg) {
+                resume('throw', arg);
+              }
+            );
+          } else {
+            settle(result.done ? 'return' : 'normal', result.value);
+          }
+        } catch (err) {
+          settle('throw', err);
+        }
+      }
+
+      function settle(type, value) {
+        switch (type) {
+          case 'return':
+            front.resolve({
+              value: value,
+              done: true
+            });
+            break;
+
+          case 'throw':
+            front.reject(value);
+            break;
+
+          default:
+            front.resolve({
+              value: value,
+              done: false
+            });
+            break;
+        }
+
+        front = front.next;
+
+        if (front) {
+          resume(front.key, front.arg);
+        } else {
+          back = null;
+        }
+      }
+
+      this._invoke = send;
+
+      if (typeof gen.return !== 'function') {
+        this.return = undefined;
+      }
+    }
+
+    if (typeof Symbol === 'function' && Symbol.asyncIterator) {
+      AsyncGenerator.prototype[Symbol.asyncIterator] = function() {
+        return this;
+      };
+    }
+
+    AsyncGenerator.prototype.next = function(arg) {
+      return this._invoke('next', arg);
+    };
+
+    AsyncGenerator.prototype.throw = function(arg) {
+      return this._invoke('throw', arg);
+    };
+
+    AsyncGenerator.prototype.return = function(arg) {
+      return this._invoke('return', arg);
+    };
+
+    return {
+      wrap: function(fn) {
+        return function() {
+          return new AsyncGenerator(fn.apply(this, arguments));
+        };
+      },
+      await: function(value) {
+        return new AwaitValue(value);
+      }
+    };
+  })();
+
+  var toConsumableArray = function(arr) {
+    if (Array.isArray(arr)) {
+      for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++)
+        arr2[i] = arr[i];
+
+      return arr2;
+    } else {
+      return Array.from(arr);
+    }
+  };
+
+  var transforms = {
+    1: function _() {
+      return [1, 0, 0, 1, 0, 0];
+    },
+    2: function _(width) {
+      return [-1, 0, 0, 1, width, 0];
+    },
+    3: function _(width, height) {
+      return [-1, 0, 0, -1, width, height];
+    },
+    4: function _(width, height) {
+      return [1, 0, 0, -1, 0, height];
+    },
+    5: function _() {
+      return [0, 1, 1, 0, 0, 0];
+    },
+    6: function _(width, height) {
+      return [0, 1, -1, 0, height, 0];
+    },
+    7: function _(width, height) {
+      return [0, -1, -1, 0, height, width];
+    },
+    8: function _(width) {
+      return [0, -1, 1, 0, 0, width];
+    }
+  };
+
+  var fixImageOrientation = function fixImageOrientation(
+    ctx,
+    width,
+    height,
+    orientation
+  ) {
+    // no orientation supplied
+    if (orientation === -1) {
+      return;
+    }
+
+    ctx.transform.apply(
+      ctx,
+      toConsumableArray(transforms[orientation](width, height))
+    );
+  };
+
+  // draws the preview image
+  var createPreviewImage = function createPreviewImage(
+    data,
+    width,
+    height,
+    orientation
+  ) {
+    // round
+    width = Math.round(width);
+    height = Math.round(height);
+
+    // width and height have already been swapped earlier
+    // if orientation was in range below, let's swap back to make
+    // this code a bit more readable
+    if (orientation >= 5 && orientation <= 8) {
+      var _ref = [height, width];
+      width = _ref[0];
+      height = _ref[1];
+    }
+
+    // draw image
+    var canvas = document.createElement('canvas');
+    var ctx = canvas.getContext('2d');
+
+    // if is rotated incorrectly swap width and height
+    if (orientation >= 5 && orientation <= 8) {
+      canvas.width = height;
+      canvas.height = width;
+    } else {
+      canvas.width = width;
+      canvas.height = height;
+    }
+
+    // correct image orientation
+    ctx.save();
+    fixImageOrientation(ctx, width, height, orientation);
+
+    // draw the image
+    ctx.drawImage(data, 0, 0, width, height);
+
+    // end draw image
+    ctx.restore();
+
+    // data has been transferred to canvas ( if was ImageBitmap )
+    if ('close' in data) {
+      data.close();
+    }
+
+    return canvas;
+  };
+
+  var isBitmap = function isBitmap(file) {
+    return /^image/.test(file.type) && !/svg/.test(file.type);
+  };
+
+  var IMAGE_SCALE_SPRING_PROPS = {
+    type: 'spring',
+    stiffness: 0.5,
+    damping: 0.45,
+    mass: 10
+  };
+
+  var createImageView = function createImageView(fpAPI) {
+    return fpAPI.utils.createView({
+      name: 'image-preview',
+      tag: 'div',
+      ignoreRect: true,
+      create: function create(_ref) {
+        var root = _ref.root;
+
+        root.ref.clip = document.createElement('div');
+        root.element.appendChild(root.ref.clip);
+
+        var transparencyIndicator = root.query(
+          'GET_IMAGE_PREVIEW_TRANSPARENCY_INDICATOR'
+        );
+        if (transparencyIndicator === null) {
+          return;
+        }
+
+        // grid pattern
+        if (transparencyIndicator === 'grid') {
+          root.element.dataset.transparencyIndicator = transparencyIndicator;
+        } else {
+          // basic color
+          root.element.dataset.transparencyIndicator = 'color';
+        }
+      },
+      write: fpAPI.utils.createRoute({
+        DID_IMAGE_PREVIEW_LOAD: function DID_IMAGE_PREVIEW_LOAD(_ref2) {
+          var root = _ref2.root,
+            props = _ref2.props,
+            action = _ref2.action;
+          var id = props.id;
+
+          // get item
+
+          var item = root.query('GET_ITEM', { id: props.id });
+
+          // should render background color
+          var transparencyIndicator = root.query(
+            'GET_IMAGE_PREVIEW_TRANSPARENCY_INDICATOR'
+          );
+
+          // orientation info
+          var exif = item.getMetadata('exif') || {};
+          var orientation = exif.orientation || -1;
+
+          // get width and height from action, and swap of orientation is incorrect
+          var _action$data = action.data,
+            width = _action$data.width,
+            height = _action$data.height;
+
+          if (orientation >= 5 && orientation <= 8) {
+            var _ref3 = [height, width];
+            width = _ref3[0];
+            height = _ref3[1];
+          }
+
+          // get item props
+          var crop = item.getMetadata('crop') || {
+            rect: {
+              x: 0,
+              y: 0,
+              width: 1,
+              height: 1
+            },
+            aspectRatio: height / width
+          };
+
+          // scale canvas based on pixel density
+          var pixelDensityFactor = window.devicePixelRatio;
+
+          // the max height of the preview container
+          var fixedPreviewHeight = root.query('GET_IMAGE_PREVIEW_HEIGHT');
+          var minPreviewHeight = root.query('GET_IMAGE_PREVIEW_MIN_HEIGHT');
+          var maxPreviewHeight = root.query('GET_IMAGE_PREVIEW_MAX_HEIGHT');
+
+          // calculate scaled preview image size
+          var containerWidth = root.rect.inner.width;
+          var previewImageRatio = height / width;
+          var previewWidth = containerWidth;
+          var previewHeight = containerWidth * previewImageRatio;
+
+          // calculate image preview height and width
+          var imageHeight =
+            fixedPreviewHeight !== null
+              ? fixedPreviewHeight
+              : Math.max(minPreviewHeight, Math.min(height, maxPreviewHeight));
+          var imageWidth = imageHeight / previewImageRatio;
+
+          // render scaled preview image
+          var previewImage = isBitmap(item.file)
+            ? createPreviewImage(
+                action.data,
+                imageWidth * pixelDensityFactor,
+                imageHeight * pixelDensityFactor,
+                orientation
+              )
+            : action.data;
+
+          // calculate crop container size
+          var clipHeight =
+            fixedPreviewHeight !== null
+              ? fixedPreviewHeight
+              : Math.max(
+                  minPreviewHeight,
+                  Math.min(containerWidth * crop.aspectRatio, maxPreviewHeight)
+                );
+
+          var clipWidth = clipHeight / crop.aspectRatio;
+          if (clipWidth > previewWidth) {
+            clipWidth = previewWidth;
+            clipHeight = clipWidth * crop.aspectRatio;
+          }
+
+          // calculate scalar based on if the clip rectangle has been scaled down
+          var previewScalar = clipHeight / (previewHeight * crop.rect.height);
+
+          width = previewWidth * previewScalar;
+          height = previewHeight * previewScalar;
+          var x = -crop.rect.x * previewWidth * previewScalar;
+          var y = -crop.rect.y * previewHeight * previewScalar;
+
+          // apply styles
+          root.ref.clip.style.cssText =
+            '\n                    width: ' +
+            Math.round(clipWidth) +
+            'px;\n                    height: ' +
+            Math.round(clipHeight) +
+            'px;\n                ';
+
+          // position image
+          previewImage.style.cssText =
+            '\n                    ' +
+            (transparencyIndicator !== null && transparencyIndicator !== 'grid'
+              ? 'background-color: ' + transparencyIndicator + ';'
+              : '') +
+            '\n                    width: ' +
+            Math.round(width) +
+            'px;\n                    height: ' +
+            Math.round(height) +
+            'px;\n                    transform: translate(' +
+            Math.round(x) +
+            'px, ' +
+            Math.round(y) +
+            'px) rotateZ(0.00001deg);\n                ';
+          root.ref.clip.appendChild(previewImage);
+
+          // let others know of our fabulous achievement (so the image can be faded in)
+          root.dispatch('DID_IMAGE_PREVIEW_DRAW', { id: id });
+        }
+      }),
+      mixins: {
+        styles: ['scaleX', 'scaleY', 'opacity'],
+        animations: {
+          scaleX: IMAGE_SCALE_SPRING_PROPS,
+          scaleY: IMAGE_SCALE_SPRING_PROPS,
+          opacity: { type: 'tween', duration: 750 }
+        }
+      }
+    });
+  };
+
+  /**
+   * Create gradient and mask definitions, we use these in each overlay so we can define them once
+   * Turns out this also helps Safari to render the gradient on time
+   */
+  var definitions =
+    "<radialGradient id=\"filepond--image-preview-radial-gradient\" cx=\".5\" cy=\"1.25\" r=\"1.15\">\n<stop offset='50%' stop-color='#000000'/>\n<stop offset='56%' stop-color='#0a0a0a'/>\n<stop offset='63%' stop-color='#262626'/>\n<stop offset='69%' stop-color='#4f4f4f'/>\n<stop offset='75%' stop-color='#808080'/>\n<stop offset='81%' stop-color='#b1b1b1'/>\n<stop offset='88%' stop-color='#dadada'/>\n<stop offset='94%' stop-color='#f6f6f6'/>\n<stop offset='100%' stop-color='#ffffff'/>\n</radialGradient>\n\n<mask id=\"filepond--image-preview-masking\">\n<rect x=\"0\" y=\"0\" width=\"500\" height=\"200\" fill=\"url(#filepond--image-preview-radial-gradient)\"></rect>\n</mask>";
+
+  var appendDefinitions = function appendDefinitions() {
+    if (document.readyState === 'interactive') {
+      var defs = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      defs.style.cssText = 'position:absolute;width:0;height:0';
+      defs.innerHTML = definitions;
+      document.body.appendChild(defs);
+    }
+  };
+
+  var hasNavigator = typeof navigator !== 'undefined';
+  if (hasNavigator) {
+    appendDefinitions();
+    document.addEventListener('readystatechange', appendDefinitions);
+  }
+
+  // need to know if this is IE11 so we can render the definitions with each overlay
+  var isEdgeOrIE = hasNavigator
+    ? document.documentMode || /Edge/.test(navigator.userAgent)
+    : false;
+
+  var createImageOverlayView = function createImageOverlayView(fpAPI) {
+    return fpAPI.utils.createView({
+      name: 'image-preview-overlay',
+      tag: 'div',
+      ignoreRect: true,
+      create: function create(_ref) {
+        var root = _ref.root,
+          props = _ref.props;
+
+        root.element.classList.add(
+          'filepond--image-preview-overlay-' + props.status
+        );
+        root.element.innerHTML =
+          '<svg width="500" height="200" viewBox="0 0 500 200" preserveAspectRatio="none">\n                ' +
+          (isEdgeOrIE ? '<defs>' + definitions + '</defs>' : '') +
+          '\n                <rect x="0" width="500" height="200" fill="currentColor" mask="url(#filepond--image-preview-masking)"></rect>\n            </svg>\n            ';
+      },
+      mixins: {
+        styles: ['opacity'],
+        animations: {
+          opacity: { type: 'spring', mass: 25 }
+        }
+      }
+    });
+  };
+
+  /**
+   * Bitmap Worker
+   */
+  var BitmapWorker = function BitmapWorker() {
+    // route messages
+    self.onmessage = function(e) {
+      toBitmap(e.data.message, function(response) {
+        // imageBitmap is sent back as transferable
+        self.postMessage({ id: e.data.id, message: response }, [response]);
+      });
+    };
+
+    // resize image data
+    var toBitmap = function toBitmap(options, cb) {
+      fetch(options.file)
+        .then(function(response) {
+          return response.blob();
+        })
+        .then(function(blob) {
+          return createImageBitmap(blob);
+        })
+        .then(function(imageBitmap) {
+          return cb(imageBitmap);
+        });
+    };
+  };
+
+  var getImageSize = function getImageSize(url, cb) {
+    var image = new Image();
+    image.onload = function() {
+      var width = image.naturalWidth;
+      var height = image.naturalHeight;
+      image = null;
+      cb(width, height);
+    };
+    image.src = url;
+  };
+
+  var canCreateImageBitmap = function canCreateImageBitmap(file) {
+    return 'createImageBitmap' in window && isBitmap(file);
+  };
+
+  var createImageWrapperView = function createImageWrapperView(_) {
+    // create overlay view
+    var overlay = createImageOverlayView(_);
+
+    /**
+     * Write handler for when preview container has been created
+     */
+    var didCreatePreviewContainer = function didCreatePreviewContainer(_ref) {
+      var root = _ref.root,
+        props = _ref.props;
+      var utils = _.utils;
+      var createWorker = utils.createWorker,
+        loadImage = utils.loadImage;
+      var id = props.id;
+
+      // we need to get the file data to determine the eventual image size
+
+      var item = root.query('GET_ITEM', id);
+
+      // get url to file (we'll revoke it later on when done)
+      var fileURL = URL.createObjectURL(item.file);
+
+      // fallback
+      var loadPreviewFallback = function loadPreviewFallback(
+        item,
+        width,
+        height,
+        orientation
+      ) {
+        // let's scale the image in the main thread :(
+        loadImage(fileURL).then(previewImageLoaded);
+      };
+
+      // image is now ready
+      var previewImageLoaded = function previewImageLoaded(data) {
+        // the file url is no longer needed
+        URL.revokeObjectURL(fileURL);
+
+        // the preview is now ready to be drawn
+        root.dispatch('DID_IMAGE_PREVIEW_LOAD', {
+          id: id,
+          data: data
+        });
+      };
+
+      // determine image size of this item
+      getImageSize(fileURL, function(width, height) {
+        // we can now scale the panel to the final size
+        root.dispatch('DID_IMAGE_PREVIEW_CALCULATE_SIZE', {
+          id: id,
+          width: width,
+          height: height
+        });
+
+        // if we support scaling using createImageBitmap we use a worker
+        if (canCreateImageBitmap(item.file)) {
+          // let's scale the image in a worker
+          var worker = createWorker(BitmapWorker);
+          worker.post(
+            {
+              file: fileURL
+            },
+            function(imageBitmap) {
+              // destroy worker
+              worker.terminate();
+
+              // no bitmap returned, must be something wrong,
+              // try the oldschool way
+              if (!imageBitmap) {
+                loadPreviewFallback(item);
+                return;
+              }
+
+              // yay we got our bitmap, let's continue showing the preview
+              previewImageLoaded(imageBitmap);
+            }
+          );
+        } else {
+          // create fallback preview
+          loadPreviewFallback(item);
+        }
+      });
+    };
+
+    /**
+     * Write handler for when the preview has been loaded
+     */
+    var didLoadPreview = function didLoadPreview(_ref2) {
+      var root = _ref2.root;
+
+      root.ref.overlayShadow.opacity = 1;
+    };
+
+    /**
+     * Write handler for when the preview image is ready to be animated
+     */
+    var didDrawPreview = function didDrawPreview(_ref3) {
+      var root = _ref3.root;
+      var image = root.ref.image;
+
+      // reveal image
+
+      image.scaleX = 1.0;
+      image.scaleY = 1.0;
+      image.opacity = 1;
+    };
+
+    /**
+     * Write handler for when the preview has been loaded
+     */
+    var restoreOverlay = function restoreOverlay(_ref4) {
+      var root = _ref4.root;
+
+      root.ref.overlayShadow.opacity = 1;
+      root.ref.overlayError.opacity = 0;
+      root.ref.overlaySuccess.opacity = 0;
+    };
+
+    var didThrowError = function didThrowError(_ref5) {
+      var root = _ref5.root;
+
+      root.ref.overlayShadow.opacity = 0.25;
+      root.ref.overlayError.opacity = 1;
+    };
+
+    var didCompleteProcessing = function didCompleteProcessing(_ref6) {
+      var root = _ref6.root;
+
+      root.ref.overlayShadow.opacity = 0.25;
+      root.ref.overlaySuccess.opacity = 1;
+    };
+
+    /**
+     * Constructor
+     */
+    var create = function create(_ref7) {
+      var root = _ref7.root,
+        props = _ref7.props;
+
+      // image view
+      var image = createImageView(_);
+
+      // append image presenter
+      root.ref.image = root.appendChildView(
+        root.createChildView(image, {
+          id: props.id,
+          scaleX: 1.25,
+          scaleY: 1.25,
+          opacity: 0
+        })
+      );
+
+      // image overlays
+      root.ref.overlayShadow = root.appendChildView(
+        root.createChildView(overlay, {
+          opacity: 0,
+          status: 'idle'
+        })
+      );
+
+      root.ref.overlaySuccess = root.appendChildView(
+        root.createChildView(overlay, {
+          opacity: 0,
+          status: 'success'
+        })
+      );
+
+      root.ref.overlayError = root.appendChildView(
+        root.createChildView(overlay, {
+          opacity: 0,
+          status: 'failure'
+        })
+      );
+    };
+
+    return _.utils.createView({
+      name: 'image-preview-wrapper',
+      create: create,
+      write: _.utils.createRoute({
+        // image preview stated
+        DID_IMAGE_PREVIEW_LOAD: didLoadPreview,
+        DID_IMAGE_PREVIEW_DRAW: didDrawPreview,
+        DID_IMAGE_PREVIEW_CONTAINER_CREATE: didCreatePreviewContainer,
+
+        // file states
+        DID_THROW_ITEM_LOAD_ERROR: didThrowError,
+        DID_THROW_ITEM_PROCESSING_ERROR: didThrowError,
+        DID_THROW_ITEM_INVALID: didThrowError,
+        DID_COMPLETE_ITEM_PROCESSING: didCompleteProcessing,
+        DID_START_ITEM_PROCESSING: restoreOverlay,
+        DID_REVERT_ITEM_PROCESSING: restoreOverlay
+      })
+    });
+  };
+
+  /**
+   * Image Preview Plugin
+   */
+  var plugin$1 = function(fpAPI) {
+    var addFilter = fpAPI.addFilter,
+      utils = fpAPI.utils;
+    var Type = utils.Type,
+      createRoute = utils.createRoute,
+      isFile = utils.isFile;
+
+    // imagePreviewView
+
+    var imagePreviewView = createImageWrapperView(fpAPI);
+
+    // called for each view that is created right after the 'create' method
+    addFilter('CREATE_VIEW', function(viewAPI) {
+      // get reference to created view
+      var is = viewAPI.is,
+        view = viewAPI.view,
+        query = viewAPI.query;
+
+      // only hook up to item view and only if is enabled for this cropper
+
+      if (!is('file') || !query('GET_ALLOW_IMAGE_PREVIEW')) {
+        return;
+      }
+
+      // create the image preview plugin, but only do so if the item is an image
+      var didLoadItem = function didLoadItem(_ref) {
+        var root = _ref.root,
+          props = _ref.props;
+        var id = props.id;
+
+        var item = query('GET_ITEM', id);
+
+        // item could theoretically have been removed in the mean time
+        if (!item || !isFile(item.file)) {
+          return;
+        }
+
+        // get the file object
+        var file = item.file;
+
+        // exit if this is not an image
+        if (!isPreviewableImage(file)) {
+          return;
+        }
+
+        // exit if image size is too high and no createImageBitmap support
+        // this would simply bring the browser to its knees and that is not what we want
+        var supportsCreateImageBitmap = 'createImageBitmap' in (window || {});
+        var maxPreviewFileSize = query('GET_IMAGE_PREVIEW_MAX_FILE_SIZE');
+        if (
+          !supportsCreateImageBitmap &&
+          maxPreviewFileSize &&
+          file.size > maxPreviewFileSize
+        ) {
+          return;
+        }
+
+        // set preview view
+        root.ref.imagePreview = view.appendChildView(
+          view.createChildView(imagePreviewView, { id: id })
+        );
+
+        // now ready
+        root.dispatch('DID_IMAGE_PREVIEW_CONTAINER_CREATE', { id: id });
+      };
+
+      var didCalculatePreviewSize = function didCalculatePreviewSize(_ref2) {
+        var root = _ref2.root,
+          props = _ref2.props,
+          action = _ref2.action;
+
+        // get item
+        var item = root.query('GET_ITEM', { id: props.id });
+
+        // orientation info
+        var exif = item.getMetadata('exif') || {};
+        var orientation = exif.orientation || -1;
+
+        // get width and height from action, and swap of orientation is incorrect
+        var width = action.width,
+          height = action.height;
+
+        if (orientation >= 5 && orientation <= 8) {
+          var _ref3 = [height, width];
+          width = _ref3[0];
+          height = _ref3[1];
+        }
+
+        // we need the item to get to the crop size
+        var crop = item.getMetadata('crop') || {
+          rect: {
+            x: 0,
+            y: 0,
+            width: 1,
+            height: 1
+          },
+          aspectRatio: height / width
+        };
+
+        // get height min and max
+        var fixedPreviewHeight = root.query('GET_IMAGE_PREVIEW_HEIGHT');
+        var minPreviewHeight = root.query('GET_IMAGE_PREVIEW_MIN_HEIGHT');
+        var maxPreviewHeight = root.query('GET_IMAGE_PREVIEW_MAX_HEIGHT');
+
+        // scale up width and height when we're dealing with an SVG
+        if (!isBitmap(item.file)) {
+          var scalar = 2048 / width;
+          width *= scalar;
+          height *= scalar;
+        }
+
+        // const crop width
+        height =
+          fixedPreviewHeight !== null
+            ? fixedPreviewHeight
+            : Math.max(minPreviewHeight, Math.min(height, maxPreviewHeight));
+
+        width = height / crop.aspectRatio;
+        if (width > root.rect.element.width) {
+          width = root.rect.element.width;
+          height = width * crop.aspectRatio;
+        }
+
+        // set height
+        root.ref.imagePreview.element.style.cssText =
+          'height:' + Math.round(height) + 'px';
+      };
+
+      // start writing
+      view.registerWriter(
+        createRoute({
+          DID_LOAD_ITEM: didLoadItem,
+          DID_IMAGE_PREVIEW_CALCULATE_SIZE: didCalculatePreviewSize
+        })
+      );
+    });
+
+    // expose plugin
+    return {
+      options: {
+        // Enable or disable image preview
+        allowImagePreview: [true, Type.BOOLEAN],
+
+        // Fixed preview height
+        imagePreviewHeight: [null, Type.INT],
+
+        // Min image height
+        imagePreviewMinHeight: [44, Type.INT],
+
+        // Max image height
+        imagePreviewMaxHeight: [256, Type.INT],
+
+        // Max size of preview file for when createImageBitmap is not supported
+        imagePreviewMaxFileSize: [null, Type.INT],
+
+        // Style of the transparancy indicator used behind images
+        imagePreviewTransparencyIndicator: [null, Type.STRING]
+      }
+    };
+  };
+
+  if (typeof navigator !== 'undefined' && document) {
+    // plugin has loaded
+    document.dispatchEvent(
+      new CustomEvent('FilePond:pluginloaded', { detail: plugin$1 })
+    );
+  }
+
+  return plugin$1;
+});
+
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/*
+ * FilePondPluginFileValidateSize 1.0.4
+ * Licensed under MIT, https://opensource.org/licenses/MIT
+ * Please visit https://pqina.nl/filepond for details.
+ */
+(function(global, factory) {
+   true
+    ? (module.exports = factory())
+    : typeof define === 'function' && define.amd
+      ? define(factory)
+      : (global.FilePondPluginFileValidateSize = factory());
+})(this, function() {
+  'use strict';
+
+  var plugin$1 = function(_ref) {
+    var addFilter = _ref.addFilter,
+      utils = _ref.utils;
+
+    // get quick reference to Type utils
+    var Type = utils.Type,
+      replaceInString = utils.replaceInString,
+      toNaturalFileSize = utils.toNaturalFileSize;
+
+    // filtering if an item is allowed in hopper
+
+    addFilter('ALLOW_HOPPER_ITEM', function(file, _ref2) {
+      var query = _ref2.query;
+
+      if (!query('GET_ALLOW_FILE_SIZE_VALIDATION')) {
+        return true;
+      }
+
+      var sizeMax = query('GET_MAX_FILE_SIZE');
+      if (sizeMax !== null && file.size > sizeMax) {
+        return false;
+      }
+      return true;
+    });
+
+    // called for each file that is loaded
+    // right before it is set to the item state
+    // should return a promise
+    addFilter('LOAD_FILE', function(file, _ref3) {
+      var query = _ref3.query;
+      return new Promise(function(resolve, reject) {
+        // if not allowed, all fine, exit
+        if (!query('GET_ALLOW_FILE_SIZE_VALIDATION')) {
+          resolve(file);
+          return;
+        }
+
+        // reject or resolve based on file size
+        var sizeMax = query('GET_MAX_FILE_SIZE');
+        if (sizeMax !== null && file.size > sizeMax) {
+          reject({
+            status: {
+              main: query('GET_LABEL_MAX_FILE_SIZE_EXCEEDED'),
+              sub: replaceInString(query('GET_LABEL_MAX_FILE_SIZE'), {
+                filesize: toNaturalFileSize(sizeMax)
+              })
+            }
+          });
+          return;
+        }
+
+        // returns the current option value
+        var totalSizeMax = query('GET_MAX_TOTAL_FILE_SIZE');
+        if (totalSizeMax !== null) {
+          // get the current total file size
+          var currentTotalSize = query('GET_ITEMS').reduce(function(
+            total,
+            item
+          ) {
+            return total + item.fileSize;
+          },
+          0);
+
+          // get the size of the new file
+          if (currentTotalSize > totalSizeMax) {
+            reject({
+              status: {
+                main: query('GET_LABEL_MAX_TOTAL_FILE_SIZE_EXCEEDED'),
+                sub: replaceInString(query('GET_LABEL_MAX_TOTAL_FILE_SIZE'), {
+                  filesize: toNaturalFileSize(totalSizeMax)
+                })
+              }
+            });
+            return;
+          }
+        }
+
+        // file is fine, let's pass it back
+        resolve(file);
+      });
+    });
+
+    return {
+      options: {
+        // Enable or disable file type validation
+        allowFileSizeValidation: [true, Type.BOOLEAN],
+
+        // Max individual file size in bytes
+        maxFileSize: [null, Type.INT],
+
+        // Max total file size in bytes
+        maxTotalFileSize: [null, Type.INT],
+
+        // error labels
+        labelMaxFileSizeExceeded: ['File is too large', Type.STRING],
+        labelMaxFileSize: ['Maximum file size is {filesize}', Type.STRING],
+        labelMaxTotalFileSizeExceeded: [
+          'Maximum total size exceeded',
+          Type.STRING
+        ],
+        labelMaxTotalFileSize: [
+          'Maximum total file size is {filesize}',
+          Type.STRING
+        ]
+      }
+    };
+  };
+
+  if (typeof navigator !== 'undefined' && document) {
+    // plugin has loaded
+    document.dispatchEvent(
+      new CustomEvent('FilePond:pluginloaded', { detail: plugin$1 })
+    );
+  }
+
+  return plugin$1;
+});
+
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/*
+ * FilePondPluginFileValidateType 1.1.0
+ * Licensed under MIT, https://opensource.org/licenses/MIT
+ * Please visit https://pqina.nl/filepond for details.
+ */
+(function(global, factory) {
+   true
+    ? (module.exports = factory())
+    : typeof define === 'function' && define.amd
+      ? define(factory)
+      : (global.FilePondPluginFileValidateType = factory());
+})(this, function() {
+  'use strict';
+
+  var plugin$1 = function(_ref) {
+    var addFilter = _ref.addFilter,
+      utils = _ref.utils;
+
+    // get quick reference to Type utils
+    var Type = utils.Type,
+      isString = utils.isString,
+      replaceInString = utils.replaceInString,
+      guesstimateMimeType = utils.guesstimateMimeType,
+      getExtensionFromFilename = utils.getExtensionFromFilename,
+      getFilenameFromURL = utils.getFilenameFromURL;
+
+    var mimeTypeMatchesWildCard = function mimeTypeMatchesWildCard(
+      mimeType,
+      wildcard
+    ) {
+      var mimeTypeGroup = (/^[^/]+/.exec(mimeType) || []).pop(); // image/png -> image
+      var wildcardGroup = wildcard.slice(0, -2); // image/* -> image
+      return mimeTypeGroup === wildcardGroup;
+    };
+
+    var isValidMIMEType = function isValidMIMEType(
+      acceptedTypes,
+      userInputType
+    ) {
+      return acceptedTypes.some(function(acceptedType) {
+        // accepted is wildcard mime type
+        if (/\*$/.test(acceptedType)) {
+          return mimeTypeMatchesWildCard(userInputType, acceptedType);
+        }
+
+        // is normal mime type
+        return acceptedType === userInputType;
+      });
+    };
+
+    var validateFile = function validateFile(item, acceptedFileTypes) {
+      // no types defined, everything is allowed \o/
+      if (acceptedFileTypes.length === 0) {
+        return true;
+      }
+
+      // if the item is a url we guess the mime type by the extension
+      var type = '';
+      if (isString(item)) {
+        var filename = getFilenameFromURL(item);
+        var extension = getExtensionFromFilename(filename);
+        if (extension) {
+          type = guesstimateMimeType(extension);
+        } else {
+          return true;
+        }
+      } else {
+        type = item.type;
+      }
+
+      // validate file type
+      return isValidMIMEType(acceptedFileTypes, type);
+    };
+
+    var applyMimeTypeMap = function applyMimeTypeMap(map) {
+      return function(acceptedFileType) {
+        return map[acceptedFileType] === null
+          ? false
+          : map[acceptedFileType] || acceptedFileType;
+      };
+    };
+
+    // setup attribute mapping for accept
+    addFilter('SET_ATTRIBUTE_TO_OPTION_MAP', function(map) {
+      return Object.assign(map, {
+        accept: 'acceptedFileTypes'
+      });
+    });
+
+    // filtering if an item is allowed in hopper
+    addFilter('ALLOW_HOPPER_ITEM', function(file, _ref2) {
+      var query = _ref2.query;
+
+      // if we are not doing file type validation exit
+      if (!query('GET_ALLOW_FILE_TYPE_VALIDATION')) {
+        return true;
+      }
+
+      // we validate the file against the accepted file types
+      return validateFile(file, query('GET_ACCEPTED_FILE_TYPES'));
+    });
+
+    // called for each file that is loaded
+    // right before it is set to the item state
+    // should return a promise
+    addFilter('LOAD_FILE', function(file, _ref3) {
+      var query = _ref3.query;
+      return new Promise(function(resolve, reject) {
+        var allowFileTypeValidation = query('GET_ALLOW_FILE_TYPE_VALIDATION');
+        if (!allowFileTypeValidation) {
+          resolve(file);
+          return;
+        }
+
+        var acceptedFileTypes = query('GET_ACCEPTED_FILE_TYPES');
+
+        // if invalid, exit here
+        if (!validateFile(file, acceptedFileTypes)) {
+          var acceptedFileTypesMapped = acceptedFileTypes
+            .map(
+              applyMimeTypeMap(
+                query('GET_FILE_VALIDATE_TYPE_LABEL_EXPECTED_TYPES_MAP')
+              )
+            )
+            .filter(function(label) {
+              return label !== false;
+            });
+
+          reject({
+            status: {
+              main: query('GET_LABEL_FILE_TYPE_NOT_ALLOWED'),
+              sub: replaceInString(
+                query('GET_FILE_VALIDATE_TYPE_LABEL_EXPECTED_TYPES'),
+                {
+                  allTypes: acceptedFileTypesMapped.join(', '),
+                  allButLastType: acceptedFileTypesMapped
+                    .slice(0, -1)
+                    .join(', '),
+                  lastType:
+                    acceptedFileTypesMapped[acceptedFileTypesMapped.length - 1]
+                }
+              )
+            }
+          });
+          return;
+        }
+
+        // all fine
+        resolve(file);
+      });
+    });
+
+    // expose plugin
+    return {
+      // default options
+      options: {
+        // Enable or disable file type validation
+        allowFileTypeValidation: [true, Type.BOOLEAN],
+
+        // What file types to accept
+        acceptedFileTypes: [[], Type.ARRAY],
+        // - must be comma separated
+        // - mime types: image/png, image/jpeg, image/gif
+        // - extensions: .png, .jpg, .jpeg ( not enabled yet )
+        // - wildcards: image/*
+
+        // label to show when a type is not allowed
+        labelFileTypeNotAllowed: ['File is of invalid type', Type.STRING],
+
+        // nicer label
+        fileValidateTypeLabelExpectedTypes: [
+          'Expects {allButLastType} or {lastType}',
+          Type.STRING
+        ],
+
+        // map mime types to extensions
+        fileValidateTypeLabelExpectedTypesMap: [{}, Type.OBJECT]
+      }
+    };
+  };
+
+  if (typeof navigator !== 'undefined' && document) {
+    // plugin has loaded
+    document.dispatchEvent(
+      new CustomEvent('FilePond:pluginloaded', { detail: plugin$1 })
+    );
+  }
+
+  return plugin$1;
+});
+
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/*
+ * FilePondPluginFileEncode 1.0.5
+ * Licensed under MIT, https://opensource.org/licenses/MIT
+ * Please visit https://pqina.nl/filepond for details.
+ */
+(function(global, factory) {
+   true
+    ? (module.exports = factory())
+    : typeof define === 'function' && define.amd
+      ? define(factory)
+      : (global.FilePondPluginFileEncode = factory());
+})(this, function() {
+  'use strict';
+
+  /**
+   * DataURI Worker
+   */
+  var DataURIWorker = function DataURIWorker() {
+    // route messages
+    self.onmessage = function(e) {
+      convert(e.data.message, function(response) {
+        self.postMessage({ id: e.data.id, message: response });
+      });
+    };
+
+    // convert file to data uri
+    var convert = function convert(options, cb) {
+      var file = options.file;
+
+      var reader = new FileReader();
+      reader.onloadend = function() {
+        cb(reader.result.replace('data:', '').replace(/^.+,/, ''));
+      };
+      reader.readAsDataURL(file);
+    };
+  };
+
+  var plugin$1 = function(_ref) {
+    var addFilter = _ref.addFilter,
+      utils = _ref.utils;
+
+    // get quick reference to Type utils
+    var Type = utils.Type,
+      createWorker = utils.createWorker,
+      createRoute = utils.createRoute,
+      isFile = utils.isFile;
+
+    addFilter('SHOULD_PREPARE_OUTPUT', function(shouldPrepareOutput) {
+      return new Promise(function(resolve, reject) {
+        // should alway prepare output
+        resolve(true);
+      });
+    });
+
+    addFilter('COMPLETE_PREPARE_OUTPUT', function(file, _ref2) {
+      var item = _ref2.item;
+      return new Promise(function(resolve, reject) {
+        // this is not a file, continue
+        if (!isFile(file)) {
+          resolve(file);
+          return;
+        }
+
+        var metadata = item.getMetadata();
+        delete metadata.base64;
+
+        var worker = createWorker(DataURIWorker);
+        worker.post({ file: file }, function(data) {
+          // store in item metadata
+          item.setMetadata('base64', data);
+
+          // done dealing with prepared output
+          resolve(file);
+        });
+      });
+    });
+
+    // called for each view that is created right after the 'create' method
+    addFilter('CREATE_VIEW', function(viewAPI) {
+      // get reference to created view
+      var is = viewAPI.is,
+        view = viewAPI.view,
+        query = viewAPI.query;
+
+      // only hook up to item view
+
+      if (!is('file-wrapper') || !query('GET_ALLOW_FILE_ENCODE')) {
+        return;
+      }
+
+      view.registerWriter(
+        createRoute({
+          DID_LOAD_ITEM: function DID_LOAD_ITEM(_ref3) {
+            var root = _ref3.root,
+              action = _ref3.action;
+
+            // only do this if is not uploading async
+            if (query('IS_ASYNC')) {
+              return;
+            }
+
+            var item = query('GET_ITEM', action.id);
+
+            // extract base64 string
+            var metadata = item.getMetadata();
+            var data = metadata.base64;
+            delete metadata.base64;
+
+            // create JSON string from encoded data and stores in the hidden input field
+            root.ref.data.value = JSON.stringify({
+              id: item.id,
+              name: item.file.name,
+              type: item.file.type,
+              size: item.file.size,
+              metadata: metadata,
+              data: data
+            });
+          }
+        })
+      );
+    });
+
+    return {
+      options: {
+        // Enable or disable file encoding
+        allowFileEncode: [true, Type.BOOLEAN]
+      }
+    };
+  };
+
+  if (typeof navigator !== 'undefined' && document) {
+    // plugin has loaded
+    document.dispatchEvent(
+      new CustomEvent('FilePond:pluginloaded', { detail: plugin$1 })
+    );
+  }
+
+  return plugin$1;
+});
+
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(211);
+if(typeof content === 'string') content = [[module.i, content, '']];
+// Prepare cssTransformation
+var transform;
+
+var options = {}
+options.transform = transform
+// add the styles to the DOM
+var update = __webpack_require__(152)(content, options);
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(false) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept("!!../../css-loader/index.js!./filepond.min.css", function() {
+			var newContent = require("!!../../css-loader/index.js!./filepond.min.css");
+			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+			update(newContent);
+		});
+	}
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 13 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(213);
+if(typeof content === 'string') content = [[module.i, content, '']];
+// Prepare cssTransformation
+var transform;
+
+var options = {}
+options.transform = transform
+// add the styles to the DOM
+var update = __webpack_require__(152)(content, options);
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(false) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept("!!../../css-loader/index.js!./filepond-plugin-image-preview.css", function() {
+			var newContent = require("!!../../css-loader/index.js!./filepond-plugin-image-preview.css");
+			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+			update(newContent);
+		});
+	}
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16762,1633 +18388,7 @@ Vue.compile = compileToFunctions;
 
 module.exports = Vue;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(193).setImmediate))
-
-/***/ }),
-/* 8 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
- * vue-filepond v3.0.3
- * A handy FilePond adapter component for Vue
- * 
- * Copyright (c) 2018 PQINA
- * https://pqina.nl/filepond
- * 
- * Licensed under the MIT license.
- */
-
-(function (global, factory) {
-    if (true) {
-        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [exports, __webpack_require__(7), __webpack_require__(209)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
-				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
-				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
-				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-    } else if (typeof exports !== "undefined") {
-        factory(exports, require('vue'), require('filepond'));
-    } else {
-        var mod = {
-            exports: {}
-        };
-        factory(mod.exports, global.Vue, global.FilePond);
-        global.vueFilePond = mod.exports;
-    }
-})(this, function (exports, _vue, _filepond) {
-    'use strict';
-
-    Object.defineProperty(exports, "__esModule", {
-        value: true
-    });
-    exports.setOptions = undefined;
-
-    var _vue2 = _interopRequireDefault(_vue);
-
-    function _interopRequireDefault(obj) {
-        return obj && obj.__esModule ? obj : {
-            default: obj
-        };
-    }
-
-    // Methods not made available to the component
-    var filteredComponentMethods = ['setOptions', 'on', 'off', 'onOnce', 'appendTo', 'insertAfter', 'insertBefore', 'isAttachedTo', 'replaceElement', 'restoreElement', 'destroy'];
-
-    // Test if is supported on this client
-    var isSupported = (0, _filepond.supported)();
-
-    // Setup initial prop types and update when plugins are added
-    var getNativeConstructorFromType = function getNativeConstructorFromType(type) {
-        return {
-            string: String,
-            boolean: Boolean,
-            array: Array,
-            function: Function,
-            int: Number,
-            serverapi: Object
-        }[type];
-    };
-
-    // Activated props
-    var props = {};
-
-    // Events that need to be mapped to emitters
-    var events = [];
-
-    // Props to watch
-    var watch = {};
-
-    // all active instances
-    var instances = [];
-
-    // global options
-    var globalOptions = {};
-    var setOptions = exports.setOptions = function setOptions(options) {
-        globalOptions = Object.assign(globalOptions, options);
-        instances.forEach(function (instance) {
-            instance.setOptions(globalOptions);
-        });
-    };
-
-    exports.default = function () {
-
-        // register plugins in FilePond
-        _filepond.registerPlugin.apply(undefined, arguments);
-
-        // build events and props array
-        events.length = 0;
-
-        var _loop = function _loop(prop) {
-            // don't add events to the props array
-            if (/^on/.test(prop)) {
-                events.push(prop);
-                return 'continue';
-            }
-
-            // get property type ( can be either a String or the type defined within FilePond )
-            props[prop] = [String, getNativeConstructorFromType(_filepond.OptionTypes[prop])];
-
-            // setup watcher
-            watch[prop] = function (value) {
-                this._pond[prop] = value;
-            };
-        };
-
-        for (var prop in _filepond.OptionTypes) {
-            var _ret = _loop(prop);
-
-            if (_ret === 'continue') continue;
-        }
-
-        // create 
-        return _vue2.default.component('FilePond', {
-            name: 'FilePond',
-            props: props,
-            watch: watch,
-            render: function render(h) {
-                return h('div', {
-                    'class': {
-                        'filepond--wrapper': true
-                    }
-                }, [h('input', {
-                    attrs: {
-                        id: this.id,
-                        name: this.name,
-                        type: 'file',
-                        'class': this.className,
-                        required: this.required,
-                        multiple: this.allowMultiple,
-                        accept: this.acceptedFileTypes,
-                        capture: this.captureMethod
-                    }
-                })]);
-            },
-
-            // Will setup FilePond instance when mounted
-            mounted: function mounted() {
-                var _this = this;
-
-                // exit here if not supported
-                if (!isSupported) {
-                    return;
-                }
-
-                // get pond element
-                this._element = this.$el.querySelector('input');
-
-                // Map FilePond callback methods to Vue $emitters
-                var options = events.reduce(function (obj, value) {
-                    obj[value] = function () {
-                        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-                            args[_key] = arguments[_key];
-                        }
-
-                        _this.$emit.apply(_this, [value.substr(2)].concat(args));
-                    };
-                    return obj;
-                }, {});
-
-                // Scoop up attributes that might not have been caught by Vue ( because the props object is extended dynamically )
-                var attrs = Object.assign({}, this.$attrs);
-
-                // Create our pond
-                this._pond = (0, _filepond.create)(this._element, Object.assign(globalOptions, options, attrs, this.$options.propsData));
-
-                // Copy instance method references to component instance
-                Object.keys(this._pond).filter(function (key) {
-                    return !filteredComponentMethods.includes(key);
-                }).forEach(function (key) {
-                    _this[key] = _this._pond[key];
-                });
-
-                // Add to instances so we can apply global options when used
-                instances.push(this._pond);
-            },
-
-
-            // Will clean up FilePond instance when unmounted
-            beforeDestroy: function beforeDestroy() {
-                // exit when no pond defined
-                if (!this._pond) {
-                    return;
-                }
-
-                // bye bye pond
-                this._pond.destroy();
-
-                // remove from instances
-                var index = instances.indexOf(this._pond);
-                if (index >= 0) {
-                    instances.splice(index, 1);
-                }
-            }
-        });
-    };
-});
-
-
-
-
-/***/ }),
-/* 9 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/*
- * FilePondPluginImagePreview 2.0.1
- * Licensed under MIT, https://opensource.org/licenses/MIT
- * Please visit https://pqina.nl/filepond for details.
- */
-(function(global, factory) {
-   true
-    ? (module.exports = factory())
-    : typeof define === 'function' && define.amd
-      ? define(factory)
-      : (global.FilePondPluginImagePreview = factory());
-})(this, function() {
-  'use strict';
-
-  // test if file is of type image and can be viewed in canvas
-  var isPreviewableImage = function isPreviewableImage(file) {
-    return /^image/.test(file.type);
-  }; // && !/svg/.test(file.type);
-
-  var asyncGenerator = (function() {
-    function AwaitValue(value) {
-      this.value = value;
-    }
-
-    function AsyncGenerator(gen) {
-      var front, back;
-
-      function send(key, arg) {
-        return new Promise(function(resolve, reject) {
-          var request = {
-            key: key,
-            arg: arg,
-            resolve: resolve,
-            reject: reject,
-            next: null
-          };
-
-          if (back) {
-            back = back.next = request;
-          } else {
-            front = back = request;
-            resume(key, arg);
-          }
-        });
-      }
-
-      function resume(key, arg) {
-        try {
-          var result = gen[key](arg);
-          var value = result.value;
-
-          if (value instanceof AwaitValue) {
-            Promise.resolve(value.value).then(
-              function(arg) {
-                resume('next', arg);
-              },
-              function(arg) {
-                resume('throw', arg);
-              }
-            );
-          } else {
-            settle(result.done ? 'return' : 'normal', result.value);
-          }
-        } catch (err) {
-          settle('throw', err);
-        }
-      }
-
-      function settle(type, value) {
-        switch (type) {
-          case 'return':
-            front.resolve({
-              value: value,
-              done: true
-            });
-            break;
-
-          case 'throw':
-            front.reject(value);
-            break;
-
-          default:
-            front.resolve({
-              value: value,
-              done: false
-            });
-            break;
-        }
-
-        front = front.next;
-
-        if (front) {
-          resume(front.key, front.arg);
-        } else {
-          back = null;
-        }
-      }
-
-      this._invoke = send;
-
-      if (typeof gen.return !== 'function') {
-        this.return = undefined;
-      }
-    }
-
-    if (typeof Symbol === 'function' && Symbol.asyncIterator) {
-      AsyncGenerator.prototype[Symbol.asyncIterator] = function() {
-        return this;
-      };
-    }
-
-    AsyncGenerator.prototype.next = function(arg) {
-      return this._invoke('next', arg);
-    };
-
-    AsyncGenerator.prototype.throw = function(arg) {
-      return this._invoke('throw', arg);
-    };
-
-    AsyncGenerator.prototype.return = function(arg) {
-      return this._invoke('return', arg);
-    };
-
-    return {
-      wrap: function(fn) {
-        return function() {
-          return new AsyncGenerator(fn.apply(this, arguments));
-        };
-      },
-      await: function(value) {
-        return new AwaitValue(value);
-      }
-    };
-  })();
-
-  var toConsumableArray = function(arr) {
-    if (Array.isArray(arr)) {
-      for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++)
-        arr2[i] = arr[i];
-
-      return arr2;
-    } else {
-      return Array.from(arr);
-    }
-  };
-
-  var transforms = {
-    1: function _() {
-      return [1, 0, 0, 1, 0, 0];
-    },
-    2: function _(width) {
-      return [-1, 0, 0, 1, width, 0];
-    },
-    3: function _(width, height) {
-      return [-1, 0, 0, -1, width, height];
-    },
-    4: function _(width, height) {
-      return [1, 0, 0, -1, 0, height];
-    },
-    5: function _() {
-      return [0, 1, 1, 0, 0, 0];
-    },
-    6: function _(width, height) {
-      return [0, 1, -1, 0, height, 0];
-    },
-    7: function _(width, height) {
-      return [0, -1, -1, 0, height, width];
-    },
-    8: function _(width) {
-      return [0, -1, 1, 0, 0, width];
-    }
-  };
-
-  var fixImageOrientation = function fixImageOrientation(
-    ctx,
-    width,
-    height,
-    orientation
-  ) {
-    // no orientation supplied
-    if (orientation === -1) {
-      return;
-    }
-
-    ctx.transform.apply(
-      ctx,
-      toConsumableArray(transforms[orientation](width, height))
-    );
-  };
-
-  // draws the preview image
-  var createPreviewImage = function createPreviewImage(
-    data,
-    width,
-    height,
-    orientation
-  ) {
-    // round
-    width = Math.round(width);
-    height = Math.round(height);
-
-    // width and height have already been swapped earlier
-    // if orientation was in range below, let's swap back to make
-    // this code a bit more readable
-    if (orientation >= 5 && orientation <= 8) {
-      var _ref = [height, width];
-      width = _ref[0];
-      height = _ref[1];
-    }
-
-    // draw image
-    var canvas = document.createElement('canvas');
-    var ctx = canvas.getContext('2d');
-
-    // if is rotated incorrectly swap width and height
-    if (orientation >= 5 && orientation <= 8) {
-      canvas.width = height;
-      canvas.height = width;
-    } else {
-      canvas.width = width;
-      canvas.height = height;
-    }
-
-    // correct image orientation
-    ctx.save();
-    fixImageOrientation(ctx, width, height, orientation);
-
-    // draw the image
-    ctx.drawImage(data, 0, 0, width, height);
-
-    // end draw image
-    ctx.restore();
-
-    // data has been transferred to canvas ( if was ImageBitmap )
-    if ('close' in data) {
-      data.close();
-    }
-
-    return canvas;
-  };
-
-  var isBitmap = function isBitmap(file) {
-    return /^image/.test(file.type) && !/svg/.test(file.type);
-  };
-
-  var IMAGE_SCALE_SPRING_PROPS = {
-    type: 'spring',
-    stiffness: 0.5,
-    damping: 0.45,
-    mass: 10
-  };
-
-  var createImageView = function createImageView(fpAPI) {
-    return fpAPI.utils.createView({
-      name: 'image-preview',
-      tag: 'div',
-      ignoreRect: true,
-      create: function create(_ref) {
-        var root = _ref.root;
-
-        root.ref.clip = document.createElement('div');
-        root.element.appendChild(root.ref.clip);
-
-        var transparencyIndicator = root.query(
-          'GET_IMAGE_PREVIEW_TRANSPARENCY_INDICATOR'
-        );
-        if (transparencyIndicator === null) {
-          return;
-        }
-
-        // grid pattern
-        if (transparencyIndicator === 'grid') {
-          root.element.dataset.transparencyIndicator = transparencyIndicator;
-        } else {
-          // basic color
-          root.element.dataset.transparencyIndicator = 'color';
-        }
-      },
-      write: fpAPI.utils.createRoute({
-        DID_IMAGE_PREVIEW_LOAD: function DID_IMAGE_PREVIEW_LOAD(_ref2) {
-          var root = _ref2.root,
-            props = _ref2.props,
-            action = _ref2.action;
-          var id = props.id;
-
-          // get item
-
-          var item = root.query('GET_ITEM', { id: props.id });
-
-          // should render background color
-          var transparencyIndicator = root.query(
-            'GET_IMAGE_PREVIEW_TRANSPARENCY_INDICATOR'
-          );
-
-          // orientation info
-          var exif = item.getMetadata('exif') || {};
-          var orientation = exif.orientation || -1;
-
-          // get width and height from action, and swap of orientation is incorrect
-          var _action$data = action.data,
-            width = _action$data.width,
-            height = _action$data.height;
-
-          if (orientation >= 5 && orientation <= 8) {
-            var _ref3 = [height, width];
-            width = _ref3[0];
-            height = _ref3[1];
-          }
-
-          // get item props
-          var crop = item.getMetadata('crop') || {
-            rect: {
-              x: 0,
-              y: 0,
-              width: 1,
-              height: 1
-            },
-            aspectRatio: height / width
-          };
-
-          // scale canvas based on pixel density
-          var pixelDensityFactor = window.devicePixelRatio;
-
-          // the max height of the preview container
-          var fixedPreviewHeight = root.query('GET_IMAGE_PREVIEW_HEIGHT');
-          var minPreviewHeight = root.query('GET_IMAGE_PREVIEW_MIN_HEIGHT');
-          var maxPreviewHeight = root.query('GET_IMAGE_PREVIEW_MAX_HEIGHT');
-
-          // calculate scaled preview image size
-          var containerWidth = root.rect.inner.width;
-          var previewImageRatio = height / width;
-          var previewWidth = containerWidth;
-          var previewHeight = containerWidth * previewImageRatio;
-
-          // calculate image preview height and width
-          var imageHeight =
-            fixedPreviewHeight !== null
-              ? fixedPreviewHeight
-              : Math.max(minPreviewHeight, Math.min(height, maxPreviewHeight));
-          var imageWidth = imageHeight / previewImageRatio;
-
-          // render scaled preview image
-          var previewImage = isBitmap(item.file)
-            ? createPreviewImage(
-                action.data,
-                imageWidth * pixelDensityFactor,
-                imageHeight * pixelDensityFactor,
-                orientation
-              )
-            : action.data;
-
-          // calculate crop container size
-          var clipHeight =
-            fixedPreviewHeight !== null
-              ? fixedPreviewHeight
-              : Math.max(
-                  minPreviewHeight,
-                  Math.min(containerWidth * crop.aspectRatio, maxPreviewHeight)
-                );
-
-          var clipWidth = clipHeight / crop.aspectRatio;
-          if (clipWidth > previewWidth) {
-            clipWidth = previewWidth;
-            clipHeight = clipWidth * crop.aspectRatio;
-          }
-
-          // calculate scalar based on if the clip rectangle has been scaled down
-          var previewScalar = clipHeight / (previewHeight * crop.rect.height);
-
-          width = previewWidth * previewScalar;
-          height = previewHeight * previewScalar;
-          var x = -crop.rect.x * previewWidth * previewScalar;
-          var y = -crop.rect.y * previewHeight * previewScalar;
-
-          // apply styles
-          root.ref.clip.style.cssText =
-            '\n                    width: ' +
-            Math.round(clipWidth) +
-            'px;\n                    height: ' +
-            Math.round(clipHeight) +
-            'px;\n                ';
-
-          // position image
-          previewImage.style.cssText =
-            '\n                    ' +
-            (transparencyIndicator !== null && transparencyIndicator !== 'grid'
-              ? 'background-color: ' + transparencyIndicator + ';'
-              : '') +
-            '\n                    width: ' +
-            Math.round(width) +
-            'px;\n                    height: ' +
-            Math.round(height) +
-            'px;\n                    transform: translate(' +
-            Math.round(x) +
-            'px, ' +
-            Math.round(y) +
-            'px) rotateZ(0.00001deg);\n                ';
-          root.ref.clip.appendChild(previewImage);
-
-          // let others know of our fabulous achievement (so the image can be faded in)
-          root.dispatch('DID_IMAGE_PREVIEW_DRAW', { id: id });
-        }
-      }),
-      mixins: {
-        styles: ['scaleX', 'scaleY', 'opacity'],
-        animations: {
-          scaleX: IMAGE_SCALE_SPRING_PROPS,
-          scaleY: IMAGE_SCALE_SPRING_PROPS,
-          opacity: { type: 'tween', duration: 750 }
-        }
-      }
-    });
-  };
-
-  /**
-   * Create gradient and mask definitions, we use these in each overlay so we can define them once
-   * Turns out this also helps Safari to render the gradient on time
-   */
-  var definitions =
-    "<radialGradient id=\"filepond--image-preview-radial-gradient\" cx=\".5\" cy=\"1.25\" r=\"1.15\">\n<stop offset='50%' stop-color='#000000'/>\n<stop offset='56%' stop-color='#0a0a0a'/>\n<stop offset='63%' stop-color='#262626'/>\n<stop offset='69%' stop-color='#4f4f4f'/>\n<stop offset='75%' stop-color='#808080'/>\n<stop offset='81%' stop-color='#b1b1b1'/>\n<stop offset='88%' stop-color='#dadada'/>\n<stop offset='94%' stop-color='#f6f6f6'/>\n<stop offset='100%' stop-color='#ffffff'/>\n</radialGradient>\n\n<mask id=\"filepond--image-preview-masking\">\n<rect x=\"0\" y=\"0\" width=\"500\" height=\"200\" fill=\"url(#filepond--image-preview-radial-gradient)\"></rect>\n</mask>";
-
-  var appendDefinitions = function appendDefinitions() {
-    if (document.readyState === 'interactive') {
-      var defs = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-      defs.style.cssText = 'position:absolute;width:0;height:0';
-      defs.innerHTML = definitions;
-      document.body.appendChild(defs);
-    }
-  };
-
-  var hasNavigator = typeof navigator !== 'undefined';
-  if (hasNavigator) {
-    appendDefinitions();
-    document.addEventListener('readystatechange', appendDefinitions);
-  }
-
-  // need to know if this is IE11 so we can render the definitions with each overlay
-  var isEdgeOrIE = hasNavigator
-    ? document.documentMode || /Edge/.test(navigator.userAgent)
-    : false;
-
-  var createImageOverlayView = function createImageOverlayView(fpAPI) {
-    return fpAPI.utils.createView({
-      name: 'image-preview-overlay',
-      tag: 'div',
-      ignoreRect: true,
-      create: function create(_ref) {
-        var root = _ref.root,
-          props = _ref.props;
-
-        root.element.classList.add(
-          'filepond--image-preview-overlay-' + props.status
-        );
-        root.element.innerHTML =
-          '<svg width="500" height="200" viewBox="0 0 500 200" preserveAspectRatio="none">\n                ' +
-          (isEdgeOrIE ? '<defs>' + definitions + '</defs>' : '') +
-          '\n                <rect x="0" width="500" height="200" fill="currentColor" mask="url(#filepond--image-preview-masking)"></rect>\n            </svg>\n            ';
-      },
-      mixins: {
-        styles: ['opacity'],
-        animations: {
-          opacity: { type: 'spring', mass: 25 }
-        }
-      }
-    });
-  };
-
-  /**
-   * Bitmap Worker
-   */
-  var BitmapWorker = function BitmapWorker() {
-    // route messages
-    self.onmessage = function(e) {
-      toBitmap(e.data.message, function(response) {
-        // imageBitmap is sent back as transferable
-        self.postMessage({ id: e.data.id, message: response }, [response]);
-      });
-    };
-
-    // resize image data
-    var toBitmap = function toBitmap(options, cb) {
-      fetch(options.file)
-        .then(function(response) {
-          return response.blob();
-        })
-        .then(function(blob) {
-          return createImageBitmap(blob);
-        })
-        .then(function(imageBitmap) {
-          return cb(imageBitmap);
-        });
-    };
-  };
-
-  var getImageSize = function getImageSize(url, cb) {
-    var image = new Image();
-    image.onload = function() {
-      var width = image.naturalWidth;
-      var height = image.naturalHeight;
-      image = null;
-      cb(width, height);
-    };
-    image.src = url;
-  };
-
-  var canCreateImageBitmap = function canCreateImageBitmap(file) {
-    return 'createImageBitmap' in window && isBitmap(file);
-  };
-
-  var createImageWrapperView = function createImageWrapperView(_) {
-    // create overlay view
-    var overlay = createImageOverlayView(_);
-
-    /**
-     * Write handler for when preview container has been created
-     */
-    var didCreatePreviewContainer = function didCreatePreviewContainer(_ref) {
-      var root = _ref.root,
-        props = _ref.props;
-      var utils = _.utils;
-      var createWorker = utils.createWorker,
-        loadImage = utils.loadImage;
-      var id = props.id;
-
-      // we need to get the file data to determine the eventual image size
-
-      var item = root.query('GET_ITEM', id);
-
-      // get url to file (we'll revoke it later on when done)
-      var fileURL = URL.createObjectURL(item.file);
-
-      // fallback
-      var loadPreviewFallback = function loadPreviewFallback(
-        item,
-        width,
-        height,
-        orientation
-      ) {
-        // let's scale the image in the main thread :(
-        loadImage(fileURL).then(previewImageLoaded);
-      };
-
-      // image is now ready
-      var previewImageLoaded = function previewImageLoaded(data) {
-        // the file url is no longer needed
-        URL.revokeObjectURL(fileURL);
-
-        // the preview is now ready to be drawn
-        root.dispatch('DID_IMAGE_PREVIEW_LOAD', {
-          id: id,
-          data: data
-        });
-      };
-
-      // determine image size of this item
-      getImageSize(fileURL, function(width, height) {
-        // we can now scale the panel to the final size
-        root.dispatch('DID_IMAGE_PREVIEW_CALCULATE_SIZE', {
-          id: id,
-          width: width,
-          height: height
-        });
-
-        // if we support scaling using createImageBitmap we use a worker
-        if (canCreateImageBitmap(item.file)) {
-          // let's scale the image in a worker
-          var worker = createWorker(BitmapWorker);
-          worker.post(
-            {
-              file: fileURL
-            },
-            function(imageBitmap) {
-              // destroy worker
-              worker.terminate();
-
-              // no bitmap returned, must be something wrong,
-              // try the oldschool way
-              if (!imageBitmap) {
-                loadPreviewFallback(item);
-                return;
-              }
-
-              // yay we got our bitmap, let's continue showing the preview
-              previewImageLoaded(imageBitmap);
-            }
-          );
-        } else {
-          // create fallback preview
-          loadPreviewFallback(item);
-        }
-      });
-    };
-
-    /**
-     * Write handler for when the preview has been loaded
-     */
-    var didLoadPreview = function didLoadPreview(_ref2) {
-      var root = _ref2.root;
-
-      root.ref.overlayShadow.opacity = 1;
-    };
-
-    /**
-     * Write handler for when the preview image is ready to be animated
-     */
-    var didDrawPreview = function didDrawPreview(_ref3) {
-      var root = _ref3.root;
-      var image = root.ref.image;
-
-      // reveal image
-
-      image.scaleX = 1.0;
-      image.scaleY = 1.0;
-      image.opacity = 1;
-    };
-
-    /**
-     * Write handler for when the preview has been loaded
-     */
-    var restoreOverlay = function restoreOverlay(_ref4) {
-      var root = _ref4.root;
-
-      root.ref.overlayShadow.opacity = 1;
-      root.ref.overlayError.opacity = 0;
-      root.ref.overlaySuccess.opacity = 0;
-    };
-
-    var didThrowError = function didThrowError(_ref5) {
-      var root = _ref5.root;
-
-      root.ref.overlayShadow.opacity = 0.25;
-      root.ref.overlayError.opacity = 1;
-    };
-
-    var didCompleteProcessing = function didCompleteProcessing(_ref6) {
-      var root = _ref6.root;
-
-      root.ref.overlayShadow.opacity = 0.25;
-      root.ref.overlaySuccess.opacity = 1;
-    };
-
-    /**
-     * Constructor
-     */
-    var create = function create(_ref7) {
-      var root = _ref7.root,
-        props = _ref7.props;
-
-      // image view
-      var image = createImageView(_);
-
-      // append image presenter
-      root.ref.image = root.appendChildView(
-        root.createChildView(image, {
-          id: props.id,
-          scaleX: 1.25,
-          scaleY: 1.25,
-          opacity: 0
-        })
-      );
-
-      // image overlays
-      root.ref.overlayShadow = root.appendChildView(
-        root.createChildView(overlay, {
-          opacity: 0,
-          status: 'idle'
-        })
-      );
-
-      root.ref.overlaySuccess = root.appendChildView(
-        root.createChildView(overlay, {
-          opacity: 0,
-          status: 'success'
-        })
-      );
-
-      root.ref.overlayError = root.appendChildView(
-        root.createChildView(overlay, {
-          opacity: 0,
-          status: 'failure'
-        })
-      );
-    };
-
-    return _.utils.createView({
-      name: 'image-preview-wrapper',
-      create: create,
-      write: _.utils.createRoute({
-        // image preview stated
-        DID_IMAGE_PREVIEW_LOAD: didLoadPreview,
-        DID_IMAGE_PREVIEW_DRAW: didDrawPreview,
-        DID_IMAGE_PREVIEW_CONTAINER_CREATE: didCreatePreviewContainer,
-
-        // file states
-        DID_THROW_ITEM_LOAD_ERROR: didThrowError,
-        DID_THROW_ITEM_PROCESSING_ERROR: didThrowError,
-        DID_THROW_ITEM_INVALID: didThrowError,
-        DID_COMPLETE_ITEM_PROCESSING: didCompleteProcessing,
-        DID_START_ITEM_PROCESSING: restoreOverlay,
-        DID_REVERT_ITEM_PROCESSING: restoreOverlay
-      })
-    });
-  };
-
-  /**
-   * Image Preview Plugin
-   */
-  var plugin$1 = function(fpAPI) {
-    var addFilter = fpAPI.addFilter,
-      utils = fpAPI.utils;
-    var Type = utils.Type,
-      createRoute = utils.createRoute,
-      isFile = utils.isFile;
-
-    // imagePreviewView
-
-    var imagePreviewView = createImageWrapperView(fpAPI);
-
-    // called for each view that is created right after the 'create' method
-    addFilter('CREATE_VIEW', function(viewAPI) {
-      // get reference to created view
-      var is = viewAPI.is,
-        view = viewAPI.view,
-        query = viewAPI.query;
-
-      // only hook up to item view and only if is enabled for this cropper
-
-      if (!is('file') || !query('GET_ALLOW_IMAGE_PREVIEW')) {
-        return;
-      }
-
-      // create the image preview plugin, but only do so if the item is an image
-      var didLoadItem = function didLoadItem(_ref) {
-        var root = _ref.root,
-          props = _ref.props;
-        var id = props.id;
-
-        var item = query('GET_ITEM', id);
-
-        // item could theoretically have been removed in the mean time
-        if (!item || !isFile(item.file)) {
-          return;
-        }
-
-        // get the file object
-        var file = item.file;
-
-        // exit if this is not an image
-        if (!isPreviewableImage(file)) {
-          return;
-        }
-
-        // exit if image size is too high and no createImageBitmap support
-        // this would simply bring the browser to its knees and that is not what we want
-        var supportsCreateImageBitmap = 'createImageBitmap' in (window || {});
-        var maxPreviewFileSize = query('GET_IMAGE_PREVIEW_MAX_FILE_SIZE');
-        if (
-          !supportsCreateImageBitmap &&
-          maxPreviewFileSize &&
-          file.size > maxPreviewFileSize
-        ) {
-          return;
-        }
-
-        // set preview view
-        root.ref.imagePreview = view.appendChildView(
-          view.createChildView(imagePreviewView, { id: id })
-        );
-
-        // now ready
-        root.dispatch('DID_IMAGE_PREVIEW_CONTAINER_CREATE', { id: id });
-      };
-
-      var didCalculatePreviewSize = function didCalculatePreviewSize(_ref2) {
-        var root = _ref2.root,
-          props = _ref2.props,
-          action = _ref2.action;
-
-        // get item
-        var item = root.query('GET_ITEM', { id: props.id });
-
-        // orientation info
-        var exif = item.getMetadata('exif') || {};
-        var orientation = exif.orientation || -1;
-
-        // get width and height from action, and swap of orientation is incorrect
-        var width = action.width,
-          height = action.height;
-
-        if (orientation >= 5 && orientation <= 8) {
-          var _ref3 = [height, width];
-          width = _ref3[0];
-          height = _ref3[1];
-        }
-
-        // we need the item to get to the crop size
-        var crop = item.getMetadata('crop') || {
-          rect: {
-            x: 0,
-            y: 0,
-            width: 1,
-            height: 1
-          },
-          aspectRatio: height / width
-        };
-
-        // get height min and max
-        var fixedPreviewHeight = root.query('GET_IMAGE_PREVIEW_HEIGHT');
-        var minPreviewHeight = root.query('GET_IMAGE_PREVIEW_MIN_HEIGHT');
-        var maxPreviewHeight = root.query('GET_IMAGE_PREVIEW_MAX_HEIGHT');
-
-        // scale up width and height when we're dealing with an SVG
-        if (!isBitmap(item.file)) {
-          var scalar = 2048 / width;
-          width *= scalar;
-          height *= scalar;
-        }
-
-        // const crop width
-        height =
-          fixedPreviewHeight !== null
-            ? fixedPreviewHeight
-            : Math.max(minPreviewHeight, Math.min(height, maxPreviewHeight));
-
-        width = height / crop.aspectRatio;
-        if (width > root.rect.element.width) {
-          width = root.rect.element.width;
-          height = width * crop.aspectRatio;
-        }
-
-        // set height
-        root.ref.imagePreview.element.style.cssText =
-          'height:' + Math.round(height) + 'px';
-      };
-
-      // start writing
-      view.registerWriter(
-        createRoute({
-          DID_LOAD_ITEM: didLoadItem,
-          DID_IMAGE_PREVIEW_CALCULATE_SIZE: didCalculatePreviewSize
-        })
-      );
-    });
-
-    // expose plugin
-    return {
-      options: {
-        // Enable or disable image preview
-        allowImagePreview: [true, Type.BOOLEAN],
-
-        // Fixed preview height
-        imagePreviewHeight: [null, Type.INT],
-
-        // Min image height
-        imagePreviewMinHeight: [44, Type.INT],
-
-        // Max image height
-        imagePreviewMaxHeight: [256, Type.INT],
-
-        // Max size of preview file for when createImageBitmap is not supported
-        imagePreviewMaxFileSize: [null, Type.INT],
-
-        // Style of the transparancy indicator used behind images
-        imagePreviewTransparencyIndicator: [null, Type.STRING]
-      }
-    };
-  };
-
-  if (typeof navigator !== 'undefined' && document) {
-    // plugin has loaded
-    document.dispatchEvent(
-      new CustomEvent('FilePond:pluginloaded', { detail: plugin$1 })
-    );
-  }
-
-  return plugin$1;
-});
-
-
-/***/ }),
-/* 10 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/*
- * FilePondPluginFileValidateSize 1.0.4
- * Licensed under MIT, https://opensource.org/licenses/MIT
- * Please visit https://pqina.nl/filepond for details.
- */
-(function(global, factory) {
-   true
-    ? (module.exports = factory())
-    : typeof define === 'function' && define.amd
-      ? define(factory)
-      : (global.FilePondPluginFileValidateSize = factory());
-})(this, function() {
-  'use strict';
-
-  var plugin$1 = function(_ref) {
-    var addFilter = _ref.addFilter,
-      utils = _ref.utils;
-
-    // get quick reference to Type utils
-    var Type = utils.Type,
-      replaceInString = utils.replaceInString,
-      toNaturalFileSize = utils.toNaturalFileSize;
-
-    // filtering if an item is allowed in hopper
-
-    addFilter('ALLOW_HOPPER_ITEM', function(file, _ref2) {
-      var query = _ref2.query;
-
-      if (!query('GET_ALLOW_FILE_SIZE_VALIDATION')) {
-        return true;
-      }
-
-      var sizeMax = query('GET_MAX_FILE_SIZE');
-      if (sizeMax !== null && file.size > sizeMax) {
-        return false;
-      }
-      return true;
-    });
-
-    // called for each file that is loaded
-    // right before it is set to the item state
-    // should return a promise
-    addFilter('LOAD_FILE', function(file, _ref3) {
-      var query = _ref3.query;
-      return new Promise(function(resolve, reject) {
-        // if not allowed, all fine, exit
-        if (!query('GET_ALLOW_FILE_SIZE_VALIDATION')) {
-          resolve(file);
-          return;
-        }
-
-        // reject or resolve based on file size
-        var sizeMax = query('GET_MAX_FILE_SIZE');
-        if (sizeMax !== null && file.size > sizeMax) {
-          reject({
-            status: {
-              main: query('GET_LABEL_MAX_FILE_SIZE_EXCEEDED'),
-              sub: replaceInString(query('GET_LABEL_MAX_FILE_SIZE'), {
-                filesize: toNaturalFileSize(sizeMax)
-              })
-            }
-          });
-          return;
-        }
-
-        // returns the current option value
-        var totalSizeMax = query('GET_MAX_TOTAL_FILE_SIZE');
-        if (totalSizeMax !== null) {
-          // get the current total file size
-          var currentTotalSize = query('GET_ITEMS').reduce(function(
-            total,
-            item
-          ) {
-            return total + item.fileSize;
-          },
-          0);
-
-          // get the size of the new file
-          if (currentTotalSize > totalSizeMax) {
-            reject({
-              status: {
-                main: query('GET_LABEL_MAX_TOTAL_FILE_SIZE_EXCEEDED'),
-                sub: replaceInString(query('GET_LABEL_MAX_TOTAL_FILE_SIZE'), {
-                  filesize: toNaturalFileSize(totalSizeMax)
-                })
-              }
-            });
-            return;
-          }
-        }
-
-        // file is fine, let's pass it back
-        resolve(file);
-      });
-    });
-
-    return {
-      options: {
-        // Enable or disable file type validation
-        allowFileSizeValidation: [true, Type.BOOLEAN],
-
-        // Max individual file size in bytes
-        maxFileSize: [null, Type.INT],
-
-        // Max total file size in bytes
-        maxTotalFileSize: [null, Type.INT],
-
-        // error labels
-        labelMaxFileSizeExceeded: ['File is too large', Type.STRING],
-        labelMaxFileSize: ['Maximum file size is {filesize}', Type.STRING],
-        labelMaxTotalFileSizeExceeded: [
-          'Maximum total size exceeded',
-          Type.STRING
-        ],
-        labelMaxTotalFileSize: [
-          'Maximum total file size is {filesize}',
-          Type.STRING
-        ]
-      }
-    };
-  };
-
-  if (typeof navigator !== 'undefined' && document) {
-    // plugin has loaded
-    document.dispatchEvent(
-      new CustomEvent('FilePond:pluginloaded', { detail: plugin$1 })
-    );
-  }
-
-  return plugin$1;
-});
-
-
-/***/ }),
-/* 11 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/*
- * FilePondPluginFileValidateType 1.1.0
- * Licensed under MIT, https://opensource.org/licenses/MIT
- * Please visit https://pqina.nl/filepond for details.
- */
-(function(global, factory) {
-   true
-    ? (module.exports = factory())
-    : typeof define === 'function' && define.amd
-      ? define(factory)
-      : (global.FilePondPluginFileValidateType = factory());
-})(this, function() {
-  'use strict';
-
-  var plugin$1 = function(_ref) {
-    var addFilter = _ref.addFilter,
-      utils = _ref.utils;
-
-    // get quick reference to Type utils
-    var Type = utils.Type,
-      isString = utils.isString,
-      replaceInString = utils.replaceInString,
-      guesstimateMimeType = utils.guesstimateMimeType,
-      getExtensionFromFilename = utils.getExtensionFromFilename,
-      getFilenameFromURL = utils.getFilenameFromURL;
-
-    var mimeTypeMatchesWildCard = function mimeTypeMatchesWildCard(
-      mimeType,
-      wildcard
-    ) {
-      var mimeTypeGroup = (/^[^/]+/.exec(mimeType) || []).pop(); // image/png -> image
-      var wildcardGroup = wildcard.slice(0, -2); // image/* -> image
-      return mimeTypeGroup === wildcardGroup;
-    };
-
-    var isValidMIMEType = function isValidMIMEType(
-      acceptedTypes,
-      userInputType
-    ) {
-      return acceptedTypes.some(function(acceptedType) {
-        // accepted is wildcard mime type
-        if (/\*$/.test(acceptedType)) {
-          return mimeTypeMatchesWildCard(userInputType, acceptedType);
-        }
-
-        // is normal mime type
-        return acceptedType === userInputType;
-      });
-    };
-
-    var validateFile = function validateFile(item, acceptedFileTypes) {
-      // no types defined, everything is allowed \o/
-      if (acceptedFileTypes.length === 0) {
-        return true;
-      }
-
-      // if the item is a url we guess the mime type by the extension
-      var type = '';
-      if (isString(item)) {
-        var filename = getFilenameFromURL(item);
-        var extension = getExtensionFromFilename(filename);
-        if (extension) {
-          type = guesstimateMimeType(extension);
-        } else {
-          return true;
-        }
-      } else {
-        type = item.type;
-      }
-
-      // validate file type
-      return isValidMIMEType(acceptedFileTypes, type);
-    };
-
-    var applyMimeTypeMap = function applyMimeTypeMap(map) {
-      return function(acceptedFileType) {
-        return map[acceptedFileType] === null
-          ? false
-          : map[acceptedFileType] || acceptedFileType;
-      };
-    };
-
-    // setup attribute mapping for accept
-    addFilter('SET_ATTRIBUTE_TO_OPTION_MAP', function(map) {
-      return Object.assign(map, {
-        accept: 'acceptedFileTypes'
-      });
-    });
-
-    // filtering if an item is allowed in hopper
-    addFilter('ALLOW_HOPPER_ITEM', function(file, _ref2) {
-      var query = _ref2.query;
-
-      // if we are not doing file type validation exit
-      if (!query('GET_ALLOW_FILE_TYPE_VALIDATION')) {
-        return true;
-      }
-
-      // we validate the file against the accepted file types
-      return validateFile(file, query('GET_ACCEPTED_FILE_TYPES'));
-    });
-
-    // called for each file that is loaded
-    // right before it is set to the item state
-    // should return a promise
-    addFilter('LOAD_FILE', function(file, _ref3) {
-      var query = _ref3.query;
-      return new Promise(function(resolve, reject) {
-        var allowFileTypeValidation = query('GET_ALLOW_FILE_TYPE_VALIDATION');
-        if (!allowFileTypeValidation) {
-          resolve(file);
-          return;
-        }
-
-        var acceptedFileTypes = query('GET_ACCEPTED_FILE_TYPES');
-
-        // if invalid, exit here
-        if (!validateFile(file, acceptedFileTypes)) {
-          var acceptedFileTypesMapped = acceptedFileTypes
-            .map(
-              applyMimeTypeMap(
-                query('GET_FILE_VALIDATE_TYPE_LABEL_EXPECTED_TYPES_MAP')
-              )
-            )
-            .filter(function(label) {
-              return label !== false;
-            });
-
-          reject({
-            status: {
-              main: query('GET_LABEL_FILE_TYPE_NOT_ALLOWED'),
-              sub: replaceInString(
-                query('GET_FILE_VALIDATE_TYPE_LABEL_EXPECTED_TYPES'),
-                {
-                  allTypes: acceptedFileTypesMapped.join(', '),
-                  allButLastType: acceptedFileTypesMapped
-                    .slice(0, -1)
-                    .join(', '),
-                  lastType:
-                    acceptedFileTypesMapped[acceptedFileTypesMapped.length - 1]
-                }
-              )
-            }
-          });
-          return;
-        }
-
-        // all fine
-        resolve(file);
-      });
-    });
-
-    // expose plugin
-    return {
-      // default options
-      options: {
-        // Enable or disable file type validation
-        allowFileTypeValidation: [true, Type.BOOLEAN],
-
-        // What file types to accept
-        acceptedFileTypes: [[], Type.ARRAY],
-        // - must be comma separated
-        // - mime types: image/png, image/jpeg, image/gif
-        // - extensions: .png, .jpg, .jpeg ( not enabled yet )
-        // - wildcards: image/*
-
-        // label to show when a type is not allowed
-        labelFileTypeNotAllowed: ['File is of invalid type', Type.STRING],
-
-        // nicer label
-        fileValidateTypeLabelExpectedTypes: [
-          'Expects {allButLastType} or {lastType}',
-          Type.STRING
-        ],
-
-        // map mime types to extensions
-        fileValidateTypeLabelExpectedTypesMap: [{}, Type.OBJECT]
-      }
-    };
-  };
-
-  if (typeof navigator !== 'undefined' && document) {
-    // plugin has loaded
-    document.dispatchEvent(
-      new CustomEvent('FilePond:pluginloaded', { detail: plugin$1 })
-    );
-  }
-
-  return plugin$1;
-});
-
-
-/***/ }),
-/* 12 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/*
- * FilePondPluginFileEncode 1.0.5
- * Licensed under MIT, https://opensource.org/licenses/MIT
- * Please visit https://pqina.nl/filepond for details.
- */
-(function(global, factory) {
-   true
-    ? (module.exports = factory())
-    : typeof define === 'function' && define.amd
-      ? define(factory)
-      : (global.FilePondPluginFileEncode = factory());
-})(this, function() {
-  'use strict';
-
-  /**
-   * DataURI Worker
-   */
-  var DataURIWorker = function DataURIWorker() {
-    // route messages
-    self.onmessage = function(e) {
-      convert(e.data.message, function(response) {
-        self.postMessage({ id: e.data.id, message: response });
-      });
-    };
-
-    // convert file to data uri
-    var convert = function convert(options, cb) {
-      var file = options.file;
-
-      var reader = new FileReader();
-      reader.onloadend = function() {
-        cb(reader.result.replace('data:', '').replace(/^.+,/, ''));
-      };
-      reader.readAsDataURL(file);
-    };
-  };
-
-  var plugin$1 = function(_ref) {
-    var addFilter = _ref.addFilter,
-      utils = _ref.utils;
-
-    // get quick reference to Type utils
-    var Type = utils.Type,
-      createWorker = utils.createWorker,
-      createRoute = utils.createRoute,
-      isFile = utils.isFile;
-
-    addFilter('SHOULD_PREPARE_OUTPUT', function(shouldPrepareOutput) {
-      return new Promise(function(resolve, reject) {
-        // should alway prepare output
-        resolve(true);
-      });
-    });
-
-    addFilter('COMPLETE_PREPARE_OUTPUT', function(file, _ref2) {
-      var item = _ref2.item;
-      return new Promise(function(resolve, reject) {
-        // this is not a file, continue
-        if (!isFile(file)) {
-          resolve(file);
-          return;
-        }
-
-        var metadata = item.getMetadata();
-        delete metadata.base64;
-
-        var worker = createWorker(DataURIWorker);
-        worker.post({ file: file }, function(data) {
-          // store in item metadata
-          item.setMetadata('base64', data);
-
-          // done dealing with prepared output
-          resolve(file);
-        });
-      });
-    });
-
-    // called for each view that is created right after the 'create' method
-    addFilter('CREATE_VIEW', function(viewAPI) {
-      // get reference to created view
-      var is = viewAPI.is,
-        view = viewAPI.view,
-        query = viewAPI.query;
-
-      // only hook up to item view
-
-      if (!is('file-wrapper') || !query('GET_ALLOW_FILE_ENCODE')) {
-        return;
-      }
-
-      view.registerWriter(
-        createRoute({
-          DID_LOAD_ITEM: function DID_LOAD_ITEM(_ref3) {
-            var root = _ref3.root,
-              action = _ref3.action;
-
-            // only do this if is not uploading async
-            if (query('IS_ASYNC')) {
-              return;
-            }
-
-            var item = query('GET_ITEM', action.id);
-
-            // extract base64 string
-            var metadata = item.getMetadata();
-            var data = metadata.base64;
-            delete metadata.base64;
-
-            // create JSON string from encoded data and stores in the hidden input field
-            root.ref.data.value = JSON.stringify({
-              id: item.id,
-              name: item.file.name,
-              type: item.file.type,
-              size: item.file.size,
-              metadata: metadata,
-              data: data
-            });
-          }
-        })
-      );
-    });
-
-    return {
-      options: {
-        // Enable or disable file encoding
-        allowFileEncode: [true, Type.BOOLEAN]
-      }
-    };
-  };
-
-  if (typeof navigator !== 'undefined' && document) {
-    // plugin has loaded
-    document.dispatchEvent(
-      new CustomEvent('FilePond:pluginloaded', { detail: plugin$1 })
-    );
-  }
-
-  return plugin$1;
-});
-
-
-/***/ }),
-/* 13 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(210);
-if(typeof content === 'string') content = [[module.i, content, '']];
-// Prepare cssTransformation
-var transform;
-
-var options = {}
-options.transform = transform
-// add the styles to the DOM
-var update = __webpack_require__(152)(content, options);
-if(content.locals) module.exports = content.locals;
-// Hot Module Replacement
-if(false) {
-	// When the styles change, update the <style> tags
-	if(!content.locals) {
-		module.hot.accept("!!../../css-loader/index.js!./filepond.min.css", function() {
-			var newContent = require("!!../../css-loader/index.js!./filepond.min.css");
-			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-			update(newContent);
-		});
-	}
-	// When the module is disposed, remove the <style> tags
-	module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 14 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(212);
-if(typeof content === 'string') content = [[module.i, content, '']];
-// Prepare cssTransformation
-var transform;
-
-var options = {}
-options.transform = transform
-// add the styles to the DOM
-var update = __webpack_require__(152)(content, options);
-if(content.locals) module.exports = content.locals;
-// Hot Module Replacement
-if(false) {
-	// When the styles change, update the <style> tags
-	if(!content.locals) {
-		module.hot.accept("!!../../css-loader/index.js!./filepond-plugin-image-preview.css", function() {
-			var newContent = require("!!../../css-loader/index.js!./filepond-plugin-image-preview.css");
-			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-			update(newContent);
-		});
-	}
-	// When the module is disposed, remove the <style> tags
-	module.hot.dispose(function() { update(); });
-}
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(194).setImmediate))
 
 /***/ }),
 /* 15 */
@@ -18398,7 +18398,7 @@ if(false) {
 /* WEBPACK VAR INJECTION */(function(process) {
 
 var utils = __webpack_require__(2);
-var normalizeHeaderName = __webpack_require__(178);
+var normalizeHeaderName = __webpack_require__(179);
 
 var DEFAULT_CONTENT_TYPE = {
   'Content-Type': 'application/x-www-form-urlencoded'
@@ -18712,7 +18712,7 @@ module.exports = function(module) {
 /* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(175);
+module.exports = __webpack_require__(176);
 
 /***/ }),
 /* 19 */
@@ -18740,12 +18740,12 @@ module.exports = function bind(fn, thisArg) {
 
 
 var utils = __webpack_require__(2);
-var settle = __webpack_require__(179);
-var buildURL = __webpack_require__(181);
-var parseHeaders = __webpack_require__(182);
-var isURLSameOrigin = __webpack_require__(183);
+var settle = __webpack_require__(180);
+var buildURL = __webpack_require__(182);
+var parseHeaders = __webpack_require__(183);
+var isURLSameOrigin = __webpack_require__(184);
 var createError = __webpack_require__(21);
-var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(184);
+var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(185);
 
 module.exports = function xhrAdapter(config) {
   return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -18842,7 +18842,7 @@ module.exports = function xhrAdapter(config) {
     // This is only done if running in a standard browser environment.
     // Specifically not if we're in a web worker, or react-native.
     if (utils.isStandardBrowserEnv()) {
-      var cookies = __webpack_require__(185);
+      var cookies = __webpack_require__(186);
 
       // Add xsrf header
       var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
@@ -18926,7 +18926,7 @@ module.exports = function xhrAdapter(config) {
 "use strict";
 
 
-var enhanceError = __webpack_require__(180);
+var enhanceError = __webpack_require__(181);
 
 /**
  * Create an Error with the specified message, config, error code, request and response.
@@ -21619,9 +21619,9 @@ if (inBrowser && window.Vue) {
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(198)
+var __vue_script__ = __webpack_require__(199)
 /* template */
-var __vue_template__ = __webpack_require__(199)
+var __vue_template__ = __webpack_require__(200)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -21668,7 +21668,7 @@ var normalizeComponent = __webpack_require__(1)
 /* script */
 var __vue_script__ = null
 /* template */
-var __vue_template__ = __webpack_require__(200)
+var __vue_template__ = __webpack_require__(201)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -21713,13 +21713,13 @@ module.exports = Component.exports
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(201)
+  __webpack_require__(202)
 }
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(204)
+var __vue_script__ = __webpack_require__(205)
 /* template */
-var __vue_template__ = __webpack_require__(207)
+var __vue_template__ = __webpack_require__(208)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -33609,9 +33609,9 @@ module.exports = Component.exports
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(208)
+var __vue_script__ = __webpack_require__(209)
 /* template */
-var __vue_template__ = __webpack_require__(213)
+var __vue_template__ = __webpack_require__(214)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -33696,7 +33696,7 @@ var singleton = null;
 var	singletonCounter = 0;
 var	stylesInsertedAtTop = [];
 
-var	fixUrls = __webpack_require__(211);
+var	fixUrls = __webpack_require__(212);
 
 module.exports = function(list, options) {
 	if (typeof DEBUG !== "undefined" && DEBUG) {
@@ -34015,9 +34015,9 @@ function updateLink (link, options, obj) {
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(214)
+var __vue_script__ = __webpack_require__(215)
 /* template */
-var __vue_template__ = __webpack_require__(215)
+var __vue_template__ = __webpack_require__(216)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -34062,9 +34062,9 @@ module.exports = Component.exports
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(216)
+var __vue_script__ = __webpack_require__(217)
 /* template */
-var __vue_template__ = __webpack_require__(217)
+var __vue_template__ = __webpack_require__(218)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -34109,13 +34109,13 @@ module.exports = Component.exports
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(218)
+  __webpack_require__(219)
 }
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(220)
+var __vue_script__ = __webpack_require__(221)
 /* template */
-var __vue_template__ = __webpack_require__(221)
+var __vue_template__ = __webpack_require__(222)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -34160,9 +34160,9 @@ module.exports = Component.exports
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(222)
+var __vue_script__ = __webpack_require__(223)
 /* template */
-var __vue_template__ = __webpack_require__(223)
+var __vue_template__ = __webpack_require__(224)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -34205,15 +34205,62 @@ module.exports = Component.exports
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(225)
+/* template */
+var __vue_template__ = __webpack_require__(226)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/lecturer/MateriEdit.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-321ee0ba", Component.options)
+  } else {
+    hotAPI.reload("data-v-321ee0ba", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 158 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(224)
+  __webpack_require__(227)
 }
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(226)
+var __vue_script__ = __webpack_require__(229)
 /* template */
-var __vue_template__ = __webpack_require__(227)
+var __vue_template__ = __webpack_require__(230)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -34252,15 +34299,15 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 158 */
+/* 159 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(228)
+var __vue_script__ = __webpack_require__(231)
 /* template */
-var __vue_template__ = __webpack_require__(229)
+var __vue_template__ = __webpack_require__(232)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -34299,7 +34346,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 159 */
+/* 160 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
@@ -34307,7 +34354,7 @@ var normalizeComponent = __webpack_require__(1)
 /* script */
 var __vue_script__ = null
 /* template */
-var __vue_template__ = __webpack_require__(230)
+var __vue_template__ = __webpack_require__(233)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -34346,15 +34393,15 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 160 */
+/* 161 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(231)
+var __vue_script__ = __webpack_require__(234)
 /* template */
-var __vue_template__ = __webpack_require__(232)
+var __vue_template__ = __webpack_require__(235)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -34393,7 +34440,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 161 */
+/* 162 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
@@ -34401,7 +34448,7 @@ var normalizeComponent = __webpack_require__(1)
 /* script */
 var __vue_script__ = null
 /* template */
-var __vue_template__ = __webpack_require__(233)
+var __vue_template__ = __webpack_require__(236)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -34440,15 +34487,15 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 162 */
+/* 163 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(234)
+var __vue_script__ = __webpack_require__(237)
 /* template */
-var __vue_template__ = __webpack_require__(235)
+var __vue_template__ = __webpack_require__(238)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -34487,19 +34534,19 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 163 */
+/* 164 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(236)
+  __webpack_require__(239)
 }
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(238)
+var __vue_script__ = __webpack_require__(241)
 /* template */
-var __vue_template__ = __webpack_require__(239)
+var __vue_template__ = __webpack_require__(242)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -34538,19 +34585,19 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 164 */
+/* 165 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(240)
+  __webpack_require__(243)
 }
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(242)
+var __vue_script__ = __webpack_require__(245)
 /* template */
-var __vue_template__ = __webpack_require__(243)
+var __vue_template__ = __webpack_require__(246)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -34589,15 +34636,15 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 165 */
+/* 166 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(244)
+var __vue_script__ = __webpack_require__(247)
 /* template */
-var __vue_template__ = __webpack_require__(245)
+var __vue_template__ = __webpack_require__(248)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -34636,15 +34683,15 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 166 */
+/* 167 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(246)
+var __vue_script__ = __webpack_require__(249)
 /* template */
-var __vue_template__ = __webpack_require__(247)
+var __vue_template__ = __webpack_require__(250)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -34683,7 +34730,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 167 */
+/* 168 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
@@ -34691,7 +34738,7 @@ var normalizeComponent = __webpack_require__(1)
 /* script */
 var __vue_script__ = null
 /* template */
-var __vue_template__ = __webpack_require__(248)
+var __vue_template__ = __webpack_require__(251)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -34730,15 +34777,15 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 168 */
+/* 169 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(249)
+var __vue_script__ = __webpack_require__(252)
 /* template */
-var __vue_template__ = __webpack_require__(250)
+var __vue_template__ = __webpack_require__(253)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -34777,25 +34824,25 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 169 */
+/* 170 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(170);
-module.exports = __webpack_require__(259);
+__webpack_require__(171);
+module.exports = __webpack_require__(262);
 
 
 /***/ }),
-/* 170 */
+/* 171 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_router__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(195);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuetify__ = __webpack_require__(196);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(196);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuetify__ = __webpack_require__(197);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuetify___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_vuetify__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__routes__ = __webpack_require__(197);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_es6_promise_auto__ = __webpack_require__(257);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__routes__ = __webpack_require__(198);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_es6_promise_auto__ = __webpack_require__(260);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_es6_promise_auto___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_es6_promise_auto__);
 
 /**
@@ -34804,9 +34851,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-__webpack_require__(171);
+__webpack_require__(172);
 
-window.Vue = __webpack_require__(7);
+window.Vue = __webpack_require__(14);
 
 
 
@@ -34859,11 +34906,11 @@ new Vue({
 });
 
 /***/ }),
-/* 171 */
+/* 172 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-window._ = __webpack_require__(172);
+window._ = __webpack_require__(173);
 
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
@@ -34872,9 +34919,9 @@ window._ = __webpack_require__(172);
  */
 
 try {
-  window.$ = window.jQuery = __webpack_require__(173);
+  window.$ = window.jQuery = __webpack_require__(174);
 
-  __webpack_require__(174);
+  __webpack_require__(175);
 } catch (e) {}
 
 /**
@@ -34917,7 +34964,7 @@ if (token) {
 // });
 
 /***/ }),
-/* 172 */
+/* 173 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, module) {var __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -52030,7 +52077,7 @@ if (token) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(17)(module)))
 
 /***/ }),
-/* 173 */
+/* 174 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -62401,7 +62448,7 @@ return jQuery;
 
 
 /***/ }),
-/* 174 */
+/* 175 */
 /***/ (function(module, exports) {
 
 /*!
@@ -64784,7 +64831,7 @@ if (typeof jQuery === 'undefined') {
 
 
 /***/ }),
-/* 175 */
+/* 176 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -64792,7 +64839,7 @@ if (typeof jQuery === 'undefined') {
 
 var utils = __webpack_require__(2);
 var bind = __webpack_require__(19);
-var Axios = __webpack_require__(177);
+var Axios = __webpack_require__(178);
 var defaults = __webpack_require__(15);
 
 /**
@@ -64827,14 +64874,14 @@ axios.create = function create(instanceConfig) {
 
 // Expose Cancel & CancelToken
 axios.Cancel = __webpack_require__(23);
-axios.CancelToken = __webpack_require__(191);
+axios.CancelToken = __webpack_require__(192);
 axios.isCancel = __webpack_require__(22);
 
 // Expose all/spread
 axios.all = function all(promises) {
   return Promise.all(promises);
 };
-axios.spread = __webpack_require__(192);
+axios.spread = __webpack_require__(193);
 
 module.exports = axios;
 
@@ -64843,7 +64890,7 @@ module.exports.default = axios;
 
 
 /***/ }),
-/* 176 */
+/* 177 */
 /***/ (function(module, exports) {
 
 /*!
@@ -64870,7 +64917,7 @@ function isSlowBuffer (obj) {
 
 
 /***/ }),
-/* 177 */
+/* 178 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -64878,10 +64925,10 @@ function isSlowBuffer (obj) {
 
 var defaults = __webpack_require__(15);
 var utils = __webpack_require__(2);
-var InterceptorManager = __webpack_require__(186);
-var dispatchRequest = __webpack_require__(187);
-var isAbsoluteURL = __webpack_require__(189);
-var combineURLs = __webpack_require__(190);
+var InterceptorManager = __webpack_require__(187);
+var dispatchRequest = __webpack_require__(188);
+var isAbsoluteURL = __webpack_require__(190);
+var combineURLs = __webpack_require__(191);
 
 /**
  * Create a new instance of Axios
@@ -64963,7 +65010,7 @@ module.exports = Axios;
 
 
 /***/ }),
-/* 178 */
+/* 179 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -64982,7 +65029,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 
 
 /***/ }),
-/* 179 */
+/* 180 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -65015,7 +65062,7 @@ module.exports = function settle(resolve, reject, response) {
 
 
 /***/ }),
-/* 180 */
+/* 181 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -65043,7 +65090,7 @@ module.exports = function enhanceError(error, config, code, request, response) {
 
 
 /***/ }),
-/* 181 */
+/* 182 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -65118,7 +65165,7 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 
 
 /***/ }),
-/* 182 */
+/* 183 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -65162,7 +65209,7 @@ module.exports = function parseHeaders(headers) {
 
 
 /***/ }),
-/* 183 */
+/* 184 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -65237,7 +65284,7 @@ module.exports = (
 
 
 /***/ }),
-/* 184 */
+/* 185 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -65280,7 +65327,7 @@ module.exports = btoa;
 
 
 /***/ }),
-/* 185 */
+/* 186 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -65340,7 +65387,7 @@ module.exports = (
 
 
 /***/ }),
-/* 186 */
+/* 187 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -65399,14 +65446,14 @@ module.exports = InterceptorManager;
 
 
 /***/ }),
-/* 187 */
+/* 188 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var utils = __webpack_require__(2);
-var transformData = __webpack_require__(188);
+var transformData = __webpack_require__(189);
 var isCancel = __webpack_require__(22);
 var defaults = __webpack_require__(15);
 
@@ -65485,7 +65532,7 @@ module.exports = function dispatchRequest(config) {
 
 
 /***/ }),
-/* 188 */
+/* 189 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -65512,7 +65559,7 @@ module.exports = function transformData(data, headers, fns) {
 
 
 /***/ }),
-/* 189 */
+/* 190 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -65533,7 +65580,7 @@ module.exports = function isAbsoluteURL(url) {
 
 
 /***/ }),
-/* 190 */
+/* 191 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -65554,7 +65601,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 
 
 /***/ }),
-/* 191 */
+/* 192 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -65618,7 +65665,7 @@ module.exports = CancelToken;
 
 
 /***/ }),
-/* 192 */
+/* 193 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -65652,7 +65699,7 @@ module.exports = function spread(callback) {
 
 
 /***/ }),
-/* 193 */
+/* 194 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var scope = (typeof global !== "undefined" && global) ||
@@ -65708,7 +65755,7 @@ exports._unrefActive = exports.active = function(item) {
 };
 
 // setimmediate attaches itself to the global object
-__webpack_require__(194);
+__webpack_require__(195);
 // On some exotic environments, it's not clear which object `setimmediate` was
 // able to install onto.  Search each possibility in the same order as the
 // `setimmediate` library.
@@ -65722,7 +65769,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ }),
-/* 194 */
+/* 195 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
@@ -65915,7 +65962,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(16)))
 
 /***/ }),
-/* 195 */
+/* 196 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -66860,12 +66907,12 @@ var index_esm = {
 
 
 /***/ }),
-/* 196 */
+/* 197 */
 /***/ (function(module, exports, __webpack_require__) {
 
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(true)
-		module.exports = factory(__webpack_require__(7));
+		module.exports = factory(__webpack_require__(14));
 	else if(typeof define === 'function' && define.amd)
 		define(["vue"], factory);
 	else if(typeof exports === 'object')
@@ -88025,11 +88072,11 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_vue__;
 //# sourceMappingURL=vuetify.js.map
 
 /***/ }),
-/* 197 */
+/* 198 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_router__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_lecturer_Layout_vue__ = __webpack_require__(25);
@@ -88048,31 +88095,31 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_vue__;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_lecturer_Materi_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__components_lecturer_Materi_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_lecturer_MateriAdd_vue__ = __webpack_require__(156);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_lecturer_MateriAdd_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9__components_lecturer_MateriAdd_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_lecturer_MateriEdit_vue__ = __webpack_require__(268);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_lecturer_MateriEdit_vue__ = __webpack_require__(157);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_lecturer_MateriEdit_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10__components_lecturer_MateriEdit_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_lecturer_NilaiPermodul_vue__ = __webpack_require__(157);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_lecturer_NilaiPermodul_vue__ = __webpack_require__(158);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_lecturer_NilaiPermodul_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11__components_lecturer_NilaiPermodul_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_lecturer_NilaiPermodulDetail_vue__ = __webpack_require__(158);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_lecturer_NilaiPermodulDetail_vue__ = __webpack_require__(159);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_lecturer_NilaiPermodulDetail_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_12__components_lecturer_NilaiPermodulDetail_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_lecturer_Report_vue__ = __webpack_require__(159);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_lecturer_Report_vue__ = __webpack_require__(160);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_lecturer_Report_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_13__components_lecturer_Report_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_Login_vue__ = __webpack_require__(160);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_Login_vue__ = __webpack_require__(161);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_Login_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_14__components_Login_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__components_NotFound_vue__ = __webpack_require__(161);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__components_NotFound_vue__ = __webpack_require__(162);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__components_NotFound_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_15__components_NotFound_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__components_Redirect_vue__ = __webpack_require__(162);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__components_Redirect_vue__ = __webpack_require__(163);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__components_Redirect_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_16__components_Redirect_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__components_student_Home_vue__ = __webpack_require__(163);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__components_student_Home_vue__ = __webpack_require__(164);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__components_student_Home_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_17__components_student_Home_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__components_student_ETugas_vue__ = __webpack_require__(164);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__components_student_ETugas_vue__ = __webpack_require__(165);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__components_student_ETugas_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_18__components_student_ETugas_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__components_student_Schedule_vue__ = __webpack_require__(165);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__components_student_Schedule_vue__ = __webpack_require__(166);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__components_student_Schedule_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_19__components_student_Schedule_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__components_student_Materi_vue__ = __webpack_require__(166);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__components_student_Materi_vue__ = __webpack_require__(167);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__components_student_Materi_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_20__components_student_Materi_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__components_student_Report_vue__ = __webpack_require__(167);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__components_student_Report_vue__ = __webpack_require__(168);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__components_student_Report_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_21__components_student_Report_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__components_student_DetailEtugas_vue__ = __webpack_require__(168);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__components_student_DetailEtugas_vue__ = __webpack_require__(169);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__components_student_DetailEtugas_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_22__components_student_DetailEtugas_vue__);
 
 
@@ -88110,26 +88157,26 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('home', __webpack_require_
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('e-tugas', __webpack_require__(27));
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('e-tugas-add', __webpack_require__(151));
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('e-tugas-edit', __webpack_require__(153));
-__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('e-tugas-detail', __webpack_require__(251));
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('e-tugas-detail', __webpack_require__(254));
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('schedule', __webpack_require__(154));
-__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('report', __webpack_require__(159));
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('report', __webpack_require__(160));
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('materi', __webpack_require__(155));
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('materi-add', __webpack_require__(156));
-__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('materi-edit', __webpack_require__(268));
-__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('nilai-permodul', __webpack_require__(157));
-__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('nilai-permodul-detail', __webpack_require__(158));
-__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('login', __webpack_require__(160));
-__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('not-found', __webpack_require__(161));
-__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('redirect', __webpack_require__(162));
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('materi-edit', __webpack_require__(157));
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('nilai-permodul', __webpack_require__(158));
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('nilai-permodul-detail', __webpack_require__(159));
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('login', __webpack_require__(161));
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('not-found', __webpack_require__(162));
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('redirect', __webpack_require__(163));
 
 // // student
-__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('layout-student', __webpack_require__(254));
-__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('beranda', __webpack_require__(163));
-__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('etugas', __webpack_require__(164));
-__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('jadwal', __webpack_require__(165));
-__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('laporan-tugas', __webpack_require__(167));
-__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('materi-kuliah', __webpack_require__(166));
-__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('detail-etugas', __webpack_require__(168));
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('layout-student', __webpack_require__(257));
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('beranda', __webpack_require__(164));
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('etugas', __webpack_require__(165));
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('jadwal', __webpack_require__(166));
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('laporan-tugas', __webpack_require__(168));
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('materi-kuliah', __webpack_require__(167));
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('detail-etugas', __webpack_require__(169));
 
 var routes = [{
     path: '/',
@@ -88288,7 +88335,7 @@ var routes = [{
 }));
 
 /***/ }),
-/* 198 */
+/* 199 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -88443,7 +88490,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 199 */
+/* 200 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -88725,7 +88772,7 @@ if (false) {
 }
 
 /***/ }),
-/* 200 */
+/* 201 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -88753,13 +88800,13 @@ if (false) {
 }
 
 /***/ }),
-/* 201 */
+/* 202 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(202);
+var content = __webpack_require__(203);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -88779,7 +88826,7 @@ if(false) {
 }
 
 /***/ }),
-/* 202 */
+/* 203 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(4)(false);
@@ -88793,7 +88840,7 @@ exports.push([module.i, "\n.fab-container {\r\n  position: fixed;\r\n  bottom: 2
 
 
 /***/ }),
-/* 203 */
+/* 204 */
 /***/ (function(module, exports) {
 
 /**
@@ -88826,7 +88873,7 @@ module.exports = function listToStyles (parentId, list) {
 
 
 /***/ }),
-/* 204 */
+/* 205 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -89106,7 +89153,7 @@ __WEBPACK_IMPORTED_MODULE_1_moment__["locale"]('id');
 });
 
 /***/ }),
-/* 205 */
+/* 206 */
 /***/ (function(module, exports) {
 
 var nestRE = /^(attrs|props|on|nativeOn|class|style|hook)$/
@@ -89162,7 +89209,7 @@ function mergeFn (a, b) {
 
 
 /***/ }),
-/* 206 */
+/* 207 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
@@ -89427,10 +89474,10 @@ webpackContext.keys = function webpackContextKeys() {
 };
 webpackContext.resolve = webpackContextResolve;
 module.exports = webpackContext;
-webpackContext.id = 206;
+webpackContext.id = 207;
 
 /***/ }),
-/* 207 */
+/* 208 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -89952,25 +89999,25 @@ if (false) {
 }
 
 /***/ }),
-/* 208 */
+/* 209 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_content_loader__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_filepond__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_filepond__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_filepond___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue_filepond__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_filepond_plugin_image_preview__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_filepond_plugin_image_preview__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_filepond_plugin_image_preview___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_filepond_plugin_image_preview__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_filepond_plugin_file_validate_size__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_filepond_plugin_file_validate_size__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_filepond_plugin_file_validate_size___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_filepond_plugin_file_validate_size__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_filepond_plugin_file_validate_type__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_filepond_plugin_file_validate_type__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_filepond_plugin_file_validate_type___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_filepond_plugin_file_validate_type__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_filepond_plugin_file_encode__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_filepond_plugin_file_encode__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_filepond_plugin_file_encode___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_filepond_plugin_file_encode__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_filepond_dist_filepond_min_css__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_filepond_dist_filepond_min_css__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_filepond_dist_filepond_min_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_filepond_dist_filepond_min_css__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_filepond_plugin_image_preview_dist_filepond_plugin_image_preview_css__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_filepond_plugin_image_preview_dist_filepond_plugin_image_preview_css__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_filepond_plugin_image_preview_dist_filepond_plugin_image_preview_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_filepond_plugin_image_preview_dist_filepond_plugin_image_preview_css__);
 //
 //
@@ -90309,7 +90356,7 @@ var FilePond = __WEBPACK_IMPORTED_MODULE_1_vue_filepond___default()(__WEBPACK_IM
 });
 
 /***/ }),
-/* 209 */
+/* 210 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -98735,7 +98782,7 @@ function signature:
 
 
 /***/ }),
-/* 210 */
+/* 211 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(4)(false);
@@ -98749,7 +98796,7 @@ exports.push([module.i, "/*\n * FilePond 2.2.0\n * Licensed under MIT, https://o
 
 
 /***/ }),
-/* 211 */
+/* 212 */
 /***/ (function(module, exports) {
 
 
@@ -98844,7 +98891,7 @@ module.exports = function (css) {
 
 
 /***/ }),
-/* 212 */
+/* 213 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(4)(false);
@@ -98858,7 +98905,7 @@ exports.push([module.i, "/*\n * FilePondPluginImagePreview 2.0.1\n * Licensed un
 
 
 /***/ }),
-/* 213 */
+/* 214 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -99413,7 +99460,7 @@ if (false) {
 }
 
 /***/ }),
-/* 214 */
+/* 215 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -99421,19 +99468,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_content_loader__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_moment__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_moment__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_filepond__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_filepond__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_filepond___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_vue_filepond__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_filepond_plugin_image_preview__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_filepond_plugin_image_preview__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_filepond_plugin_image_preview___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_filepond_plugin_image_preview__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_filepond_plugin_file_validate_size__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_filepond_plugin_file_validate_size__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_filepond_plugin_file_validate_size___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_filepond_plugin_file_validate_size__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_filepond_plugin_file_validate_type__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_filepond_plugin_file_validate_type__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_filepond_plugin_file_validate_type___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_filepond_plugin_file_validate_type__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_filepond_plugin_file_encode__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_filepond_plugin_file_encode__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_filepond_plugin_file_encode___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_filepond_plugin_file_encode__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_filepond_dist_filepond_min_css__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_filepond_dist_filepond_min_css__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_filepond_dist_filepond_min_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_filepond_dist_filepond_min_css__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_filepond_plugin_image_preview_dist_filepond_plugin_image_preview_css__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_filepond_plugin_image_preview_dist_filepond_plugin_image_preview_css__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_filepond_plugin_image_preview_dist_filepond_plugin_image_preview_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_filepond_plugin_image_preview_dist_filepond_plugin_image_preview_css__);
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
@@ -99797,7 +99844,7 @@ var FilePond = __WEBPACK_IMPORTED_MODULE_2_vue_filepond___default()(__WEBPACK_IM
 });
 
 /***/ }),
-/* 215 */
+/* 216 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -100372,12 +100419,54 @@ if (false) {
 }
 
 /***/ }),
-/* 216 */
+/* 217 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_content_loader__ = __webpack_require__(3);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -100448,11 +100537,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             headerTable: [{ text: 'Modul', value: 'modul' }, { text: 'Matakuliah', value: 'matakuliah' }, { text: 'Program', value: 'program' }, { text: 'Jurusan', value: 'jurusan' }, { text: 'Tahun', value: 'tahun' }, { text: 'Semester', value: 'semester' }, { text: 'Paralel', value: 'paralel' }],
             bodyTable: [],
             semesters: [],
-            descriptionSemester: '',
-            filter: '',
             snackbarText: '',
             snackbar: false,
-            isLoaded: false
+            isLoaded: false,
+            filter: {
+                list_semester: [],
+                list_kelas: [],
+                list_matakuliah: [],
+                semester: '',
+                kelas: '',
+                matakuliah: ''
+            }
         };
     },
 
@@ -100468,9 +100563,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var app = this;
             axios.get('lecturer/schedule').then(function (resp) {
                 app.isLoaded = true;
-                app.descriptionSemester = resp.data.keterangan;
-                app.bodyTable = resp.data.data;
-                app.semesters = resp.data.data_semester;
+                app.bodyTable = resp.data.list_schedule;
+                app.filter.list_semester = resp.data.list_semester;
             }).catch(function (resp) {
                 showSnackbar("oops, something went wrong. Please try again!");
             });
@@ -100480,23 +100574,44 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             app.snackbarText = text;
             app.snackbar = true;
         },
-        selectSemester: function selectSemester() {
-            if (!this.filter) return false;
+        selectKelas: function selectKelas() {
+            if (!this.filter.semester) return false;
             var app = this;
-            app.isLoaded = false;
-            axios.get('lecturer/schedule/get-by-semester/' + app.filter).then(function (resp) {
-                app.isLoaded = true;
-                app.descriptionSemester = resp.data.keterangan;
-                app.bodyTable = resp.data.data;
+            axios.get('filter/get-kelas/' + app.filter.semester).then(function (resp) {
+                app.filter.list_kelas = '';
+                app.filter.list_kelas = resp.data;
             }).catch(function (resp) {
-                showSnackbar("oops, something went wrong. Please try again!");
+                app.showSnackbar("Terjadi kegagalan sistem. Silahkan coba lagi!");
+            });
+        },
+        selectMatakuliah: function selectMatakuliah() {
+            if (!this.filter.kelas) return false;
+            var app = this;
+            axios.post('filter/get-matakuliah', app.filter).then(function (resp) {
+                app.filter.list_matakuliah = '';
+                app.filter.list_matakuliah = resp.data;
+            }).catch(function (resp) {
+                app.showSnackbar("Terjadi kegagalan sistem. Silahkan coba lagi!");
+            });
+        },
+        selectData: function selectData() {
+            if (!this.filter.matakuliah) return false;
+            var app = this;
+            app.loadDetail = true;
+            axios.post('lecturer/schedule/filter', app.filter).then(function (resp) {
+                app.loadDetail = false;
+                app.bodyTable = '';
+                app.bodyTable = resp.data;
+                console.log(resp.data);
+            }).catch(function (resp) {
+                app.showSnackbar("Terjadi kegagalan sistem. Silahkan coba lagi!");
             });
         }
     }
 });
 
 /***/ }),
-/* 217 */
+/* 218 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -100507,88 +100622,198 @@ var render = function() {
     "v-flex",
     { attrs: { sm12: "" } },
     [
-      _c("h1", { staticClass: "font-weight-light" }, [_vm._v("Jadwal")]),
+      _c("h1", { staticClass: "font-weight-light" }, [_vm._v("Daftar Modul")]),
       _vm._v(" "),
       _c("div", { staticClass: "subheading" }, [
-        _vm._v("Modul untuk perkuliahan " + _vm._s(_vm.descriptionSemester))
+        _vm._v("Modul untuk perkuliahan")
       ]),
       _vm._v(" "),
       !_vm.isLoaded
         ? _c("content-loader", { attrs: { height: 250 } })
         : _vm._e(),
       _vm._v(" "),
-      _vm.isLoaded
-        ? _c(
-            "v-flex",
-            { attrs: { sm6: "", "d-flex": "", "mt-5": "" } },
-            [
-              _c("v-select", {
-                attrs: {
-                  items: _vm.semesters,
-                  label: "Filter jadwal",
-                  "item-text": "tahun",
-                  "item-value": "kuliah",
-                  solo: ""
-                },
-                on: {
-                  change: function($event) {
-                    _vm.selectSemester()
-                  }
-                },
-                scopedSlots: _vm._u([
-                  {
-                    key: "selection",
-                    fn: function(data) {
-                      return [
-                        _vm._v(
-                          "\n                " +
-                            _vm._s(data.item.tahun) +
-                            " / " +
-                            _vm._s(data.item.semester) +
-                            " - " +
-                            _vm._s(data.item.jurusan) +
-                            " (" +
-                            _vm._s(data.item.kelas) +
-                            " " +
-                            _vm._s(data.item.pararel) +
-                            ")\n            "
-                        )
-                      ]
-                    }
-                  },
-                  {
-                    key: "item",
-                    fn: function(data) {
-                      return [
-                        _vm._v(
-                          "\n                " +
-                            _vm._s(data.item.tahun) +
-                            " / " +
-                            _vm._s(data.item.semester) +
-                            " - " +
-                            _vm._s(data.item.jurusan) +
-                            " (" +
-                            _vm._s(data.item.kelas) +
-                            " " +
-                            _vm._s(data.item.pararel) +
-                            ")\n            "
-                        )
-                      ]
-                    }
-                  }
-                ]),
-                model: {
-                  value: _vm.filter,
-                  callback: function($$v) {
-                    _vm.filter = $$v
-                  },
-                  expression: "filter"
-                }
-              })
-            ],
-            1
-          )
-        : _vm._e(),
+      [
+        _vm.isLoaded
+          ? _c(
+              "v-container",
+              { attrs: { fluid: "", "grid-list-xl": "" } },
+              [
+                _c(
+                  "v-layout",
+                  { attrs: { wrap: "", "align-center": "" } },
+                  [
+                    _c(
+                      "v-flex",
+                      { attrs: { md4: "", "d-flex": "" } },
+                      [
+                        _c("v-select", {
+                          attrs: {
+                            items: _vm.filter.list_semester,
+                            label: "Pilih semester",
+                            "item-text": "tahun",
+                            "item-value": "semester",
+                            solo: ""
+                          },
+                          on: {
+                            change: function($event) {
+                              _vm.selectKelas()
+                            }
+                          },
+                          scopedSlots: _vm._u([
+                            {
+                              key: "selection",
+                              fn: function(data) {
+                                return [
+                                  _vm._v(
+                                    "\n                            " +
+                                      _vm._s(data.item.semester) +
+                                      "\n                        "
+                                  )
+                                ]
+                              }
+                            },
+                            {
+                              key: "item",
+                              fn: function(data) {
+                                return [
+                                  _vm._v(
+                                    "\n                            " +
+                                      _vm._s(data.item.semester) +
+                                      "\n                        "
+                                  )
+                                ]
+                              }
+                            }
+                          ]),
+                          model: {
+                            value: _vm.filter.semester,
+                            callback: function($$v) {
+                              _vm.$set(_vm.filter, "semester", $$v)
+                            },
+                            expression: "filter.semester"
+                          }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "v-flex",
+                      { attrs: { md4: "", "d-flex": "" } },
+                      [
+                        _c("v-select", {
+                          attrs: {
+                            items: _vm.filter.list_kelas,
+                            label: "Pilih kelas",
+                            "item-text": "kode",
+                            "item-value": "nomor",
+                            solo: ""
+                          },
+                          on: {
+                            change: function($event) {
+                              _vm.selectMatakuliah()
+                            }
+                          },
+                          scopedSlots: _vm._u([
+                            {
+                              key: "selection",
+                              fn: function(data) {
+                                return [
+                                  _vm._v(
+                                    "\n                            " +
+                                      _vm._s(data.item.kode) +
+                                      "\n                        "
+                                  )
+                                ]
+                              }
+                            },
+                            {
+                              key: "item",
+                              fn: function(data) {
+                                return [
+                                  _vm._v(
+                                    "\n                            " +
+                                      _vm._s(data.item.kode) +
+                                      "\n                        "
+                                  )
+                                ]
+                              }
+                            }
+                          ]),
+                          model: {
+                            value: _vm.filter.kelas,
+                            callback: function($$v) {
+                              _vm.$set(_vm.filter, "kelas", $$v)
+                            },
+                            expression: "filter.kelas"
+                          }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "v-flex",
+                      { attrs: { md4: "", "d-flex": "" } },
+                      [
+                        _c("v-select", {
+                          attrs: {
+                            items: _vm.filter.list_matakuliah,
+                            label: "Pilih matakuliah",
+                            "item-text": "matakuliah",
+                            "item-value": "nomor",
+                            solo: ""
+                          },
+                          on: {
+                            change: function($event) {
+                              _vm.selectData()
+                            }
+                          },
+                          scopedSlots: _vm._u([
+                            {
+                              key: "selection",
+                              fn: function(data) {
+                                return [
+                                  _vm._v(
+                                    "\n                            " +
+                                      _vm._s(data.item.matakuliah) +
+                                      "\n                        "
+                                  )
+                                ]
+                              }
+                            },
+                            {
+                              key: "item",
+                              fn: function(data) {
+                                return [
+                                  _vm._v(
+                                    "\n                            " +
+                                      _vm._s(data.item.matakuliah) +
+                                      "\n                        "
+                                  )
+                                ]
+                              }
+                            }
+                          ]),
+                          model: {
+                            value: _vm.filter.matakuliah,
+                            callback: function($$v) {
+                              _vm.$set(_vm.filter, "matakuliah", $$v)
+                            },
+                            expression: "filter.matakuliah"
+                          }
+                        })
+                      ],
+                      1
+                    )
+                  ],
+                  1
+                )
+              ],
+              1
+            )
+          : _vm._e()
+      ],
       _vm._v(" "),
       _vm.isLoaded
         ? _c(
@@ -100674,7 +100899,7 @@ var render = function() {
         1
       )
     ],
-    1
+    2
   )
 }
 var staticRenderFns = []
@@ -100688,13 +100913,13 @@ if (false) {
 }
 
 /***/ }),
-/* 218 */
+/* 219 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(219);
+var content = __webpack_require__(220);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -100714,7 +100939,7 @@ if(false) {
 }
 
 /***/ }),
-/* 219 */
+/* 220 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(4)(false);
@@ -100728,7 +100953,7 @@ exports.push([module.i, "\n.fab-container {\r\n  position: fixed;\r\n  bottom: 2
 
 
 /***/ }),
-/* 220 */
+/* 221 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -100974,7 +101199,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 221 */
+/* 222 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -101454,25 +101679,25 @@ if (false) {
 }
 
 /***/ }),
-/* 222 */
+/* 223 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_content_loader__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_filepond__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_filepond__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_filepond___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue_filepond__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_filepond_plugin_image_preview__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_filepond_plugin_image_preview__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_filepond_plugin_image_preview___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_filepond_plugin_image_preview__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_filepond_plugin_file_validate_size__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_filepond_plugin_file_validate_size__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_filepond_plugin_file_validate_size___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_filepond_plugin_file_validate_size__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_filepond_plugin_file_validate_type__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_filepond_plugin_file_validate_type__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_filepond_plugin_file_validate_type___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_filepond_plugin_file_validate_type__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_filepond_plugin_file_encode__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_filepond_plugin_file_encode__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_filepond_plugin_file_encode___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_filepond_plugin_file_encode__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_filepond_dist_filepond_min_css__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_filepond_dist_filepond_min_css__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_filepond_dist_filepond_min_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_filepond_dist_filepond_min_css__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_filepond_plugin_image_preview_dist_filepond_plugin_image_preview_css__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_filepond_plugin_image_preview_dist_filepond_plugin_image_preview_css__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_filepond_plugin_image_preview_dist_filepond_plugin_image_preview_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_filepond_plugin_image_preview_dist_filepond_plugin_image_preview_css__);
 //
 //
@@ -101722,7 +101947,7 @@ var FilePond = __WEBPACK_IMPORTED_MODULE_1_vue_filepond___default()(__WEBPACK_IM
 });
 
 /***/ }),
-/* 223 */
+/* 224 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -102092,13 +102317,699 @@ if (false) {
 }
 
 /***/ }),
-/* 224 */
+/* 225 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_content_loader__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_filepond__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_filepond___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue_filepond__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_filepond_plugin_image_preview__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_filepond_plugin_image_preview___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_filepond_plugin_image_preview__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_filepond_plugin_file_validate_size__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_filepond_plugin_file_validate_size___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_filepond_plugin_file_validate_size__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_filepond_plugin_file_validate_type__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_filepond_plugin_file_validate_type___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_filepond_plugin_file_validate_type__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_filepond_plugin_file_encode__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_filepond_plugin_file_encode___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_filepond_plugin_file_encode__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_filepond_dist_filepond_min_css__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_filepond_dist_filepond_min_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_filepond_dist_filepond_min_css__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_filepond_plugin_image_preview_dist_filepond_plugin_image_preview_css__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_filepond_plugin_image_preview_dist_filepond_plugin_image_preview_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_filepond_plugin_image_preview_dist_filepond_plugin_image_preview_css__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+// Import Vue FilePond
+
+
+
+
+
+// Import FilePond styles
+
+
+var FilePond = __WEBPACK_IMPORTED_MODULE_1_vue_filepond___default()(__WEBPACK_IMPORTED_MODULE_2_filepond_plugin_image_preview___default.a, __WEBPACK_IMPORTED_MODULE_3_filepond_plugin_file_validate_size___default.a, __WEBPACK_IMPORTED_MODULE_4_filepond_plugin_file_validate_type___default.a, __WEBPACK_IMPORTED_MODULE_5_filepond_plugin_file_encode___default.a);
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            isLoaded: false,
+            snackbarText: '',
+            snackbar: false,
+            nilai_master_modul: '',
+            list_modul: [],
+            myFiles: '',
+            judul: '',
+            keterangan: '',
+            menu: false,
+            menu2: false,
+            id: '',
+            materi: '',
+            filter: {
+                list_semester: [],
+                list_kelas: [],
+                list_matakuliah: [],
+                semester: '',
+                kelas: '',
+                matakuliah: ''
+            }
+        };
+    },
+    mounted: function mounted() {
+        this.initData();
+    },
+    created: function created() {
+        this.id = this.$route.params.id;
+    },
+
+    methods: {
+        initData: function initData() {
+            var app = this;
+            axios.get('lecturer/materi/edit/' + this.id).then(function (resp) {
+                app.isLoaded = true;
+                console.log(resp.data);
+                app.filter.list_semester = resp.data.list_semester;
+                app.filter.list_kelas = resp.data.list_kelas;
+                app.filter.list_matakuliah = resp.data.list_matakuliah;
+                app.filter.semester = resp.data.kuliah.tahun + '/' + resp.data.kuliah.semester;
+                app.filter.kelas = resp.data.materi.kelas;
+                app.filter.matakuliah = resp.data.kuliah.matakuliah;
+                app.materi = resp.data.materi;
+                // data materi
+                app.nilai_master_modul = resp.data.materi.nilai_master_modul;
+                app.list_modul = resp.data.list_modul;
+                app.judul = resp.data.materi.judul;
+                app.keterangan = resp.data.materi.keterangan;
+            }).catch(function (resp) {
+                app.showSnackbar("oops, something went wrong. Please try again!");
+            });
+        },
+        showSnackbar: function showSnackbar(text) {
+            var app = this;
+            app.snackbarText = text;
+            app.snackbar = true;
+        },
+        selectKelas: function selectKelas() {
+            if (!this.filter.semester) return false;
+            var app = this;
+            axios.get('filter/get-kelas/' + app.filter.semester).then(function (resp) {
+                app.filter.list_kelas = '';
+                app.filter.list_kelas = resp.data;
+            }).catch(function (resp) {
+                app.showSnackbar("Terjadi kegagalan sistem. Silahkan coba lagi!");
+            });
+        },
+        selectMatakuliah: function selectMatakuliah() {
+            if (!this.filter.kelas) return false;
+            var app = this;
+            axios.post('filter/get-matakuliah', app.filter).then(function (resp) {
+                app.filter.list_matakuliah = '';
+                app.filter.list_matakuliah = resp.data;
+            }).catch(function (resp) {
+                app.showSnackbar("Terjadi kegagalan sistem. Silahkan coba lagi!");
+            });
+        },
+        selectModul: function selectModul() {
+            if (!this.filter.matakuliah) return false;
+            var app = this;
+            axios.post('filter/get-modul', app.filter).then(function (resp) {
+                app.list_modul = '';
+                app.list_modul = resp.data;
+            }).catch(function (resp) {
+                app.showSnackbar("Terjadi kegagalan sistem. Silahkan coba lagi!");
+            });
+        },
+        submit: function submit() {
+            var app = this;
+            if (!app.filter) {
+                app.showSnackbar('Anda belum memilih kelas.');
+                return false;
+            }
+
+            if (!app.nilai_master_modul) {
+                app.showSnackbar('Anda belum memilih modul.');
+                return false;
+            }
+
+            if (!app.judul) {
+                app.showSnackbar('Judul materi harus diisi');
+                return false;
+            }
+
+            if (!app.keterangan) {
+                app.showSnackbar('Keterangan materi harus diisi');
+                return false;
+            }
+
+            var file = app.$refs.pond.getFiles();
+            var form = new FormData();
+            if (file.length) {
+                form.append('file', file[0].file);
+            } else {
+                form.append('file', '');
+            }
+            form.append('judul', app.judul);
+            form.append('keterangan', app.keterangan);
+            form.append('nilai_master_modul', app.nilai_master_modul);
+            axios.post('lecturer/materi/update/' + app.id, form, { headers: { 'Content-Type': 'multipart/form-data' } }).then(function (resp) {
+                if (resp.data.code == 200) {
+                    app.judul = '';
+                    app.keterangan = '';
+                    app.myFiles = [];
+                    app.showSnackbar('materi berhasil disimpan');
+                    app.$router.push('/materi');
+                }
+            }).catch(function (e) {
+                app.showSnackbar('materi gagal disimpan');
+            });
+        }
+    },
+    components: {
+        ContentLoader: __WEBPACK_IMPORTED_MODULE_0_vue_content_loader__["a" /* ContentLoader */],
+        FilePond: FilePond
+    }
+});
+
+/***/ }),
+/* 226 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "v-flex",
+    { attrs: { sm12: "" } },
+    [
+      _c("h1", { staticClass: "font-weight-light" }, [
+        _vm._v("Perbarui Materi")
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "subheading" }, [
+        _vm._v("Tambahkan materi sebagai bahan belajar mahasiswa")
+      ]),
+      _vm._v(" "),
+      !_vm.isLoaded
+        ? _c("content-loader", { attrs: { height: 250 } })
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.isLoaded
+        ? _c(
+            "v-container",
+            { attrs: { fluid: "", "grid-list-xl": "" } },
+            [
+              _c(
+                "v-layout",
+                { attrs: { wrap: "", "align-center": "" } },
+                [
+                  _c(
+                    "v-flex",
+                    { attrs: { md4: "", xs12: "", "d-flex": "" } },
+                    [
+                      _c("v-select", {
+                        attrs: {
+                          items: _vm.filter.list_semester,
+                          label: "Pilih semester",
+                          "item-text": "semester",
+                          "item-value": "semester",
+                          solo: ""
+                        },
+                        on: {
+                          change: function($event) {
+                            _vm.selectKelas()
+                          }
+                        },
+                        scopedSlots: _vm._u([
+                          {
+                            key: "selection",
+                            fn: function(data) {
+                              return [
+                                _vm._v(
+                                  "\n                        " +
+                                    _vm._s(data.item.semester) +
+                                    "\n                    "
+                                )
+                              ]
+                            }
+                          },
+                          {
+                            key: "item",
+                            fn: function(data) {
+                              return [
+                                _vm._v(
+                                  "\n                        " +
+                                    _vm._s(data.item.semester) +
+                                    "\n                    "
+                                )
+                              ]
+                            }
+                          }
+                        ]),
+                        model: {
+                          value: _vm.filter.semester,
+                          callback: function($$v) {
+                            _vm.$set(_vm.filter, "semester", $$v)
+                          },
+                          expression: "filter.semester"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-flex",
+                    { attrs: { md4: "", xs12: "", "d-flex": "" } },
+                    [
+                      _c("v-select", {
+                        attrs: {
+                          items: _vm.filter.list_kelas,
+                          label: "Pilih kelas",
+                          "item-text": "kode",
+                          "item-value": "nomor",
+                          solo: ""
+                        },
+                        on: {
+                          change: function($event) {
+                            _vm.selectMatakuliah()
+                          }
+                        },
+                        scopedSlots: _vm._u([
+                          {
+                            key: "selection",
+                            fn: function(data) {
+                              return [
+                                _vm._v(
+                                  "\n                        " +
+                                    _vm._s(data.item.kode) +
+                                    "\n                    "
+                                )
+                              ]
+                            }
+                          },
+                          {
+                            key: "item",
+                            fn: function(data) {
+                              return [
+                                _vm._v(
+                                  "\n                        " +
+                                    _vm._s(data.item.kode) +
+                                    "\n                    "
+                                )
+                              ]
+                            }
+                          }
+                        ]),
+                        model: {
+                          value: _vm.filter.kelas,
+                          callback: function($$v) {
+                            _vm.$set(_vm.filter, "kelas", $$v)
+                          },
+                          expression: "filter.kelas"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-flex",
+                    { attrs: { md4: "", xs12: "", "d-flex": "" } },
+                    [
+                      _c("v-select", {
+                        attrs: {
+                          items: _vm.filter.list_matakuliah,
+                          label: "Pilih matakuliah",
+                          "item-text": "matakuliah",
+                          "item-value": "nomor",
+                          solo: ""
+                        },
+                        on: {
+                          change: function($event) {
+                            _vm.selectModul()
+                          }
+                        },
+                        scopedSlots: _vm._u([
+                          {
+                            key: "selection",
+                            fn: function(data) {
+                              return [
+                                _vm._v(
+                                  "\n                        " +
+                                    _vm._s(data.item.matakuliah) +
+                                    "\n                    "
+                                )
+                              ]
+                            }
+                          },
+                          {
+                            key: "item",
+                            fn: function(data) {
+                              return [
+                                _vm._v(
+                                  "\n                        " +
+                                    _vm._s(data.item.matakuliah) +
+                                    "\n                    "
+                                )
+                              ]
+                            }
+                          }
+                        ]),
+                        model: {
+                          value: _vm.filter.matakuliah,
+                          callback: function($$v) {
+                            _vm.$set(_vm.filter, "matakuliah", $$v)
+                          },
+                          expression: "filter.matakuliah"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-flex",
+                    { attrs: { md12: "" } },
+                    [
+                      _c("v-select", {
+                        attrs: {
+                          items: _vm.list_modul,
+                          label: "Modul",
+                          "item-text": "modul",
+                          "item-value": "nomor",
+                          solo: ""
+                        },
+                        scopedSlots: _vm._u([
+                          {
+                            key: "selection",
+                            fn: function(data) {
+                              return [
+                                _vm._v(
+                                  "\n                        " +
+                                    _vm._s(data.item.modul) +
+                                    "\n                    "
+                                )
+                              ]
+                            }
+                          },
+                          {
+                            key: "item",
+                            fn: function(data) {
+                              return [
+                                _vm._v(
+                                  "\n                        " +
+                                    _vm._s(data.item.modul) +
+                                    "\n                    "
+                                )
+                              ]
+                            }
+                          }
+                        ]),
+                        model: {
+                          value: _vm.nilai_master_modul,
+                          callback: function($$v) {
+                            _vm.nilai_master_modul = $$v
+                          },
+                          expression: "nilai_master_modul"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-flex",
+                    { attrs: { xs12: "", sm12: "", md12: "" } },
+                    [
+                      _c("v-text-field", {
+                        attrs: { label: "Judul materi", solo: "" },
+                        model: {
+                          value: _vm.judul,
+                          callback: function($$v) {
+                            _vm.judul = $$v
+                          },
+                          expression: "judul"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-flex",
+                    { attrs: { xs12: "" } },
+                    [
+                      _c("v-textarea", {
+                        attrs: {
+                          solo: "",
+                          name: "input-7-4",
+                          label: "Keterangan"
+                        },
+                        model: {
+                          value: _vm.keterangan,
+                          callback: function($$v) {
+                            _vm.keterangan = $$v
+                          },
+                          expression: "keterangan"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-flex",
+                    { attrs: { xs12: "" } },
+                    [
+                      _c("p", [_vm._v("Tambahkan File (Optional)")]),
+                      _vm._v(" "),
+                      _c("file-pond", {
+                        ref: "pond",
+                        attrs: {
+                          name: "file",
+                          "label-idle": "Drop files here...",
+                          "allow-multiple": "false",
+                          files: _vm.myFiles
+                        }
+                      }),
+                      _vm._v(" "),
+                      _vm.materi.file_url
+                        ? [
+                            _c(
+                              "a",
+                              {
+                                attrs: {
+                                  slot: "activator",
+                                  href: _vm.materi.file_url
+                                },
+                                slot: "activator"
+                              },
+                              [_vm._v(" Download File ")]
+                            )
+                          ]
+                        : _vm._e()
+                    ],
+                    2
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "router-link",
+                    { attrs: { to: "/materi" } },
+                    [
+                      _c("v-btn", { attrs: { flat: "" } }, [
+                        _vm._v("Saya berubah pikiran")
+                      ])
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    { attrs: { color: "info" }, on: { click: _vm.submit } },
+                    [_vm._v("Simpan")]
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        : _vm._e(),
+      _vm._v(" "),
+      _c(
+        "v-snackbar",
+        {
+          attrs: { right: "", bottom: "" },
+          model: {
+            value: _vm.snackbar,
+            callback: function($$v) {
+              _vm.snackbar = $$v
+            },
+            expression: "snackbar"
+          }
+        },
+        [
+          _vm._v("\n        " + _vm._s(_vm.snackbarText) + "\n        "),
+          _c(
+            "v-btn",
+            {
+              attrs: { dark: "", flat: "" },
+              on: {
+                click: function($event) {
+                  _vm.snackbar = false
+                }
+              }
+            },
+            [_vm._v("\n            Close\n        ")]
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-321ee0ba", module.exports)
+  }
+}
+
+/***/ }),
+/* 227 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(225);
+var content = __webpack_require__(228);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -102118,7 +103029,7 @@ if(false) {
 }
 
 /***/ }),
-/* 225 */
+/* 228 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(4)(false);
@@ -102132,7 +103043,7 @@ exports.push([module.i, "\n.fab-container {\r\n  position: fixed;\r\n  bottom: 2
 
 
 /***/ }),
-/* 226 */
+/* 229 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -102331,7 +103242,7 @@ __WEBPACK_IMPORTED_MODULE_1_moment__["locale"]('id');
 });
 
 /***/ }),
-/* 227 */
+/* 230 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -102656,7 +103567,7 @@ if (false) {
 }
 
 /***/ }),
-/* 228 */
+/* 231 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -102802,7 +103713,7 @@ __WEBPACK_IMPORTED_MODULE_0_moment__["locale"]('id');
 });
 
 /***/ }),
-/* 229 */
+/* 232 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -103039,7 +103950,7 @@ if (false) {
 }
 
 /***/ }),
-/* 230 */
+/* 233 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -103067,7 +103978,7 @@ if (false) {
 }
 
 /***/ }),
-/* 231 */
+/* 234 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -103254,7 +104165,7 @@ var axios = __webpack_require__(18);
 });
 
 /***/ }),
-/* 232 */
+/* 235 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -103502,7 +104413,7 @@ if (false) {
 }
 
 /***/ }),
-/* 233 */
+/* 236 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -103536,7 +104447,7 @@ if (false) {
 }
 
 /***/ }),
-/* 234 */
+/* 237 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -103557,7 +104468,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({});
 
 /***/ }),
-/* 235 */
+/* 238 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -103599,13 +104510,13 @@ if (false) {
 }
 
 /***/ }),
-/* 236 */
+/* 239 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(237);
+var content = __webpack_require__(240);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -103625,7 +104536,7 @@ if(false) {
 }
 
 /***/ }),
-/* 237 */
+/* 240 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(4)(false);
@@ -103639,7 +104550,7 @@ exports.push([module.i, "\n.fab-container {\r\n  position: fixed;\r\n  bottom: 2
 
 
 /***/ }),
-/* 238 */
+/* 241 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -103797,7 +104708,7 @@ __WEBPACK_IMPORTED_MODULE_1_moment__["locale"]('id');
 });
 
 /***/ }),
-/* 239 */
+/* 242 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -104122,13 +105033,13 @@ if (false) {
 }
 
 /***/ }),
-/* 240 */
+/* 243 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(241);
+var content = __webpack_require__(244);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -104148,7 +105059,7 @@ if(false) {
 }
 
 /***/ }),
-/* 241 */
+/* 244 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(4)(false);
@@ -104162,7 +105073,7 @@ exports.push([module.i, "\n.fab-container {\r\n  position: fixed;\r\n  bottom: 2
 
 
 /***/ }),
-/* 242 */
+/* 245 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -104333,7 +105244,7 @@ __WEBPACK_IMPORTED_MODULE_1_moment__["locale"]('id');
 });
 
 /***/ }),
-/* 243 */
+/* 246 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -104653,7 +105564,7 @@ if (false) {
 }
 
 /***/ }),
-/* 244 */
+/* 247 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -104741,7 +105652,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 245 */
+/* 248 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -104860,7 +105771,7 @@ if (false) {
 }
 
 /***/ }),
-/* 246 */
+/* 249 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -104975,7 +105886,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 247 */
+/* 250 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -105194,7 +106105,7 @@ if (false) {
 }
 
 /***/ }),
-/* 248 */
+/* 251 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -105222,26 +106133,26 @@ if (false) {
 }
 
 /***/ }),
-/* 249 */
+/* 252 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_moment__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_moment__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_filepond__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_filepond__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_filepond___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue_filepond__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_filepond_plugin_image_preview__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_filepond_plugin_image_preview__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_filepond_plugin_image_preview___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_filepond_plugin_image_preview__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_filepond_plugin_file_validate_size__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_filepond_plugin_file_validate_size__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_filepond_plugin_file_validate_size___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_filepond_plugin_file_validate_size__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_filepond_plugin_file_validate_type__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_filepond_plugin_file_validate_type__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_filepond_plugin_file_validate_type___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_filepond_plugin_file_validate_type__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_filepond_plugin_file_encode__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_filepond_plugin_file_encode__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_filepond_plugin_file_encode___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_filepond_plugin_file_encode__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_filepond_dist_filepond_min_css__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_filepond_dist_filepond_min_css__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_filepond_dist_filepond_min_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_filepond_dist_filepond_min_css__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_filepond_plugin_image_preview_dist_filepond_plugin_image_preview_css__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_filepond_plugin_image_preview_dist_filepond_plugin_image_preview_css__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_filepond_plugin_image_preview_dist_filepond_plugin_image_preview_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_filepond_plugin_image_preview_dist_filepond_plugin_image_preview_css__);
 //
 //
@@ -105433,7 +106344,7 @@ var FilePond = __WEBPACK_IMPORTED_MODULE_1_vue_filepond___default()(__WEBPACK_IM
 });
 
 /***/ }),
-/* 250 */
+/* 253 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -105793,15 +106704,15 @@ if (false) {
 }
 
 /***/ }),
-/* 251 */
+/* 254 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(252)
+var __vue_script__ = __webpack_require__(255)
 /* template */
-var __vue_template__ = __webpack_require__(253)
+var __vue_template__ = __webpack_require__(256)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -105840,7 +106751,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 252 */
+/* 255 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -106065,7 +106976,7 @@ __WEBPACK_IMPORTED_MODULE_0_moment__["locale"]('id');
 });
 
 /***/ }),
-/* 253 */
+/* 256 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -106627,15 +107538,15 @@ if (false) {
 }
 
 /***/ }),
-/* 254 */
+/* 257 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(255)
+var __vue_script__ = __webpack_require__(258)
 /* template */
-var __vue_template__ = __webpack_require__(256)
+var __vue_template__ = __webpack_require__(259)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -106674,7 +107585,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 255 */
+/* 258 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -106797,7 +107708,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 256 */
+/* 259 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -107012,18 +107923,18 @@ if (false) {
 }
 
 /***/ }),
-/* 257 */
+/* 260 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 // This file can be required in Browserify and Node.js for automatic polyfill
 // To use it:  require('es6-promise/auto');
 
-module.exports = __webpack_require__(258).polyfill();
+module.exports = __webpack_require__(261).polyfill();
 
 
 /***/ }),
-/* 258 */
+/* 261 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(process, global) {/*!
@@ -108213,751 +109124,10 @@ return Promise$1;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(16), __webpack_require__(5)))
 
 /***/ }),
-/* 259 */
+/* 262 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 260 */,
-/* 261 */,
-/* 262 */,
-/* 263 */,
-/* 264 */,
-/* 265 */,
-/* 266 */,
-/* 267 */,
-/* 268 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(1)
-/* script */
-var __vue_script__ = __webpack_require__(269)
-/* template */
-var __vue_template__ = __webpack_require__(270)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/components/lecturer/MateriEdit.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-321ee0ba", Component.options)
-  } else {
-    hotAPI.reload("data-v-321ee0ba", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 269 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_content_loader__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_filepond__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_filepond___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue_filepond__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_filepond_plugin_image_preview__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_filepond_plugin_image_preview___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_filepond_plugin_image_preview__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_filepond_plugin_file_validate_size__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_filepond_plugin_file_validate_size___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_filepond_plugin_file_validate_size__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_filepond_plugin_file_validate_type__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_filepond_plugin_file_validate_type___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_filepond_plugin_file_validate_type__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_filepond_plugin_file_encode__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_filepond_plugin_file_encode___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_filepond_plugin_file_encode__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_filepond_dist_filepond_min_css__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_filepond_dist_filepond_min_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_filepond_dist_filepond_min_css__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_filepond_plugin_image_preview_dist_filepond_plugin_image_preview_css__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_filepond_plugin_image_preview_dist_filepond_plugin_image_preview_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_filepond_plugin_image_preview_dist_filepond_plugin_image_preview_css__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-
-// Import Vue FilePond
-
-
-
-
-
-// Import FilePond styles
-
-
-var FilePond = __WEBPACK_IMPORTED_MODULE_1_vue_filepond___default()(__WEBPACK_IMPORTED_MODULE_2_filepond_plugin_image_preview___default.a, __WEBPACK_IMPORTED_MODULE_3_filepond_plugin_file_validate_size___default.a, __WEBPACK_IMPORTED_MODULE_4_filepond_plugin_file_validate_type___default.a, __WEBPACK_IMPORTED_MODULE_5_filepond_plugin_file_encode___default.a);
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    data: function data() {
-        return {
-            isLoaded: false,
-            snackbarText: '',
-            snackbar: false,
-            nilai_master_modul: '',
-            list_modul: [],
-            myFiles: '',
-            judul: '',
-            keterangan: '',
-            menu: false,
-            menu2: false,
-            id: '',
-            materi: '',
-            filter: {
-                list_semester: [],
-                list_kelas: [],
-                list_matakuliah: [],
-                semester: '',
-                kelas: '',
-                matakuliah: ''
-            }
-        };
-    },
-    mounted: function mounted() {
-        this.initData();
-    },
-    created: function created() {
-        this.id = this.$route.params.id;
-    },
-
-    methods: {
-        initData: function initData() {
-            var app = this;
-            axios.get('lecturer/materi/edit/' + this.id).then(function (resp) {
-                app.isLoaded = true;
-                console.log(resp.data);
-                app.filter.list_semester = resp.data.list_semester;
-                app.filter.list_kelas = resp.data.list_kelas;
-                app.filter.list_matakuliah = resp.data.list_matakuliah;
-                app.filter.semester = resp.data.kuliah.tahun + '/' + resp.data.kuliah.semester;
-                app.filter.kelas = resp.data.materi.kelas;
-                app.filter.matakuliah = resp.data.kuliah.matakuliah;
-                app.materi = resp.data.materi;
-                // data materi
-                app.nilai_master_modul = resp.data.materi.nilai_master_modul;
-                app.list_modul = resp.data.list_modul;
-                app.judul = resp.data.materi.judul;
-                app.keterangan = resp.data.materi.keterangan;
-            }).catch(function (resp) {
-                app.showSnackbar("oops, something went wrong. Please try again!");
-            });
-        },
-        showSnackbar: function showSnackbar(text) {
-            var app = this;
-            app.snackbarText = text;
-            app.snackbar = true;
-        },
-        selectKelas: function selectKelas() {
-            if (!this.filter.semester) return false;
-            var app = this;
-            axios.get('filter/get-kelas/' + app.filter.semester).then(function (resp) {
-                app.filter.list_kelas = '';
-                app.filter.list_kelas = resp.data;
-            }).catch(function (resp) {
-                app.showSnackbar("Terjadi kegagalan sistem. Silahkan coba lagi!");
-            });
-        },
-        selectMatakuliah: function selectMatakuliah() {
-            if (!this.filter.kelas) return false;
-            var app = this;
-            axios.post('filter/get-matakuliah', app.filter).then(function (resp) {
-                app.filter.list_matakuliah = '';
-                app.filter.list_matakuliah = resp.data;
-            }).catch(function (resp) {
-                app.showSnackbar("Terjadi kegagalan sistem. Silahkan coba lagi!");
-            });
-        },
-        selectModul: function selectModul() {
-            if (!this.filter.matakuliah) return false;
-            var app = this;
-            axios.post('filter/get-modul', app.filter).then(function (resp) {
-                app.list_modul = '';
-                app.list_modul = resp.data;
-            }).catch(function (resp) {
-                app.showSnackbar("Terjadi kegagalan sistem. Silahkan coba lagi!");
-            });
-        },
-        submit: function submit() {
-            var app = this;
-            if (!app.filter) {
-                app.showSnackbar('Anda belum memilih kelas.');
-                return false;
-            }
-
-            if (!app.nilai_master_modul) {
-                app.showSnackbar('Anda belum memilih modul.');
-                return false;
-            }
-
-            if (!app.judul) {
-                app.showSnackbar('Judul materi harus diisi');
-                return false;
-            }
-
-            if (!app.keterangan) {
-                app.showSnackbar('Keterangan materi harus diisi');
-                return false;
-            }
-
-            var file = app.$refs.pond.getFiles();
-            var form = new FormData();
-            if (file.length) {
-                form.append('file', file[0].file);
-            } else {
-                form.append('file', '');
-            }
-            form.append('judul', app.judul);
-            form.append('keterangan', app.keterangan);
-            form.append('nilai_master_modul', app.nilai_master_modul);
-            axios.post('lecturer/materi/update/' + app.id, form, { headers: { 'Content-Type': 'multipart/form-data' } }).then(function (resp) {
-                if (resp.data.code == 200) {
-                    app.judul = '';
-                    app.keterangan = '';
-                    app.myFiles = [];
-                    app.showSnackbar('materi berhasil disimpan');
-                    app.$router.push('/materi');
-                }
-            }).catch(function (e) {
-                app.showSnackbar('materi gagal disimpan');
-            });
-        }
-    },
-    components: {
-        ContentLoader: __WEBPACK_IMPORTED_MODULE_0_vue_content_loader__["a" /* ContentLoader */],
-        FilePond: FilePond
-    }
-});
-
-/***/ }),
-/* 270 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "v-flex",
-    { attrs: { sm12: "" } },
-    [
-      _c("h1", { staticClass: "font-weight-light" }, [
-        _vm._v("Perbarui Materi")
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "subheading" }, [
-        _vm._v("Tambahkan materi sebagai bahan belajar mahasiswa")
-      ]),
-      _vm._v(" "),
-      !_vm.isLoaded
-        ? _c("content-loader", { attrs: { height: 250 } })
-        : _vm._e(),
-      _vm._v(" "),
-      _vm.isLoaded
-        ? _c(
-            "v-container",
-            { attrs: { fluid: "", "grid-list-xl": "" } },
-            [
-              _c(
-                "v-layout",
-                { attrs: { wrap: "", "align-center": "" } },
-                [
-                  _c(
-                    "v-flex",
-                    { attrs: { md4: "", xs12: "", "d-flex": "" } },
-                    [
-                      _c("v-select", {
-                        attrs: {
-                          items: _vm.filter.list_semester,
-                          label: "Pilih semester",
-                          "item-text": "semester",
-                          "item-value": "semester",
-                          solo: ""
-                        },
-                        on: {
-                          change: function($event) {
-                            _vm.selectKelas()
-                          }
-                        },
-                        scopedSlots: _vm._u([
-                          {
-                            key: "selection",
-                            fn: function(data) {
-                              return [
-                                _vm._v(
-                                  "\n                        " +
-                                    _vm._s(data.item.semester) +
-                                    "\n                    "
-                                )
-                              ]
-                            }
-                          },
-                          {
-                            key: "item",
-                            fn: function(data) {
-                              return [
-                                _vm._v(
-                                  "\n                        " +
-                                    _vm._s(data.item.semester) +
-                                    "\n                    "
-                                )
-                              ]
-                            }
-                          }
-                        ]),
-                        model: {
-                          value: _vm.filter.semester,
-                          callback: function($$v) {
-                            _vm.$set(_vm.filter, "semester", $$v)
-                          },
-                          expression: "filter.semester"
-                        }
-                      })
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "v-flex",
-                    { attrs: { md4: "", xs12: "", "d-flex": "" } },
-                    [
-                      _c("v-select", {
-                        attrs: {
-                          items: _vm.filter.list_kelas,
-                          label: "Pilih kelas",
-                          "item-text": "kode",
-                          "item-value": "nomor",
-                          solo: ""
-                        },
-                        on: {
-                          change: function($event) {
-                            _vm.selectMatakuliah()
-                          }
-                        },
-                        scopedSlots: _vm._u([
-                          {
-                            key: "selection",
-                            fn: function(data) {
-                              return [
-                                _vm._v(
-                                  "\n                        " +
-                                    _vm._s(data.item.kode) +
-                                    "\n                    "
-                                )
-                              ]
-                            }
-                          },
-                          {
-                            key: "item",
-                            fn: function(data) {
-                              return [
-                                _vm._v(
-                                  "\n                        " +
-                                    _vm._s(data.item.kode) +
-                                    "\n                    "
-                                )
-                              ]
-                            }
-                          }
-                        ]),
-                        model: {
-                          value: _vm.filter.kelas,
-                          callback: function($$v) {
-                            _vm.$set(_vm.filter, "kelas", $$v)
-                          },
-                          expression: "filter.kelas"
-                        }
-                      })
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "v-flex",
-                    { attrs: { md4: "", xs12: "", "d-flex": "" } },
-                    [
-                      _c("v-select", {
-                        attrs: {
-                          items: _vm.filter.list_matakuliah,
-                          label: "Pilih matakuliah",
-                          "item-text": "matakuliah",
-                          "item-value": "nomor",
-                          solo: ""
-                        },
-                        on: {
-                          change: function($event) {
-                            _vm.selectModul()
-                          }
-                        },
-                        scopedSlots: _vm._u([
-                          {
-                            key: "selection",
-                            fn: function(data) {
-                              return [
-                                _vm._v(
-                                  "\n                        " +
-                                    _vm._s(data.item.matakuliah) +
-                                    "\n                    "
-                                )
-                              ]
-                            }
-                          },
-                          {
-                            key: "item",
-                            fn: function(data) {
-                              return [
-                                _vm._v(
-                                  "\n                        " +
-                                    _vm._s(data.item.matakuliah) +
-                                    "\n                    "
-                                )
-                              ]
-                            }
-                          }
-                        ]),
-                        model: {
-                          value: _vm.filter.matakuliah,
-                          callback: function($$v) {
-                            _vm.$set(_vm.filter, "matakuliah", $$v)
-                          },
-                          expression: "filter.matakuliah"
-                        }
-                      })
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "v-flex",
-                    { attrs: { md12: "" } },
-                    [
-                      _c("v-select", {
-                        attrs: {
-                          items: _vm.list_modul,
-                          label: "Modul",
-                          "item-text": "modul",
-                          "item-value": "nomor",
-                          solo: ""
-                        },
-                        scopedSlots: _vm._u([
-                          {
-                            key: "selection",
-                            fn: function(data) {
-                              return [
-                                _vm._v(
-                                  "\n                        " +
-                                    _vm._s(data.item.modul) +
-                                    "\n                    "
-                                )
-                              ]
-                            }
-                          },
-                          {
-                            key: "item",
-                            fn: function(data) {
-                              return [
-                                _vm._v(
-                                  "\n                        " +
-                                    _vm._s(data.item.modul) +
-                                    "\n                    "
-                                )
-                              ]
-                            }
-                          }
-                        ]),
-                        model: {
-                          value: _vm.nilai_master_modul,
-                          callback: function($$v) {
-                            _vm.nilai_master_modul = $$v
-                          },
-                          expression: "nilai_master_modul"
-                        }
-                      })
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "v-flex",
-                    { attrs: { xs12: "", sm12: "", md12: "" } },
-                    [
-                      _c("v-text-field", {
-                        attrs: { label: "Judul materi", solo: "" },
-                        model: {
-                          value: _vm.judul,
-                          callback: function($$v) {
-                            _vm.judul = $$v
-                          },
-                          expression: "judul"
-                        }
-                      })
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "v-flex",
-                    { attrs: { xs12: "" } },
-                    [
-                      _c("v-textarea", {
-                        attrs: {
-                          solo: "",
-                          name: "input-7-4",
-                          label: "Keterangan"
-                        },
-                        model: {
-                          value: _vm.keterangan,
-                          callback: function($$v) {
-                            _vm.keterangan = $$v
-                          },
-                          expression: "keterangan"
-                        }
-                      })
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "v-flex",
-                    { attrs: { xs12: "" } },
-                    [
-                      _c("p", [_vm._v("Tambahkan File (Optional)")]),
-                      _vm._v(" "),
-                      _c("file-pond", {
-                        ref: "pond",
-                        attrs: {
-                          name: "file",
-                          "label-idle": "Drop files here...",
-                          "allow-multiple": "false",
-                          files: _vm.myFiles
-                        }
-                      }),
-                      _vm._v(" "),
-                      _vm.materi.file_url
-                        ? [
-                            _c(
-                              "a",
-                              {
-                                attrs: {
-                                  slot: "activator",
-                                  href: _vm.materi.file_url
-                                },
-                                slot: "activator"
-                              },
-                              [_vm._v(" Download File ")]
-                            )
-                          ]
-                        : _vm._e()
-                    ],
-                    2
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "router-link",
-                    { attrs: { to: "/materi" } },
-                    [
-                      _c("v-btn", { attrs: { flat: "" } }, [
-                        _vm._v("Saya berubah pikiran")
-                      ])
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "v-btn",
-                    { attrs: { color: "info" }, on: { click: _vm.submit } },
-                    [_vm._v("Simpan")]
-                  )
-                ],
-                1
-              )
-            ],
-            1
-          )
-        : _vm._e(),
-      _vm._v(" "),
-      _c(
-        "v-snackbar",
-        {
-          attrs: { right: "", bottom: "" },
-          model: {
-            value: _vm.snackbar,
-            callback: function($$v) {
-              _vm.snackbar = $$v
-            },
-            expression: "snackbar"
-          }
-        },
-        [
-          _vm._v("\n        " + _vm._s(_vm.snackbarText) + "\n        "),
-          _c(
-            "v-btn",
-            {
-              attrs: { dark: "", flat: "" },
-              on: {
-                click: function($event) {
-                  _vm.snackbar = false
-                }
-              }
-            },
-            [_vm._v("\n            Close\n        ")]
-          )
-        ],
-        1
-      )
-    ],
-    1
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-321ee0ba", module.exports)
-  }
-}
 
 /***/ })
 /******/ ]);

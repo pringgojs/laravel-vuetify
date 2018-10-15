@@ -54,7 +54,7 @@ Route::group(['prefix' => 'lecturer', 'middleware' => 'role:lecturer', 'namespac
     });
 
     Route::group(['prefix' => 'schedule'], function () {
-        Route::get('get-by-semester/{kuliah}', 'ScheduleController@getBySemester');
+        Route::post('filter', 'ScheduleController@filter');
         Route::get('/', 'ScheduleController@index');
     });
 

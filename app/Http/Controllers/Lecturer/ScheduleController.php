@@ -20,13 +20,13 @@ class ScheduleController extends Controller
         return $response;
     }
 
-    public static function getBySemester($kuliah)
+    public static function filter(Request $request)
     {
-        $url = config('api.url').'/lecturer/schedule/get-by-semester/'.$kuliah;
-        $data = array('user' => ResponseHelper::user());
+        $url = config('api.url').'/lecturer/schedule/filter';
+        $data = array('user' => ResponseHelper::user(), 'request' => $request->toArray());
         $response = Curl::to($url)
-        ->withData($data)
-        ->post();
+            ->withData($data)
+            ->post();
         
         return $response;
     }
