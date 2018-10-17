@@ -176,14 +176,13 @@ export default {
             form.append('tugas_id', app.$store.state.obj_etugas.etugas.id)
             form.append('kelas_id', app.$store.state.obj_etugas.etugas.kelas)
             axios.post( 'student/e-tugas/store', form, { headers: {'Content-Type': 'multipart/form-data'}}).then(function (resp) {
-                if (resp.data.code == 200) {
-                    app.keterangan = ''
-                    app.myFiles = []
-                    app.showSnackbar('Tugas berhasil diunggah')
-                    app.$store.state.form_dialog_detail_etugas = false
-                    app.$store.state.obj_list_etugas = null
-                    app.$store.state.obj_list_etugas =  resp.data.data_tugas
-                }
+                app.keterangan = ''
+                app.myFiles = []
+                app.showSnackbar('Tugas berhasil diunggah')
+                app.$store.state.form_dialog_detail_etugas = false
+                app.$store.state.obj_list_etugas = null
+                app.$store.state.obj_list_etugas =  resp.data.list_tugas
+
             })
             .catch(function(e) {
                 app.showSnackbar('Tugas gagal diunggah')
