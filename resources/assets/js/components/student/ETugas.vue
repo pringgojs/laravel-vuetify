@@ -183,9 +183,10 @@ export default {
         selectKelas() {
             if (!this.filter.semester) return false
             var app = this
-            axios.get('filter/get-kelas/'+app.filter.semester).then(function (resp) {
+            axios.get('filter/student/get-kelas/tugas/'+app.filter.semester).then(function (resp) {
                 app.filter.list_kelas = ''
                 app.filter.list_kelas = resp.data
+                console.log(resp.data)
             })
             .catch(function (resp) {
                 app.showSnackbar("Terjadi kegagalan sistem. Silahkan coba lagi!")
@@ -194,7 +195,7 @@ export default {
         selectMatakuliah() {
             if (!this.filter.kelas) return false
             var app = this
-            axios.post('filter/get-matakuliah', app.filter).then(function (resp) {
+            axios.post('filter/student/get-matakuliah/tugas', app.filter).then(function (resp) {
                 app.filter.list_matakuliah = ''
                 app.filter.list_matakuliah = resp.data
             })
@@ -211,7 +212,6 @@ export default {
                 app.bodyTable = ''
                 app.$store.state.obj_list_etugas = null
                 app.$store.state.obj_list_etugas =  resp.data
-                console.log(resp.data)
 
             })
             .catch(function (resp) {

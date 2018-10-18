@@ -138,7 +138,6 @@ export default {
                 app.isLoaded = true
                 app.bodyTable = resp.data.list_materi
                 app.filter.list_semester = resp.data.list_semester
-                console.log(resp.data)
             })
             .catch(function (resp) {
                 app.showSnackbar("oops, something went wrong. Please try again!")
@@ -155,7 +154,6 @@ export default {
             axios.get('filter/student/get-kelas/materi/'+app.filter.semester).then(function (resp) {
                 app.filter.list_kelas = ''
                 app.filter.list_kelas = resp.data
-                console.log(resp.data)
             })
             .catch(function (resp) {
                 app.showSnackbar("Terjadi kegagalan sistem. Silahkan coba lagi!")

@@ -105289,9 +105289,10 @@ __WEBPACK_IMPORTED_MODULE_1_moment__["locale"]('id');
         selectKelas: function selectKelas() {
             if (!this.filter.semester) return false;
             var app = this;
-            axios.get('filter/get-kelas/' + app.filter.semester).then(function (resp) {
+            axios.get('filter/student/get-kelas/tugas/' + app.filter.semester).then(function (resp) {
                 app.filter.list_kelas = '';
                 app.filter.list_kelas = resp.data;
+                console.log(resp.data);
             }).catch(function (resp) {
                 app.showSnackbar("Terjadi kegagalan sistem. Silahkan coba lagi!");
             });
@@ -105299,7 +105300,7 @@ __WEBPACK_IMPORTED_MODULE_1_moment__["locale"]('id');
         selectMatakuliah: function selectMatakuliah() {
             if (!this.filter.kelas) return false;
             var app = this;
-            axios.post('filter/get-matakuliah', app.filter).then(function (resp) {
+            axios.post('filter/student/get-matakuliah/tugas', app.filter).then(function (resp) {
                 app.filter.list_matakuliah = '';
                 app.filter.list_matakuliah = resp.data;
             }).catch(function (resp) {
@@ -105315,7 +105316,6 @@ __WEBPACK_IMPORTED_MODULE_1_moment__["locale"]('id');
                 app.bodyTable = '';
                 app.$store.state.obj_list_etugas = null;
                 app.$store.state.obj_list_etugas = resp.data;
-                console.log(resp.data);
             }).catch(function (resp) {
                 app.showSnackbar("Terjadi kegagalan sistem. Silahkan coba lagi!");
             });
@@ -106137,7 +106137,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 app.isLoaded = true;
                 app.bodyTable = resp.data.list_materi;
                 app.filter.list_semester = resp.data.list_semester;
-                console.log(resp.data);
             }).catch(function (resp) {
                 app.showSnackbar("oops, something went wrong. Please try again!");
             });
@@ -106153,7 +106152,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             axios.get('filter/student/get-kelas/materi/' + app.filter.semester).then(function (resp) {
                 app.filter.list_kelas = '';
                 app.filter.list_kelas = resp.data;
-                console.log(resp.data);
             }).catch(function (resp) {
                 app.showSnackbar("Terjadi kegagalan sistem. Silahkan coba lagi!");
             });

@@ -27,7 +27,7 @@ class MateriController extends Controller
         $response = Curl::to($url)
             ->withData($data)
             ->post();
-        \Log::info("asd");        
+            
         return $response;
     }
 }
