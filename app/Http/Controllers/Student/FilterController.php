@@ -1,25 +1,26 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Student;
 
 use Illuminate\Http\Request;
 use Ixudra\Curl\Facades\Curl;
 use App\Helpers\ResponseHelper;
+use App\Http\Controllers\Controller;
 
 class FilterController extends Controller
 {
-    public function getSemester()
+    public function getSemester($type)
     {
-        $url = config('api.url').'/filter/get-semester';
+        $url = config('api.url').'/filter/student/get-semester/'.$type;
         $response = Curl::to($url)->get();
         
         return $response;
     }
 
-    public function getKelas($tahun, $semester)
+    public function getKelas($type, $tahun, $semester)
     {
-        $url = config('api.url').'/filter/get-kelas';
-        $data = array('tahun' => $tahun, 'semester' => $semester);
+        $url = config('api.url').'/filter/student/get-kelas';
+        $data = array('user' => ResponseHelper::user(), 'type' => $type, 'tahun' => $tahun, 'semester' => $semester);
         $response = Curl::to($url)->withData($data)->post();
         
         return $response;
@@ -27,16 +28,7 @@ class FilterController extends Controller
 
     public function getMatakuliah(Request $request)
     {
-        $url = config('api.url').'/filter/get-matakuliah';
-        $data = array('user' => ResponseHelper::user(), 'request' => $request->toArray());
-        $response = Curl::to($url)->withData($data)->post();
-        
-        return $response;
-    }
-
-    public function getMatakuliahStudent(Request $request)
-    {
-        $url = config('api.url').'/filter/get-matakuliah/student';
+        $url = config('api.url').'/filter/student/get-matakuliah';
         $data = array('user' => ResponseHelper::user(), 'request' => $request->toArray());
         $response = Curl::to($url)->withData($data)->post();
         
@@ -45,7 +37,7 @@ class FilterController extends Controller
 
     public function getModul(Request $request)
     {
-        $url = config('api.url').'/filter/get-modul';
+        $url = config('api.url').'/filter/student/get-modul';
         $data = array('user' => ResponseHelper::user(), 'request' => $request->toArray());
         $response = Curl::to($url)->withData($data)->post();
         return $response;

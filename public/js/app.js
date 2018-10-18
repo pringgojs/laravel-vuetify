@@ -106059,6 +106059,48 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -106066,9 +106108,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             headerTable: [{ text: 'Modul', value: 'modul' }, { text: 'Matakuliah', value: 'matakuliah' }, { text: 'Kelas', value: 'kelas' }, { text: 'Judul Materi', value: 'judul' }, { text: 'Keterangan', value: 'keterangan' }, { text: 'File Materi', value: 'file_url' }],
             bodyTable: [],
-            semesters: [],
             descriptionSemester: '',
-            filter: '',
+            filter: {
+                list_semester: [],
+                list_kelas: [],
+                list_matakuliah: [],
+                semester: '',
+                kelas: '',
+                matakuliah: ''
+            },
             snackbarText: '',
             snackbar: false,
             isLoaded: false
@@ -106087,8 +106135,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var app = this;
             axios.get('student/materi').then(function (resp) {
                 app.isLoaded = true;
-                app.bodyTable = resp.data.data;
-                app.semesters = resp.data.data_semester;
+                app.bodyTable = resp.data.list_materi;
+                app.filter.list_semester = resp.data.list_semester;
+                console.log(resp.data);
             }).catch(function (resp) {
                 app.showSnackbar("oops, something went wrong. Please try again!");
             });
@@ -106098,13 +106147,37 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             app.snackbarText = text;
             app.snackbar = true;
         },
-        selectSemester: function selectSemester() {
-            if (!this.filter) return false;
+        selectKelas: function selectKelas() {
+            if (!this.filter.semester) return false;
             var app = this;
-            axios.get('student/materi/kuliah/' + app.filter).then(function (resp) {
-                app.bodyTable = resp.data.data;
+            axios.get('filter/student/get-kelas/materi/' + app.filter.semester).then(function (resp) {
+                app.filter.list_kelas = '';
+                app.filter.list_kelas = resp.data;
+                console.log(resp.data);
             }).catch(function (resp) {
-                app.showSnackbar("oops, something went wrong. Please try again!");
+                app.showSnackbar("Terjadi kegagalan sistem. Silahkan coba lagi!");
+            });
+        },
+        selectMatakuliah: function selectMatakuliah() {
+            if (!this.filter.kelas) return false;
+            var app = this;
+            axios.post('filter/student/get-matakuliah/materi', app.filter).then(function (resp) {
+                app.filter.list_matakuliah = '';
+                app.filter.list_matakuliah = resp.data;
+            }).catch(function (resp) {
+                app.showSnackbar("Terjadi kegagalan sistem. Silahkan coba lagi!");
+            });
+        },
+        selectData: function selectData() {
+            if (!this.filter.matakuliah) return false;
+            var app = this;
+            app.loadDetail = true;
+            axios.post('student/materi/filter', app.filter).then(function (resp) {
+                app.loadDetail = false;
+                app.bodyTable = null;
+                app.bodyTable = resp.data;
+            }).catch(function (resp) {
+                app.showSnackbar("Terjadi kegagalan sistem. Silahkan coba lagi!");
             });
         }
     }
@@ -106132,70 +106205,188 @@ var render = function() {
         ? _c("content-loader", { attrs: { height: 250 } })
         : _vm._e(),
       _vm._v(" "),
-      _vm.isLoaded
-        ? _c(
-            "v-flex",
-            { attrs: { md5: "", "mt-5": "" } },
-            [
-              _c("v-select", {
-                attrs: {
-                  items: _vm.semesters,
-                  label: "Filter jadwal",
-                  "item-text": "tahun",
-                  "item-value": "kuliah",
-                  solo: ""
-                },
-                on: {
-                  change: function($event) {
-                    _vm.selectSemester()
-                  }
-                },
-                scopedSlots: _vm._u([
-                  {
-                    key: "selection",
-                    fn: function(data) {
-                      return [
-                        _vm._v(
-                          "\n                " +
-                            _vm._s(data.item.tahun) +
-                            " / " +
-                            _vm._s(data.item.semester) +
-                            " - " +
-                            _vm._s(data.item.matakuliah) +
-                            "\n            "
-                        )
-                      ]
-                    }
-                  },
-                  {
-                    key: "item",
-                    fn: function(data) {
-                      return [
-                        _vm._v(
-                          "\n                " +
-                            _vm._s(data.item.tahun) +
-                            " / " +
-                            _vm._s(data.item.semester) +
-                            " - " +
-                            _vm._s(data.item.matakuliah) +
-                            "\n            "
-                        )
-                      ]
-                    }
-                  }
-                ]),
-                model: {
-                  value: _vm.filter,
-                  callback: function($$v) {
-                    _vm.filter = $$v
-                  },
-                  expression: "filter"
-                }
-              })
-            ],
-            1
-          )
-        : _vm._e(),
+      [
+        _vm.isLoaded
+          ? _c(
+              "v-container",
+              { attrs: { fluid: "", "grid-list-xl": "" } },
+              [
+                _c(
+                  "v-layout",
+                  { attrs: { wrap: "", "align-center": "" } },
+                  [
+                    _c(
+                      "v-flex",
+                      { attrs: { md4: "", "mt-5": "", "d-flex": "" } },
+                      [
+                        _c("v-select", {
+                          attrs: {
+                            items: _vm.filter.list_semester,
+                            label: "Pilih semester",
+                            "item-text": "tahun",
+                            "item-value": "semester",
+                            solo: ""
+                          },
+                          on: {
+                            change: function($event) {
+                              _vm.selectKelas()
+                            }
+                          },
+                          scopedSlots: _vm._u([
+                            {
+                              key: "selection",
+                              fn: function(data) {
+                                return [
+                                  _vm._v(
+                                    "\n                            " +
+                                      _vm._s(data.item.semester) +
+                                      "\n                        "
+                                  )
+                                ]
+                              }
+                            },
+                            {
+                              key: "item",
+                              fn: function(data) {
+                                return [
+                                  _vm._v(
+                                    "\n                            " +
+                                      _vm._s(data.item.semester) +
+                                      "\n                        "
+                                  )
+                                ]
+                              }
+                            }
+                          ]),
+                          model: {
+                            value: _vm.filter.semester,
+                            callback: function($$v) {
+                              _vm.$set(_vm.filter, "semester", $$v)
+                            },
+                            expression: "filter.semester"
+                          }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "v-flex",
+                      { attrs: { md4: "", "mt-5": "", "d-flex": "" } },
+                      [
+                        _c("v-select", {
+                          attrs: {
+                            items: _vm.filter.list_kelas,
+                            label: "Pilih kelas",
+                            "item-text": "kode",
+                            "item-value": "nomor",
+                            solo: ""
+                          },
+                          on: {
+                            change: function($event) {
+                              _vm.selectMatakuliah()
+                            }
+                          },
+                          scopedSlots: _vm._u([
+                            {
+                              key: "selection",
+                              fn: function(data) {
+                                return [
+                                  _vm._v(
+                                    "\n                            " +
+                                      _vm._s(data.item.kode) +
+                                      "\n                        "
+                                  )
+                                ]
+                              }
+                            },
+                            {
+                              key: "item",
+                              fn: function(data) {
+                                return [
+                                  _vm._v(
+                                    "\n                            " +
+                                      _vm._s(data.item.kode) +
+                                      "\n                        "
+                                  )
+                                ]
+                              }
+                            }
+                          ]),
+                          model: {
+                            value: _vm.filter.kelas,
+                            callback: function($$v) {
+                              _vm.$set(_vm.filter, "kelas", $$v)
+                            },
+                            expression: "filter.kelas"
+                          }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "v-flex",
+                      { attrs: { md4: "", "mt-5": "", "d-flex": "" } },
+                      [
+                        _c("v-select", {
+                          attrs: {
+                            items: _vm.filter.list_matakuliah,
+                            label: "Pilih matakuliah",
+                            "item-text": "matakuliah",
+                            "item-value": "nomor",
+                            solo: ""
+                          },
+                          on: {
+                            change: function($event) {
+                              _vm.selectData()
+                            }
+                          },
+                          scopedSlots: _vm._u([
+                            {
+                              key: "selection",
+                              fn: function(data) {
+                                return [
+                                  _vm._v(
+                                    "\n                            " +
+                                      _vm._s(data.item.matakuliah) +
+                                      "\n                        "
+                                  )
+                                ]
+                              }
+                            },
+                            {
+                              key: "item",
+                              fn: function(data) {
+                                return [
+                                  _vm._v(
+                                    "\n                            " +
+                                      _vm._s(data.item.matakuliah) +
+                                      "\n                        "
+                                  )
+                                ]
+                              }
+                            }
+                          ]),
+                          model: {
+                            value: _vm.filter.matakuliah,
+                            callback: function($$v) {
+                              _vm.$set(_vm.filter, "matakuliah", $$v)
+                            },
+                            expression: "filter.matakuliah"
+                          }
+                        })
+                      ],
+                      1
+                    )
+                  ],
+                  1
+                )
+              ],
+              1
+            )
+          : _vm._e()
+      ],
       _vm._v(" "),
       _vm.isLoaded
         ? _c(
@@ -106316,7 +106507,7 @@ var render = function() {
           )
         : _vm._e()
     ],
-    1
+    2
   )
 }
 var staticRenderFns = []

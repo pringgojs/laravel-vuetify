@@ -11,17 +11,21 @@
 |
 */
 
-Route::group(['prefix' => 'student', 'middleware' => 'role:student'], function () {
+Route::group(['prefix' => 'student', 'middleware' => 'role:student',  'namespace' => 'Student'], function () {
+    Route::group(['prefix' => 'e-tugas'], function () {
+        Route::post('filter', 'EtugasController@filter');
+        Route::post('store', 'EtugasController@store');
+        Route::get('detail/{id}', 'EtugasController@detail');
+        Route::get('/', 'EtugasController@index');
+    });
+
+    Route::group(['prefix' => 'materi'], function () {
+        Route::post('filter', 'MateriController@filter');
+        Route::get('/', 'MateriController@index');
+    });
     
-    Route::get('materi/kuliah/{kuliah}', 'StudentController@materiGetBySemester');
-    Route::get('materi', 'StudentController@materi');
-    Route::get('schedule', 'StudentController@schedule');
-    Route::post('e-tugas/filter', 'StudentController@eTugasFilter');
-    Route::post('e-tugas/store', 'StudentController@eTugasStore');
-    Route::get('e-tugas/detail/{id}', 'StudentController@eTugasDetail');
-    Route::get('e-tugas', 'StudentController@eTugas');
-    Route::get('dashboard', 'StudentController@dashboard');
-    Route::get('/', 'StudentController@index');
+    Route::get('dashboard', 'DashboardController@dashboard');
+    Route::get('/', 'DashboardController@index');
 });
 
 Route::group(['prefix' => 'lecturer', 'middleware' => 'role:lecturer', 'namespace' => 'Lecturer'], function () {
@@ -60,11 +64,21 @@ Route::group(['prefix' => 'lecturer', 'middleware' => 'role:lecturer', 'namespac
 
     Route::get('/', 'DashboardController@index');
 });
+
 Route::group(['prefix' => 'filter'], function () {
-    Route::post('get-modul', 'FilterController@getModul');
-    Route::post('get-matakuliah', 'FilterController@getMatakuliah');
-    Route::get('get-kelas/{tahun}/{semester}', 'FilterController@getKelas');
-    Route::get('get-semester', 'FilterController@getSemester');
+    Route::group(['prefix' => 'lecturer', 'namespace' => 'Lecturer'], function () {
+        Route::post('get-modul', 'FilterController@getModul');
+        Route::post('get-matakuliah', 'FilterController@getMatakuliah');
+        Route::get('get-kelas/{tahun}/{semester}', 'FilterController@getKelas');
+        Route::get('get-semester', 'FilterController@getSemester');
+    });
+
+    Route::group(['prefix' => 'student', 'namespace' => 'Student'], function () {
+        Route::post('get-modul', 'FilterController@getModul');
+        Route::post('get-matakuliah/{type}', 'FilterController@getMatakuliah');
+        Route::get('get-kelas/{type}/{tahun}/{semester}', 'FilterController@getKelas');
+        Route::get('get-semester/{type}', 'FilterController@getSemester');
+    });
 });
 
 Route::post('login', 'Auth\LoginController@login');
