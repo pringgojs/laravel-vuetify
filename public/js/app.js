@@ -88455,33 +88455,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       dialog: false,
       drawer: null,
-      items: [{ icon: 'home', text: 'Beranda', link: '/home' }, { icon: 'history', text: 'E-tugas', link: '/e-tugas' }, { icon: 'content_copy', text: 'Materi', link: '/materi' }, { icon: 'date_range', text: 'Jadwal', link: '/schedule' }],
+      items: [
+      // { icon: 'home', text: 'Beranda', link: '/home'},
+      { icon: 'history', text: 'E-tugas', link: '/e-tugas' }, { icon: 'content_copy', text: 'Materi', link: '/materi' }, { icon: 'date_range', text: 'Jadwal', link: '/schedule' }],
       children: [{ text: 'Nilai Permodul', link: '/nilai-permodul' }],
       mo_icon: 'keyboard_arrow_up',
       mo_icon_down: 'keyboard_arrow_down',
@@ -88728,32 +88710,7 @@ var render = function() {
             1
           ),
           _vm._v(" "),
-          _c("v-text-field", {
-            staticClass: "hidden-sm-and-down",
-            attrs: {
-              flat: "",
-              "solo-inverted": "",
-              "hide-details": "",
-              "prepend-inner-icon": "search",
-              placeholder: "Search"
-            }
-          }),
-          _vm._v(" "),
           _c("v-spacer"),
-          _vm._v(" "),
-          _c(
-            "v-btn",
-            { attrs: { icon: "" } },
-            [_c("v-icon", [_vm._v("apps")])],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-btn",
-            { attrs: { icon: "" } },
-            [_c("v-icon", [_vm._v("notifications")])],
-            1
-          ),
           _vm._v(" "),
           _c(
             "v-menu",
@@ -88761,21 +88718,12 @@ var render = function() {
             [
               _c(
                 "v-avatar",
-                { attrs: { slot: "activator" }, slot: "activator" },
-                [_c("v-icon", [_vm._v("account_circle")])],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-list",
-                [
-                  _c(
-                    "v-list-tile",
-                    { on: { click: _vm.logout } },
-                    [_c("v-list-tile-title", [_vm._v("Keluar")])],
-                    1
-                  )
-                ],
+                {
+                  attrs: { slot: "activator" },
+                  on: { click: _vm.logout },
+                  slot: "activator"
+                },
+                [_c("v-icon", [_vm._v("logout")])],
                 1
               )
             ],
@@ -108213,33 +108161,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       dialog: false,
       drawer: null,
-      items: [{ icon: 'home', text: 'Beranda', link: '/beranda' }, { icon: 'history', text: 'E-tugas', link: '/etugas' }, { icon: 'content_copy', text: 'Materi', link: '/materi-kuliah' }]
+      items: [
+      // { icon: 'home', text: 'Beranda', link: '/beranda'},
+      { icon: 'history', text: 'E-tugas', link: '/etugas' }, { icon: 'content_copy', text: 'Materi', link: '/materi-kuliah' }]
     };
   },
   props: {
@@ -108293,7 +108223,7 @@ var render = function() {
             [
               _c(
                 "v-list",
-                { staticClass: "pa-0" },
+                {},
                 [
                   _c(
                     "v-list-tile",
@@ -108348,11 +108278,7 @@ var render = function() {
                         [
                           _c(
                             "v-list-tile-action",
-                            [
-                              _c("v-icon", { staticClass: "ml-0 pl-3" }, [
-                                _vm._v(_vm._s(item.icon))
-                              ])
-                            ],
+                            [_c("v-icon", {}, [_vm._v(_vm._s(item.icon))])],
                             1
                           ),
                           _vm._v(" "),
@@ -108395,7 +108321,7 @@ var render = function() {
         [
           _c(
             "v-toolbar-title",
-            { staticClass: "ml-0 pl-0", staticStyle: { width: "300px" } },
+            { staticStyle: { width: "300px" } },
             [
               _c("v-toolbar-side-icon", {
                 on: {
@@ -108409,38 +108335,13 @@ var render = function() {
               _c(
                 "span",
                 { staticClass: "hidden-sm-and-down font-weight-regular" },
-                [_vm._v("Dosen Jaga")]
+                [_vm._v("Manajemen Tugas")]
               )
             ],
             1
           ),
           _vm._v(" "),
-          _c("v-text-field", {
-            staticClass: "hidden-sm-and-down",
-            attrs: {
-              flat: "",
-              "solo-inverted": "",
-              "hide-details": "",
-              "prepend-inner-icon": "search",
-              placeholder: "Search"
-            }
-          }),
-          _vm._v(" "),
           _c("v-spacer"),
-          _vm._v(" "),
-          _c(
-            "v-btn",
-            { attrs: { icon: "" } },
-            [_c("v-icon", [_vm._v("apps")])],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-btn",
-            { attrs: { icon: "" } },
-            [_c("v-icon", [_vm._v("notifications")])],
-            1
-          ),
           _vm._v(" "),
           _c(
             "v-menu",
@@ -108448,21 +108349,12 @@ var render = function() {
             [
               _c(
                 "v-avatar",
-                { attrs: { slot: "activator" }, slot: "activator" },
-                [_c("v-icon", [_vm._v("account_circle")])],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-list",
-                [
-                  _c(
-                    "v-list-tile",
-                    { on: { click: _vm.logout } },
-                    [_c("v-list-tile-title", [_vm._v("Keluar")])],
-                    1
-                  )
-                ],
+                {
+                  attrs: { slot: "activator" },
+                  on: { click: _vm.logout },
+                  slot: "activator"
+                },
+                [_c("v-icon", [_vm._v("logout")])],
                 1
               )
             ],
