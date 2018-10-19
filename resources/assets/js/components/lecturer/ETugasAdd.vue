@@ -234,7 +234,7 @@ export default {
         initData() {
             var app = this
             app.isLoaded = true
-            axios.get('filter/get-semester').then(function (resp) {
+            axios.get('filter/lecturer/get-semester').then(function (resp) {
                 app.isLoaded = true
                 app.filter.list_semester = resp.data
             })

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Lecturer;
 
+use App\Helpers\DateHelper;
 use App\Helpers\FileHelper;
 use Illuminate\Http\Request;
 use Ixudra\Curl\Facades\Curl;
@@ -92,6 +93,30 @@ class EtugasController extends Controller
         return $response;
     }
 
+    public function download($id)
+    {
+        $url = config('api.url').'/lecturer/e-tugas/detail/'.$id;
+        $data = array('user' => ResponseHelper::user());
+        $response = Curl::to($url)
+            ->withData($data)
+            ->post();
+        $response = json_decode($response);
+        $content = array(array('No','NIM', 'NAMA', 'KETERANGAN TUGAS', 'TGL UNGGAH', 'FILE TUGAS', 'NILAI'));
+        $i = 1;
+        foreach ($response->etugas_kelas_mahasiswa as $mahasiswa) {
+            $updated_at = $mahasiswa->nilai ? DateHelper::formatView($mahasiswa->nilai->updated_at) : '0';
+            array_push($content, [$i, $mahasiswa->nrp,  $mahasiswa->nama, $mahasiswa->nilai ? $mahasiswa->nilai->keterangan : '', 
+                $updated_at, $mahasiswa->nilai ? $mahasiswa->nilai->file_url : '', $mahasiswa->nilai ? $mahasiswa->nilai->nilai : '']);
+            $i++;
+        }
+
+        $file_name = 'LAPORAN TUGAS ' .date('YmdHis');
+        $header = 'LAPORAN TUGAS '.$response->etugas->judul;
+        self::excel($file_name, $content, $header);
+
+        return 1;
+    }
+
     public function setNilai(Request $request)
     {
         $url = config('api.url').'/lecturer/e-tugas/set-nilai';
@@ -100,5 +125,33 @@ class EtugasController extends Controller
             ->withData($data)
             ->post();
         return $response;
+    }
+
+    public static function excel($file_name, $data, $header) 
+    {
+        \Excel::create($file_name, function ($excel) use ($data, $header)  {
+            # Sheet Tim
+            $excel->sheet('DATA', function ($sheet) use ($data, $header)  {
+                $sheet->setWidth(array(
+                    'A' => 25,
+                    'B' => 25
+                ));
+
+                // MERGER COLUMN
+                $sheet->mergeCells('A1:G1', 'center');
+                $sheet->cell('A1:J2', function ($cell) {
+                    // Set font
+                    $cell->setFont(array(
+                        'family'     => 'Times New Roman',
+                        'size'       => '12',
+                    ));
+                });
+                $sheet->cell('A1', function ($cell) use ($header) {
+                    $cell->setValue(strtoupper($header));
+                });
+                
+                $sheet->fromArray($data, null, 'A2', false, false);
+            });
+        })->export('xls');
     }
 }

@@ -44,6 +44,7 @@ Route::group(['prefix' => 'lecturer', 'middleware' => 'role:lecturer', 'namespac
         Route::post('filter', 'EtugasController@filter');
         Route::post('update/{id}', 'EtugasController@update');
         Route::get('detail/{id}', 'EtugasController@detail');
+        Route::get('download/{id}', 'EtugasController@download');
         Route::get('edit/{id}', 'EtugasController@edit');
         Route::get('remove/{id}', 'EtugasController@delete');
         Route::post('store', 'EtugasController@store');

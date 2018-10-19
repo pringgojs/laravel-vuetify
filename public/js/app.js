@@ -90250,7 +90250,7 @@ var FilePond = __WEBPACK_IMPORTED_MODULE_1_vue_filepond___default()(__WEBPACK_IM
         initData: function initData() {
             var app = this;
             app.isLoaded = true;
-            axios.get('filter/get-semester').then(function (resp) {
+            axios.get('filter/lecturer/get-semester').then(function (resp) {
                 app.isLoaded = true;
                 app.filter.list_semester = resp.data;
             }).catch(function (resp) {
@@ -107366,6 +107366,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 __WEBPACK_IMPORTED_MODULE_0_moment__["locale"]('id');
@@ -107376,6 +107384,7 @@ __WEBPACK_IMPORTED_MODULE_0_moment__["locale"]('id');
             nama_mahasiswa: '',
             dialog: false,
             is_save: false,
+            is_download: false,
             snackbarText: '',
             snackbar: false,
             headerTable: [{ text: 'NIM', value: 'nrp' }, { text: 'Nama', value: 'nama' }, { text: 'Keterangan Tugas', value: 'nilai.keterangan' }, { text: 'Tanggal Unggah', value: 'nilai.updated_at' }, { text: 'File Tugas', value: 'nilai.file_url' }, { text: 'Nilai', value: 'nilai.nilai' }, { text: 'Aksi', value: 'nilai.id' }],
@@ -107417,7 +107426,22 @@ __WEBPACK_IMPORTED_MODULE_0_moment__["locale"]('id');
             }
             return '-';
         },
-        download: function download() {},
+        download: function download() {
+            var app = this;
+            var id = this.$store.state.obj_etugas.etugas.id;
+            app.is_download = true;
+            var hostname = window.location.hostname;
+            location.href = hostname + '/lecturer/e-tugas/download/' + id;
+            axios.get('lecturer/e-tugas/download/' + id).then(function (resp) {
+                console.log(resp.data);
+                app.is_download = false;
+                app.showSnackbar("berhasil mengunduh data!");
+                return true;
+            }).catch(function (resp) {
+                app.is_download = false;
+                app.showSnackbar("oops, something went wrong. Please try again!");
+            });
+        },
         showSnackbar: function showSnackbar(text) {
             var app = this;
             app.snackbarText = text;
@@ -107518,6 +107542,21 @@ var render = function() {
                   _vm._v(" "),
                   _c("v-spacer"),
                   _vm._v(" "),
+                  [
+                    _vm.is_download
+                      ? _c(
+                          "div",
+                          { staticClass: "text-xs-center" },
+                          [
+                            _c("v-progress-circular", {
+                              attrs: { indeterminate: "", color: "white" }
+                            })
+                          ],
+                          1
+                        )
+                      : _vm._e()
+                  ],
+                  _vm._v(" "),
                   _c(
                     "v-toolbar-items",
                     [
@@ -107533,7 +107572,7 @@ var render = function() {
                     1
                   )
                 ],
-                1
+                2
               ),
               _vm._v(" "),
               _c(

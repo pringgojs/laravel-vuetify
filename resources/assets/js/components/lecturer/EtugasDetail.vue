@@ -8,6 +8,14 @@
                     </v-btn>
                     <v-toolbar-title>{{$store.state.form_dialog_detail_etugas ? $store.state.obj_etugas.etugas.judul : ''}}</v-toolbar-title>
                     <v-spacer></v-spacer>
+                    <template>
+                        <div class="text-xs-center" v-if="is_download">
+                            <v-progress-circular
+                            indeterminate
+                            color="white"
+                            ></v-progress-circular>
+                        </div>
+                    </template>
                     <v-toolbar-items>
                         <v-btn dark flat @click="download">Download Excel</v-btn>
                     </v-toolbar-items>
@@ -131,6 +139,7 @@ export default {
             nama_mahasiswa: '',
             dialog: false,
             is_save: false,
+            is_download: false,
             snackbarText: '',
             snackbar: false,
             headerTable: [
@@ -180,7 +189,22 @@ export default {
             return '-'
         },
         download() {
-
+            var app = this
+            var id = this.$store.state.obj_etugas.etugas.id
+            app.is_download = true
+            var hostname = window.location.hostname
+            location.href = hostname+'/lecturer/e-tugas/download/'+ id
+            axios.get('lecturer/e-tugas/download/'+ id)
+                .then(function (resp) {
+                    console.log(resp.data)
+                    app.is_download = false
+                    app.showSnackbar("berhasil mengunduh data!")
+                    return true
+                })
+                .catch(function (resp) {
+                    app.is_download = false
+                    app.showSnackbar("oops, something went wrong. Please try again!")
+                })
         },
         showSnackbar(text) {
             var app = this
