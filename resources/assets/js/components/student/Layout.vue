@@ -8,7 +8,7 @@
       app
     >
     <v-toolbar flat class="transparent">
-      <v-list class="pa-0">
+      <v-list class="">
         <v-list-tile avatar>
           <v-list-tile-avatar>
             <img src="img/avatar.png">
@@ -32,7 +32,7 @@
 
           <v-list-tile v-else :key="item.text" @click="link(item.link)">
             <v-list-tile-action>
-              <v-icon class="ml-0 pl-3">{{ item.icon }}</v-icon>
+              <v-icon class="">{{ item.icon }}</v-icon>
             </v-list-tile-action>
             <v-list-tile-content>
               <v-list-tile-title>
@@ -52,37 +52,17 @@
       app
       fixed
     >
-      <v-toolbar-title style="width: 300px" class="ml-0 pl-0">
+      <v-toolbar-title style="width: 300px" >
         <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
-        <span class="hidden-sm-and-down font-weight-regular">Dosen Jaga</span>
+        <span class="hidden-sm-and-down font-weight-regular">Manajemen Tugas</span>
       </v-toolbar-title>
-      <v-text-field
-        flat
-        solo-inverted
-        hide-details
-        prepend-inner-icon="search"
-        placeholder="Search"
-        class="hidden-sm-and-down"
-      ></v-text-field>
+
       <v-spacer></v-spacer>
-      <v-btn icon>
-        <v-icon>apps</v-icon>
-      </v-btn>
-      <v-btn icon>
-        <v-icon>notifications</v-icon>
-      </v-btn>
       <v-menu bottom left full-width>
-        <v-avatar slot="activator">
-          <v-icon >account_circle</v-icon>
+        <v-avatar slot="activator"  @click="logout">
+          <v-icon >logout</v-icon>
         </v-avatar>
-          <v-list>
-            <v-list-tile
-              @click="logout"
-            >
-              <v-list-tile-title>Keluar</v-list-tile-title>
-            </v-list-tile>
-          </v-list>
-        </v-menu>
+      </v-menu>
     </v-toolbar>
     <!-- end of toolbar -->
     
@@ -110,7 +90,7 @@
       dialog: false,
       drawer: null,
       items: [
-        { icon: 'home', text: 'Beranda', link: '/beranda'},
+        // { icon: 'home', text: 'Beranda', link: '/beranda'},
         { icon: 'history', text: 'E-tugas', link: '/etugas' },
         { icon: 'content_copy', text: 'Materi', link: '/materi-kuliah' },
       ]

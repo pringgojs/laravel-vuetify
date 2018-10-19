@@ -85,33 +85,13 @@
         <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
         <span class="hidden-sm-and-down font-weight-regular">Manajemen Tugas</span>
       </v-toolbar-title>
-      <v-text-field
-        flat
-        solo-inverted
-        hide-details
-        prepend-inner-icon="search"
-        placeholder="Search"
-        class="hidden-sm-and-down"
-      ></v-text-field>
+      
       <v-spacer></v-spacer>
-      <v-btn icon>
-        <v-icon>apps</v-icon>
-      </v-btn>
-      <v-btn icon>
-        <v-icon>notifications</v-icon>
-      </v-btn>
       <v-menu bottom left full-width>
-        <v-avatar slot="activator">
-          <v-icon >account_circle</v-icon>
+        <v-avatar slot="activator" @click="logout">
+          <v-icon >logout</v-icon>
         </v-avatar>
-          <v-list>
-            <v-list-tile
-              @click="logout"
-            >
-              <v-list-tile-title>Keluar</v-list-tile-title>
-            </v-list-tile>
-          </v-list>
-        </v-menu>
+      </v-menu>
     </v-toolbar>
     <!-- end of toolbar -->
     
@@ -139,7 +119,7 @@
       dialog: false,
       drawer: null,
       items: [
-        { icon: 'home', text: 'Beranda', link: '/home'},
+        // { icon: 'home', text: 'Beranda', link: '/home'},
         { icon: 'history', text: 'E-tugas', link: '/e-tugas' },
         { icon: 'content_copy', text: 'Materi', link: '/materi' },
         { icon: 'date_range', text: 'Jadwal', link: '/schedule' },
