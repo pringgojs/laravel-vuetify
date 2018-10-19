@@ -21,6 +21,12 @@
                         <v-list-tile-sub-title>{{$store.state.form_dialog_detail_etugas ? $store.state.obj_etugas.mata_kuliah.matakuliah : ''}}</v-list-tile-sub-title>
                         </v-list-tile-content>
                     </v-list-tile>
+                    <v-list-tile avatar>
+                        <v-list-tile-content>
+                        <v-list-tile-title>Terkahir Data di Simpan</v-list-tile-title>
+                        <v-list-tile-sub-title>{{$store.state.form_dialog_detail_etugas ? dateView($store.state.obj_etugas.nilai_master_modul.last_save) : ''}}</v-list-tile-sub-title>
+                        </v-list-tile-content>
+                    </v-list-tile>
                 </v-list>
                 <v-divider></v-divider>
                 <v-list three-line subheader>
@@ -114,7 +120,14 @@ export default {
                 .then(function (resp) {
                     app.is_save = false
                     app.dialog = false
-                    app.$store.state.obj_list_etugas = resp.data.etugas_kelas_mahasiswa
+                    app.$store.state.obj_etugas = resp.data
+                    app.$store.state.obj_list_etugas = resp.data.kelas_mahasiswa
+                    // initialize table header data
+                    app.$store.state.table_headers = []
+                    resp.data.table_headers.forEach(item => {
+                    app.$store.state.table_headers.push({ text: item, value: item.toLowerCase() })
+                    })
+
                     app.showSnackbar("Data berhasil disimpan!")
                     return true
                 })
@@ -133,6 +146,14 @@ export default {
             index+=1
             var t = 'tugas_'+index
             return obj[t]
+        },
+        dateView(date) {
+            if (date != '0000-00-00 00:00:00') {
+                return moment(date).format("dddd, MMMM Do YYYY, h:mm:ss a")
+            }
+
+            return '-'
+
         }
     }
 }

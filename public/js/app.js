@@ -103634,6 +103634,14 @@ if (false) {
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_moment__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_moment__);
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -103724,7 +103732,7 @@ __WEBPACK_IMPORTED_MODULE_0_moment__["locale"]('id');
         }
     },
     mutation: {},
-    methods: {
+    methods: _defineProperty({
         setNilai: function setNilai(tugas_id, mahasiswa_id) {
             this.dialog = true;
             this.data.tugas_id = tugas_id;
@@ -103748,7 +103756,14 @@ __WEBPACK_IMPORTED_MODULE_0_moment__["locale"]('id');
             axios.get('lecturer/report/nilai-permodul/sync/' + nilai_master_modul).then(function (resp) {
                 app.is_save = false;
                 app.dialog = false;
-                app.$store.state.obj_list_etugas = resp.data.etugas_kelas_mahasiswa;
+                app.$store.state.obj_etugas = resp.data;
+                app.$store.state.obj_list_etugas = resp.data.kelas_mahasiswa;
+                // initialize table header data
+                app.$store.state.table_headers = [];
+                resp.data.table_headers.forEach(function (item) {
+                    app.$store.state.table_headers.push({ text: item, value: item.toLowerCase() });
+                });
+
                 app.showSnackbar("Data berhasil disimpan!");
                 return true;
             }).catch(function (resp) {
@@ -103767,7 +103782,13 @@ __WEBPACK_IMPORTED_MODULE_0_moment__["locale"]('id');
             var t = 'tugas_' + index;
             return obj[t];
         }
-    }
+    }, 'dateView', function dateView(date) {
+        if (date != '0000-00-00 00:00:00') {
+            return __WEBPACK_IMPORTED_MODULE_0_moment__(date).format("dddd, MMMM Do YYYY, h:mm:ss a");
+        }
+
+        return '-';
+    })
 });
 
 /***/ }),
@@ -103867,6 +103888,36 @@ var render = function() {
                                 _vm.$store.state.form_dialog_detail_etugas
                                   ? _vm.$store.state.obj_etugas.mata_kuliah
                                       .matakuliah
+                                  : ""
+                              )
+                            )
+                          ])
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-list-tile",
+                    { attrs: { avatar: "" } },
+                    [
+                      _c(
+                        "v-list-tile-content",
+                        [
+                          _c("v-list-tile-title", [
+                            _vm._v("Terkahir Data di Simpan")
+                          ]),
+                          _vm._v(" "),
+                          _c("v-list-tile-sub-title", [
+                            _vm._v(
+                              _vm._s(
+                                _vm.$store.state.form_dialog_detail_etugas
+                                  ? _vm.dateView(
+                                      _vm.$store.state.obj_etugas
+                                        .nilai_master_modul.last_save
+                                    )
                                   : ""
                               )
                             )
