@@ -64,7 +64,9 @@
                 </v-layout>
             </v-container>
         </template>
-
+        <template v-if="loadDetail">
+            <v-progress-linear :indeterminate="true" style="margin-bottom:0px"></v-progress-linear>
+        </template>
         <v-flex sm12 v-if="isLoaded">
             <v-data-table
                 :headers="headerTable"
@@ -121,6 +123,7 @@ export default {
             snackbarText: '',
             snackbar: false,
             isLoaded: false,
+            loadDetail: false,
             filter: {
                 list_semester: [],
                 list_kelas: [],
@@ -157,7 +160,7 @@ export default {
         selectKelas() {
             if (!this.filter.semester) return false
             var app = this
-            axios.get('filter/get-kelas/'+app.filter.semester).then(function (resp) {
+            axios.get('filter/lecturer/get-kelas/'+app.filter.semester).then(function (resp) {
                 app.filter.list_kelas = ''
                 app.filter.list_kelas = resp.data
             })
@@ -168,7 +171,7 @@ export default {
         selectMatakuliah() {
             if (!this.filter.kelas) return false
             var app = this
-            axios.post('filter/get-matakuliah', app.filter).then(function (resp) {
+            axios.post('filter/lecturer/get-matakuliah', app.filter).then(function (resp) {
                 app.filter.list_matakuliah = ''
                 app.filter.list_matakuliah = resp.data
             })

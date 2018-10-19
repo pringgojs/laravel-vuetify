@@ -89090,7 +89090,7 @@ __WEBPACK_IMPORTED_MODULE_1_moment__["locale"]('id');
         selectKelas: function selectKelas() {
             if (!this.filter.semester) return false;
             var app = this;
-            axios.get('filter/get-kelas/' + app.filter.semester).then(function (resp) {
+            axios.get('filter/lecturer/get-kelas/' + app.filter.semester).then(function (resp) {
                 app.filter.list_kelas = '';
                 app.filter.list_kelas = resp.data;
             }).catch(function (resp) {
@@ -89100,7 +89100,7 @@ __WEBPACK_IMPORTED_MODULE_1_moment__["locale"]('id');
         selectMatakuliah: function selectMatakuliah() {
             if (!this.filter.kelas) return false;
             var app = this;
-            axios.post('filter/get-matakuliah', app.filter).then(function (resp) {
+            axios.post('filter/lecturer/get-matakuliah', app.filter).then(function (resp) {
                 app.filter.list_matakuliah = '';
                 app.filter.list_matakuliah = resp.data;
             }).catch(function (resp) {
@@ -90266,7 +90266,7 @@ var FilePond = __WEBPACK_IMPORTED_MODULE_1_vue_filepond___default()(__WEBPACK_IM
         selectKelas: function selectKelas() {
             if (!this.filter.semester) return false;
             var app = this;
-            axios.get('filter/get-kelas/' + app.filter.semester).then(function (resp) {
+            axios.get('filter/lecturer/get-kelas/' + app.filter.semester).then(function (resp) {
                 app.filter.list_kelas = '';
                 app.filter.list_kelas = resp.data;
             }).catch(function (resp) {
@@ -90276,7 +90276,7 @@ var FilePond = __WEBPACK_IMPORTED_MODULE_1_vue_filepond___default()(__WEBPACK_IM
         selectMatakuliah: function selectMatakuliah() {
             if (!this.filter.kelas) return false;
             var app = this;
-            axios.post('filter/get-matakuliah', app.filter).then(function (resp) {
+            axios.post('filter/lecturer/get-matakuliah', app.filter).then(function (resp) {
                 app.filter.list_matakuliah = '';
                 app.filter.list_matakuliah = resp.data;
             }).catch(function (resp) {
@@ -90286,7 +90286,7 @@ var FilePond = __WEBPACK_IMPORTED_MODULE_1_vue_filepond___default()(__WEBPACK_IM
         selectModul: function selectModul() {
             if (!this.filter.matakuliah) return false;
             var app = this;
-            axios.post('filter/get-modul', app.filter).then(function (resp) {
+            axios.post('filter/lecturer/get-modul', app.filter).then(function (resp) {
                 app.list_modul = '';
                 app.list_modul = resp.data;
             }).catch(function (resp) {
@@ -99753,7 +99753,7 @@ var FilePond = __WEBPACK_IMPORTED_MODULE_2_vue_filepond___default()(__WEBPACK_IM
         selectKelas: function selectKelas() {
             if (!this.filter.semester) return false;
             var app = this;
-            axios.get('filter/get-kelas/' + app.filter.semester).then(function (resp) {
+            axios.get('filter/lecturer/get-kelas/' + app.filter.semester).then(function (resp) {
                 app.filter.list_kelas = '';
                 app.filter.list_kelas = resp.data;
             }).catch(function (resp) {
@@ -99763,7 +99763,7 @@ var FilePond = __WEBPACK_IMPORTED_MODULE_2_vue_filepond___default()(__WEBPACK_IM
         selectMatakuliah: function selectMatakuliah() {
             if (!this.filter.kelas) return false;
             var app = this;
-            axios.post('filter/get-matakuliah', app.filter).then(function (resp) {
+            axios.post('filter/lecturer/get-matakuliah', app.filter).then(function (resp) {
                 app.filter.list_matakuliah = '';
                 app.filter.list_matakuliah = resp.data;
             }).catch(function (resp) {
@@ -99773,7 +99773,7 @@ var FilePond = __WEBPACK_IMPORTED_MODULE_2_vue_filepond___default()(__WEBPACK_IM
         selectModul: function selectModul() {
             if (!this.filter.matakuliah) return false;
             var app = this;
-            axios.post('filter/get-modul', app.filter).then(function (resp) {
+            axios.post('filter/lecturer/get-modul', app.filter).then(function (resp) {
                 app.list_modul = '';
                 app.list_modul = resp.data;
             }).catch(function (resp) {
@@ -100528,6 +100528,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 
@@ -100540,6 +100542,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             snackbarText: '',
             snackbar: false,
             isLoaded: false,
+            loadDetail: false,
             filter: {
                 list_semester: [],
                 list_kelas: [],
@@ -100577,7 +100580,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         selectKelas: function selectKelas() {
             if (!this.filter.semester) return false;
             var app = this;
-            axios.get('filter/get-kelas/' + app.filter.semester).then(function (resp) {
+            axios.get('filter/lecturer/get-kelas/' + app.filter.semester).then(function (resp) {
                 app.filter.list_kelas = '';
                 app.filter.list_kelas = resp.data;
             }).catch(function (resp) {
@@ -100587,7 +100590,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         selectMatakuliah: function selectMatakuliah() {
             if (!this.filter.kelas) return false;
             var app = this;
-            axios.post('filter/get-matakuliah', app.filter).then(function (resp) {
+            axios.post('filter/lecturer/get-matakuliah', app.filter).then(function (resp) {
                 app.filter.list_matakuliah = '';
                 app.filter.list_matakuliah = resp.data;
             }).catch(function (resp) {
@@ -100813,6 +100816,15 @@ var render = function() {
             )
           : _vm._e()
       ],
+      _vm._v(" "),
+      _vm.loadDetail
+        ? [
+            _c("v-progress-linear", {
+              staticStyle: { "margin-bottom": "0px" },
+              attrs: { indeterminate: true }
+            })
+          ]
+        : _vm._e(),
       _vm._v(" "),
       _vm.isLoaded
         ? _c(
@@ -101091,6 +101103,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -101112,7 +101126,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             dialog: false,
             title_confirm: '',
             desc_confirm: '',
-            remove_id: ''
+            remove_id: '',
+            loadDetail: false
         };
     },
 
@@ -101142,7 +101157,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         selectKelas: function selectKelas() {
             if (!this.filter.semester) return false;
             var app = this;
-            axios.get('filter/get-kelas/' + app.filter.semester).then(function (resp) {
+            axios.get('filter/lecturer/get-kelas/' + app.filter.semester).then(function (resp) {
                 app.filter.list_kelas = '';
                 app.filter.list_kelas = resp.data;
             }).catch(function (resp) {
@@ -101152,7 +101167,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         selectMatakuliah: function selectMatakuliah() {
             if (!this.filter.kelas) return false;
             var app = this;
-            axios.post('filter/get-matakuliah', app.filter).then(function (resp) {
+            axios.post('filter/lecturer/get-matakuliah', app.filter).then(function (resp) {
                 app.filter.list_matakuliah = '';
                 app.filter.list_matakuliah = resp.data;
             }).catch(function (resp) {
@@ -101401,6 +101416,15 @@ var render = function() {
             )
           : _vm._e()
       ],
+      _vm._v(" "),
+      _vm.loadDetail
+        ? [
+            _c("v-progress-linear", {
+              staticStyle: { "margin-bottom": "0px" },
+              attrs: { indeterminate: true }
+            })
+          ]
+        : _vm._e(),
       _vm._v(" "),
       _vm.isLoaded
         ? _c(
@@ -101861,7 +101885,7 @@ var FilePond = __WEBPACK_IMPORTED_MODULE_1_vue_filepond___default()(__WEBPACK_IM
         initData: function initData() {
             var app = this;
             app.isLoaded = true;
-            axios.get('filter/get-semester').then(function (resp) {
+            axios.get('filter/lecturer/get-semester').then(function (resp) {
                 app.isLoaded = true;
                 app.filter.list_semester = resp.data;
             }).catch(function (resp) {
@@ -101876,7 +101900,7 @@ var FilePond = __WEBPACK_IMPORTED_MODULE_1_vue_filepond___default()(__WEBPACK_IM
         selectKelas: function selectKelas() {
             if (!this.filter.semester) return false;
             var app = this;
-            axios.get('filter/get-kelas/' + app.filter.semester).then(function (resp) {
+            axios.get('filter/lecturer/get-kelas/' + app.filter.semester).then(function (resp) {
                 app.filter.list_kelas = '';
                 app.filter.list_kelas = resp.data;
             }).catch(function (resp) {
@@ -101886,7 +101910,7 @@ var FilePond = __WEBPACK_IMPORTED_MODULE_1_vue_filepond___default()(__WEBPACK_IM
         selectMatakuliah: function selectMatakuliah() {
             if (!this.filter.kelas) return false;
             var app = this;
-            axios.post('filter/get-matakuliah', app.filter).then(function (resp) {
+            axios.post('filter/lecturer/get-matakuliah', app.filter).then(function (resp) {
                 app.filter.list_matakuliah = '';
                 app.filter.list_matakuliah = resp.data;
             }).catch(function (resp) {
@@ -101896,7 +101920,7 @@ var FilePond = __WEBPACK_IMPORTED_MODULE_1_vue_filepond___default()(__WEBPACK_IM
         selectModul: function selectModul() {
             if (!this.filter.matakuliah) return false;
             var app = this;
-            axios.post('filter/get-modul', app.filter).then(function (resp) {
+            axios.post('filter/lecturer/get-modul', app.filter).then(function (resp) {
                 app.list_modul = '';
                 app.list_modul = resp.data;
             }).catch(function (resp) {
@@ -101934,7 +101958,6 @@ var FilePond = __WEBPACK_IMPORTED_MODULE_1_vue_filepond___default()(__WEBPACK_IM
                     app.showSnackbar('Materi berhasil ditambahkan');
                 }
             }).catch(function (e) {
-                console.log(e);
                 app.showSnackbar('Materi gagal ditambahkan');
             });
         }
@@ -102533,7 +102556,7 @@ var FilePond = __WEBPACK_IMPORTED_MODULE_1_vue_filepond___default()(__WEBPACK_IM
         selectKelas: function selectKelas() {
             if (!this.filter.semester) return false;
             var app = this;
-            axios.get('filter/get-kelas/' + app.filter.semester).then(function (resp) {
+            axios.get('filter/lecturer/get-kelas/' + app.filter.semester).then(function (resp) {
                 app.filter.list_kelas = '';
                 app.filter.list_kelas = resp.data;
             }).catch(function (resp) {
@@ -102543,7 +102566,7 @@ var FilePond = __WEBPACK_IMPORTED_MODULE_1_vue_filepond___default()(__WEBPACK_IM
         selectMatakuliah: function selectMatakuliah() {
             if (!this.filter.kelas) return false;
             var app = this;
-            axios.post('filter/get-matakuliah', app.filter).then(function (resp) {
+            axios.post('filter/lecturer/get-matakuliah', app.filter).then(function (resp) {
                 app.filter.list_matakuliah = '';
                 app.filter.list_matakuliah = resp.data;
             }).catch(function (resp) {
@@ -102553,7 +102576,7 @@ var FilePond = __WEBPACK_IMPORTED_MODULE_1_vue_filepond___default()(__WEBPACK_IM
         selectModul: function selectModul() {
             if (!this.filter.matakuliah) return false;
             var app = this;
-            axios.post('filter/get-modul', app.filter).then(function (resp) {
+            axios.post('filter/lecturer/get-modul', app.filter).then(function (resp) {
                 app.list_modul = '';
                 app.list_modul = resp.data;
             }).catch(function (resp) {
@@ -103222,7 +103245,7 @@ __WEBPACK_IMPORTED_MODULE_1_moment__["locale"]('id');
         selectKelas: function selectKelas() {
             if (!this.filter.semester) return false;
             var app = this;
-            axios.get('filter/get-kelas/' + app.filter.semester).then(function (resp) {
+            axios.get('filter/lecturer/get-kelas/' + app.filter.semester).then(function (resp) {
                 app.filter.list_kelas = '';
                 app.filter.list_kelas = resp.data;
             }).catch(function (resp) {
@@ -103232,7 +103255,7 @@ __WEBPACK_IMPORTED_MODULE_1_moment__["locale"]('id');
         selectMatakuliah: function selectMatakuliah() {
             if (!this.filter.kelas) return false;
             var app = this;
-            axios.post('filter/get-matakuliah', app.filter).then(function (resp) {
+            axios.post('filter/lecturer/get-matakuliah', app.filter).then(function (resp) {
                 app.filter.list_matakuliah = '';
                 app.filter.list_matakuliah = resp.data;
             }).catch(function (resp) {

@@ -165,7 +165,7 @@ export default {
         initData() {
             var app = this
             app.isLoaded = true
-            axios.get('filter/get-semester').then(function (resp) {
+            axios.get('filter/lecturer/get-semester').then(function (resp) {
                 app.isLoaded = true
                 app.filter.list_semester = resp.data
             })
@@ -181,7 +181,7 @@ export default {
         selectKelas() {
             if (!this.filter.semester) return false
             var app = this
-            axios.get('filter/get-kelas/'+app.filter.semester).then(function (resp) {
+            axios.get('filter/lecturer/get-kelas/'+app.filter.semester).then(function (resp) {
                 app.filter.list_kelas = ''
                 app.filter.list_kelas = resp.data
             })
@@ -192,7 +192,7 @@ export default {
         selectMatakuliah() {
             if (!this.filter.kelas) return false
             var app = this
-            axios.post('filter/get-matakuliah', app.filter).then(function (resp) {
+            axios.post('filter/lecturer/get-matakuliah', app.filter).then(function (resp) {
                 app.filter.list_matakuliah = ''
                 app.filter.list_matakuliah = resp.data
             })
@@ -203,7 +203,7 @@ export default {
         selectModul() {
             if (!this.filter.matakuliah) return false
             var app = this
-            axios.post('filter/get-modul', app.filter).then(function (resp) {
+            axios.post('filter/lecturer/get-modul', app.filter).then(function (resp) {
                 app.list_modul = ''
                 app.list_modul = resp.data
             })
@@ -243,7 +243,6 @@ export default {
                 }
             })
             .catch(function(e) {
-                console.log(e)
                 app.showSnackbar('Materi gagal ditambahkan')
             })
         }
