@@ -7,6 +7,20 @@
       fixed
       app
     >
+    <v-toolbar flat class="transparent">
+      <v-list class="pa-0">
+        <v-list-tile avatar>
+          <v-list-tile-avatar>
+            <img src="img/avatar.png">
+          </v-list-tile-avatar>
+
+          <v-list-tile-content>
+            <v-list-tile-title id="title-name">Pringgo Juni S</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+      </v-list>
+    </v-toolbar>
+
       <v-list dense>
         <template v-for="item in items">
           <v-layout
