@@ -24,5 +24,9 @@
     </body>
 
     <script src="{{ asset('js/app.js') }}"></script>
-
+    <script>
+    $( document ).ready(function() {
+        $('#title-name').html('{{session("name")}}');
+    });
+    </script>
 </html>
