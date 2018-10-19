@@ -23,7 +23,7 @@
                     </v-list-tile>
                     <v-list-tile avatar>
                         <v-list-tile-content>
-                        <v-list-tile-title>Terkahir Data di Simpan</v-list-tile-title>
+                        <v-list-tile-title>Terkahir data di simpan</v-list-tile-title>
                         <v-list-tile-sub-title>{{$store.state.form_dialog_detail_etugas ? dateView($store.state.obj_etugas.nilai_master_modul.last_save) : ''}}</v-list-tile-sub-title>
                         </v-list-tile-content>
                     </v-list-tile>

@@ -103907,7 +103907,7 @@ var render = function() {
                         "v-list-tile-content",
                         [
                           _c("v-list-tile-title", [
-                            _vm._v("Terkahir Data di Simpan")
+                            _vm._v("Terkahir data di simpan")
                           ]),
                           _vm._v(" "),
                           _c("v-list-tile-sub-title", [
