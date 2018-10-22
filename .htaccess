@@ -15,5 +15,5 @@
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ server.php
-
+    options -Indexes
 </IfModule>
