@@ -17,6 +17,8 @@
                         </div>
                     </template>
                     <v-toolbar-items>
+                        <v-icon @click="downloadFile" v-if="file_is_ready" large color="white darken-2">get_app</v-icon>
+
                         <v-btn dark flat @click="download">Download Excel</v-btn>
                     </v-toolbar-items>
                 </v-toolbar>
@@ -142,6 +144,8 @@ export default {
             is_download: false,
             snackbarText: '',
             snackbar: false,
+            file_is_ready: false,
+            link_file_download: '',
             headerTable: [
                 { text: 'NIM', value: 'nrp' },
                 { text: 'Nama', value: 'nama' },
@@ -192,11 +196,11 @@ export default {
             var app = this
             var id = this.$store.state.obj_etugas.etugas.id
             app.is_download = true
-            var hostname = window.location.hostname
-            location.href = hostname+'/lecturer/e-tugas/download/'+ id
+            app.file_is_ready = false
             axios.get('lecturer/e-tugas/download/'+ id)
                 .then(function (resp) {
-                    console.log(resp.data)
+                    app.link_file_download = resp.data.link
+                    app.file_is_ready = true
                     app.is_download = false
                     app.showSnackbar("berhasil mengunduh data!")
                     return true
@@ -205,6 +209,9 @@ export default {
                     app.is_download = false
                     app.showSnackbar("oops, something went wrong. Please try again!")
                 })
+        },
+        downloadFile() {
+            location.href = this.link_file_download
         },
         showSnackbar(text) {
             var app = this

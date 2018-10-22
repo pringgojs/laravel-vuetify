@@ -82,6 +82,7 @@ Route::group(['prefix' => 'filter'], function () {
     });
 });
 
+Route::get('download/{folder}/{name}', 'DownloadFileController@download');
 Route::post('login', 'Auth\LoginController@login');
 Route::get('logout', 'Auth\LoginController@logout');
 Route::get('login', 'Auth\LoginController@showLoginForm');

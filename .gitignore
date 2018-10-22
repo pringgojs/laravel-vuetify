@@ -6,6 +6,7 @@
 /vendor
 /.idea
 /.vagrant
+/storage/app/public/nilai-permodul
 Homestead.json
 Homestead.yaml
 npm-debug.log

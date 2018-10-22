@@ -114,7 +114,11 @@ class EtugasController extends Controller
         $header = 'LAPORAN TUGAS '.$response->etugas->judul;
         self::excel($file_name, $content, $header);
 
-        return 1;
+        $response = array(
+            'link' => url('download/nilai-permodul/'.$file_name.'.xls'),
+        );
+
+        return response()->json($response);
     }
 
     public function setNilai(Request $request)
@@ -129,6 +133,7 @@ class EtugasController extends Controller
 
     public static function excel($file_name, $data, $header) 
     {
+        $storage = storage_path('app/public/nilai-permodul/');
         \Excel::create($file_name, function ($excel) use ($data, $header)  {
             # Sheet Tim
             $excel->sheet('DATA', function ($sheet) use ($data, $header)  {
@@ -152,6 +157,6 @@ class EtugasController extends Controller
                 
                 $sheet->fromArray($data, null, 'A2', false, false);
             });
-        })->export('xls');
+        })->store('xls', $storage);
     }
 }

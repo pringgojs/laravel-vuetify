@@ -105365,7 +105365,6 @@ __WEBPACK_IMPORTED_MODULE_1_moment__["locale"]('id');
             axios.get('filter/student/get-kelas/tugas/' + app.filter.semester).then(function (resp) {
                 app.filter.list_kelas = '';
                 app.filter.list_kelas = resp.data;
-                console.log(resp.data);
             }).catch(function (resp) {
                 app.showSnackbar("Terjadi kegagalan sistem. Silahkan coba lagi!");
             });
@@ -107374,6 +107373,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 __WEBPACK_IMPORTED_MODULE_0_moment__["locale"]('id');
@@ -107387,6 +107388,8 @@ __WEBPACK_IMPORTED_MODULE_0_moment__["locale"]('id');
             is_download: false,
             snackbarText: '',
             snackbar: false,
+            file_is_ready: false,
+            link_file_download: '',
             headerTable: [{ text: 'NIM', value: 'nrp' }, { text: 'Nama', value: 'nama' }, { text: 'Keterangan Tugas', value: 'nilai.keterangan' }, { text: 'Tanggal Unggah', value: 'nilai.updated_at' }, { text: 'File Tugas', value: 'nilai.file_url' }, { text: 'Nilai', value: 'nilai.nilai' }, { text: 'Aksi', value: 'nilai.id' }],
             data: {
                 nilai: '',
@@ -107430,10 +107433,10 @@ __WEBPACK_IMPORTED_MODULE_0_moment__["locale"]('id');
             var app = this;
             var id = this.$store.state.obj_etugas.etugas.id;
             app.is_download = true;
-            var hostname = window.location.hostname;
-            location.href = hostname + '/lecturer/e-tugas/download/' + id;
+            app.file_is_ready = false;
             axios.get('lecturer/e-tugas/download/' + id).then(function (resp) {
-                console.log(resp.data);
+                app.link_file_download = resp.data.link;
+                app.file_is_ready = true;
                 app.is_download = false;
                 app.showSnackbar("berhasil mengunduh data!");
                 return true;
@@ -107441,6 +107444,9 @@ __WEBPACK_IMPORTED_MODULE_0_moment__["locale"]('id');
                 app.is_download = false;
                 app.showSnackbar("oops, something went wrong. Please try again!");
             });
+        },
+        downloadFile: function downloadFile() {
+            location.href = this.link_file_download;
         },
         showSnackbar: function showSnackbar(text) {
             var app = this;
@@ -107560,6 +107566,17 @@ var render = function() {
                   _c(
                     "v-toolbar-items",
                     [
+                      _vm.file_is_ready
+                        ? _c(
+                            "v-icon",
+                            {
+                              attrs: { large: "", color: "white darken-2" },
+                              on: { click: _vm.downloadFile }
+                            },
+                            [_vm._v("get_app")]
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
                       _c(
                         "v-btn",
                         {
