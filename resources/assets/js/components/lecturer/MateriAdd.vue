@@ -166,10 +166,10 @@ export default {
             var app = this
             app.isLoaded = true
             axios.get('filter/lecturer/get-semester').then(function (resp) {
+                console.log(resp.data)
                 app.isLoaded = true
                 app.filter.list_semester = resp.data
 
-                console.log(resp.data)
             })
             .catch(function (resp) {
                 app.showSnackbar("Terjadi kegagalan sistem. Silahkan coba lagi!")
