@@ -161,7 +161,7 @@ export default {
             if (!this.filter.semester) return false
             var app = this
             axios.get('filter/lecturer/get-kelas/'+app.filter.semester).then(function (resp) {
-                app.filter.list_kelas = ''
+                app.filter.list_kelas = []
                 app.filter.list_kelas = resp.data
             })
             .catch(function (resp) {
@@ -172,7 +172,7 @@ export default {
             if (!this.filter.kelas) return false
             var app = this
             axios.post('filter/lecturer/get-matakuliah', app.filter).then(function (resp) {
-                app.filter.list_matakuliah = ''
+                app.filter.list_matakuliah = []
                 app.filter.list_matakuliah = resp.data
             })
             .catch(function (resp) {
@@ -185,7 +185,7 @@ export default {
             app.loadDetail = true
             axios.post('lecturer/schedule/filter', app.filter).then(function (resp) {
                 app.loadDetail = false
-                app.bodyTable = ''
+                app.bodyTable = []
                 app.bodyTable = resp.data
             })
             .catch(function (resp) {

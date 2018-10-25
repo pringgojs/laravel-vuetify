@@ -186,6 +186,7 @@ export default {
             axios.get('filter/lecturer/get-kelas/'+app.filter.semester).then(function (resp) {
                 app.filter.list_kelas = []
                 app.filter.list_kelas = resp.data
+                console.log(resp.data)
             })
             .catch(function (resp) {
                 app.showSnackbar("Terjadi kegagalan sistem. Silahkan coba lagi!")

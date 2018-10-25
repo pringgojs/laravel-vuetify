@@ -89090,7 +89090,7 @@ __WEBPACK_IMPORTED_MODULE_1_moment__["locale"]('id');
             if (!this.filter.semester) return false;
             var app = this;
             axios.get('filter/lecturer/get-kelas/' + app.filter.semester).then(function (resp) {
-                app.filter.list_kelas = '';
+                app.filter.list_kelas = [];
                 app.filter.list_kelas = resp.data;
             }).catch(function (resp) {
                 app.showSnackbar("Terjadi kegagalan sistem. Silahkan coba lagi!");
@@ -89100,7 +89100,7 @@ __WEBPACK_IMPORTED_MODULE_1_moment__["locale"]('id');
             if (!this.filter.kelas) return false;
             var app = this;
             axios.post('filter/lecturer/get-matakuliah', app.filter).then(function (resp) {
-                app.filter.list_matakuliah = '';
+                app.filter.list_matakuliah = [];
                 app.filter.list_matakuliah = resp.data;
             }).catch(function (resp) {
                 app.showSnackbar("Terjadi kegagalan sistem. Silahkan coba lagi!");
@@ -89112,7 +89112,7 @@ __WEBPACK_IMPORTED_MODULE_1_moment__["locale"]('id');
             app.loadDetail = true;
             axios.post('lecturer/e-tugas/filter', app.filter).then(function (resp) {
                 app.loadDetail = false;
-                app.bodyTable = '';
+                app.bodyTable = [];
                 app.bodyTable = resp.data;
             }).catch(function (resp) {
                 app.showSnackbar("Terjadi kegagalan sistem. Silahkan coba lagi!");
@@ -90266,7 +90266,7 @@ var FilePond = __WEBPACK_IMPORTED_MODULE_1_vue_filepond___default()(__WEBPACK_IM
             if (!this.filter.semester) return false;
             var app = this;
             axios.get('filter/lecturer/get-kelas/' + app.filter.semester).then(function (resp) {
-                app.filter.list_kelas = '';
+                app.filter.list_kelas = [];
                 app.filter.list_kelas = resp.data;
             }).catch(function (resp) {
                 app.showSnackbar("Terjadi kegagalan sistem. Silahkan coba lagi!");
@@ -90276,7 +90276,7 @@ var FilePond = __WEBPACK_IMPORTED_MODULE_1_vue_filepond___default()(__WEBPACK_IM
             if (!this.filter.kelas) return false;
             var app = this;
             axios.post('filter/lecturer/get-matakuliah', app.filter).then(function (resp) {
-                app.filter.list_matakuliah = '';
+                app.filter.list_matakuliah = [];
                 app.filter.list_matakuliah = resp.data;
             }).catch(function (resp) {
                 app.showSnackbar("Terjadi kegagalan sistem. Silahkan coba lagi!");
@@ -90286,7 +90286,7 @@ var FilePond = __WEBPACK_IMPORTED_MODULE_1_vue_filepond___default()(__WEBPACK_IM
             if (!this.filter.matakuliah) return false;
             var app = this;
             axios.post('filter/lecturer/get-modul', app.filter).then(function (resp) {
-                app.list_modul = '';
+                app.list_modul = [];
                 app.list_modul = resp.data;
             }).catch(function (resp) {
                 app.showSnackbar("Terjadi kegagalan sistem. Silahkan coba lagi!");
@@ -99753,7 +99753,7 @@ var FilePond = __WEBPACK_IMPORTED_MODULE_2_vue_filepond___default()(__WEBPACK_IM
             if (!this.filter.semester) return false;
             var app = this;
             axios.get('filter/lecturer/get-kelas/' + app.filter.semester).then(function (resp) {
-                app.filter.list_kelas = '';
+                app.filter.list_kelas = [];
                 app.filter.list_kelas = resp.data;
             }).catch(function (resp) {
                 app.showSnackbar("Terjadi kegagalan sistem. Silahkan coba lagi!");
@@ -99763,7 +99763,7 @@ var FilePond = __WEBPACK_IMPORTED_MODULE_2_vue_filepond___default()(__WEBPACK_IM
             if (!this.filter.kelas) return false;
             var app = this;
             axios.post('filter/lecturer/get-matakuliah', app.filter).then(function (resp) {
-                app.filter.list_matakuliah = '';
+                app.filter.list_matakuliah = [];
                 app.filter.list_matakuliah = resp.data;
             }).catch(function (resp) {
                 app.showSnackbar("Terjadi kegagalan sistem. Silahkan coba lagi!");
@@ -99773,7 +99773,7 @@ var FilePond = __WEBPACK_IMPORTED_MODULE_2_vue_filepond___default()(__WEBPACK_IM
             if (!this.filter.matakuliah) return false;
             var app = this;
             axios.post('filter/lecturer/get-modul', app.filter).then(function (resp) {
-                app.list_modul = '';
+                app.list_modul = [];
                 app.list_modul = resp.data;
             }).catch(function (resp) {
                 app.showSnackbar("Terjadi kegagalan sistem. Silahkan coba lagi!");
@@ -100580,7 +100580,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             if (!this.filter.semester) return false;
             var app = this;
             axios.get('filter/lecturer/get-kelas/' + app.filter.semester).then(function (resp) {
-                app.filter.list_kelas = '';
+                app.filter.list_kelas = [];
                 app.filter.list_kelas = resp.data;
             }).catch(function (resp) {
                 app.showSnackbar("Terjadi kegagalan sistem. Silahkan coba lagi!");
@@ -100590,7 +100590,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             if (!this.filter.kelas) return false;
             var app = this;
             axios.post('filter/lecturer/get-matakuliah', app.filter).then(function (resp) {
-                app.filter.list_matakuliah = '';
+                app.filter.list_matakuliah = [];
                 app.filter.list_matakuliah = resp.data;
             }).catch(function (resp) {
                 app.showSnackbar("Terjadi kegagalan sistem. Silahkan coba lagi!");
@@ -100602,7 +100602,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             app.loadDetail = true;
             axios.post('lecturer/schedule/filter', app.filter).then(function (resp) {
                 app.loadDetail = false;
-                app.bodyTable = '';
+                app.bodyTable = [];
                 app.bodyTable = resp.data;
             }).catch(function (resp) {
                 app.showSnackbar("Terjadi kegagalan sistem. Silahkan coba lagi!");
@@ -101157,7 +101157,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             if (!this.filter.semester) return false;
             var app = this;
             axios.get('filter/lecturer/get-kelas/' + app.filter.semester).then(function (resp) {
-                app.filter.list_kelas = '';
+                app.filter.list_kelas = [];
                 app.filter.list_kelas = resp.data;
             }).catch(function (resp) {
                 app.showSnackbar("Terjadi kegagalan sistem. Silahkan coba lagi!");
@@ -101167,7 +101167,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             if (!this.filter.kelas) return false;
             var app = this;
             axios.post('filter/lecturer/get-matakuliah', app.filter).then(function (resp) {
-                app.filter.list_matakuliah = '';
+                app.filter.list_matakuliah = [];
                 app.filter.list_matakuliah = resp.data;
             }).catch(function (resp) {
                 app.showSnackbar("Terjadi kegagalan sistem. Silahkan coba lagi!");
@@ -101179,7 +101179,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             app.loadDetail = true;
             axios.post('lecturer/materi/filter', app.filter).then(function (resp) {
                 app.loadDetail = false;
-                app.bodyTable = '';
+                app.bodyTable = [];
                 app.bodyTable = resp.data;
             }).catch(function (resp) {
                 app.showSnackbar("Terjadi kegagalan sistem. Silahkan coba lagi!");
@@ -101903,6 +101903,7 @@ var FilePond = __WEBPACK_IMPORTED_MODULE_1_vue_filepond___default()(__WEBPACK_IM
             axios.get('filter/lecturer/get-kelas/' + app.filter.semester).then(function (resp) {
                 app.filter.list_kelas = [];
                 app.filter.list_kelas = resp.data;
+                console.log(resp.data);
             }).catch(function (resp) {
                 app.showSnackbar("Terjadi kegagalan sistem. Silahkan coba lagi!");
             });
@@ -102558,7 +102559,7 @@ var FilePond = __WEBPACK_IMPORTED_MODULE_1_vue_filepond___default()(__WEBPACK_IM
             if (!this.filter.semester) return false;
             var app = this;
             axios.get('filter/lecturer/get-kelas/' + app.filter.semester).then(function (resp) {
-                app.filter.list_kelas = '';
+                app.filter.list_kelas = [];
                 app.filter.list_kelas = resp.data;
             }).catch(function (resp) {
                 app.showSnackbar("Terjadi kegagalan sistem. Silahkan coba lagi!");
@@ -102568,7 +102569,7 @@ var FilePond = __WEBPACK_IMPORTED_MODULE_1_vue_filepond___default()(__WEBPACK_IM
             if (!this.filter.kelas) return false;
             var app = this;
             axios.post('filter/lecturer/get-matakuliah', app.filter).then(function (resp) {
-                app.filter.list_matakuliah = '';
+                app.filter.list_matakuliah = [];
                 app.filter.list_matakuliah = resp.data;
             }).catch(function (resp) {
                 app.showSnackbar("Terjadi kegagalan sistem. Silahkan coba lagi!");
@@ -102578,7 +102579,7 @@ var FilePond = __WEBPACK_IMPORTED_MODULE_1_vue_filepond___default()(__WEBPACK_IM
             if (!this.filter.matakuliah) return false;
             var app = this;
             axios.post('filter/lecturer/get-modul', app.filter).then(function (resp) {
-                app.list_modul = '';
+                app.list_modul = [];
                 app.list_modul = resp.data;
             }).catch(function (resp) {
                 app.showSnackbar("Terjadi kegagalan sistem. Silahkan coba lagi!");
@@ -103247,7 +103248,7 @@ __WEBPACK_IMPORTED_MODULE_1_moment__["locale"]('id');
             if (!this.filter.semester) return false;
             var app = this;
             axios.get('filter/lecturer/get-kelas/' + app.filter.semester).then(function (resp) {
-                app.filter.list_kelas = '';
+                app.filter.list_kelas = [];
                 app.filter.list_kelas = resp.data;
             }).catch(function (resp) {
                 app.showSnackbar("Terjadi kegagalan sistem. Silahkan coba lagi!");
@@ -103257,7 +103258,7 @@ __WEBPACK_IMPORTED_MODULE_1_moment__["locale"]('id');
             if (!this.filter.kelas) return false;
             var app = this;
             axios.post('filter/lecturer/get-matakuliah', app.filter).then(function (resp) {
-                app.filter.list_matakuliah = '';
+                app.filter.list_matakuliah = [];
                 app.filter.list_matakuliah = resp.data;
             }).catch(function (resp) {
                 app.showSnackbar("Terjadi kegagalan sistem. Silahkan coba lagi!");
@@ -105365,7 +105366,7 @@ __WEBPACK_IMPORTED_MODULE_1_moment__["locale"]('id');
             if (!this.filter.semester) return false;
             var app = this;
             axios.get('filter/student/get-kelas/tugas/' + app.filter.semester).then(function (resp) {
-                app.filter.list_kelas = '';
+                app.filter.list_kelas = [];
                 app.filter.list_kelas = resp.data;
             }).catch(function (resp) {
                 app.showSnackbar("Terjadi kegagalan sistem. Silahkan coba lagi!");
@@ -105375,7 +105376,7 @@ __WEBPACK_IMPORTED_MODULE_1_moment__["locale"]('id');
             if (!this.filter.kelas) return false;
             var app = this;
             axios.post('filter/student/get-matakuliah/tugas', app.filter).then(function (resp) {
-                app.filter.list_matakuliah = '';
+                app.filter.list_matakuliah = [];
                 app.filter.list_matakuliah = resp.data;
             }).catch(function (resp) {
                 app.showSnackbar("Terjadi kegagalan sistem. Silahkan coba lagi!");
@@ -105387,7 +105388,7 @@ __WEBPACK_IMPORTED_MODULE_1_moment__["locale"]('id');
             app.loadDetail = true;
             axios.post('student/e-tugas/filter', app.filter).then(function (resp) {
                 app.loadDetail = false;
-                app.bodyTable = '';
+                app.bodyTable = [];
                 app.$store.state.obj_list_etugas = null;
                 app.$store.state.obj_list_etugas = resp.data;
             }).catch(function (resp) {
@@ -106224,7 +106225,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             if (!this.filter.semester) return false;
             var app = this;
             axios.get('filter/student/get-kelas/materi/' + app.filter.semester).then(function (resp) {
-                app.filter.list_kelas = '';
+                app.filter.list_kelas = [];
                 app.filter.list_kelas = resp.data;
             }).catch(function (resp) {
                 app.showSnackbar("Terjadi kegagalan sistem. Silahkan coba lagi!");
@@ -106234,7 +106235,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             if (!this.filter.kelas) return false;
             var app = this;
             axios.post('filter/student/get-matakuliah/materi', app.filter).then(function (resp) {
-                app.filter.list_matakuliah = '';
+                app.filter.list_matakuliah = [];
                 app.filter.list_matakuliah = resp.data;
             }).catch(function (resp) {
                 app.showSnackbar("Terjadi kegagalan sistem. Silahkan coba lagi!");
