@@ -18,6 +18,12 @@ Vue.use(Vuetify)
 Vue.use(VueRouter)
 Vue.use(Vuex)
 
+// for production mode
+Vue.config.devtools = false;
+Vue.config.debug = false;
+Vue.config.silent = true;
+Vue.config.productionTip = false;
+
 // Add title in header
 router.beforeEach((to, from, next) => {
     if (!to.matched.length) {

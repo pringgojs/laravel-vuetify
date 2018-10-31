@@ -166,7 +166,6 @@ export default {
             var app = this
             app.isLoaded = true
             axios.get('filter/lecturer/get-semester').then(function (resp) {
-                console.log(resp.data)
                 app.isLoaded = true
                 app.filter.list_semester = resp.data
 
@@ -186,7 +185,6 @@ export default {
             axios.get('filter/lecturer/get-kelas/'+app.filter.semester).then(function (resp) {
                 app.filter.list_kelas = []
                 app.filter.list_kelas = resp.data
-                console.log(resp.data)
             })
             .catch(function (resp) {
                 app.showSnackbar("Terjadi kegagalan sistem. Silahkan coba lagi!")
@@ -198,7 +196,6 @@ export default {
             axios.post('filter/lecturer/get-matakuliah', app.filter).then(function (resp) {
                 app.filter.list_matakuliah = []
                 app.filter.list_matakuliah = resp.data
-                console.log(resp.data)
             })
             .catch(function (resp) {
                 app.showSnackbar("Terjadi kegagalan sistem. Silahkan coba lagi!")
