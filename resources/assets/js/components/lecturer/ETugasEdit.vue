@@ -244,7 +244,6 @@ export default {
             var app = this
             axios.get('lecturer/e-tugas/edit/'+this.id).then(function (resp) {
                 app.isLoaded = true
-                console.log(resp.data)
                 app.filter.list_semester = resp.data.list_semester
                 app.filter.list_kelas = resp.data.list_kelas
                 app.filter.list_matakuliah = resp.data.list_matakuliah

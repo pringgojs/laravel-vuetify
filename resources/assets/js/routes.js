@@ -5,7 +5,6 @@ Vue.use(Router)
 
 // lecturer
 import Layout from './components/lecturer/Layout.vue'
-import Home from './components/lecturer/Home.vue'
 import ETugas from './components/lecturer/ETugas.vue'
 import ETugasAdd from './components/lecturer/ETugasAdd.vue'
 import ETugasEdit from './components/lecturer/ETugasEdit.vue'
@@ -15,7 +14,6 @@ import MateriAdd from './components/lecturer/MateriAdd.vue'
 import MateriEdit from './components/lecturer/MateriEdit.vue'
 import NilaiPermodul from './components/lecturer/NilaiPermodul.vue'
 import NilaiPermodulDetail from './components/lecturer/NilaiPermodulDetail.vue'
-import Report from './components/lecturer/Report.vue'
 import Login from './components/Login.vue'
 import NotFound from './components/NotFound.vue'
 import Redirect from './components/Redirect.vue'
@@ -25,18 +23,15 @@ import StudentHome from './components/student/Home.vue'
 import StudentETugas from './components/student/ETugas.vue'
 import StudentSchedule from './components/student/Schedule.vue'
 import StudentMateri from './components/student/Materi.vue'
-import StudentReport from './components/student/Report.vue'
 import StudentDetailEtugas from './components/student/DetailEtugas.vue'
 
 // lecturer
 Vue.component('layout', require('./components/lecturer/Layout.vue'))
-Vue.component('home', require('./components/lecturer/Home.vue'))
 Vue.component('e-tugas', require('./components/lecturer/ETugas.vue'))
 Vue.component('e-tugas-add', require('./components/lecturer/ETugasAdd.vue'))
 Vue.component('e-tugas-edit', require('./components/lecturer/ETugasEdit.vue'))
 Vue.component('e-tugas-detail', require('./components/lecturer/EtugasDetail.vue'))
 Vue.component('schedule', require('./components/lecturer/Schedule.vue'))
-Vue.component('report', require('./components/lecturer/Report.vue'))
 Vue.component('materi', require('./components/lecturer/Materi.vue'))
 Vue.component('materi-add', require('./components/lecturer/MateriAdd.vue'))
 Vue.component('materi-edit', require('./components/lecturer/MateriEdit.vue'))
@@ -51,7 +46,6 @@ Vue.component('layout-student', require('./components/student/Layout.vue'))
 Vue.component('beranda', require('./components/student/Home.vue'))
 Vue.component('etugas', require('./components/student/ETugas.vue'))
 Vue.component('jadwal', require('./components/student/Schedule.vue'))
-Vue.component('laporan-tugas', require('./components/student/Report.vue'))
 Vue.component('materi-kuliah', require('./components/student/Materi.vue'))
 Vue.component('detail-etugas', require('./components/student/DetailEtugas.vue'))
 
@@ -69,15 +63,6 @@ const routes = [
         path: '/layout',
         component: Layout,
         name: 'lecturerLayout',
-        meta: {
-            title: 'Beranda - Dosen Jaga',
-            type: 'lecturer'
-        }
-    },
-    {
-        path: '/home',
-        component: Home,
-        name: 'lecturerHome',
         meta: {
             title: 'Beranda - Dosen Jaga',
             type: 'lecturer'
@@ -138,15 +123,6 @@ const routes = [
         }
     },
     {
-        path: '/report',
-        component: Report,
-        name: 'lecturerReport',
-        meta: {
-            title: 'Laporan - Dosen Jaga',
-            type: 'lecturer'
-        }
-    },
-    {
         path: '/schedule',
         component: Schedule,
         name: 'lecturerSchedule',
@@ -191,28 +167,24 @@ const routes = [
         meta: {
             title: 'Beranda - Dosen Jaga'
         }
-    }, {
+    }, 
+    {
         path: '/etugas',
         component: StudentETugas,
         name: 'studentEtugas',
         meta: {
             title: 'Etugas - Dosen Jaga'
         }
-    }, {
+    }, 
+    {
         path: '/materi-kuliah',
         component: StudentMateri,
         name: 'studentMateri',
         meta: {
             title: 'Materi - Dosen Jaga'
         }
-    }, {
-        path: '/laporan',
-        component: StudentReport,
-        name: 'studentLaporan',
-        meta: {
-            title: 'Laporan - Dosen Jaga'
-        }
-    }, {
+    },
+    {
         path: '/jadwal',
         component: StudentSchedule,
         name: 'studentJadwal',
