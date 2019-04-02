@@ -20,7 +20,7 @@ class FilterController extends Controller
     public function getKelas($tahun, $semester)
     {
         $url = config('api.url').'/filter/lecturer/get-kelas';
-        $data = array('tahun' => $tahun, 'semester' => $semester);
+        $data = array('user' => ResponseHelper::user(), 'tahun' => $tahun, 'semester' => $semester);
         $response = Curl::to($url)->withData($data)->post();
         
         return $response;
