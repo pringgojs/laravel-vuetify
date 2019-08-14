@@ -6,8 +6,16 @@ class FileHelper
 {
     public static function upload($file, $path)
     {
+        if (!$file) return null;
+
+        $valid_array_extension = ['pdf', 'jpeg', 'jpg', 'png', 'zip', 'rar', 'xls', 'xlxs', 'doc', 'docx'];
+
+        if (!in_array(strtolower($file->extension()), $valid_array_extension)) {
+            return null;
+        }
+
         $file_prop = [];
-        if(\Input::file()) {
+        if (\Input::file()) {
             $filename = date("YmdHis"). '-' . $file->getClientOriginalName();
             $file_prop['original_name'] = $file->getClientOriginalName();
             $file_prop['original_extension'] = $file->getClientOriginalExtension();
