@@ -5,6 +5,8 @@ Vue.use(Router)
 
 // lecturer
 import Layout from './components/lecturer/Layout.vue'
+import ResetPassword from './components/ResetPassword.vue'
+
 import ETugas from './components/lecturer/ETugas.vue'
 import ETugasAdd from './components/lecturer/ETugasAdd.vue'
 import ETugasEdit from './components/lecturer/ETugasEdit.vue'
@@ -27,6 +29,7 @@ import StudentDetailEtugas from './components/student/DetailEtugas.vue'
 
 // lecturer
 Vue.component('layout', require('./components/lecturer/Layout.vue'))
+Vue.component('reset-password', require('./components/ResetPassword.vue'))
 Vue.component('e-tugas', require('./components/lecturer/ETugas.vue'))
 Vue.component('e-tugas-add', require('./components/lecturer/ETugasAdd.vue'))
 Vue.component('e-tugas-edit', require('./components/lecturer/ETugasEdit.vue'))
@@ -156,6 +159,15 @@ const routes = [
         meta: {
             title: '404 - Dosen Jaga',
             type: 'lecturer'
+        }
+    },
+
+    {
+        path: '/reset-password',
+        component: ResetPassword,
+        name: 'resetPassword',
+        meta: {
+            title: 'Ubah Password',
         }
     },
 

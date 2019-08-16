@@ -123,6 +123,7 @@
         { icon: 'history', text: 'E-tugas', link: '/e-tugas' },
         { icon: 'content_copy', text: 'Materi', link: '/materi' },
         { icon: 'date_range', text: 'Jadwal', link: '/schedule' },
+        { icon: 'lock', text: 'Ubah Password', link: '/reset-password' },
       ],
       children: [
         { text: 'Nilai Permodul', link: '/nilai-permodul'},

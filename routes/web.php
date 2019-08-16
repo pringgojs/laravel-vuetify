@@ -82,6 +82,7 @@ Route::group(['prefix' => 'filter'], function () {
     });
 });
 
+Route::post('reset-password', 'Auth\LoginController@resetPassword');
 Route::get('download/{folder}/{name}', 'DownloadFileController@download');
 Route::post('login', 'Auth\LoginController@login');
 Route::get('logout', 'Auth\LoginController@logout');

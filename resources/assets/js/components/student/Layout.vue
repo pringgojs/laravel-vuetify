@@ -93,6 +93,7 @@
         // { icon: 'home', text: 'Beranda', link: '/beranda'},
         { icon: 'history', text: 'E-tugas', link: '/etugas' },
         { icon: 'content_copy', text: 'Materi', link: '/materi-kuliah' },
+        { icon: 'lock', text: 'Ubah Password', link: '/reset-password' },
       ]
     }),
     props: {

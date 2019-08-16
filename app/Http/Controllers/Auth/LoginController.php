@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use Illuminate\Http\Request;
 use Ixudra\Curl\Facades\Curl;
 use App\Http\Controllers\Controller;
+use App\Helpers\ResponseHelper;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class LoginController extends Controller
@@ -94,5 +95,16 @@ class LoginController extends Controller
         }
 
         return redirect('login');
+    }
+
+    public function resetPassword(Request $request)
+    {
+        $url = config('api.url').'/reset-password';
+        $data = array('user' => ResponseHelper::user(), 'request' => $request->toArray());
+        $response = Curl::to($url)
+            ->withData($data)
+            ->post();
+        
+        return $response;
     }
 }
