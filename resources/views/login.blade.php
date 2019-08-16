@@ -5,7 +5,9 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
-
+        <meta name="description" content="Manajemen E-Tugas mahasiswa Politeknik Pertanian Negeri Pangkajene Kepulauan">
+        <meta name="keywords" content="polipangkep,etugas polipangkep, e-tugas, manajemen e-tugas polipangkep">
+        <meta name="author" content="Pringgo Juni Saputro | odyinggo@gmail.com | PENS">
         <title>Login | Dosen Jaga</title>
 
         <!-- Fonts -->
