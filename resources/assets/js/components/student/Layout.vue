@@ -58,11 +58,17 @@
       </v-toolbar-title>
 
       <v-spacer></v-spacer>
+      
+      <v-btn color="info" class="white--text" @click="manualBook" >
+        <v-icon>book</v-icon>
+        Manual book
+      </v-btn>
       <v-menu bottom left full-width>
         <v-avatar slot="activator"  @click="logout">
           <v-icon >logout</v-icon>
         </v-avatar>
       </v-menu>
+      
     </v-toolbar>
     <!-- end of toolbar -->
     
@@ -106,6 +112,9 @@
       logout() {
         let base_url = window.location.origin
         window.location.href = base_url+'/logout'
+      },
+      manualBook() {
+        window.open('/mahasiswa.pdf', '_blank')
       }
     },
     mounted() {

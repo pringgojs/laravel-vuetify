@@ -87,6 +87,10 @@
       </v-toolbar-title>
       
       <v-spacer></v-spacer>
+      <v-btn color="info" class="white--text" @click="manualBook" >
+        <v-icon>book</v-icon>
+        Manual book
+      </v-btn>
       <v-menu bottom left full-width>
         <v-avatar slot="activator" @click="logout">
           <v-icon >logout</v-icon>
@@ -143,6 +147,9 @@
       logout() {
         let base_url = window.location.origin
         window.location.href = base_url+'/logout'
+      },
+      manualBook() {
+        window.open('/dosen.pdf', '_blank')
       }
     }
   }
