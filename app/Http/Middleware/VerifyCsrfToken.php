@@ -15,5 +15,6 @@ class VerifyCsrfToken extends BaseVerifier
         'filter/lecturer/get-matakuliah',
         'filter/student/get-modul',
         'filter/student/get-matakuliah/*',
+        'login',
     ];
 }
