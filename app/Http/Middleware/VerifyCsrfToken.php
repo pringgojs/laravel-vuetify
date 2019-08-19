@@ -18,6 +18,7 @@ class VerifyCsrfToken extends BaseVerifier
         'lecturer/schedule/filter',
         'lecturer/nilai-permodul/filter',
         'lecturer/nilai-permodul/filter',
+        'lecturer/report/nilai-permodul/filter',
 
         'student/e-tugas/filter',
         'filter/student/get-modul',
