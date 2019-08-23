@@ -166,6 +166,7 @@
                         label-idle="Drop files here..."
                         allow-multiple="false"
                         v-bind:files="myFiles"/>
+                    <p>Ukuran maksimal file 10MB dengan jenis file 'pdf', 'jpeg', 'jpg', 'png', 'zip', 'rar', 'xls', 'xlxs', 'doc', 'docx', 'ppt', 'pptx'. </p>
                     
                     <template v-if="tugas.file_url"><a slot="activator" v-bind:href="tugas.file_url"> Download File </a></template>
                 </v-flex>

@@ -8,7 +8,7 @@ class FileHelper
     {
         if (!$file) return null;
 
-        $valid_array_extension = ['pdf', 'jpeg', 'jpg', 'png', 'zip', 'rar', 'xls', 'xlxs', 'doc', 'docx'];
+        $valid_array_extension = ['pdf', 'jpeg', 'jpg', 'png', 'zip', 'rar', 'xls', 'xlxs', 'doc', 'docx', 'ppt', 'pptx'];
 
         if (!in_array(strtolower($file->extension()), $valid_array_extension)) {
             return null;
