@@ -60,6 +60,8 @@
                     <br>
                     <v-flex xs12 style="padding:15px">
                         <p>Tambahkan File (Optional)</p>
+                        <p>Ukuran maksimal file 10MB dengan jenis file 'pdf', 'jpeg', 'jpg', 'png', 'zip', 'rar', 'xls', 'xlxs', 'doc', 'docx'. </p>
+
                         <file-pond
                             name="file"
                             ref="pond"
