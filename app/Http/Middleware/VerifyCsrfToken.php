@@ -14,6 +14,7 @@ class VerifyCsrfToken extends BaseVerifier
     protected $except = [
         'filter/lecturer/get-modul',
         'filter/lecturer/get-matakuliah',
+        'lecturer/e-tugas/filter',
         'lecturer/materi/filter',
         'lecturer/schedule/filter',
         'lecturer/nilai-permodul/filter',
