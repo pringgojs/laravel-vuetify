@@ -22,6 +22,17 @@ class EtugasController extends Controller
         return $response;
     }
 
+    public function create()
+    {
+        $url = config('api.url').'/lecturer/e-tugas/create';
+        $data = array('user' => ResponseHelper::user());
+        $response = Curl::to($url)
+            ->withData($data)
+            ->post();
+
+        return $response;
+    }
+
     public function edit($id)
     {
         $url = config('api.url').'/lecturer/e-tugas/edit/'.$id;

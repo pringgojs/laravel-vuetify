@@ -6,45 +6,71 @@
         
         <content-loader v-if="!isLoaded" :height="250"></content-loader>
         <template>
-            <v-container fluid grid-list-xl v-if="isLoaded">
+            <v-container row grid-list-xl v-if="isLoaded">
                 <v-layout wrap align-center>
-                    <v-flex md4 mt-5 d-flex>
+                    <v-flex md4 d-flex>
                         <v-select 
                             :items="filter.list_semester"
                             v-model="filter.semester"
-                            label="Pilih semester"
+                            label="Semester"
                             item-text="tahun"
                             item-value="semester"
-                            @change="selectKelas()"
-                            solo
-                        >
-                            <template slot="selection" slot-scope="data">
-                                {{ data.item.semester }}
-                            </template>
-                            <template slot="item" slot-scope="data">
-                                {{ data.item.semester }}
-                            </template>
-                        </v-select>
-                    </v-flex>
-                    <v-flex md4 mt-5 d-flex>
-                        <v-select 
-                            :items="filter.list_kelas"
-                            v-model="filter.kelas"
-                            label="Pilih kelas"
-                            item-text="kode"
-                            item-value="nomor"
                             @change="selectMatakuliah()"
                             solo
                         >
                             <template slot="selection" slot-scope="data">
-                                {{ data.item.kode }}
+                                {{ data.item.semester }}
                             </template>
                             <template slot="item" slot-scope="data">
-                                {{ data.item.kode }}
+                                {{ data.item.semester }}
                             </template>
                         </v-select>
                     </v-flex>
-                    <v-flex md4 mt-5 d-flex>
+                    <v-flex md4 d-flex>
+                        <v-select 
+                            :items="filter.list_program"
+                            v-model="filter.program"
+                            label="Program"
+                            item-text="program"
+                            item-value="nomor"
+                            solo
+                            @change="selectMatakuliah()"
+                        >
+                        </v-select>
+                    </v-flex>
+                    <v-flex md4 d-flex>
+                        <v-select 
+                            :items="filter.list_jurusan"
+                            v-model="filter.jurusan"
+                            label="Jurusan"
+                            item-text="jurusan"
+                            item-value="nomor"
+                            solo
+                            @change="selectMatakuliah()"
+                        >
+                        </v-select>
+                    </v-flex>
+                    <v-flex md4 d-flex>
+                        <v-select 
+                            :items="filter.list_semester_tempuh"
+                            v-model="filter.semester_tempuh"
+                            label="Semester Tempuh"
+                            solo
+                            @change="selectMatakuliah()"
+                        >
+                        </v-select>
+                    </v-flex>
+                    <v-flex md4 d-flex>
+                        <v-select 
+                            :items="filter.list_pararel"
+                            v-model="filter.pararel"
+                            label="Pararel"
+                            solo
+                            @change="selectMatakuliah()"
+                        >
+                        </v-select>
+                    </v-flex>
+                    <v-flex md4 d-flex>
                         <v-select 
                             :items="filter.list_matakuliah"
                             v-model="filter.matakuliah"
@@ -168,11 +194,20 @@ export default {
             remove_id: '',
             filter: {
                 list_semester: [],
+                list_program: [],
+                list_jurusan: [],
+                list_semester_tempuh: [1,2,3,4,5,6,7,8],
+                list_pararel: ['A', 'B'],
+
                 list_kelas: [],
                 list_matakuliah: [],
                 semester: '',
                 kelas: '',
                 matakuliah: '',
+                program: '',
+                jurusan: '',
+                semester_tempuh: '',
+                pararel: '',
             }
         }
     },
@@ -189,6 +224,9 @@ export default {
                 app.isLoaded = true
                 app.bodyTable = resp.data.list_tugas
                 app.filter.list_semester = resp.data.list_semester
+                app.filter.list_jurusan = resp.data.list_jurusan
+                app.filter.list_program = resp.data.list_program
+                console.log(resp)
             })
             .catch(function (resp) {
                 app.showSnackbar("oops, something went wrong. Please try again!")
@@ -212,23 +250,30 @@ export default {
             app.snackbarText = text
             app.snackbar = true
         },
-        selectKelas() {
-            if (!this.filter.semester) return false
-            var app = this
-            axios.get('filter/lecturer/get-kelas/'+app.filter.semester).then(function (resp) {
-                app.filter.list_kelas = []
-                app.filter.list_kelas = resp.data
-            })
-            .catch(function (resp) {
-                app.showSnackbar("Terjadi kegagalan sistem. Silahkan coba lagi!")
-            })
-        },
+        // selectKelas() {
+        //     if (!this.filter.semester) return false
+        //     var app = this
+        //     axios.get('filter/lecturer/get-kelas/'+app.filter.semester).then(function (resp) {
+        //         app.filter.list_kelas = []
+        //         app.filter.list_kelas = resp.data
+        //     })
+        //     .catch(function (resp) {
+        //         app.showSnackbar("Terjadi kegagalan sistem. Silahkan coba lagi!")
+        //     })
+        // },
         selectMatakuliah() {
-            if (!this.filter.kelas) return false
+            if (!this.filter.semester) return false
+            if (!this.filter.program) return false
+            if (!this.filter.jurusan) return false
+            if (!this.filter.semester_tempuh) return false
+            if (!this.filter.pararel) return false
+            this.filter.matakuliah = ""
             var app = this
             axios.post('filter/lecturer/get-matakuliah', app.filter).then(function (resp) {
+                console.log(resp)
                 app.filter.list_matakuliah = []
-                app.filter.list_matakuliah = resp.data
+                app.filter.list_matakuliah = resp.data.list_matakuliah
+                app.filter.kelas = resp.data.kelas
             })
             .catch(function (resp) {
                 app.showSnackbar("Terjadi kegagalan sistem. Silahkan coba lagi!")
