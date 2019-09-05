@@ -104,9 +104,9 @@
             >
                 <template slot="items" slot-scope="props">
                     <tr :id="'tr-'+props.item.id">
-                        <td>{{ props.item.modul }}</td>
-                        <td class="text-xs-left" :id="'matakuliah-'+props.item.id">{{ props.item.matakuliah }}</td>
-                        <td class="text-xs-left" :id="'kelas-'+props.item.id">{{ props.item.tahun }} / {{ props.item.semester }} - {{ props.item.program }} {{ props.item.jurusan }} ({{props.item.kelas}} {{props.item.pararel}})</td>
+                        <td>{{ props.item.nilai_master_modul.modul }}</td>
+                        <td class="text-xs-left" :id="'matakuliah-'+props.item.id">{{ props.item.to_matakuliah.matakuliah }}</td>
+                        <td class="text-xs-left" :id="'kelas-'+props.item.id">{{ props.item.to_kuliah.tahun }} / {{ props.item.to_kuliah.semester }} - {{ props.item.to_program.program }} {{ props.item.to_jurusan.jurusan }} ({{props.item.to_kelas.kelas}} {{props.item.to_kelas.pararel}})</td>
                         <td class="text-xs-left" :id="'judul-'+props.item.id">{{ props.item.judul }} </td>
                         <td class="text-xs-center" :id="'keterangan-'+props.item.id">{{ props.item.keterangan }}</td>
                         <td class="text-xs-center" :id="'due-date-'+props.item.id">{{ dateView(props.item.due_date) }}</td>

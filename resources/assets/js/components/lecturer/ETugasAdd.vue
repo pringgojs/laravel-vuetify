@@ -249,9 +249,9 @@ export default {
                 list_jurusan: [],
                 list_semester_tempuh: [1,2,3,4,5,6,7,8],
                 list_pararel: ['A', 'B'],
-
                 list_kelas: [],
                 list_matakuliah: [],
+                
                 semester: '',
                 kelas: '',
                 matakuliah: '',
@@ -366,6 +366,9 @@ export default {
             form.append('tanggal', app.date)
             form.append('waktu', app.time)
             form.append('keterangan', app.keterangan)
+            form.append('program', app.filter.program)
+            form.append('jurusan', app.filter.jurusan)
+            form.append('matakuliah', app.filter.matakuliah)
             form.append('nilai_master_modul', app.nilai_master_modul)
             axios.post( 'lecturer/e-tugas/store', form, { headers: {'Content-Type': 'multipart/form-data'}}).then(function (resp) {
                 if (resp.data.code == 200) {
