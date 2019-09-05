@@ -21,6 +21,17 @@ class MateriController extends Controller
         return $response;
     }
 
+    public function create()
+    {
+        $url = config('api.url').'/lecturer/materi/create';
+        $data = array('user' => ResponseHelper::user());
+        $response = Curl::to($url)
+            ->withData($data)
+            ->post();
+
+        return $response;
+    }
+
     public function store(Request $request)
     {
         $file = FileHelper::upload($request->file('file'), 'uploads/materi/');

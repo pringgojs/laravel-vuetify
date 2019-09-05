@@ -313,17 +313,6 @@ export default {
             app.snackbarText = text
             app.snackbar = true
         },
-        // selectKelas() {
-        //     if (!this.filter.semester) return false
-        //     var app = this
-        //     axios.get('filter/lecturer/get-kelas/'+app.filter.semester).then(function (resp) {
-        //         app.filter.list_kelas = []
-        //         app.filter.list_kelas = resp.data
-        //     })
-        //     .catch(function (resp) {
-        //         app.showSnackbar("Terjadi kegagalan sistem. Silahkan coba lagi!")
-        //     })
-        // },
         selectMatakuliah() {
             if (!this.filter.semester) return false
             if (!this.filter.program) return false

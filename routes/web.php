@@ -36,6 +36,7 @@ Route::group(['prefix' => 'lecturer', 'middleware' => 'role:lecturer', 'namespac
         Route::get('edit/{id}', 'MateriController@edit');
         Route::get('remove/{id}', 'MateriController@delete');
         Route::post('store', 'MateriController@store');
+        Route::get('create', 'MateriController@create');
         Route::get('/', 'MateriController@index');
     });
 
