@@ -18,7 +18,6 @@ class DashboardController extends Controller
             ->post();
         
         $response = json_decode($response);
-
         $view = view('lecturer');
         $view->lecturer = $response->lecturer;
         $view->program_study = $response->program_study;
