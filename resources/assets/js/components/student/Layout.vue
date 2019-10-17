@@ -15,7 +15,7 @@
           </v-list-tile-avatar>
 
           <v-list-tile-content>
-            <v-list-tile-title id="title-name">Pringgo Juni S</v-list-tile-title>
+            <v-list-tile-title id="title-name"></v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
       </v-list>
