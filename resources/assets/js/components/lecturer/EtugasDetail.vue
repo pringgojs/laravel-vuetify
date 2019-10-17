@@ -73,7 +73,7 @@
                                     <td class="text-xs-center" :style="statusLate($store.state.form_dialog_detail_etugas ? $store.state.obj_etugas.etugas.due_date : '', props.item.nilai)" :id="'due-date-'+props.item.nomor">{{ props.item.nilai ? dateView(props.item.nilai.updated_at) : '' }}</td>
                                     <td class="text-xs-center">
                                         <template v-if="props.item.nilai">
-                                            <a slot="activator" v-if="props.item.nilai.file_url" v-bind:href="props.item.file_url"> Download File </a>
+                                            <a slot="activator" v-if="props.item.nilai.file_url" v-bind:href="props.item.nilai.file_url"> Download File </a>
                                         </template>
                                     </td>
                                     <td class="text-xs-center">{{ props.item.nilai ? props.item.nilai.nilai : ''}}</td>
