@@ -194,6 +194,8 @@
                         label-idle="Drop files here..."
                         allow-multiple="false"
                         v-bind:files="myFiles"/>
+                    <p>Ukuran maksimal file 10MB dengan jenis file 'pdf', 'jpeg', 'jpg', 'png', 'zip', 'rar', 'xls', 'xlxs', 'doc', 'docx', 'ppt', 'pptx'. </p>
+                    
                 </v-flex>
                 <router-link to="/e-tugas"><v-btn flat >Kembali</v-btn></router-link>
                 <v-btn color="info" @click="submit">Simpan</v-btn>
