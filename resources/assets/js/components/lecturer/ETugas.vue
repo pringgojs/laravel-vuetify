@@ -15,7 +15,7 @@
                             label="Semester"
                             item-text="tahun"
                             item-value="semester"
-                            @change="selectMatakuliah()"
+                            @change="selectMatakuliah(1)"
                             solo
                         >
                             <template slot="selection" slot-scope="data">
@@ -196,7 +196,7 @@ export default {
                 list_semester: [],
                 list_program: [],
                 list_jurusan: [],
-                list_semester_tempuh: [1,2,3,4,5,6,7,8],
+                list_semester_tempuh: [],
                 list_pararel: ['A', 'B'],
 
                 list_kelas: [],
@@ -226,7 +226,6 @@ export default {
                 app.filter.list_semester = resp.data.list_semester
                 app.filter.list_jurusan = resp.data.list_jurusan
                 app.filter.list_program = resp.data.list_program
-                console.log(resp)
             })
             .catch(function (resp) {
                 app.showSnackbar("oops, something went wrong. Please try again!")
@@ -261,7 +260,16 @@ export default {
         //         app.showSnackbar("Terjadi kegagalan sistem. Silahkan coba lagi!")
         //     })
         // },
-        selectMatakuliah() {
+        selectMatakuliah(is_semester_tempuh = '') {
+            if (is_semester_tempuh == 1) {
+                var split_semester = this.filter.semester.split('/')
+                var ganjil_genap_semester = split_semester[1]
+                if (ganjil_genap_semester == 1) {
+                    this.filter.list_semester_tempuh = [1,3,5,7]
+                } else {
+                    this.filter.list_semester_tempuh = [2,4,6,8]
+                }
+            }
             if (!this.filter.semester) return false
             if (!this.filter.program) return false
             if (!this.filter.jurusan) return false
