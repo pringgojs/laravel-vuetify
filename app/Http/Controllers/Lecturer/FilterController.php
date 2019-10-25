@@ -26,6 +26,15 @@ class FilterController extends Controller
         return $response;
     }
 
+    public function getJurusan($tahun="", $semester="")
+    {
+        $url = config('api.url').'/filter/lecturer/get-jurusan';
+        $data = array('user' => ResponseHelper::user(), 'tahun' => $tahun, 'semester' => $semester);
+        $response = Curl::to($url)->withData($data)->post();
+        
+        return $response;
+    }
+
     public function getMatakuliah(Request $request)
     {
         $url = config('api.url').'/filter/lecturer/get-matakuliah';

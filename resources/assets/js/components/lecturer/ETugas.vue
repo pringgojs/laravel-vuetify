@@ -216,6 +216,7 @@ export default {
     },
     mounted() {
         this.initData()
+        this.fetchJurusan()
     },
     methods: {
         initData() {
@@ -260,6 +261,16 @@ export default {
         //         app.showSnackbar("Terjadi kegagalan sistem. Silahkan coba lagi!")
         //     })
         // },
+        fetchJurusan() {
+            let app = this
+            axios.get('filter/lecturer/get-jurusan/'+app.filter.semester).then(function (resp) {
+                app.filter.list_jurusan = []
+                app.filter.list_jurusan = resp.data
+            })
+            .catch(function (resp) {
+                app.showSnackbar("Terjadi kegagalan sistem. Silahkan coba lagi!")
+            })
+        },
         selectMatakuliah(is_semester_tempuh = '') {
             if (is_semester_tempuh == 1) {
                 var split_semester = this.filter.semester.split('/')
@@ -269,6 +280,8 @@ export default {
                 } else {
                     this.filter.list_semester_tempuh = [2,4,6,8]
                 }
+
+                this.fetchJurusan();
             }
             if (!this.filter.semester) return false
             if (!this.filter.program) return false
@@ -278,7 +291,6 @@ export default {
             this.filter.matakuliah = ""
             var app = this
             axios.post('filter/lecturer/get-matakuliah', app.filter).then(function (resp) {
-                console.log(resp)
                 app.filter.list_matakuliah = []
                 app.filter.list_matakuliah = resp.data.list_matakuliah
                 app.filter.kelas = resp.data.kelas

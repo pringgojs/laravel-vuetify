@@ -73,6 +73,8 @@ Route::group(['prefix' => 'filter'], function () {
         Route::post('get-modul', 'FilterController@getModul');
         Route::post('get-matakuliah', 'FilterController@getMatakuliah');
         Route::get('get-kelas/{tahun}/{semester}', 'FilterController@getKelas');
+        Route::get('get-jurusan/{tahun}/{semester}', 'FilterController@getJurusan');
+        Route::get('get-jurusan', 'FilterController@getJurusan');
         Route::get('get-semester', 'FilterController@getSemester');
     });
 
