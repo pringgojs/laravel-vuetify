@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use App\Helpers\ResponseHelper;
 
 class CheckAuth
 {
@@ -15,8 +16,9 @@ class CheckAuth
      */
     public function handle($request, Closure $next, $role)
     {
-        // if (!session('type')) return redirect('login');
-        // if ($role != session('type')) return redirect('/');
+        $user = ResponseHelper::user();
+        if (!$user['type']) return redirect('login');
+        if ($role != $user['type']) return redirect('/');
         
         return $next($request);
     }
