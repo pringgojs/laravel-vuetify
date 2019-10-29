@@ -61,7 +61,7 @@
       
       <v-btn color="info" class="white--text" @click="manualBook" >
         <v-icon>book</v-icon>
-        Manual book
+        Manual book 
       </v-btn>
       <v-menu bottom left full-width>
         <v-avatar slot="activator"  @click="logout">
@@ -83,6 +83,7 @@
           <!-- end of your content -->
 
         </v-layout>
+        <User/>
       </v-container>
     </v-content>
     <!-- end of content -->
@@ -91,6 +92,9 @@
 </template>
 
 <script>
+  import Cookies from 'js-cookie'
+  import User from './../User'
+
   export default {
     data: () => ({
       dialog: false,
@@ -110,6 +114,7 @@
         this.$router.push(link)
       },
       logout() {
+        Cookies.remove('user')
         let base_url = window.location.origin
         window.location.href = base_url+'/logout'
       },
@@ -118,6 +123,9 @@
       }
     },
     mounted() {
+    },
+    components: {
+      User
     }
   }
 </script>

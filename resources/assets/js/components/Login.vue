@@ -101,6 +101,7 @@
 </script>
 <script>
 var axios = require('axios')
+import Cookies from 'js-cookie'
 
 export default {
     data () {
@@ -155,12 +156,12 @@ export default {
             var data = app.data
             axios.post('login', data).then(function (resp) {
                 if (resp.data.status ==1) {
+                    Cookies.set('user', JSON.stringify(resp.data))
                     app.showSnackbar('Selamat datang, Anda berhasil masuk')
                     window.location.href = resp.data.url
                     return true
                 }
                 app.showSnackbar('Data tidak ditemukan, silahkan coba lagi.')
-
             })
             .catch(function (resp) {
                 app.showSnackbar('oops, something went wrong. Please try again!')

@@ -13,10 +13,12 @@ import Vuex from 'vuex'
 import Vuetify from 'vuetify'
 import router from './routes'
 import 'es6-promise/auto'
+import Cookies from 'js-cookie'
 
 Vue.use(Vuetify)
 Vue.use(VueRouter)
 Vue.use(Vuex)
+Vue.use(Cookies)
 
 // for production mode
 Vue.config.devtools = false;
@@ -45,6 +47,7 @@ const store = new Vuex.Store({
         count: 0,
         snackbarText: '',
         snackbar: false,
+        user: null
     },
     mutations: {
         increment(state) {

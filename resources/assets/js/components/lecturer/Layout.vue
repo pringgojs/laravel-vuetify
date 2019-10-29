@@ -110,14 +110,17 @@
           <!-- end of your content -->
 
         </v-layout>
+        <User/>
       </v-container>
     </v-content>
     <!-- end of content -->
-    
   </v-app>
 </template>
 
 <script>
+  import Cookies from 'js-cookie' 
+  import User from './../User'
+
   export default {
     data: () => ({
       dialog: false,
@@ -151,6 +154,9 @@
       manualBook() {
         window.open('/dosen.pdf', '_blank')
       }
+    },
+    components: {
+      User
     }
   }
 </script>

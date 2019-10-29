@@ -21,8 +21,9 @@ try {
 
 window.axios = require('axios');
 
+import Cookies from 'js-cookie'
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-
+window.axios.defaults.headers.common['user'] = Cookies.get('user');
 /**
  * Next we will register the CSRF Token as a common header with Axios so that
  * all outgoing HTTP requests automatically have it attached. This is just

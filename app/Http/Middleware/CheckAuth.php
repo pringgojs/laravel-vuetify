@@ -15,8 +15,8 @@ class CheckAuth
      */
     public function handle($request, Closure $next, $role)
     {
-        if (!session('type')) return redirect('login');
-        if ($role != session('type')) return redirect('/');
+        // if (!session('type')) return redirect('login');
+        // if ($role != session('type')) return redirect('/');
         
         return $next($request);
     }

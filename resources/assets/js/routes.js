@@ -6,7 +6,7 @@ Vue.use(Router)
 // lecturer
 import Layout from './components/lecturer/Layout.vue'
 import ResetPassword from './components/ResetPassword.vue'
-
+import User from './components/User.vue'
 import ETugas from './components/lecturer/ETugas.vue'
 import ETugasAdd from './components/lecturer/ETugasAdd.vue'
 import ETugasEdit from './components/lecturer/ETugasEdit.vue'
@@ -51,6 +51,7 @@ Vue.component('etugas', require('./components/student/ETugas.vue'))
 Vue.component('jadwal', require('./components/student/Schedule.vue'))
 Vue.component('materi-kuliah', require('./components/student/Materi.vue'))
 Vue.component('detail-etugas', require('./components/student/DetailEtugas.vue'))
+Vue.component('user', User)
 
 const routes = [
     {
