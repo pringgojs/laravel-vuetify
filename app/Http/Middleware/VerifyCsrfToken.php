@@ -30,5 +30,6 @@ class VerifyCsrfToken extends BaseVerifier
         'student/e-tugas/filter',
         'filter/student/get-modul',
         'filter/student/get-matakuliah/*',
+        '*'
     ];
 }
